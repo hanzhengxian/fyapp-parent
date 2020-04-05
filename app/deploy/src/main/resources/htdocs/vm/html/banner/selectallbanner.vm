@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+#parse("content/importBase.vm")
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+#preview>img {
+	width: 100%;
+	height: 170px;
+}
+</style>
+</head>
+<body style="width: 100%;">
+	<div id="page-wrapper">
+		<!--BEGIN TITLE & BREADCRUMB PAGE-->
+		<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+			<div class="page-header pull-left">
+				<div class="page-title">banner管理</div>
+			</div>
+			<ol class="breadcrumb page-breadcrumb pull-right">
+				<li><i class="fa fa-home"></i>&nbsp;<a href="#">banner管理</a></li>
+
+			</ol>
+
+			<div class="clearfix"></div>
+		</div>
+
+		<div style="margin-top: 2%;" id="a">
+
+			<div class="row">
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">类型：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select class="form-control" id="selectBannerType">
+							<option selected="selected" value="">请选择</option>
+							<option value="0">图文</option>
+							<option value="1">商品</option>
+							<option value="2">店铺</option>
+							<option value="3">链接</option>
+						</select> <br />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">位置：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select class="form-control" id="selectBannerPosition">
+							<option selected="selected" value="">请选择</option>
+							<option value="0">微信首页</option>
+							<option value="1">微信商品页</option>
+							<option value="4">微信首页大图</option>
+							<option value="5">微信首页类别背景图</option>
+							<option value="2">WEB首页</option>
+							<option value="3">WEB商城</option>
+							<option value="6">WEB商城页 活动左</option>
+							<option value="7">WEB商城页 活动右</option>
+							<option value="8">WEB养生知识</option>
+							<option value="9">WEB新闻公告</option>
+							<option value="10">WEB庆余门店</option>
+							<option value="11">WEB关于我们</option>
+						</select> <br />
+					</div>
+				</div>
+
+			</div>
+
+			<div class="col-sm-4" style="float: right">
+				<div class="control-group">
+					<div>
+						<button onclick="clean()" class="btn btn-danger" name="Name"
+							id="search_tel" value="清空"
+							style="float: right; margin-right: 2%;">清空</button>
+					</div>
+					<div>
+						<button onclick="sorce()" class="btn btn-info" name="Name"
+							id="search_tel" value="查询"
+							style="float: right; margin-right: 2%;">查询</button>
+					</div>
+					<div>
+						<button onclick="showallmodal('myModal','show')"
+							class="btn btn-warning" name="Name" id="search_tel" value="添加"
+							style="float: right; margin-right: 2%;">添加</button>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<!--END TITLE & BREADCRUMB PAGE-->
+		<!--BEGIN CONTENT-->
+		<!-- 添加banner -->
+		<table id="mytab" class="table table-hover"></table>
+
+
+		<div class="modal fade" id="myModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" style="width: 40%">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">编辑banner</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" role="form" id="addForm"
+							enctype="multipart/form-data" method="post">
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label">类型<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-10">
+									<input type="hidden" id="id" value="0" name="id" /> <select
+										class="form-control" id="bannerType" name="bannerType"
+										onchange="bannerTypeChoose(this)">
+										<option value="">请选择</option>
+										<option value="0">图文</option>
+										<option value="1">商品</option>
+										<option value="2">店铺</option>
+										<option value="3">链接</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label">缩略图<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-10">
+									<input type="file" id="bannerImg" name="bannerImg"
+										onchange="preview(this)" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label"></label>
+								<div class="col-sm-10">
+									<div id="preview" style="display: none" class=""></div>
+								</div>
+							</div>
+
+							<div class="form-group" id="changeType">
+								<input type="hidden" name="bannerContent" id="bannerContent">
+								<label for="lastname" class="col-sm-2 control-label">banner内容：</label><br />
+								<div id="edit" class="col-sm-10"></div>
+							</div>
+
+							<!-- <div class="form-group">
+								<font color="red" style="margin-left: 135px;">注:当banner类型为 商品/店铺时,banner内容对应填写 商品编号/店铺编号)</font>
+							</div> -->
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label">banner位置<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-10">
+									<select class="form-control" id="bannerPosition"
+										name="bannerPosition">
+										<option value="">请选择</option>
+										<option value="0">微信首页（尺寸:宽750px，高334px）</option>
+										<option value="1">微信商品页（尺寸:宽750px，高310px）</option>
+										<option value="4">微信首页大图（尺寸:宽750px，高1334px）</option>
+										<option value="5">微信首页类别背景图（尺寸:宽750px，高112px）</option>
+										<option value="2">WEB首页（尺寸:宽1920px，高400px）</option>
+										<option value="3">WEB商城（尺寸:宽1920px，高400px）</option>
+										<option value="6">WEB商城页 活动左</option>
+										<option value="7">WEB商城页 活动右</option>
+										<option value="8">WEB养生知识（尺寸:宽1920px，高400px）</option>
+										<option value="9">WEB新闻公告（尺寸:宽1920px，高400px）</option>
+										<option value="10">WEB庆余门店（尺寸:宽1920px，高400px）</option>
+										<option value="11">WEB关于我们（尺寸:宽1920px，高400px）</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label">排序<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-10">
+									<input type="number" id="rank" name="rank" class="form-control" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label">描述：</label>
+								<div class="col-sm-10">
+									<input type="text" id="bannerDesc" name="bannerDesc"
+										class="form-control" />
+								</div>
+							</div>
+
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="submitReply" class="btn btn-primary"
+							onclick="submitAddBanner(this)">确定</button>
+						<button type="button" class="btn btn-danger"
+							onclick="closeModal()">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 查看图片模块 -->
+		<div class="modal fade" id="imgbig" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">查看图片</h4>
+					</div>
+					<div class="modal-body">
+						<img alt="" src="" id="bigbis" style="width: 100%; height: 100%;" />
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<input type="hidden" id="thisBannerId" name="thisBannerId"
+			class="form-control" />
+
+		<!-- 关联商品选择框 -->
+		<div class="modal fade" id="selectGoodsModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" style="width: 1000px;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">关联商品</h4>
+					</div>
+					<div style="margin-top: 2%;" id="searchGoods">
+
+						<div class="row">
+							<label class="col-sm-1 control-label"
+								style="text-align: right; margin-top: 5px">商品名称：</label>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<input type="text" id="productName" name="alertGoodsName"
+										class="form-control" />
+								</div>
+							</div>
+							<label class="col-sm-1 control-label"
+								style="text-align: right; margin-top: 5px">商品编号：</label>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<input type="text" id="productId" name="alertGoodsId"
+										class="form-control" />
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-1 control-label"
+								style="text-align: right; margin-top: 5px">是否已选中：</label>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<select class="form-control" id="linkType" name="linkType">
+										<option value="" selected="selected">全部</option>
+										<option value="0">已选中</option>
+										<option value="1">未选中</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="control-group">
+								<div>
+									<button onclick="cleant()" class="btn btn-danger" name="Name"
+										id="search_tel" value="清空"
+										style="float: right; margin-right: 2%;">清空</button>
+								</div>
+								<div>
+									<button onclick="searchGoods()" class="btn btn-info"
+										name="Name" id="search_tel" value="查询"
+										style="float: right; margin-right: 2%;">查询</button>
+								</div>
+							</div>
+						</div>
+						<table id="goodsListTable" class="table table-hover"></table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- 关联门店选择框 -->
+		<div class="modal fade" id="selectShopModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" style="width: 1000px;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">关联门店</h4>
+					</div>
+					<div style="margin-top: 2%;" id="searchShop">
+						<div class="row">
+							<label class="col-sm-1 control-label"
+								style="text-align: right; margin-top: 5px">门店名称：</label>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<input type="text" id="teamName" name="teamName"
+										class="form-control" />
+								</div>
+							</div>
+							<label class="col-sm-1 control-label"
+								style="text-align: right; margin-top: 5px">门店erp编号：</label>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<input type="text" id="teamErpNo" name="teamErpNo"
+										class="form-control" />
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+
+							<label class="col-sm-1 control-label"
+								style="text-align: right; margin-top: 5px">是否已选中：</label>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<select class="form-control" id="linkType" name="linkType">
+										<option value="" selected="selected">全部</option>
+										<option value="0">已选中</option>
+										<option value="1">未选中</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="control-group">
+
+								<div>
+									<button onclick="cleant()" class="btn btn-danger" name="Name"
+										id="search_tel" value="清空"
+										style="float: right; margin-right: 2%;">清空</button>
+								</div>
+								<div>
+									<button onclick="searchShop()" class="btn btn-info" name="Name"
+										id="search_tel" value="查询"
+										style="float: right; margin-right: 2%;">查询</button>
+								</div>
+
+							</div>
+						</div>
+						<table id="shopListTable" class="table table-hover"></table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+
+	<!-- 注意， 只需要引用 JS，无需引用任何 CSS！！！-->
+	<script type="text/javascript" src="js/wangEditor/wangEditor.js"></script>
+	<script type="text/javascript">
+		var E = window.wangEditor
+		var editor = new E('#edit')
+		// 或者 var editor = new E( document.getElementById('editor') )
+		// 隐藏“网络图片”tab
+		editor.customConfig.showLinkImg = false
+		// 关闭粘贴样式的过滤
+		editor.customConfig.pasteFilterStyle = false
+		//editor.customConfig.debug = location.href.indexOf('wangeditor_debug_mode=1') > 0
+		// 下面两个配置，使用其中一个即可显示“上传图片”的tab。但是两者不要同时使用！！！
+		// editor.customConfig.uploadImgShowBase64 = true   // 使用 base64 保存图片
+		// 上传图片（举例）
+		editor.customConfig.uploadImgServer = 'fileUploadForEditor.do';
+		//限制上传图片数 
+		editor.customConfig.uploadImgMaxLength = 1;
+
+		editor.customConfig.uploadImgParams = {
+			token : 'abcdef12345' // 属性值会自动进行 encode ，此处无需 encode
+		}
+		//图片上传时的属性名 
+		editor.customConfig.uploadFileName = 'photo'
+
+		editor.customConfig.uploadImgHeaders = {
+			'Accept' : 'text/x-json'
+		}
+
+		editor.customConfig.uploadImgHooks = {
+			before : function(xhr, editor, files) {
+				// 图片上传之前触发
+				// xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，files 是选择的图片文件
+
+				// 如果返回的结果是 {prevent: true, msg: 'xxxx'} 则表示用户放弃上传
+				// return {
+				//     prevent: true,
+				//     msg: '放弃上传'
+				// }
+			},
+			success : function(xhr, editor, result) {
+				// 图片上传并返回结果，图片插入成功之后触发
+				// xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，result 是服务器端返回的结果
+				//alert(result.data);
+
+			},
+			fail : function(xhr, editor, result) {
+				// 图片上传并返回结果，但图片插入错误时触发
+				// xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，result 是服务器端返回的结果
+				//alert(result);
+			},
+			error : function(xhr, editor) {
+				// 图片上传出错时触发
+				// xhr 是 XMLHttpRequst 对象，editor 是编辑器对象
+			},
+			timeout : function(xhr, editor) {
+				// 图片上传超时时触发
+				// xhr 是 XMLHttpRequst 对象，editor 是编辑器对象
+			},
+
+			// 如果服务器端返回的不是 {errno:0, data: [...]} 这种格式，可使用该配置
+			// （但是，服务器端返回的必须是一个 JSON 格式字符串！！！否则会报错）
+			customInsert : function(insertImg, result, editor) {
+				// 图片上传并返回结果，自定义插入图片的事件（而不是编辑器自动插入图片！！！）
+				// insertImg 是插入图片的函数，editor 是编辑器对象，result 是服务器端返回的结果
+
+				// 举例：假如上传图片成功后，服务器端返回的是 {url:'....'} 这种格式，即可这样插入图片：
+				var url = result.data
+				/* var htmlStr = '<p style="margin:0;padding: 0;border:0;"><img src="'+url+'" style="max-width:100%;"><br></p>'; */
+				/* editor.txt.html(htmlStr); */
+				insertImg(url)
+
+				// result 必须是一个 JSON 格式字符串！！！否则报错
+			}
+		}
+		editor.create();
+		$('#editor').attr('style', 'height:auto;');
+	</script>
+</body>
+
+<script type="text/javascript">
+	//添加
+	function submitAddBanner(ele) {
+		var idval = $("#id").val();
+		if ($("#bannerType").val() == "") {
+			alert("请选择类型！");
+			return;
+		}
+		if ($("#rank").val() == "") {
+			alert("请填写排序！");
+			return;
+		}
+
+		var formData = new FormData();
+		var url = "";
+		if (idval == "0" || !idval) {
+			url = "addbanner.do";
+			formData.append("bannerType", $("#bannerType").val());
+			formData.append("bannerPosition", $("#bannerPosition").val());
+			formData.append("rank", $("#rank").val());
+			formData.append("bannerContent", editor.txt.html());
+			formData.append("bannerImg", $("#bannerImg")[0].files[0]);
+			formData.append("bannerDesc", $("#bannerDesc").val());
+		} else if (idval > "0") {
+			url = "updatebanner.do";
+			formData.append("eid", $("#id").val());
+			formData.append("ebannerType", $("#bannerType").val());
+			formData.append("ebannerPosition", $("#bannerPosition").val());
+			formData.append("erank", $("#rank").val());
+			formData.append("ebannerContent", editor.txt.html());
+			formData.append("oldImg", $("#oldImg").val());
+			formData.append("ebannerImg", $("#bannerImg")[0].files[0]);
+			formData.append("ebannerDesc", $("#bannerDesc").val());
+		}
+
+		$(ele).attr("disabled", true);
+
+		jQuery.ajax({
+			url : url,
+			type : 'post',
+			data : formData,
+			dataType : 'json',
+			cache : false,
+			processData : false,
+			contentType : false,
+			success : function(data) {
+				$(ele).attr("disabled", false);
+				if (data.success) {
+					claenmyModal();
+					editor.txt.html("");
+					$("#preview").html("");
+					$("#oldImg").val("");
+					$("#id").val("0");
+					$('#myModal').modal('hide');
+					$("#mytab").bootstrapTable('refresh');
+				} else {
+					alert(data.message);
+				}
+			},
+			error : function() {
+				alert("操作失败！");
+			}
+		});
+	}
+
+	//显示修改框 数据回显 
+	function updateBanner(index) {
+		claenmyEditModal();
+		editor.txt.html(all[index].bannerContent);//富文本回显
+		$("#preview").html("<img src="+all[index].bannerImg+" />");
+		$("#preview").css("display", "block");
+		$("#bannerType").val(all[index].bannerType);
+		$("#bannerPosition").val(all[index].bannerPosition);
+		$("#bannerDesc").val(all[index].bannerDesc);
+		$("#id").val(all[index].id);
+		$("#rank").val(all[index].rank);
+		$("#oldImg").val(all[index].bannerImg);
+
+		var chooseType = all[index].bannerType;
+		if (chooseType == '1' || chooseType == '2') {
+			$("#changeType").hide();
+		} else {
+			$("#changeType").show();
+		}
+
+		$("#myModal").modal("show");
+	}
+
+	function claenmyModal() {
+		$("#myModal input").val("");
+		$("#myModal select").val("");
+		$("#myModal textarea").val("");
+		$("#preview").html("");
+		editor.txt.html("");
+	}
+
+	function claenmyEditModal() {
+		$("#myEditModal input").val("");
+		$("#myEditModal select").val("");
+		$("#myEditModal textarea").val("");
+		$("#preview").html("");
+		editor.txt.html("");
+	}
+
+	//图片预览
+	function preview(file) {
+		var prevDiv = document.getElementById('preview');
+		prevDiv.style.display = "block";
+		if (file.files && file.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function(evt) {
+				prevDiv.innerHTML = '<img src="' + evt.target.result + '" />';
+			}
+			reader.readAsDataURL(file.files[0]);
+		} else {
+			prevDiv.innerHTML = '<div class="img" style="filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src=\'' + file.value + '\'"></div>';
+		}
+	}
+	function clean() {
+		$("#a input").val("");
+		$("#a select").val("");
+	}
+
+	bootsearch()
+	function sorce() {
+		$("#mytab").bootstrapTable('destroy');
+		//生成用户数据
+		bootsearch();
+	}
+
+	var all;
+	function bootsearch() {
+		//生成用户数据
+		$('#mytab')
+				.bootstrapTable(
+						{
+							method : 'post',
+							contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+							url : "selectallbanner.do",//要请求数据的文件路径
+							dataType : 'json',
+							striped : true, //是否显示行间隔色
+							pageNumber : 1, //初始化加载第一页，默认第一页
+							pageSize : 10,//单页记录数
+							pageList : [ 5, 10, 20, 30 ],//分页步进值
+							pagination : true,//是否分页
+							queryParamsType : 'limit',//查询参数组织方式
+							sidePagination : 'server',//指定服务器端分页
+							queryParams : function(p) {
+								return params(p);
+							},
+							clickToSelect : false,//是否启用点击选中行
+							toolbarAlign : 'right',//工具栏对齐方式
+							buttonsAlign : 'right',//按钮对齐方式
+							toolbar : '#toolbar',//指定工作栏
+							columns : [
+									{
+										title : '操作',
+										field : 'ID',
+										formatter : function(value, row, index) {
+											var addHtml = '';
+											if (row.bannerType == '1') {
+												addHtml = "|<a href='#' onclick=showAddLinkGoods('"
+														+ index + "')>关联商品</a>";
+											}
+											if (row.bannerType == '2') {
+												addHtml = "|<a href='#' onclick=showAddLinkShops('"
+														+ index + "')>关联门店</a>";
+											}
+											return "<a href='#' onclick=updateBanner('"
+													+ index
+													+ "')>修改</a>  | <a href='#' onclick=deleteBanner('"
+													+ index
+													+ "')>删除</a>"
+													+ addHtml;
+										}
+									},
+									{
+										title : '类型',
+										field : 'bannerType',
+										formatter : function(value, row, index) {
+											if (value == "0") {
+												return "图文";
+											}
+											if (value == "1") {
+												return "商品";
+											}
+											if (value == "2") {
+												return "店铺";
+											}
+											if (value == "3") {
+												return "链接";
+											}
+										}
+									},
+									{
+										title : '缩略图',
+										field : 'bannerImg',
+										formatter : function(value, row, index) {
+											return '<img src="'+value+'" data-imgurl="'+value+'" width="100px" height="60px"/>';
+										}
+									},
+									{
+										title : '排序',
+										field : 'rank',
+									},
+									{
+										title : '位置',
+										field : 'bannerPositionStr'
+									},
+									{
+										title : '描述',
+										field : 'bannerDesc',
+									},
+									{
+										title : '创建者',
+										field : 'creater'
+									},
+									{
+										title : '创建时间',
+										field : 'gmtCreate',
+										formatter : function(value, row, index) {
+											return format(value);
+										}
+									},
+									{
+										title : '修改者',
+										field : 'modifier'
+									},
+									{
+										title : '修改时间',
+										field : 'gmtModifide',
+										formatter : function(value, row, index) {
+											return format(value);
+										}
+									} ],
+							locale : 'zh-CN',//中文支持,
+							onLoadSuccess : function() { //加载成功时执行
+								$("img").load(
+										function() {
+											var viewer = new Viewer(document
+													.getElementById('mytab'), {
+												navbar : false,
+												toolbar : {
+													zoomIn : true,
+													zoomOut : true,
+													play : true,
+													rotateLeft : true,
+													rotateRight : true
+
+												},
+												show : function() {
+													viewer.update();
+												}
+											});
+										})
+							},
+							responseHandler : function(res) {
+								//在ajax获取到数据，渲染表格之前，修改数据源
+								all = res.rows;
+								return res;
+							}
+						})
+	}
+
+	//删除
+	function deleteBanner(index) {
+		var id = all[index].id;
+		if (confirm("确定删除此信息？删除后不可恢复")) {
+			jQuery.ajax({
+				url : "deletebanner.do",
+				type : 'post',
+				data : {
+					"id" : id
+				},
+				dataType : 'json',
+				success : function(json) {
+					if (json) {
+						alert("删除成功");
+						$("#mytab").bootstrapTable('refresh');
+					} else {
+						alert("删除失败");
+					}
+				},
+				error : function() {
+					alert("异常！");
+				}
+			});
+		} else {
+			return;
+		}
+	}
+	//显示添加框
+	function showallmodal(id, type) {
+		claenmyModal();
+		$("#" + id).modal(type);
+	}
+	//显示放大图片
+	function imgbig(url) {
+		$('#imgbig').modal('show');
+		$("#bigbis").attr('src', url);
+	}
+
+	//获取搜索的所有值
+	function params(params) {
+		$("#a input[type='text']").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		$("#a select").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		return params;
+	}
+
+	function closeModal() {
+		$("#myModal input").val("");
+		$("#myModal select").val("");
+		$("#myModal textarea").val("");
+		//$("#myEditModal input").val();
+		$("#myEditModal").modal('hide');
+		$("#myModal").modal('hide');
+	}
+
+	function bannerTypeChoose(ele) {
+		var chooseType = $(ele).val();
+		if (chooseType == '1' || chooseType == '2') {
+			$("#changeType").hide();
+		} else {
+			$("#changeType").show();
+		}
+	}
+
+	/* function ebannerTypeChoose(ele) {
+		var chooseType = $(ele).val();
+		if(chooseType == '1' || chooseType == '2'){
+			$("#echangeType").hide();
+		}else{
+			$("#echangeType").show();
+		}
+	} */
+</script>
+
+<script type="text/javascript">
+	function stateFormatter(value, row, index) {
+		if (row.hasChoose) {
+			return {
+				disabled : false,//设置是否可用 
+				checked : true
+			//设置选中 
+			};
+		} else {
+			return {
+				disabled : false,//设置是否可用 
+				checked : false
+			//设置不选中 
+			};
+		}
+	}
+
+	function showAddLinkGoods(index) {
+		var thisBannerId = all[index].id;
+		$("#thisBannerId").val(thisBannerId);
+
+		$("#goodsListTable").bootstrapTable('destroy');
+		askGoodsList();
+
+		$("#selectGoodsModal").modal('show');
+	}
+
+	//查询商品
+	function searchGoods() {
+		$('#goodsListTable').bootstrapTable("selectPage", 1);
+	}
+
+	//清除搜索
+	function cleanDis() {
+		$('#searchGoods input').val("");
+		$('#searchGoods select').val("");
+	}
+
+	//请求商品数据
+	function askGoodsList() {
+		var allGoods;
+		$('#goodsListTable').bootstrapTable({
+			method : 'post',
+			contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+			url : "selectGoodsForBanner.do?",
+			dataType : 'json',
+			striped : true, //是否显示行间隔色
+			pageNumber : 1, //初始化加载第一页，默认第一页
+			pageSize : 10,//单页记录数
+			pageList : [ 10, 20, 30 ],//分页步进值
+			pagination : true,//是否分页
+			queryParamsType : 'limit',//查询参数组织方式
+			sidePagination : 'server',//指定服务器端分页
+			queryParams : function(p) {
+				return paramsForAlertGoodsTable(p);
+			},
+			clickToSelect : false,//是否启用点击选中行
+			toolbarAlign : 'right',//工具栏对齐方式
+			buttonsAlign : 'right',//按钮对齐方式
+			toolbar : '#toolbar',//指定工作栏
+			//点击全选框时触发的操作        
+			onCheckAll : function(rows) {
+				setAllLinkGoods(rows);
+			},
+			onUncheckAll : function(rows) {
+				unsetAllLinkGoods(rows);
+			},
+			//点击每一个单选框时触发的操作         
+			onCheck : function(row) {
+				setLinkGoods(row);
+			},
+			//取消每一个单选框时对应的操作；        
+			onUncheck : function(row) {
+				unsetLinkGoods(row);
+			},
+			columns : [ {
+				field : "id",
+				checkbox : true,
+				//直接绑定js函数 
+				formatter : stateFormatter
+			}, {
+				title : '商品编号',
+				field : 'productId'
+			}, {
+				title : 'erp编号',
+				field : 'erpNo'
+			}, {
+				title : '商品名称',
+				field : 'productName'
+			} ],
+			locale : 'zh-CN',//中文支持,
+			responseHandler : function(res) {
+				//在ajax获取到数据，渲染表格之前，修改数据源
+				allGoods = res.rows;
+				return res;
+			}
+		})
+	}
+
+	function paramsForAlertGoodsTable(params) {
+		$("#searchGoods input[type='text']").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		$("#searchGoods select").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		params["isDelete"] = "0";
+		params["onSale"] = "1";
+		params["bannerId"] = $("#thisBannerId").val();
+		return params;
+	}
+</script>
+
+<script type="text/javascript">
+	//选择关联门店
+	function showAddLinkShops(index) {
+		var thisBannerId = all[index].id;
+
+		$("#thisBannerId").val(thisBannerId);
+
+		$("#shopListTable").bootstrapTable('destroy');
+		askShopList();
+
+		$("#selectShopModal").modal('show');
+	}
+
+	//查询门店
+	function searchShop() {
+		$('#shopListTable').bootstrapTable("selectPage", 1);
+	}
+
+	//清除搜索
+	function cleanDis() {
+		$('#searchShop input').val("");
+		$('#searchShop select').val("");
+	}
+
+	//请求门店数据
+	function askShopList() {
+		var allShop;
+		$('#shopListTable').bootstrapTable({
+			method : 'post',
+			contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+			url : "selectTeamForBanner.do?",//
+			dataType : 'json',
+			striped : true, //是否显示行间隔色
+			pageNumber : 1, //初始化加载第一页，默认第一页
+			pageSize : 10,//单页记录数
+			pageList : [ 10, 20, 30 ],//分页步进值
+			pagination : true,//是否分页
+			queryParamsType : 'limit',//查询参数组织方式
+			sidePagination : 'server',//指定服务器端分页
+			queryParams : function(p) {
+				return paramsForAlertShopTable(p);
+			},
+			clickToSelect : false,//是否启用点击选中行
+			toolbarAlign : 'right',//工具栏对齐方式
+			buttonsAlign : 'right',//按钮对齐方式
+			toolbar : '#toolbar',//指定工作栏
+			//点击全选框时触发的操作        
+			onCheckAll : function(rows) {
+				setAllLinkShops(rows);
+			},
+			onUncheckAll : function(rows) {
+				unsetAllLinkShops(rows);
+			},
+			//点击每一个单选框时触发的操作         
+			onCheck : function(row) {
+				setLinkShops(row);
+			},
+			//取消每一个单选框时对应的操作；        
+			onUncheck : function(row) {
+				unsetLinkShops(row);
+			},
+			columns : [ {
+				field : "id",
+				checkbox : true,
+				//直接绑定js函数 
+				formatter : stateFormatter
+			}, {
+				title : '门店编号',
+				field : 'teamId'
+			}, {
+				title : 'erp编号',
+				field : 'erpNo'
+			}, {
+				title : '门店名称',
+				field : 'teamName'
+			}, {
+				title : '门店类型',
+				field : 'teamType',
+				formatter : function(value, row, index) {
+					if (value == "1") {
+						return "门店"
+					} else if (value == "2") {
+						return "服务商"
+					} else if (value == "3") {
+						return "代理商"
+					}
+				}
+			} ],
+			locale : 'zh-CN',//中文支持,
+			responseHandler : function(res) {
+				//在ajax获取到数据，渲染表格之前，修改数据源
+				allShop = res.rows;
+				return res;
+			}
+		})
+	}
+
+	function paramsForAlertShopTable(params) {
+		$("#searchShop input[type='text']").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		$("#searchShop select").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		params["bannerId"] = $("#thisBannerId").val();
+		return params;
+	}
+</script>
+
+<script type="text/javascript">
+	//选中 
+	function setLinkGoods(row) {
+
+		var bannerId = $("#thisBannerId").val();
+		jQuery.ajax({
+			url : "bannerChooseGood.do",
+			type : 'post',
+			data : {
+				"bannerId" : bannerId,
+				"productId" : row.productId
+			},
+			dataType : 'json',
+			success : function(json) {
+				$("#goodsListTable").bootstrapTable('refresh');
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+	}
+
+	//取消 
+	function unsetLinkGoods(row) {
+
+		var bannerId = $("#thisBannerId").val();
+		jQuery.ajax({
+			url : "bannerUnChooseGood.do",
+			type : 'post',
+			data : {
+				"bannerId" : bannerId,
+				"productId" : row.productId
+			},
+			dataType : 'json',
+			success : function(json) {
+				$("#goodsListTable").bootstrapTable('refresh');
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+	}
+
+	//全选 
+	function setAllLinkGoods(rows) {
+		var arrayObj = new Array();
+		for (var i = 0; i < rows.length; i++) {
+			arrayObj.push(rows[i].productId);
+		}
+		var bannerId = $("#thisBannerId").val();
+		jQuery.ajax({
+			url : "bannerChooseGoodAll.do",
+			type : 'post',
+			data : {
+				"bannerId" : bannerId,
+				"productIdS" : arrayObj
+			},
+			dataType : 'json',
+			traditional : true,//这里设置为true 
+			success : function(json) {
+				$("#goodsListTable").bootstrapTable('refresh');
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+	}
+
+	//全选 取消
+	function unsetAllLinkGoods(rows) {
+		var arrayObj = new Array();
+		for (var i = 0; i < rows.length; i++) {
+			arrayObj.push(rows[i].productId);
+		}
+		var bannerId = $("#thisBannerId").val();
+		jQuery.ajax({
+			url : "bannerUnChooseGoodAll.do",
+			type : 'post',
+			data : {
+				"bannerId" : bannerId,
+				"productIdS" : arrayObj
+			},
+			dataType : 'json',
+			traditional : true,//这里设置为true 
+			success : function(json) {
+				$("#goodsListTable").bootstrapTable('refresh');
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+	}
+</script>
+
+<script type="text/javascript">
+	//选中 
+	function setLinkShops(row) {
+
+		var bannerId = $("#thisBannerId").val();
+		jQuery.ajax({
+			url : "bannerChooseShop.do",
+			type : 'post',
+			data : {
+				"bannerId" : bannerId,
+				"teamId" : row.teamId
+			},
+			dataType : 'json',
+			success : function(json) {
+				$("#shopListTable").bootstrapTable('refresh');
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+	}
+
+	//取消 
+	function unsetLinkShops(row) {
+
+		var bannerId = $("#thisBannerId").val();
+		jQuery.ajax({
+			url : "bannerUnChooseShop.do",
+			type : 'post',
+			data : {
+				"bannerId" : bannerId,
+				"teamId" : row.teamId
+			},
+			dataType : 'json',
+			success : function(json) {
+				$("#shopListTable").bootstrapTable('refresh');
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+	}
+
+	//全选 
+	function setAllLinkShops(rows) {
+		var arrayObj = new Array();
+		for (var i = 0; i < rows.length; i++) {
+			arrayObj.push(rows[i].teamId);
+		}
+		var bannerId = $("#thisBannerId").val();
+		jQuery.ajax({
+			url : "bannerChooseShopAll.do",
+			type : 'post',
+			data : {
+				"bannerId" : bannerId,
+				"teamIdS" : arrayObj
+			},
+			dataType : 'json',
+			traditional : true,//这里设置为true 
+			success : function(json) {
+				$("#shopListTable").bootstrapTable('refresh');
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+	}
+
+	//全选 取消
+	function unsetAllLinkShops(rows) {
+		var arrayObj = new Array();
+		for (var i = 0; i < rows.length; i++) {
+			arrayObj.push(rows[i].teamId);
+		}
+		var bannerId = $("#thisBannerId").val();
+		jQuery.ajax({
+			url : "bannerChooseUnShopAll.do",
+			type : 'post',
+			data : {
+				"bannerId" : bannerId,
+				"teamIdS" : arrayObj
+			},
+			dataType : 'json',
+			traditional : true,//这里设置为true 
+			success : function(json) {
+				$("#shopListTable").bootstrapTable('refresh');
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+	}
+</script>
+</html>

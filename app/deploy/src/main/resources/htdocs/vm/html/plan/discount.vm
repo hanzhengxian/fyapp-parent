@@ -1,0 +1,3405 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+#parse("content/importBase.vm")
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+#preview>img {
+	width: 100px;
+	height: 100px;
+}
+
+.fixed-table-container thead th:nth-child(1) .th-inner {
+	width: 200px
+}
+</style>
+</head>
+<body style="width: 100%; height: 100%;">
+	<div id="page-wrapper">
+		<!--BEGIN TITLE & BREADCRUMB PAGE-->
+		<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+			<div class="page-header pull-left">
+				<div class="page-title">优惠券管理</div>
+			</div>
+			<ol class="breadcrumb page-breadcrumb pull-right">
+				<li><i class="fa fa-home"></i>&nbsp;<a href="#">方案管理</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="hidden"><a href="#">优惠券信息</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="active">优惠券列表</li>
+			</ol>
+			<div class="clearfix"></div>
+		</div>
+
+		<input type="hidden" id="thisModel" name="thisModel"
+			class="form-control">
+
+		<div style="margin-top: 2%;" id="a">
+			<!-- 查询条件  -->
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">优惠编号：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="discountId" name="discountId"
+							class="form-control">
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">优惠名称：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="discountName" name="discountName"
+							class="form-control">
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">优惠类型：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select class="form-control" id="discountType" name="discountType">
+							<option value="">请选择</option>
+							<option value="1">满减</option>
+							<option value="2">每满减</option>
+							<option value="3">折扣</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<br />
+
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">门店编号：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="teamId" name="teamId" class="form-control" />
+						<br />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">门店名称：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="teamName" name="teamName"
+							class="form-control" /> <br />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">门店erp编号：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="teamErpNo" name="teamErpNo"
+							class="form-control" /> <br />
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">商品编号：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="productId" name="productId"
+							class="form-control" /> <br />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">商品名称：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="productName" name="productName"
+							class="form-control" /> <br />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">商品erp编号：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="productErpNo" name="productErpNo"
+							class="form-control" /> <br />
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">优惠状态：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select class="form-control" id="speType" name="speType">
+							<option value="">全部</option>
+							<option value="1" selected="selected">正在优惠</option>
+							<option value="2">已结束</option>
+						</select>
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">创建开始时间：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="startDate" name="startDate"
+							class="form-control datetimepickers" readonly="readonly" /> <br />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">创建结束时间：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="endDate" name="endDate"
+							class="form-control datetimepickers" readonly="readonly" /> <br />
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">是否可重复领取：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select class="form-control" id="canOverUse" name="canOverUse">
+							<option value="">请选择</option>
+							<option value="true">可领取</option>
+							<option value="false">不可领取</option>
+						</select>
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">限制等级：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select class="form-control" id=limitUserLevel
+							name="limitUserLevel">
+							<option value="">请选择</option>
+							<option value="1">V1</option>
+							<option value="2">V2</option>
+							<option value="3">V3</option>
+							<option value="4">V4</option>
+							<option value="5">V5</option>
+						</select>
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">发布状态：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select class="form-control" id=publishFlg name="publishFlg">
+							<option value="">请选择</option>
+							<option value="0">未发布</option>
+							<option value="1">已发布</option>
+						</select>
+					</div>
+				</div>
+
+			</div>
+			<br />
+
+			<div class="row">
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">所属省：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select class="form-control" id="linkProvince" name="linkProvince">
+						</select>
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">所属市：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select class="form-control" id="linkCity" name="linkCity">
+						</select>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="col-sm-4" style="float: right">
+				<div class="control-group">
+					<div>
+						<button onclick="clean()" class="btn btn-danger" name="Name"
+							id="search_tel" value="清空"
+							style="float: right; margin-right: 2%;">清空</button>
+					</div>
+					<div>
+						<button onclick="sorce()" class="btn btn-info" name="Name"
+							id="search_tel" value="查询"
+							style="float: right; margin-right: 2%;">查询</button>
+					</div>
+					<div>
+						<button onclick="showAddModal('myModal','show')"
+							class="btn btn-warning" name="Name" id="search_tel" value="添加"
+							style="float: right; margin-right: 2%;">添加</button>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<table id="mytab" class="table table-hover"></table>
+
+		<!-- 新增模态框  -->
+		<div class="modal fade" id="myModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true" style="overflow-y: auto">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title">新增优惠券</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" role="form" name="addForm"
+							enctype="multipart/form-data" method="post">
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">优惠券组别<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<select id="addDiscountTeamId" name="addDiscountTeamId"
+										class="form-control"></select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">优惠券名称<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<input type="text" id="addDiscountName" name="addDiscountName"
+										class="form-control">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">优惠类型<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<select class="form-control" id="addDiscountType"
+										name="addDiscountType"
+										onchange="doSwitchDiscountType(this.value)">
+										<option value="">请选择</option>
+										<option value="1">满减</option>
+										<option value="2">每满减</option>
+										<option value="3">折扣</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">是否新人券<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<select class="form-control" id="addIsNew" name="addIsNew">
+										<option value="">请选择</option>
+										<option value="true">是</option>
+										<option value="fasle">否</option>
+									</select>
+								</div>
+							</div>
+
+							<!-- <div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">背景图：</label>
+								<div class="col-sm-9">
+									<input type="file" class="form-control" id="addImg"
+										name="addImg">
+								</div>
+							</div> -->
+
+							<div class="form-group priceDiv">
+								<label for="lastname" class="col-sm-3 control-label">优惠金额<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<input type="text" id="addAmount" name="addAmount"
+										class="form-control" min="0"
+										onkeyup="this.value=this.value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')">
+								</div>
+							</div>
+
+							<div class="form-group discountDiv">
+								<label for="lastname" class="col-sm-3 control-label">折扣（请输入百分比）<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<input type="text" id="addDiscount" name="addDiscount"
+										class="form-control" min="0"
+										onkeyup="this.value=this.value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')">
+								</div>
+							</div>
+
+							<div class="form-group limitDiv">
+								<label for="lastname" class="col-sm-3 control-label">限制金额<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<input type="text" id="addLimitAmount" name="addLimitAmount"
+										class="form-control" min="0"
+										onkeyup="this.value=this.value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')">
+								</div>
+							</div>
+
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">有效期类型<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<select class="form-control" id="addTimeType"
+										name="addTimeType" onchange="doSwitchTimeType(this.value)">
+										<option value="">请选择</option>
+										<option value="1">时间</option>
+										<option value="2">天数</option>
+									</select>
+								</div>
+							</div>
+
+							<!-- 当有效期类型为天数时显示此div -->
+							<div class="form-group dayDiv">
+								<label class="col-sm-3 control-label"
+									style="text-align: right; margin-top: 5px">领取后**天内可用<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<div class="control-group">
+										<input type="text" id="addEndDay" name="addEndDay"
+											class="form-control" /> <br />
+									</div>
+								</div>
+							</div>
+
+							<!-- 当有效期类型为日期时显示此div -->
+							<div class="form-group dateDiv">
+								<label class="col-sm-3 control-label"
+									style="text-align: right; margin-top: 5px">有效期<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<div class="control-group">
+										<input type="text" id="addEndDate" name="addEndDate"
+											class="form-control datetimepickers" readonly="readonly" />
+										<br />
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label"
+									style="text-align: right; margin-top: 5px">领取截止时间<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<div class="control-group">
+										<input type="text" id="addTimeEndReceive"
+											name="addTimeEndReceive" class="form-control datetimepicker"
+											readonly="readonly" /> <br />
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">优惠券类型<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<select class="form-control" id="addDiscountSubType"
+										name="addDiscountSubType">
+										<option value="">请选择</option>
+										<option value="1">线上券</option>
+										<option value="2">线下券</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">是否可重复领取<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<select class="form-control" id="addCanOverUse"
+										name="addCanOverUse"
+										onchange="doSwitchCanOverType(this.value)">
+										<option value="">请选择</option>
+										<option value="true">可领取</option>
+										<option value="false">不可领取</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">是否可以收银折扣同享<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<select class="form-control" id="addCanDiscountUse"
+										name="addCanDiscountUse">
+										<option value="">请选择</option>
+										<option value="false">不可同享</option>
+										<option value="true">可同享</option>
+									</select>
+								</div>
+							</div>
+
+							<!--  <div class="form-group canOverUse">
+								<label for="lastname" class="col-sm-3 control-label">可叠加数量：</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" name="addCanOverNums"
+										id="addCanOverNums">
+								</div>
+							</div>-->
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">是否可同时使用<span
+									style="color: red;">*</span>：
+								</label>
+								<!-- <div class="col-sm-9">
+									<select class="form-control" id="addCanTogeUse"
+										name="addCanTogeUse"
+										onchange="doSwitchCanTogeType(this.value)">
+										<option value="">请选择</option>
+										<option value="true" onclick="doSwitchCanTogeType('true')">可以</option>
+										<option value="false">不可以</option>
+									</select>
+								</div> -->
+								<div class="col-sm-9">
+									<select class="form-control" id="addCanTogeUse"
+										name="addCanTogeUse">
+										<option value="">请选择</option>
+										<option value="true">可以</option>
+										<option value="false">不可以</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">使用等级限制<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<select class="form-control" id="addLimitUserLevel"
+										name="addLimitUserLevel">
+										<option value="1">V1</option>
+										<option value="2">V2</option>
+										<option value="3">V3</option>
+										<option value="4">V4</option>
+										<option value="5">V5</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">指定门店：</label>
+								<div class="col-sm-9">
+									<select class="form-control" id="addLinkTeam"
+										name="addLinkTeam">
+									</select>
+								</div>
+							</div>
+
+							<!-- <div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">指定省：</label>
+								<div class="col-sm-9">
+									<select class="form-control" id="addLinkProvince"
+										name="addLinkProvince">
+									</select>
+								</div>
+							</div> -->
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">排序<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<input type="text" id="addRank" name="addRank"
+										class="form-control" min="0" max="100"
+										oninput="this.value=this.value.replace(/[^\d]/g,'')"
+										placeholder="最小为0最大为100">
+								</div>
+							</div>
+							<input type="hidden" id="addDiscountId" name="addDiscountId">
+							<!-- 可同时使用的优惠券json串 -->
+							<input type="hidden" id="addCanTogeDisid" name="addCanTogeDisid">
+							<!-- 指定门店(只能选择一个) -->
+							<!-- <input type="hidden" id="addLinkTeam" name="addLinkTeam"> -->
+							<!-- 指定商品json串 -->
+							<input type="hidden" id="addLinkPro" name="addLinkPro">
+							<div class="form-group text-center">
+								<!-- <button type="button" class="btn btn-info"
+									onclick="clickButtonOne()">指定门店</button> -->
+								<!-- <button type="button" class="btn btn-info"
+									onclick="clickButtonTwo()">指定商品</button> -->
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary"
+							onclick="submitAdd(this)">确定</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 修改模态框  -->
+		<div class="modal fade" id="editModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title">优惠券详情</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" role="form" name="editForm"
+							enctype="multipart/form-data" method="post">
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">优惠券组别<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<select id="editDiscountTeamId" name="editDiscountTeamId"
+										class="form-control"></select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">优惠券名称<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<input type="text" id="editDiscountName"
+										name="editDiscountName" class="form-control">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">优惠类型<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<select class="form-control" id="editDiscountType"
+										name="editDiscountType"
+										onchange="doSwitchDiscountType(this.value)">
+										<option value="">请选择</option>
+										<option value="1">满减</option>
+										<option value="2">每满减</option>
+										<option value="3">折扣</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">是否新人券<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<select class="form-control" id="editIsNew" name="editIsNew">
+										<option value="">请选择</option>
+										<option value="true">是</option>
+										<option value="fasle">否</option>
+									</select>
+								</div>
+							</div>
+
+							<!-- <div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">背景图：</label>
+								<div class="col-sm-9">
+									<input type="hidden" name="oldImg" id="oldImg"> <input
+										type="file" class="form-control" id="editImg" name="editImg">
+								</div>
+							</div> -->
+
+							<div class="form-group priceDiv">
+								<label for="lastname" class="col-sm-3 control-label">优惠金额<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<input type="text" id="editAmount" name="editAmount"
+										class="form-control" min="0"
+										onkeyup="this.value=this.value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')">
+								</div>
+							</div>
+
+							<div class="form-group discountDiv">
+								<label for="lastname" class="col-sm-3 control-label">折扣（请输入百分比）<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<input type="text" id="editDiscount" name="editDiscount"
+										class="form-control" min="0"
+										onkeyup="this.value=this.value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')">
+								</div>
+							</div>
+
+							<div class="form-group limitDiv">
+								<label for="lastname" class="col-sm-3 control-label">限制金额<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<input type="text" id="editLimitAmount" name="editLimitAmount"
+										class="form-control" min="0"
+										onkeyup="this.value=this.value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">有效期类型<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<select class="form-control" id="editTimeType"
+										name="editTimeType" onchange="doSwitchTimeType(this.value)">
+										<option value="">请选择</option>
+										<option value="1">时间</option>
+										<option value="2">天数</option>
+									</select>
+								</div>
+							</div>
+
+							<!-- 当有效期类型为天数时显示此div -->
+							<div class="form-group dayDiv">
+								<label class="col-sm-3 control-label"
+									style="text-align: right; margin-top: 5px">领取后**天内可用<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<div class="control-group">
+										<input type="text" id="editEndDay" name="editEndDay"
+											class="form-control" /> <br />
+									</div>
+								</div>
+							</div>
+
+							<!-- 当有效期类型为日期时显示此div -->
+							<div class="form-group dateDiv">
+								<label class="col-sm-3 control-label"
+									style="text-align: right; margin-top: 5px">有效期<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<div class="control-group">
+										<input type="text" id="editEndDate" name="editEndDate"
+											class="form-control datetimepickers" readonly="readonly" />
+										<br />
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label"
+									style="text-align: right; margin-top: 5px">领取截止时间<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<div class="control-group">
+										<input type="text" id="editTimeEndReceive"
+											name="editTimeEndReceive" class="form-control datetimepicker"
+											readonly="readonly" /> <br />
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">优惠券类型<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<select class="form-control" id="editDiscountSubType"
+										name="editDiscountSubType">
+										<option value="">请选择</option>
+										<option value="1">线上券</option>
+										<option value="2">线下券</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">是否可重复领取<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<select class="form-control" id="editCanOverUse"
+										name="editCanOverUse"
+										onchange="doSwitchCanOverType(this.value)">
+										<option value="">请选择</option>
+										<option value="true">可领取</option>
+										<option value="false">不可领取</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">是否可以收银折扣同享<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<select class="form-control" id="editCanDiscountUse"
+										name="editCanDiscountUse">
+										<option value="false" selected="selected">不可同享</option>
+										<option value="true">可同享</option>
+									</select>
+								</div>
+							</div>
+
+							<!-- <div class="form-group canOverUse">
+								<label for="lastname" class="col-sm-3 control-label">可叠加数量：</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" name="editCanOverNums"
+										id="editCanOverNums">
+								</div>
+							</div> -->
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">是否可同时使用<span
+									style="color: red;">*</span>：
+								</label>
+								<!--<div class="col-sm-9">
+									<select class="form-control" id="editCanTogeUse"
+										name="editCanTogeUse"
+										onchange="doSwitchCanTogeType(this.value)">
+										<option value="">请选择</option>
+										<option value="true" onclick="doSwitchCanTogeType('true')">可以</option>
+										<option value="false">不可以</option>
+									</select>
+								</div>-->
+								<div class="col-sm-9">
+									<select class="form-control" id="editCanTogeUse"
+										name="editCanTogeUse">
+										<option value="">请选择</option>
+										<option value="true">可以</option>
+										<option value="false">不可以</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">使用等级限制<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<select class="form-control" id="editLimitUserLevel"
+										name="editLimitUserLevel">
+										<option value="1">V1</option>
+										<option value="2">V2</option>
+										<option value="3">V3</option>
+										<option value="4">V4</option>
+										<option value="5">V5</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">指定门店：</label>
+								<div class="col-sm-9">
+									<select class="form-control" id="editLinkTeam"
+										name="editLinkTeam">
+									</select>
+								</div>
+							</div>
+
+							<!-- <div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">指定省：</label>
+								<div class="col-sm-9">
+									<select class="form-control" id="editLinkProvince"
+										name="editLinkProvince">
+									</select>
+								</div>
+							</div> -->
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">排序：</label>
+								<div class="col-sm-9">
+									<input type="text" id="editRank" name="editRank"
+										class="form-control" min="0" max="100"
+										oninput="this.value=this.value.replace(/[^\d]/g,'')"
+										placeholder="最小为0最大为100">
+								</div>
+							</div>
+
+							<div class="form-group text-center">
+								<!-- <button type="button" class="btn btn-info"
+									onclick="clickButtonOne()">指定门店</button> -->
+								<!-- <button type="button" class="btn btn-info"
+									onclick="clickButtonTwo()">指定商品</button> -->
+							</div>
+
+							<!-- id -->
+							<input type="hidden" id="editDiscountId" name="editDiscountId">
+							<!-- 可同时使用的优惠券json串 -->
+							<input type="hidden" id="editCanTogeDisid"
+								name="editCanTogeDisid">
+							<!-- 指定门店(只能选择一个) -->
+							<!-- <input type="hidden" id="editLinkTeam" name="editLinkTeam"> -->
+							<!-- 指定商品json串 -->
+							<input type="hidden" id="editLinkPro" name="editLinkPro">
+
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary"
+							onclick="submitEdit(this)" id="editButton">确定</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 可同时使用券选择框 -->
+		<div class="modal fade" id="selectDiscountModal"
+			data-backdrop="static" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog" style="width: 1000px;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">添加可同时使用券</h4>
+					</div>
+					<div style="margin-top: 2%;" id="serchDiscount">
+						<div class="row">
+							<label class="col-sm-1 control-label"
+								style="text-align: right; margin-top: 5px">商品编号：</label>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<input type="text" id="alertProductId" name="alertProductId"
+										class="form-control" /> <br />
+								</div>
+							</div>
+							<label class="col-sm-1 control-label"
+								style="text-align: right; margin-top: 5px">商品名称：</label>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<input type="text" id="alertProductName"
+										name="alertProductName" class="form-control" /> <br />
+								</div>
+							</div>
+
+							<label class="col-sm-1 control-label"
+								style="text-align: right; margin-top: 5px">商品erp编号：</label>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<input type="text" id="alertProductErpNo"
+										name="alertProductErpNo" class="form-control" /> <br />
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<label class="col-sm-1 control-label"
+								style="text-align: right; margin-top: 5px">子店编号：</label>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<input type="text" id="alertTeamId" name="alertTeamId"
+										class="form-control" /> <br />
+								</div>
+							</div>
+							<label class="col-sm-1 control-label"
+								style="text-align: right; margin-top: 5px">子店名称：</label>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<input type="text" id="alertTeamName" name="alertTeamName"
+										class="form-control" /> <br />
+								</div>
+							</div>
+
+							<label class="col-sm-1 control-label"
+								style="text-align: right; margin-top: 5px">子店erp编号：</label>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<input type="text" id="alertTeamErpno" name="alertTeamErpno"
+										class="form-control" /> <br />
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<label class="col-sm-1 control-label" style="text-align: right;">优惠券名称：</label>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<input type="text" id="alertDiscountName"
+										name="alertDiscountName" class="form-control" />
+								</div>
+							</div>
+							<label class="col-sm-1 control-label" style="text-align: right;">优惠券编号：</label>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<input type="text" id="alertDiscountId" name="alertDiscountId"
+										class="form-control" />
+								</div>
+							</div>
+
+							<div class="control-group">
+								<div>
+									<button onclick="cleanDis()" class="btn btn-danger" name="Name"
+										id="search_tel" value="清空"
+										style="float: right; margin-right: 2%;">清空</button>
+								</div>
+								<div>
+									<button onclick="searchDiscount()" class="btn btn-info"
+										name="Name" id="search_tel" value="查询"
+										style="float: right; margin-right: 2%;">查询</button>
+								</div>
+								<div id="addDiv">
+									<button onclick="addDiscountHidden()" class="btn btn-success"
+										style="float: right; margin-right: 2%;">添加</button>
+								</div>
+							</div>
+						</div>
+						<table id="discountTable" class="table table-hover"></table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<input type="hidden" id="thisDiscountId" name="thisDiscountId"
+			class="form-control" /> <input type="hidden" id="thisFatherShopId"
+			name="thisDiscountId" class="form-control" />
+
+		<!-- 关联门店选择框 -->
+		<div class="modal fade" id="selectShopModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" style="width: 1000px;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">关联门店</h4>
+					</div>
+					<div style="margin-top: 2%;" id="searchShop">
+						<div class="row">
+
+							<label class="col-sm-1 control-label"
+								style="text-align: right; margin-top: 5px">门店名称：</label>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<input type="text" id="teamName" name="teamName"
+										class="form-control" />
+								</div>
+							</div>
+
+							<label class="col-sm-1 control-label"
+								style="text-align: right; margin-top: 5px">门店erp编号：</label>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<input type="text" id="teamErpNo" name="teamErpNo"
+										class="form-control" />
+								</div>
+							</div>
+
+						</div>
+
+						<div class="row">
+
+							<label class="col-sm-1 control-label"
+								style="text-align: right; margin-top: 5px">是否已选中：</label>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<select class="form-control" id="linkType" name="linkType">
+										<option value="" selected="selected">全部</option>
+										<option value="0">已选中</option>
+										<option value="1">未选中</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="control-group">
+
+								<div>
+									<button onclick="cleanShop()" class="btn btn-danger"
+										name="Name" id="search_tel" value="清空"
+										style="float: right; margin-right: 2%;">清空</button>
+								</div>
+								<div>
+									<button onclick="searchShop()" class="btn btn-info" name="Name"
+										id="search_tel" value="查询"
+										style="float: right; margin-right: 2%;">查询</button>
+								</div>
+
+							</div>
+						</div>
+						<table id="shopListTable" class="table table-hover"></table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 关联商品选择框 -->
+		<div class="modal fade" id="selectGoodsModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" style="width: 1000px;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">关联商品</h4>
+					</div>
+					<div style="margin-top: 2%;" id="searchGoods">
+						<div class="row">
+							<label class="col-sm-1 control-label"
+								style="text-align: right; margin-top: 5px">商品名称：</label>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<input type="text" id="productName" name="alertGoodsName"
+										class="form-control" />
+								</div>
+							</div>
+
+							<label class="col-sm-1 control-label"
+								style="text-align: right; margin-top: 5px">商品编号：</label>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<input type="text" id="productId" name="alertGoodsId"
+										class="form-control" />
+								</div>
+							</div>
+
+							<label class="col-sm-1 control-label"
+								style="text-align: right; margin-top: 5px">商品erp编号：</label>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<input type="text" id="goodErpNo" name="alertGoodErpNo"
+										class="form-control" />
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+
+							<label class="col-sm-1 control-label"
+								style="text-align: right; margin-top: 5px">商品条形码：</label>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<input type="text" id="barCode" name="alertGoodBarCode"
+										class="form-control" />
+								</div>
+							</div>
+
+							<label class="col-sm-1 control-label"
+								style="text-align: right; margin-top: 5px">商品所属门店：</label>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<select class="form-control" id="goodFromTeam"
+										name="goodFromTeam">
+									</select>
+								</div>
+							</div>
+							<label class="col-sm-1 control-label"
+								style="text-align: right; margin-top: 5px">是否已选中：</label>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<select class="form-control" id="hasChoose" name="hasChoose">
+										<option value="" selected="selected">全部</option>
+										<option value="0">已选中</option>
+										<option value="1">未选中</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<button id="search_btn" type="button" class="btn btn-info"
+										onclick="searchGoods()">查询</button>
+									<button id="btn_edit" type="button" class="btn btn-danger"
+										style="margin-left: 3px;" onclick="cleanGoods()">清空</button>
+								</div>
+							</div>
+						</div>
+						<table id="goodsListTable" class="table table-hover"></table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 关联省选择框 -->
+		<div class="modal fade" id="selectProvinceModal"
+			data-backdrop="static" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog" style="width: 1000px;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">关联省</h4>
+					</div>
+					<div style="margin-top: 2%;" id="searchProvince">
+						<div class="row">
+
+							<label class="col-sm-1 control-label"
+								style="text-align: right; margin-top: 5px">省名称：</label>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<input type="text" id="cityName" name="cityName"
+										class="form-control" />
+								</div>
+							</div>
+
+							<label class="col-sm-1 control-label"
+								style="text-align: right; margin-top: 5px">是否已选中：</label>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<select class="form-control" id="linkType" name="linkType">
+										<option value="" selected="selected">全部</option>
+										<option value="0">已选中</option>
+										<option value="1">未选中</option>
+									</select>
+								</div>
+							</div>
+
+						</div>
+
+						<div class="row">
+							<div class="control-group">
+
+								<div>
+									<button onclick="cleanProvince()" class="btn btn-danger"
+										name="Name" id="search_tel" value="清空"
+										style="float: right; margin-right: 2%;">清空</button>
+								</div>
+								<div>
+									<button onclick="searchProvince()" class="btn btn-info"
+										name="Name" id="search_tel" value="查询"
+										style="float: right; margin-right: 2%;">查询</button>
+								</div>
+
+							</div>
+						</div>
+						<table id="provinceListTable" class="table table-hover"></table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 优惠券领取详情  -->
+		<div class="modal fade" id="discountForUserModal"
+			data-backdrop="static" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog" style="width: 1000px;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">优惠券领取详情</h4>
+					</div>
+					<div style="margin-top: 2%;" id="searchDiscountForUser">
+						<div class="row">
+
+							<label class="col-sm-1 control-label"
+								style="text-align: right; margin-top: 5px">领取日期（开始）：</label>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<input type="text" id="startDate" name="startDate"
+										class="form-control datetimepickers" readonly="readonly" /> <br />
+								</div>
+							</div>
+							<label class="col-sm-1 control-label"
+								style="text-align: right; margin-top: 5px">领取日期（截止）：</label>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<input type="text" id="endDate" name="endDate"
+										class="form-control datetimepickers" readonly="readonly" /> <br />
+								</div>
+							</div>
+
+						</div>
+
+						<div class="row">
+							<label class="col-sm-1 control-label"
+								style="text-align: right; margin-top: 5px">是否使用：</label>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<select class="form-control" id="useType" name="useType">
+										<option value="" selected="selected">全部</option>
+										<option value="0">是</option>
+										<option value="1">否</option>
+									</select>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="row">
+
+							<div class="control-group">
+								<div>
+									<button onclick="cleanDiscountForUser()" class="btn btn-danger"
+										name="Name" id="search_tel" value="清空"
+										style="float: right; margin-right: 2%;">清空</button>
+								</div>
+								<div>
+									<button onclick="searchDiscountForUser()" class="btn btn-info"
+										name="Name" id="search_tel" value="查询"
+										style="float: right; margin-right: 2%;">查询</button>
+								</div>
+							</div>
+
+						</div>
+
+						<table id="discountForUserTable" class="table table-hover"></table>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- 查看图片模块 -->
+		<div class="modal fade" id="imgbig" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">查看图片</h4>
+					</div>
+					<div class="modal-body">
+						<img alt="" src="" id="bigbis" style="width: 100%; height: 100%;" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		getAllProvince();
+	})
+	
+	$('#linkProvince').change(function(){
+　　　　　　var chooseProvinceName=$(this).children('option:selected').val();
+			getAllCity(chooseProvinceName)
+　　})  
+</script>
+
+<script type="text/javascript">
+	//显示添加框
+	function showAddModal(id, type) {
+		$("#myModal input").val("");
+		$("#myModal select").val("");
+		
+		//给优惠券组下拉框赋值
+		$("#addDiscountTeamId").empty();
+		jQuery.ajax({
+			url : "queryDiscountTeamList.do",
+			type : 'post',
+			success : function(data) {
+				for (var i = 0; i < data.length; i++) {
+					$("#addDiscountTeamId").append(
+							'<option value="'+data[i].discountTeamId+'">'
+									+ data[i].discountTitle + '</option>')
+				}
+				;
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+		//给店铺列表下拉框赋值
+		$("#addLinkTeam").empty();
+		jQuery.ajax({
+			url : "queryTeamList.do",
+			type : 'post',
+			success : function(data) {
+				//$("#addLinkTeam").append("<option value='''>全平台通用</option>")
+				for (var i = 0; i < data.length; i++) {
+					$("#addLinkTeam").append(
+							'<option value="'+data[i].teamId+'">'
+									+ data[i].teamName + '</option>')
+				}
+				;
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+		
+		$("#" + id).modal(type);
+		$('.dayDiv').css("display", "none");
+		$('.dateDiv').css("display", "none");
+		$('.canOverUse').css("display", "none");
+		$('.priceDiv').css("display", "none");
+		$('.discountDiv').css("display", "none");
+		
+		$("#thisDiscountId").val('');
+		
+		$("#thisModel").val("add");
+	}
+
+	//提交添加表单
+	function submitAdd(ele) {
+		$("form[name='addForm']").ajaxSubmit(
+				{
+					type : "post",
+					url : "addDiscount.do",
+					dataType : "json",
+					beforeSubmit : function() {
+						//表单数据校验
+						if ($("#addDiscountTeamId").val() == null
+								|| $("#addDiscountTeamId").val() == "") {
+							alert("优惠券组别不能为空");
+							return false;
+						}
+						if ($("#addDiscountName").val() == null
+								|| $("#addDiscountName").val() == "") {
+							alert("优惠券名称不能为空");
+							return false;
+						}
+						if ($("#addDiscountType").val() == null
+								|| $("#addDiscountType").val() == "") {
+							alert("请选择优惠类型");
+							return false;
+						}
+						if ($("#addDiscountType").val() == "1"
+								|| $("#addDiscountType").val() == "2") {
+							if ($("#addAmount").val() == null
+									|| $("#addAmount").val() == "") {
+								alert("请输入优惠券金额");
+								return false;
+							}
+							if ($("#addLimitAmount").val() == null
+									|| $("#addLimitAmount").val() == "") {
+								alert("请输入优惠券门槛金额");
+								return false;
+							}
+						} else if ($("#addDiscountType").val() == "3") {
+							if ($("#addDiscount").val() == null
+									|| $("#addDiscount").val() == "") {
+								alert("请输入折扣");
+								return false;
+							}
+						}
+						if ($("#addTimeType").val() == null
+								|| $("#addTimeType").val() == "") {
+							alert("有效期类型不能为空");
+							return false;
+						}
+						if ($("#addTimeType").val() == "1") {
+							if ($("#addEndDate").val() == null
+									|| $("#addEndDate").val() == "") {
+								alert("请输入有效期天数");
+								return false;
+							}
+						} else if ($("#addTimeType").val() == "2") {
+							if ($("#addEndDay").val() == null
+									|| $("#addEndDay").val() == "") {
+								alert("请选择有效期");
+								return false;
+							}
+						}
+						if ($("#addTimeEndReceive").val() == null
+								|| $("#addTimeEndReceive").val() == "") {
+							alert("领取截止时间不能为空");
+							return false;
+						}
+						if ($("#addDiscountSubType").val() == null
+								|| $("#addDiscountSubType").val() == "") {
+							alert("请选择优惠券类型");
+							return false;
+						}
+						if ($("#addCanOverUse").val() == null
+								|| $("#addCanOverUse").val() == "") {
+							alert("请选择是否可重复领取");
+							return false;
+						}
+						/*if ($("#addCanOverUse").val() == "true") {
+							if ($("#addCanOverNums").val() == null
+									|| $("#addCanOverNums").val() == "") {
+								alert("请输入可叠加数量");
+								return false;
+							}
+						}*/
+						if ($("#addCanTogeUse").val() == null
+								|| $("#addCanTogeUse").val() == "") {
+							alert("请选择是否可同时使用");
+							return false;
+						}
+						if ($("#addCanTogeUse").val() == "true") {
+							/* if ($("#addCanTogeDisid").val() == null
+									|| $("#addCanTogeDisid").val() == "") {
+								alert("请选择可同时使用的优惠券");
+								return false;
+							} */
+						}
+						if ($("#addRank").val() == null
+								|| $("#addRank").val() == "") {
+							alert("请输入排序值");
+							return false;
+						}
+						$(ele).attr("disabled",true);
+					},
+					success : function(data) {
+						$(ele).attr("disabled",false);
+						if (!data.success) {
+							alert(data.message);
+							return false;
+						} else {
+							alert(data.message);
+							showAddModal('myModal', 'hide');
+							$("#mytab").bootstrapTable('refresh');
+						}
+
+					},
+					error : function(e) {
+						alert("异常!");
+					}
+
+				});
+	}
+
+	//显示修改框     
+	function showUpdateModal(index,type) {
+		$("#editDiscountTeamId").empty();
+		jQuery.ajax({
+			url : "queryDiscountTeamList.do",
+			type : 'post',
+			success : function(data) {
+				for (var i = 0; i < data.length; i++) {
+					if (all[index].discountTeamId == data[i].discountTeamId) {
+						$("#editDiscountTeamId").append(
+								'<option value="'+data[i].discountTeamId+'" selected="selected">'
+										+ data[i].discountTitle + '</option>')
+					} else {
+						$("#editDiscountTeamId").append(
+								'<option value="'+data[i].discountTeamId+'">'
+										+ data[i].discountTitle + '</option>')
+					}
+				}
+				;
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+		//给店铺列表下拉框赋值
+		$("#editLinkTeam").empty();
+		jQuery.ajax({
+			url : "queryTeamList.do",
+			type : 'post',
+			success : function(data) {
+				$("#editLinkTeam").append("<option value='''>全平台通用</option>")
+				for (var i = 0; i < data.length; i++) {
+					if (all[index].linkTeam == data[i].teamId) {
+						$("#editLinkTeam").append(
+								'<option value="'+data[i].teamId+'" selected="selected">'
+										+ data[i].teamName + '</option>')
+					} else {
+						$("#editLinkTeam").append(
+								'<option value="'+data[i].teamId+'">'
+										+ data[i].teamName + '</option>')
+					}
+				}
+				;
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+		$("#editLinkProvince").val(all[index].linkProvince);
+		$("#editDiscountTeamId").val(all[index].discountTeamId);
+		$("#editDiscountId").val(all[index].discountId);
+		$("#editDiscountName").val(all[index].discountName);
+		$("#editDiscountType").val(all[index].discountType);
+		$("#oldImg").val(all[index].discountBackground);
+		$("#editLimitAmount").val(all[index].limitAmount.amount);
+		$("#editAmount").val(all[index].amount.amount);
+		$("#editDiscount").val(all[index].discount*100);
+		$("#editTimeType").val(all[index].timeType);
+		$("#editEndDay").val(all[index].timeEnd);
+		$("#editEndDate").val(formatNoTime(all[index].timeEnd));
+		$("#editTimeEndReceive").val(format(all[index].timeEndReceive));
+		$("#editDiscountSubType").val(all[index].discountSubType);
+		$("#editCanOverUse").val(all[index].canOverUse);
+		$("#editCanDiscountUse").val(all[index].canDiscountUse);
+		$("#editCanOverNums").val(all[index].canOverNums);
+		$("#editCanTogeUse").val(all[index].canTogeUse);
+		$("#editLimitUserLevel").val(all[index].limitUserLevel);
+		$("#editRank").val(all[index].rank);
+		$("#editCanTogeDisid").val(all[index].canTogeDisid);
+		$("#editLinkTeam").val(all[index].linkTeam);
+		$("#editLinkPro").val(all[index].linkPro);
+		
+		$("#thisDiscountId").val(all[index].discountId);
+		
+		var delFlg = all[index].delFlg;
+		if(delFlg == '2'){
+			$("#editIsNew").val("true");
+		}else{
+			$("#editIsNew").val("fasle");
+		}
+			
+		$("#thisModel").val("modify");
+		//控制部分元素的显示或隐藏
+		doSwitchDiscountType(all[index].discountType);
+		doSwitchTimeType(all[index].timeType);
+		doSwitchCanOverType(all[index].canOverUse);
+		doSwitchCanTogeType(all[index].canTogeUse,"1");
+		
+		if(type == '0'){
+			$("#editButton").show();
+		}
+		if(type == '1'){
+			$("#editButton").hide();
+		}
+		
+		$("#editModal").modal('show');
+	}
+
+	//提交修改表单
+	function submitEdit(ele) {
+		$("form[name='editForm']").ajaxSubmit(
+				{
+					type : "post",
+					url : "updateDiscount.do",
+					dataType : "json",
+					beforeSubmit : function() {
+						//表单数据校验
+						if ($("#editDiscountTeamId").val() == null
+								|| $("#editDiscountTeamId").val() == "") {
+							alert("优惠券组别不能为空");
+							return false;
+						}
+						if ($("#editDiscountName").val() == null
+								|| $("#editDiscountName").val() == "") {
+							alert("优惠券名称不能为空");
+							return false;
+						}
+						if ($("#editDiscountType").val() == null
+								|| $("#editDiscountType").val() == "") {
+							alert("请选择优惠类型");
+							return false;
+						}
+						if ($("#editDiscountType").val() == "1"
+								|| $("#editDiscountType").val() == "2") {
+							if ($("#editAmount").val() == null
+									|| $("#editAmount").val() == "") {
+								alert("请输入优惠券金额");
+								return false;
+							}
+							if ($("#editLimitAmount").val() == null
+									|| $("#editLimitAmount").val() == "") {
+								alert("请输入优惠券门槛金额");
+								return false;
+							}
+						} else if ($("#editDiscountType").val() == "3") {
+							if ($("#editDiscount").val() == null
+									|| $("#editDiscount").val() == "") {
+								alert("请输入折扣");
+								return false;
+							}
+						}
+						if ($("#editTimeType").val() == null
+								|| $("#editTimeType").val() == "") {
+							alert("有效期类型不能为空");
+							return false;
+						}
+						if ($("#editTimeType").val() == "1") {
+							if ($("#editEndDate").val() == null
+									|| $("#editEndDate").val() == "") {
+								alert("请输入有效期天数");
+								return false;
+							}
+						} else if ($("#editTimeType").val() == "2") {
+							if ($("#editEndDay").val() == null
+									|| $("#editEndDay").val() == "") {
+								alert("请选择有效期");
+								return false;
+							}
+						}
+						if ($("#editTimeEndReceive").val() == null
+								|| $("#editTimeEndReceive").val() == "") {
+							alert("领取截止时间不能为空");
+							return false;
+						}
+						if ($("#editDiscountSubType").val() == null
+								|| $("#editDiscountSubType").val() == "") {
+							alert("请选择优惠券类型");
+							return false;
+						}
+						if ($("#editCanOverUse").val() == null
+								|| $("#editCanOverUse").val() == "") {
+							alert("请选择是否可重复领取");
+							return false;
+						}
+						/*if ($("#editCanOverUse").val() == "true") {
+							if ($("#editCanOverNums").val() == null
+									|| $("#editCanOverNums").val() == "") {
+								alert("请输入可叠加数量");
+								return false;
+							}
+						}*/
+						if ($("#editCanTogeUse").val() == null
+								|| $("#editCanTogeUse").val() == "") {
+							alert("请选择是否可同时使用");
+							return false;
+						}
+						if ($("#editCanTogeUse").val() == "true") {
+							/* if ($("#editCanTogeDisid").val() == null
+									|| $("#editCanTogeDisid").val() == "") {
+								alert("请选择可同时使用的优惠券");
+								return false;
+							} */
+						}
+						if ($("#editRank").val() == null
+								|| $("#editRank").val() == "") {
+							alert("请输入排序值");
+							return false;
+						}
+						$(ele).attr("disabled",true);
+					},
+					success : function(data) {
+						$(ele).attr("disabled",false);
+						if (!data.success) {
+							alert(data.message);
+							return false;
+						} else {
+							alert(data.message);
+							$("#editModal").modal('hide');
+							$("#mytab").bootstrapTable('refresh');
+						}
+
+					},
+					error : function(e) {
+						alert("异常!");
+					}
+
+				});
+	}
+
+	//清除弹出框数据
+	function cleanAlertModal() {
+		$("#myModal input").val("");
+		$("#myModal select").val("");
+		$("#editModal input").val("");
+		$("#editModal select").val("");
+	}
+
+	//删除操作
+	function doDelete(value) {
+		if (confirm("确认删除？删除后不可修改！")) {
+			jQuery.ajax({
+				url : "deleteDiscount.do",
+				type : 'post',
+				data : {
+					"discountId" : value
+				},
+				dataType : 'json',
+				success : function(data) {
+					if (!data.success) {
+						alert(data.message);
+						return false;
+					} else {
+						alert(data.message);
+						$("#mytab").bootstrapTable('refresh');
+					}
+				},
+				error : function() {
+					alert("异常！");
+				}
+			});
+		}
+	}
+	
+	bootsearch()
+	function sorce() {
+		$("#mytab").bootstrapTable('destroy');
+		//生成用户数据
+		bootsearch();
+	}
+
+	var all;
+	function bootsearch() {
+	//生成列表数据
+	$('#mytab')
+			.bootstrapTable(
+					{
+						method : 'post',
+						contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+						url : "selectDiscount.do",//要请求数据的文件路径
+						dataType : 'json',
+						striped : true, //是否显示行间隔色
+						pageNumber : 1, //初始化加载第一页，默认第一页
+						pageSize : 10,//单页记录数
+						pageList : [ 5, 10, 20, 30 ],//分页步进值
+						pagination : true,//是否分页
+						queryParamsType : 'limit',//查询参数组织方式
+						sidePagination : 'server',//指定服务器端分页
+						queryParams : function(p) {
+							return params(p);
+						},
+						clickToSelect : false,//是否启用点击选中行
+						toolbarAlign : 'right',//工具栏对齐方式
+						buttonsAlign : 'right',//按钮对齐方式
+						toolbar : '#toolbar',//指定工作栏
+						columns : [
+								{
+									title : '操作',
+									field : 'discountId',//删除操作时使用
+									formatter : function(value, row, index) {
+										var addhtml = "";
+										
+										if(row.publishFlg == '0'){
+											 addhtml+="<a href='#' onclick=showUpdateModal('"
+													+ index
+													+ "','0')>修改 | </a>";
+										}
+										if(row.publishFlg == '1'){
+											 addhtml+="<a href='#' onclick=showUpdateModal('"
+													+ index
+													+ "','1')>详情 | </a>";
+										}
+										
+										addhtml+="<a href='#' onclick=clickButtonOne('"
+													+ value
+													+ "')>指定门店 | </a>"
+													+ "<a href='#' onclick=clickButtonTwo('"
+													+ index
+													+ "')>指定商品 | </a>"
+													+ "<a href='#' onclick=doDelete('"
+													+ value + "')>删除</a>";
+										
+										if(row.discountSubType == '2'){		
+											addhtml+="| </a>"
+												+ "<a href='#' onclick=clickButtonTeamC('"
+												+ index + "')>指定子店</a>";
+										}
+													
+										if(row.canTogeUse == 'true'){
+											 addhtml+="| </a>"
+													+ "<a href='#' onclick=showCanTogetherDiscount('"
+													+ index + "')>同时使用优惠券</a>";
+										}
+										
+										addhtml+="| </a>"
+											+ "<a href='#' onclick=clickButtonTeamD('"
+											+ index + "')>指定省市</a>";
+										
+										if(row.publishFlg == '0'){
+											 addhtml+="| </a>"
+													+ "<a href='#' onclick=modifyPublish('"
+													+ value + "','1')>确认发布</a>";
+										}
+										
+										if(row.publishFlg == '1'){
+											 addhtml+="| </a>"
+													+ "<a href='#' onclick=modifyPublish('"
+													+ value + "','0')>取消发布</a>";
+										}
+										
+										addhtml+="| </a>"
+											+ "<a href='#' onclick=getDiscountForUser('"
+											+ index + "')>领券详情</a>";
+											
+										return addhtml;
+									}
+								},
+								{
+									title : '编号',
+									field : 'discountId'
+								},
+								{
+									title : '优惠券组编号',
+									field : 'discountTeamId'
+								},
+								{
+									title : '名称',
+									field : 'discountName'
+								},{
+									title : '类型',
+									field : 'discountType',
+									formatter : function(value, row, index) {
+										if (value == "1") {
+											return "满减";
+										}
+										if (value == "2") {
+											return "每满减";
+										}
+										if (value == "3") {
+											return "折扣";
+										}
+									}
+								}, {
+									title : '优惠券金额',
+									field : 'amount',
+									formatter : function(value) {
+										return value.amount
+									}
+								}, {
+									title : '限制金额',
+									field : 'limitAmount',
+									formatter : function(value) {
+										return value.amount
+									}
+								}, {
+									title : '折扣（百分比）',
+									field : 'discount',
+									formatter : function(value, row, index) {
+										if (row.discountType == 3) {
+											return value*100
+										} else {
+											return "-"
+										}
+									}
+								}, {
+									title : '有效期类型',
+									field : 'timeType',
+									formatter : function(value, row, index) {
+										if (value == 1) {
+											return "时间"
+										} else {
+											return "天数"
+										}
+									}
+								}, {
+									title : '有效期/领取后**天内可用',
+									field : 'timeEnd',
+									formatter : function(value, row, index) {
+										if (row.timeType == 1) {
+											return value
+										} else {
+											return value + "天"
+										}
+									}
+								}, {
+									title : '领取截止时间',
+									field : 'timeEndReceive',
+									formatter : function(value, row, index) {
+										return format(value)
+									}
+								}, {
+									title : '优惠券类型',
+									field : 'discountSubType',
+									formatter : function(value, row, index) {
+										if (value == 1) {
+											return "线上券"
+										} else {
+											return "线下券"
+										}
+									}
+								},  {
+									title : '是否指定门店',
+									field : 'chooseTeamBoolean',
+									formatter : function(value, row, index) {
+										if (value) {
+											return "是"
+										} else {
+											return "否"
+										}
+									}
+								},  {
+									title : '是否指定商品',
+									field : 'chooseProBoolean',
+									formatter : function(value, row, index) {
+										if (value) {
+											return "是"
+										} else {
+											return "否"
+										}
+									}
+								}, {
+									title : '是否可重复领取',
+									field : 'canOverUse',
+									formatter : function(value, row, index) {
+										if (value == "true") {
+											return "可领取"
+										} else {
+											return "不可领取"
+										}
+									}
+								}, {
+									title : '是否可以收银折扣同享',
+									field : 'canDiscountUse',
+									formatter : function(value, row, index) {
+										if (value == "true") {
+											return "可同享"
+										} else {
+											return "不可同享"
+										}
+									}
+								}, {
+									title : '是否可同时使用',
+									field : 'canTogeUse',
+									formatter : function(value, row, index) {
+										if (value == "true") {
+											return "可以"
+										} else {
+											return "不可以"
+										}
+									}
+								}, {
+									title : '限制使用等级',
+									field : 'limitUserLevel',
+									formatter : function(value, row, index) {
+										return "需大于等于" + value
+									}
+								},
+								/* {
+									title : '叠加数',
+									field : 'canOverNums',
+									formatter : function(value, row, index) {
+										if(row.canOverUse == "true"){
+											return value
+										} else {
+											return "-"
+										}
+									}
+								}, */
+								{
+									title : '是否新人券',
+									field : 'delFlg',
+									formatter : function(value, row, index) {
+										if (value == 2) {
+											return "是"
+										} else {
+											return "否"
+										}
+									}
+								}, 
+								{
+									title : '创建者',
+									field : 'creater'
+								},
+								{
+									title : '创建时间',
+									field : 'gmtCreate',
+									formatter : function(value, row, index) {
+										return format(value)
+									}
+								},
+								{
+									title : '修改者',
+									field : 'modifier'
+								},
+								{
+									title : '修改时间',
+									field : 'gmtModified',
+									formatter : function(value, row, index) {
+										return format(value)
+									}
+								}],
+						locale : 'zh-CN',//中文支持,
+						responseHandler : function(res) {
+							//在ajax获取到数据，渲染表格之前，修改数据源
+							all = res.rows;
+							return res;
+						}
+					})
+	}
+
+	//显示放大图片
+	function imgbig(url) {
+		$('#imgbig').modal('show');
+		$("#bigbis").attr('src', url);
+	}
+	//bootstrap时间控件的一些设置
+	$('.datetimepicker').datetimepicker({
+		//minView : "month",//设置只显示到月份
+		format : 'yyyy-mm-dd hh:ii:ss',//文本框显示格式
+		language : 'zh-CN',//汉化
+		minView : 0, //0表示可以选择小时、分钟   1只可以选择小时
+		minuteStep : 1,//分钟间隔1分钟
+		autoclose : true,//选中关闭
+		todayBtn : true //今日按钮
+	})
+	//bootstrap时间控件的一些设置
+	$('.datetimepickers').datetimepicker({
+		minView : "month",//设置只显示到月份
+		format : 'yyyy-mm-dd',//文本框显示格式
+		language : 'zh-CN',//汉化
+		autoclose : true,//选中关闭
+		todayBtn : true //今日按钮
+	})
+
+	//获取搜索的所有值
+	function params(params) {
+		$("#a input[type='text']").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		$("#a select").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		return params;
+	}
+
+	//清空搜索条件
+	function clean() {
+		$("#a input").val("");
+		$("#a select").val("");
+	}
+
+	//根据优惠方式去动态显示调整
+	function doSwitchDiscountType(value) {
+		//priceDiv     金额
+		//discountDiv  折扣
+		//limitDiv     限制
+		if (value == 1 || value == 2) {
+			$('.priceDiv').css("display", "block");
+			$('.limitDiv').css("display", "block");
+			$('.discountDiv').css("display", "none");
+		} else if (value == 3) {
+			$('.priceDiv').css("display", "none");
+			$('.limitDiv').css("display", "block");
+			$('.discountDiv').css("display", "block");
+		} else {
+			$('.priceDiv').css("display", "none");
+			$('.limitDiv').css("display", "none");
+			$('.discountDiv').css("display", "none");
+		}
+	}
+
+	//根据有效期类型动态调节div
+	function doSwitchTimeType(value) {
+		if (value == 2) {
+			$('#addEndDay').val("");
+			$('#datetimepicker').val("");
+			$('.dayDiv').css("display", "block");
+			$('.dateDiv').css("display", "none");
+		} else if (value == 1) {
+			$('#addEndDay').val("");
+			$('#addEndDate').val("");
+			$('.dayDiv').css("display", "none");
+			$('.dateDiv').css("display", "block");
+		} else {
+			$('.dayDiv').css("display", "none");
+			$('.dateDiv').css("display", "none");
+		}
+	}
+	//根据是否能叠加使用来动态调节
+	function doSwitchCanOverType(value) {
+		if (value == "true") {
+			$("#addCanOverNums").val("");
+			$('.canOverUse').css("display", "block");
+		} else {
+			$("#addCanOverNums").val("");
+			$('.canOverUse').css("display", "none");
+		}
+	}
+	/*   ******00选择优惠券开始******    */
+	function showCanTogetherDiscount(index){
+		$("#thisDiscountId").val(all[index].discountId);
+		$("#editDiscountId").val(all[index].discountId);
+		$("#editDiscountType").val(all[index].discountType);
+		$("#thisModel").val("modify");
+		
+		doSwitchCanTogeType("true","justShow");
+	}
+	
+	//根据是否能同时使用来动态调节
+	function doSwitchCanTogeType(value,type) {
+		$("#serchDiscount input").val("");
+		//先销毁表格  后面再重新生成
+		$("#shopListTable").bootstrapTable('destroy');
+		if (value == "true") {
+			$("#discountTable").bootstrapTable('destroy');
+			askDiscountList();
+			if(type == "justShow"){
+				$("#addDiv").hide();
+			}else{
+				$("#addDiv").show();
+			}
+			if(type != '1'){
+				$("#selectDiscountModal").modal("show");
+			}
+		} else if (value == "false") {
+
+		}
+	}
+
+	//选择优惠券查询函数
+	function searchDiscount() {
+		$('#discountTable').bootstrapTable("selectPage", 1);
+	}
+
+	//清除搜索
+	function cleanDis() {
+		$("#serchDiscount input").val("");
+	}
+
+	function askDiscountList() {
+		var all2;
+		$('#discountTable').bootstrapTable({
+			method : 'post',
+			contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+			url : "findDiscountList.do",//请求查询所有可同时使用的优惠券
+			dataType : 'json',
+			striped : true, //是否显示行间隔色
+			pageNumber : 1, //初始化加载第一页，默认第一页
+			pageSize : 10,//单页记录数
+			pageList : [ 10, 20, 30 ],//分页步进值
+			pagination : true,//是否分页
+			queryParamsType : 'limit',//查询参数组织方式
+			sidePagination : 'server',//指定服务器端分页
+			queryParams : function(p) {
+				return paramsForAlertDiscountTable(p);
+			},
+			clickToSelect : false,//是否启用点击选中行
+			toolbarAlign : 'right',//工具栏对齐方式
+			buttonsAlign : 'right',//按钮对齐方式
+			toolbar : '#toolbar',//指定工作栏
+			checkboxHeader:false,
+			//点击每一个单选框时触发的操作         
+			onCheck:function(row){ 
+				setLinkDiscount(row);
+	        },
+			//取消每一个单选框时对应的操作；        
+			onUncheck:function(row){ 
+				unsetLinkDiscount(row);
+	        },
+			columns : [ {
+				field : "id",
+				checkbox : true,
+				//直接绑定js函数 
+				formatter : stateFormatter
+			}, {
+				title : '名称',
+				field : 'discountName'
+			},{
+				title : '类型',
+				field : 'discountType',
+				formatter : function(value, row, index) {
+					if (value == "1") {
+						return "满减";
+					}
+					if (value == "2") {
+						return "每满减";
+					}
+					if (value == "3") {
+						return "折扣";
+					}
+				}
+			}, {
+				title : '优惠券金额',
+				field : 'amount',
+				formatter : function(value) {
+					return value.amount
+				}
+			}, {
+				title : '限制金额',
+				field : 'limitAmount',
+				formatter : function(value) {
+					return value.amount
+				}
+			}, {
+				title : '折扣（百分比）',
+				field : 'discount',
+				formatter : function(value, row, index) {
+					if (row.discountType == 3) {
+						return value*100
+					} else {
+						return "-"
+					}
+				}
+			}, {
+				title : '有效期类型',
+				field : 'timeType',
+				formatter : function(value, row, index) {
+					if (value == 1) {
+						return "时间"
+					} else {
+						return "天数"
+					}
+				}
+			}, {
+				title : '有效期/领取后**天内可用',
+				field : 'timeEnd',
+				formatter : function(value, row, index) {
+					if (row.timeType == 1) {
+						return value
+					} else {
+						return value + "天"
+					}
+				}
+			}, {
+				title : '领取截止时间',
+				field : 'timeEndReceive',
+				formatter : function(value, row, index) {
+					return format(value)
+				}
+			}, {
+				title : '优惠券类型',
+				field : 'discountSubType',
+				formatter : function(value, row, index) {
+					if (value == 1) {
+						return "线上券"
+					} else {
+						return "线下券"
+					}
+				}
+			}, {
+				title : '是否可重复领取',
+				field : 'canOverUse',
+				formatter : function(value, row, index) {
+					if (value == "true") {
+						return "可领取"
+					} else {
+						return "不可领取"
+					}
+				}
+			}, {
+				title : '是否可同时使用',
+				field : 'canTogeUse',
+				formatter : function(value, row, index) {
+					if (value == "true") {
+						return "可以"
+					} else {
+						return "不可以"
+					}
+				}
+			}, {
+				title : '限制使用等级',
+				field : 'limitUserLevel',
+				formatter : function(value, row, index) {
+					return "需大于等于" + value
+				}
+			},
+			{
+				title : '是否新人券',
+				field : 'delFlg',
+				formatter : function(value, row, index) {
+					if (value == 2) {
+						return "是"
+					} else {
+						return "否"
+					}
+				}
+			}, {
+				title : '是否指定门店',
+				field : 'chooseTeamBoolean',
+				formatter : function(value, row, index) {
+					if (value) {
+						return "是"
+					} else {
+						return "否"
+					}
+				}
+			},  {
+				title : '是否指定商品',
+				field : 'chooseProBoolean',
+				formatter : function(value, row, index) {
+					if (value) {
+						return "是"
+					} else {
+						return "否"
+					}
+				}
+			}, {
+				title : '创建者',
+				field : 'creater'
+			},
+			{
+				title : '创建时间',
+				field : 'gmtCreate',
+				formatter : function(value, row, index) {
+					return format(value)
+				}
+			},
+			{
+				title : '修改者',
+				field : 'modifier'
+			},{
+				title : '修改时间',
+				field : 'gmtModified',
+				formatter : function(value, row, index) {
+					return format(value)
+				}
+			},{
+				title : '优惠券编号',
+				field : 'discountId'
+			}],
+			locale : 'zh-CN',//中文支持,
+			responseHandler : function(res) {
+				//在ajax获取到数据，渲染表格之前，修改数据源
+				all2 = res.rows;
+				return res;
+			}
+		})
+	}
+
+	function stateFormatter(value, row, index) {
+		if (row.choose == '-1') {
+			return {
+				disabled : false,//设置是否可用 
+				checked : true //设置选中 
+			};
+		}else{
+			return {
+				disabled : false,//设置是否可用 
+				checked : false //设置不选中 
+			};
+		}
+	}
+
+	function paramsForAlertDiscountTable(params) {
+		$("#serchDiscount input[type='text']").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		//当前修改位置
+		var thisModel = $("#thisModel").val();
+		if (thisModel == 'modify') {
+			params["thisDiscounId"] = $("#editDiscountId").val();
+			params["discountType"] = $("#editDiscountType").val();
+		} else if (thisModel == 'add') {
+			params["thisDiscounId"] = $("#addDiscountId").val();
+			params["discountType"] = $("#addDiscountType").val();
+		}
+		return params;
+	}
+
+	//执行添加之后将数据写入隐藏域中
+	function addDiscountHidden() {
+		//使用getSelections即可获得，row是json格式的数据
+		var row = $('#discountTable').bootstrapTable('getSelections');
+		if (row.length < 1) {
+			alert("请选择优惠券");
+			return;
+		}
+		//创建一个数组，将选中的数据row中所需要的列放到数组
+		var t = [];
+		for (var i = 0; i < row.length; i++) {
+			t.push(row[i].discountId);
+		}
+		//系列化对象  (把对象的类型转换为字符串类型)
+		var b = JSON.stringify(t);
+		//放入隐藏域中
+		$("#addCanTogeDisid").val(b);
+		$("#editCanTogeDisid").val(b);
+		$("#selectDiscountModal").modal("hide");
+	}
+	/*   ******选择优惠券结束******    */
+
+	/*   ******00选择关联门店开始******   */
+	//点击选择门店按钮触发
+	function clickButtonOne(discountId) {
+		$("#thisDiscountId").val(discountId);
+		$("#shopListTable").bootstrapTable('destroy');
+		askShopList();
+		$("#selectShopModal").modal("show");
+	}
+
+	//查询门店
+	function searchShop() {
+		$('#shopListTable').bootstrapTable("selectPage", 1);
+	}
+
+	//清除搜索
+	function cleanShop() {
+		$('#searchShop input').val("");
+	}
+
+	//请求门店数据
+	function askShopList() {
+		var all2;
+		$('#shopListTable').bootstrapTable({
+			method : 'post',
+			contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+			url : "selectTeamForDiscount.do?",//请求查询所有可同时使用的优惠券
+			dataType : 'json',
+			striped : true, //是否显示行间隔色
+			singleSelect : true,//设置checkbox为单选
+			pageNumber : 1, //初始化加载第一页，默认第一页
+			pageSize : 10,//单页记录数
+			pageList : [ 10, 20, 30 ],//分页步进值
+			pagination : true,//是否分页
+			queryParamsType : 'limit',//查询参数组织方式
+			sidePagination : 'server',//指定服务器端分页
+			queryParams : function(p) {
+				return paramsForAlertShopTable(p);
+			},
+			clickToSelect : false,//是否启用点击选中行
+			toolbarAlign : 'right',//工具栏对齐方式
+			buttonsAlign : 'right',//按钮对齐方式
+			toolbar : '#toolbar',//指定工作栏
+			//点击每一个单选框时触发的操作         
+			onCheck:function(row){ 
+				setLinkShops(row);
+	        },
+			//取消每一个单选框时对应的操作；        
+			onUncheck:function(row){ 
+				unsetLinkShops(row);
+	        },
+			columns : [ {
+				field : "id",
+				checkbox : true , 
+				formatter : checkBoxFormatter
+			}, {
+				title : 'erp编号',
+				field : 'erpNo'
+			}, {
+				title : '门店编号',
+				field : 'teamId'
+			}, {
+				title : '门店名称',
+				field : 'teamName'
+			}, {
+				title : '门店类型',
+				field : 'teamType',
+				formatter : function(value, row, index) {
+					if (value == "1") {
+						return "门店"
+					} else if (value == "2") {
+						return "服务商"
+					} else if (value == "3") {
+						return "代理商"
+					}
+				}
+			} ],
+			locale : 'zh-CN',//中文支持,
+			responseHandler : function(res) {
+				//在ajax获取到数据，渲染表格之前，修改数据源
+				all2 = res.rows;
+				return res;
+			}
+		})
+	}
+
+	function paramsForAlertShopTable(params) {
+		$("#searchShop input[type='text']").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		$("#searchShop select").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		params['discountId'] = $("#thisDiscountId").val();
+		return params;
+	}
+
+	//执行添加之后将数据写入隐藏域中
+	function addShopHidden() {
+		//使用getSelections即可获得，row是json格式的数据
+		var row = $('#shopListTable').bootstrapTable('getSelections')[0];
+		if (row.length < 1) {
+			alert("请选择关联商户");
+			return;
+		}
+		//创建一个数组，将选中的数据row中所需要的列放到数组
+		//变成单选后  注释下面五行行
+		/* var t = [];
+		for (var i = 0; i < row.length; i++) {
+			t.push(row[i].teamId);
+		} */
+		//系列化对象  (把对象的类型转换为字符串类型)
+		//var b = JSON.stringify(t);
+		//放入隐藏域中
+		$("#addLinkTeam").val(row);
+		$("#editLinkTeam").val(row);
+		$("#selectShopModal").modal("hide");
+	}
+
+	/*   ******选择关联门店结束******   */
+
+	/*   ******00选择关联商品开始******   */
+	//点击选择门店按钮触发
+	function clickButtonTwo(index) {
+		var discountId = all[index].discountId;
+		var linkTeam = all[index].linkTeam;
+		if(discountId != 'undefined' && discountId != null && discountId != ''){
+			$("#thisDiscountId").val(discountId);
+		}
+		if(linkTeam != 'undefined' && linkTeam != null && linkTeam != ''){
+			$("#goodFromTeam").val(linkTeam);
+		}
+		//给店铺列表下拉框赋值
+		$("#goodFromTeam").empty();
+		jQuery.ajax({
+			url : "queryTeamList.do",
+			type : 'post',
+			success : function(data) {
+				for (var i = 0; i < data.length; i++) {
+					if (linkTeam == data[i].teamId) {
+						$("#goodFromTeam").append(
+								'<option value="'+data[i].teamId+'" selected="selected">'
+										+ data[i].teamName + '</option>')
+					} else {
+						$("#goodFromTeam").append(
+								'<option value="'+data[i].teamId+'">'
+										+ data[i].teamName + '</option>')
+					}
+				}
+				$("#goodsListTable").bootstrapTable('destroy');
+				askGoodsList();
+				$("#selectGoodsModal").modal("show");
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+	}
+
+	//查询商品
+	function searchGoods() {
+		$('#goodsListTable').bootstrapTable("selectPage", 1);
+	}
+
+	//清除搜索
+	function cleanGoods() {
+		$('#searchGoods input').val("");
+		$('#searchGoods select').val("");
+	}
+	//请求商品数据
+	function askGoodsList() {
+		var all2;
+		$('#goodsListTable').bootstrapTable({
+			method : 'post',
+			contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+			url : "selectGoodsForDiscount.do?",
+			dataType : 'json',
+			striped : true, //是否显示行间隔色
+			pageNumber : 1, //初始化加载第一页，默认第一页
+			pageSize : 10,//单页记录数
+			pageList : [ 10, 20, 30 ],//分页步进值
+			pagination : true,//是否分页
+			queryParamsType : 'limit',//查询参数组织方式
+			sidePagination : 'server',//指定服务器端分页
+			queryParams : function(p) {
+				return paramsForAlertGoodsTable(p);
+			},
+			clickToSelect : false,//是否启用点击选中行
+			toolbarAlign : 'right',//工具栏对齐方式
+			buttonsAlign : 'right',//按钮对齐方式
+			toolbar : '#toolbar',//指定工作栏
+			//点击全选框时触发的操作        
+			onCheckAll:function(rows){ 
+	          	setAllLinkGoods(rows);
+	        },
+	        onUncheckAll:function(rows){ 
+	          	unsetAllLinkGoods(rows);
+	        },
+			//点击每一个单选框时触发的操作         
+			onCheck:function(row){ 
+				setLinkGoods(row);
+	        },
+			//取消每一个单选框时对应的操作；        
+			onUncheck:function(row){ 
+				unsetLinkGoods(row);
+	        },
+			columns : [ {
+				field : "id",
+				checkbox : true,
+				formatter : checkBoxFormatter
+			},{
+				title : 'erp编号',
+				field : 'erpNo'
+			},{
+				title : '商品编号',
+				field : 'productId'
+			},{
+				title : '商品名称',
+				field : 'productName'
+			},{
+				title : '条形码',
+				field : 'barCode'
+			},{
+				title : '可用会员等级',
+				field:'userLevel',
+	            formatter: function (value,row,index){
+	            	if(value=="1"){
+	            		return "V1及以上";
+	            	}else if(value=="2"){
+	            		return "V2及以上"
+	            	}else if(value=="3"){
+	            		return "V3及以上"
+	            	}else if(value=="4"){
+	            		return "V4及以上"
+	            	}else if(value=="5"){
+	            		return "V5及以上"
+	            	}
+	            }
+			} ],
+			locale : 'zh-CN',//中文支持,
+			responseHandler : function(res) {
+				//在ajax获取到数据，渲染表格之前，修改数据源
+				all2 = res.rows;
+				return res;
+			}
+		})
+	}
+
+	function paramsForAlertGoodsTable(params) {
+		$("#searchGoods input[type='text']").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		params["isDelete"] = "0";
+		params["onSale"] = "1";
+		params['discountId'] = $("#thisDiscountId").val();
+		params['linkTeam'] = $("#goodFromTeam").val();
+		params['hasChoose'] = $("#hasChoose").val();
+		return params;
+	}
+
+	//执行添加之后将数据写入隐藏域中
+	function addGoodsHidden() {
+		//使用getSelections即可获得，row是json格式的数据
+		var row = $('#goodsListTable').bootstrapTable('getSelections');
+		if (row.length < 1) {
+			alert("请选择用户");
+			return;
+		}
+		//创建一个数组，将选中的数据row中所需要的列放到数组
+		var t = [];
+		for (var i = 0; i < row.length; i++) {
+			t.push(row[i].productId);
+		}
+		//系列化对象  (把对象的类型转换为字符串类型)
+		var b = JSON.stringify(t);
+		//放入隐藏域中
+		$("#addLinkPro").val(b);
+		$("#editLinkPro").val(b);
+		$("#selectGoodsModal").modal("hide");
+	}
+	/*   ******选择关联商品结束******   */
+	
+	
+	function checkBoxFormatter(value, row, index) {
+		if (row.hasChoose) {
+			return {
+				disabled : false,//设置是否可用 
+				checked : true //设置选中 
+			};
+		}else{
+			return {
+				disabled : false,//设置是否可用 
+				checked : false //设置不选中 
+			};
+		}
+	}
+	
+	function checkBoxFormatterDisabled(value, row, index) {
+		if (row.hasChoose) {
+			return {
+				disabled : true,//设置是否可用 
+				checked : true //设置选中 
+			};
+		}else{
+			return {
+				disabled : true,//设置是否可用 
+				checked : false //设置不选中 
+			};
+		}
+	}
+</script>
+
+<script type="text/javascript">
+	//选中 
+	function setLinkGoods(row){
+		var discountId = $("#thisDiscountId").val();
+		jQuery.ajax({
+			url : "discountChooseGood.do",
+			type : 'post',
+			data : {
+				"discountId" : discountId,
+				"productId" : row.productId
+			},
+			dataType : 'json',
+			success : function(json) {
+				$("#goodsListTable").bootstrapTable('refresh');
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+	}
+	
+	//取消 
+	function unsetLinkGoods(row){
+		var discountId = $("#thisDiscountId").val();
+		jQuery.ajax({
+			url : "discountUnChooseGood.do",
+			type : 'post',
+			data : {
+				"discountId" : discountId,
+				"productId" : row.productId
+			},
+			dataType : 'json',
+			success : function(json) {
+				$("#goodsListTable").bootstrapTable('refresh');
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+	}
+	
+	//全选 
+	function setAllLinkGoods(rows){
+		var arrayObj = new Array();
+		for(var i = 0;i<rows.length;i++){
+			arrayObj.push(rows[i].productId);
+		}
+		var discountId = $("#thisDiscountId").val();
+		jQuery.ajax({
+			url : "discountChooseGoodAll.do",
+			type : 'post',
+			data : {
+				"discountId" : discountId,
+				"productIdS" : arrayObj
+			},
+			dataType : 'json',
+			traditional: true,//这里设置为true 
+			success : function(json) {
+				$("#goodsListTable").bootstrapTable('refresh');
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+	}
+	
+	//全选 取消
+	function unsetAllLinkGoods(rows){
+		var arrayObj = new Array();
+		for(var i = 0;i<rows.length;i++){
+			arrayObj.push(rows[i].productId);
+		}
+		var discountId = $("#thisDiscountId").val();
+		jQuery.ajax({
+			url : "discountUnChooseGoodAll.do",
+			type : 'post',
+			data : {
+				"discountId" : discountId,
+				"productIdS" : arrayObj
+			},
+			dataType : 'json',
+			traditional: true,//这里设置为true 
+			success : function(json) {
+				$("#goodsListTable").bootstrapTable('refresh');
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+	}
+</script>
+
+<script type="text/javascript">
+
+	//选中 
+	function setLinkShops(row){
+		
+		var discountId = $("#thisDiscountId").val();
+		jQuery.ajax({
+			url : "discountChooseShop.do",
+			type : 'post',
+			data : {
+				"discountId" : discountId,
+				"teamId" : row.teamId
+			},
+			dataType : 'json',
+			success : function(json) {
+				$("#shopListTable").bootstrapTable('refresh');
+				$("#mytab").bootstrapTable('refresh');
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+	}
+	
+	//取消 
+	function unsetLinkShops(row){
+		
+		var discountId = $("#thisDiscountId").val();
+		jQuery.ajax({
+			url : "discountUnChooseShop.do",
+			type : 'post',
+			data : {
+				"discountId" : discountId,
+				"teamId" : row.teamId
+			},
+			dataType : 'json',
+			success : function(json) {
+				$("#shopListTable").bootstrapTable('refresh');
+				$("#mytab").bootstrapTable('refresh');
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+	}
+
+</script>
+
+<script type="text/javascript">
+
+	//选中 
+	function setLinkDiscount(row){
+		
+		var discountId = $("#thisDiscountId").val();
+		jQuery.ajax({
+			url : "discountChooseDis.do",
+			type : 'post',
+			data : {
+				"discountId" : discountId,
+				"chooseDis" : row.discountId
+			},
+			dataType : 'json',
+			success : function(json) {
+				$("#discountTable").bootstrapTable('refresh');
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+		
+	}
+	
+	//取消 
+	function unsetLinkDiscount(row){
+		
+		var discountId = $("#thisDiscountId").val();
+		jQuery.ajax({
+			url : "discountUnChooseDis.do",
+			type : 'post',
+			data : {
+				"discountId" : discountId,
+				"chooseDis" : row.discountId
+			},
+			dataType : 'json',
+			success : function(json) {
+				$("#discountTable").bootstrapTable('refresh');
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+	}
+
+</script>
+
+<script type="text/javascript">
+/*   ******00选择关联门店开始******   */
+//点击选择门店按钮触发
+function clickButtonTeamC(index) {
+	
+	if(isEmpty(all[index].linkTeam)){
+		alert("未设置总店");
+		return false;
+	}
+	
+	$("#thisDiscountId").val(all[index].discountId);
+	$("#thisFatherShopId").val(all[index].linkTeam);
+	$("#shopListTable").bootstrapTable('destroy');
+	askShopListTeamC();
+	$("#selectShopModal").modal("show");
+}
+
+//查询门店
+function searchShop() {
+	$('#shopListTable').bootstrapTable("selectPage", 1);
+}
+
+//请求门店数据
+function askShopListTeamC() {
+	var allTeamC;
+	$('#shopListTable').bootstrapTable({
+		method : 'post',
+		contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+		url : "selectTeamChildForDiscount.do?",//请求查询所有可同时使用的优惠券
+		dataType : 'json',
+		striped : true, //是否显示行间隔色
+		pageNumber : 1, //初始化加载第一页，默认第一页
+		pageSize : 10,//单页记录数
+		pageList : [ 10, 20, 30 ],//分页步进值
+		pagination : true,//是否分页
+		queryParamsType : 'limit',//查询参数组织方式
+		sidePagination : 'server',//指定服务器端分页
+		queryParams : function(p) {
+			return paramsForAlertShopTableTeamC(p);
+		},
+		clickToSelect : false,//是否启用点击选中行
+		toolbarAlign : 'right',//工具栏对齐方式
+		buttonsAlign : 'right',//按钮对齐方式
+		toolbar : '#toolbar',//指定工作栏
+		//点击每一个单选框时触发的操作         
+		onCheck:function(row){ 
+			setLinkTeamChild(row);
+        },
+		//取消每一个单选框时对应的操作；        
+		onUncheck:function(row){ 
+			unsetLinkTeamChild(row);
+        },
+        checkboxHeader:false,
+		columns : [ {
+			field : "id",
+			checkbox : true , 
+			formatter : checkBoxFormatter
+		}, {
+			title : 'erp编号',
+			field : 'erpNo'
+		}, {
+			title : '门店编号',
+			field : 'teamId'
+		}, {
+			title : '门店名称',
+			field : 'teamName'
+		}, {
+			title : '门店类型',
+			field : 'teamType',
+			formatter : function(value, row, index) {
+				if (value == "1") {
+					return "门店"
+				} else if (value == "2") {
+					return "服务商"
+				} else if (value == "3") {
+					return "代理商"
+				}
+			}
+		} ],
+		locale : 'zh-CN',//中文支持,
+		responseHandler : function(res) {
+			//在ajax获取到数据，渲染表格之前，修改数据源
+			all2 = res.rows;
+			return res;
+		}
+	})
+}
+
+function paramsForAlertShopTableTeamC(params) {
+	$("#searchShop input[type='text']").each(function() {
+		params[$(this).attr("id")] = $(this).val();
+	});
+	$("#searchShop select").each(function() {
+		params[$(this).attr("id")] = $(this).val();
+	});
+	params['discountId'] = $("#thisDiscountId").val();
+	params['teamIdFather'] = $("#thisFatherShopId").val();
+	return params;
+}
+
+//选中 
+function setLinkTeamChild(row){
+	
+	var discountId = $("#thisDiscountId").val();
+	jQuery.ajax({
+		url : "discountChooseTeamChild.do",
+		type : 'post',
+		data : {
+			"discountId" : discountId,
+			"teamId" : row.teamId
+		},
+		dataType : 'json',
+		success : function(json) {
+			$("#discountTable").bootstrapTable('refresh');
+		},
+		error : function() {
+			alert("异常！");
+		}
+	});
+	
+}
+
+//取消 
+function unsetLinkTeamChild(row){
+	
+	var discountId = $("#thisDiscountId").val();
+	jQuery.ajax({
+		url : "discountUnChooseTeamChild.do",
+		type : 'post',
+		data : {
+			"discountId" : discountId,
+			"teamId" : row.teamId
+		},
+		dataType : 'json',
+		success : function(json) {
+			$("#discountTable").bootstrapTable('refresh');
+		},
+		error : function() {
+			alert("异常！");
+		}
+	});
+}
+
+function modifyPublish(value,type) {
+	var msg = "";
+	if(type == '1'){
+		msg = "请确认已完善所有信息，确定发布？"
+	}
+	if(type == '0'){
+		msg = "确定取消发布？"
+	}
+	
+	if (confirm(msg)) {
+		jQuery.ajax({
+			url : "modifyPublishFlg.do",
+			type : 'post',
+			data : {
+				"discountId" : value,
+				"publishFlg" : type
+			},
+			dataType : 'json',
+			success : function(data) {
+				if (!data.success) {
+					alert(data.message);
+					return false;
+				} else {
+					alert(data.message);
+					$("#mytab").bootstrapTable('refresh');
+				}
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+	}
+}
+
+</script>
+
+<script type="text/javascript">
+function clickButtonTeamD(index) {
+	
+	$("#searchProvince input[type='text']").val("");
+	$("#searchProvince select").val("");
+	
+	$("#thisDiscountId").val(all[index].discountId);
+	$("#provinceListTable").bootstrapTable('destroy');
+	askProvinceListTeamD();
+	$("#selectProvinceModal").modal("show");
+}
+
+//查询省
+function searchProvince() {
+	$('#provinceListTable').bootstrapTable("selectPage", 1);
+}
+
+function cleanProvince() {
+	$("#searchProvince input[type='text']").val("");
+	$("#searchProvince select").val("");
+}
+
+var allPro;
+//请求省数据
+function askProvinceListTeamD() {
+	$('#provinceListTable').bootstrapTable({
+		method : 'post',
+		contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+		url : "selectAllProForDiscount.do?",//请求查询所有可同时使用的优惠券
+		dataType : 'json',
+		striped : true, //是否显示行间隔色
+		pageNumber : 1, //初始化加载第一页，默认第一页
+		pageSize : 10,//单页记录数
+		pageList : [ 10, 20, 30 ],//分页步进值
+		pagination : true,//是否分页
+		queryParamsType : 'limit',//查询参数组织方式
+		sidePagination : 'server',//指定服务器端分页
+		queryParams : function(p) {
+			return paramsForAlertProvinceTableTeamD(p);
+		},
+		clickToSelect : false,//是否启用点击选中行
+		toolbarAlign : 'right',//工具栏对齐方式
+		buttonsAlign : 'right',//按钮对齐方式
+		toolbar : '#toolbar',//指定工作栏
+		detailView: true,
+		//点击每一个单选框时触发的操作         
+		onCheck:function(row){ 
+			//setLinkProvinceChild(row);
+        },
+		//取消每一个单选框时对应的操作；        
+		onUncheck:function(row){ 
+			//unsetLinkProvinceChild(row);
+        },
+        checkboxHeader:false,
+		columns : [ {
+			title : '标识',
+			field : "id",
+			checkbox : true , 
+			formatter : checkBoxFormatterDisabled
+		}, {
+			title : '名称',
+			field : 'cityName'
+		}],
+		locale : 'zh-CN',//中文支持,
+		responseHandler : function(res) {
+			//在ajax获取到数据，渲染表格之前，修改数据源
+			allPro = res.rows;
+			return res;
+		},
+		//注册加载子表的事件。注意下这里的三个参数！
+        onExpandRow: function (index, row, $detail) {
+            InitSubTable(index, row, $detail);
+        }
+	})
+}
+
+function paramsForAlertProvinceTableTeamD(params) {
+	$("#searchProvince input[type='text']").each(function() {
+		params[$(this).attr("id")] = $(this).val();
+	});
+	$("#searchProvince select").each(function() {
+		params[$(this).attr("id")] = $(this).val();
+	});
+	params['discountId'] = $("#thisDiscountId").val();
+	params['isUse'] = '1';
+	params['depth'] = '1';
+	return params;
+}
+
+//选中 
+function setLinkProvinceChild(row){
+	
+	var discountId = $("#thisDiscountId").val();
+	jQuery.ajax({
+		url : "discountChooseProvinceChild.do",
+		type : 'post',
+		data : {
+			"discountId" : discountId,
+			"cityName" : row.cityName
+		},
+		dataType : 'json',
+		success : function(json) {
+			$("#provinceListTable").bootstrapTable('refresh');
+		},
+		error : function() {
+			alert("异常！");
+		}
+	});
+	
+}
+
+//取消 
+function unsetLinkProvinceChild(row){
+	
+	var discountId = $("#thisDiscountId").val();
+	jQuery.ajax({
+		url : "discountUnChooseProvinceChild.do",
+		type : 'post',
+		data : {
+			"discountId" : discountId,
+			"cityName" : row.cityName
+		},
+		dataType : 'json',
+		success : function(json) {
+			$("#provinceListTable").bootstrapTable('refresh');
+		},
+		error : function() {
+			alert("异常！");
+		}
+	});
+}
+
+//初始化子表格(无线循环)
+function InitSubTable(index, row, $detail) {
+    var parentId = row.thisId;
+    var cur_table = $detail.html('<table></table>').find('table');
+    $(cur_table).bootstrapTable({
+    	method : 'post',
+		contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+		url : "selectAllCityForDiscount.do?",//请求查询所有可同时使用的优惠券
+		dataType : 'json',
+		striped : true, //是否显示行间隔色
+		pageNumber : 1, //初始化加载第一页，默认第一页
+		pageSize : 50,//单页记录数
+		pageList : [20],//分页步进值
+		pagination : true,//是否分页
+		queryParamsType : 'limit',//查询参数组织方式
+		sidePagination : 'server',//指定服务器端分页
+		queryParams : function(p) {
+			p['discountId'] = $("#thisDiscountId").val();
+			p['parentId'] = parentId;
+			p['isUse'] = '1';
+			p['depth'] = '2';
+			return p;
+		},
+		clickToSelect : false,//是否启用点击选中行
+		toolbarAlign : 'right',//工具栏对齐方式
+		buttonsAlign : 'right',//按钮对齐方式
+		toolbar : '#toolbar',//指定工作栏
+		//点击每一个单选框时触发的操作         
+		onCheck:function(row){ 
+			var discountId = $("#thisDiscountId").val();
+			jQuery.ajax({
+				url : "discountChooseProvinceChild.do",
+				type : 'post',
+				data : {
+					"discountId" : discountId,
+					"cityName" : row.cityName
+				},
+				dataType : 'json',
+				success : function(json) {
+					$(cur_table).bootstrapTable('refresh');
+					//$("#provinceListTable").bootstrapTable('refresh');
+				},
+				error : function() {
+					alert("异常！");
+				}
+			});
+        },
+		//取消每一个单选框时对应的操作；        
+		onUncheck:function(row){ 
+			var discountId = $("#thisDiscountId").val();
+			jQuery.ajax({
+				url : "discountUnChooseProvinceChild.do",
+				type : 'post',
+				data : {
+					"discountId" : discountId,
+					"cityName" : row.cityName
+				},
+				dataType : 'json',
+				success : function(json) {
+					$(cur_table).bootstrapTable('refresh');
+					//$("#provinceListTable").bootstrapTable('refresh');
+				},
+				error : function() {
+					alert("异常！");
+				}
+			});
+        },
+      	//点击全选框时触发的操作        
+		onCheckAll:function(rows){ 
+			var discountId = $("#thisDiscountId").val();
+			var arrayObj = new Array();
+			for(var i = 0;i<rows.length;i++){
+				arrayObj.push(rows[i].cityName);
+			}
+			jQuery.ajax({
+				url : "discountChooseAllCityChild.do",
+				type : 'post',
+				data : {
+					"discountId" : discountId,
+					"cityNameS" : arrayObj
+				},
+				dataType : 'json',
+				traditional: true,//这里设置为true 
+				success : function(json) {
+					$(cur_table).bootstrapTable('refresh');
+					//$("#provinceListTable").bootstrapTable('refresh');
+				},
+				error : function() {
+					alert("异常！");
+				}
+			});
+        },
+        onUncheckAll:function(rows){ 
+        	var discountId = $("#thisDiscountId").val();
+			var arrayObj = new Array();
+			for(var i = 0;i<rows.length;i++){
+				arrayObj.push(rows[i].cityName);
+			}
+			jQuery.ajax({
+				url : "discountUnChooseAllCityChild.do",
+				type : 'post',
+				data : {
+					"discountId" : discountId,
+					"cityNameS" : arrayObj
+				},
+				dataType : 'json',
+				traditional: true,//这里设置为true 
+				success : function(json) {
+					$(cur_table).bootstrapTable('refresh');
+					//$("#provinceListTable").bootstrapTable('refresh');
+				},
+				error : function() {
+					alert("异常！");
+				}
+			});
+        },
+        checkboxHeader:true,
+		columns : [ {
+			field : "id",
+			checkbox : true , 
+			formatter : checkBoxFormatter
+		}, {
+			title : '名称',
+			field : 'cityName'
+		}],
+		locale : 'zh-CN',//中文支持
+    });
+};
+
+//优惠券领取详情
+function getDiscountForUser(index) {
+	
+	$("#thisDiscountId").val(all[index].discountId);
+	$("#discountForUserTable").bootstrapTable('destroy');
+	askDiscountForUser();
+	$("#discountForUserModal").modal("show");
+}
+
+//查询省
+function searchDiscountForUser() {
+	$('#discountForUserTable').bootstrapTable("selectPage", 1);
+}
+
+function cleanDiscountForUser() {
+	$("#searchDiscountForUser input[type='text']").val("");
+	$("#searchDiscountForUser select").val("");
+}
+
+var allDisUser;
+function askDiscountForUser() {
+	$('#discountForUserTable').bootstrapTable({
+		method : 'post',
+		contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+		url : "getDiscountForUser.do",//请求查询所有可同时使用的优惠券
+		dataType : 'json',
+		striped : true, //是否显示行间隔色
+		pageNumber : 1, //初始化加载第一页，默认第一页
+		pageSize : 10,//单页记录数
+		pageList : [ 10, 20, 30 ],//分页步进值
+		pagination : true,//是否分页
+		queryParamsType : 'limit',//查询参数组织方式
+		sidePagination : 'server',//指定服务器端分页
+		queryParams : function(p) {
+			return paramsForDiscountForUser(p);
+		},
+		clickToSelect : false,//是否启用点击选中行
+		toolbarAlign : 'right',//工具栏对齐方式
+		buttonsAlign : 'right',//按钮对齐方式
+		toolbar : '#toolbar',//指定工作栏
+        checkboxHeader:false,
+		columns : [ {
+			title : '领券时间',
+			field : "getTime"
+		}, {
+			title : '用户编号',
+			field : 'userId'
+		}, {
+			title : '昵称',
+			field : 'nickName'
+		}, {
+			title : '真实姓名',
+			field : 'realName'
+		}, {
+			title : '手机号',
+			field : 'cell'
+		}, {
+			title : '状态',
+			field : 'status_str'
+		}, {
+			title : '有效期至',
+			field : 'timeEnd'
+		}],
+		locale : 'zh-CN',//中文支持,
+		responseHandler : function(res) {
+			//在ajax获取到数据，渲染表格之前，修改数据源
+			allDisUser = res.rows;
+			return res;
+		}
+	})
+}
+
+function paramsForDiscountForUser(params) {
+	$("#searchDiscountForUser input[type='text']").each(function() {
+		params[$(this).attr("id")] = $(this).val();
+	});
+	$("#searchDiscountForUser select").each(function() {
+		params[$(this).attr("id")] = $(this).val();
+	});
+	params['discountId'] = $("#thisDiscountId").val();
+	return params;
+}
+
+</script>
+
+
+</html>

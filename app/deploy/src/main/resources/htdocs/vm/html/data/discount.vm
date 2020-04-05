@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+#parse("content/importBase.vm")
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+#preview>img {
+	width: 100%;
+	height: 170px;
+}
+
+.fixed-table-container thead th:nth-child(10) .th-inner {
+	width: 100px
+}
+
+.fixed-table-container thead th:nth-child(11) .th-inner {
+	width: 100px
+}
+
+.fixed-table-container thead th:nth-child(12) .th-inner {
+	width: 100px
+}
+</style>
+</head>
+<body style="width: 100%; height: 100%;">
+	<div id="page-wrapper">
+		<!--BEGIN TITLE & BREADCRUMB PAGE-->
+		<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+			<div class="page-header pull-left">
+				<div class="page-title">优惠券使用记录</div>
+			</div>
+			<ol class="breadcrumb page-breadcrumb pull-right">
+				<li><i class="fa fa-home"></i>&nbsp;<a href="#">优惠券使用记录</a></li>
+			</ol>
+			<div class="clearfix"></div>
+		</div>
+
+
+		<div style="margin-top: 2%;" id="a">
+
+			<div class="row">
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">系统省：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select id="linkProvince" name="linkProvince"
+							class="selectpicker show-tick form-control" title="请选择" multiple
+							data-live-search="true" data-size="5" data-actions-box="true"
+							onchange="getAllCityComplex(this)">
+						</select><br />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">系统市：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select id="linkCity" name="linkCity"
+							class="selectpicker show-tick form-control" title="请选择" multiple
+							data-live-search="true" data-size="5" data-actions-box="true">
+						</select><br />
+					</div>
+				</div>
+
+			</div>
+			<br />
+
+			<div class="row">
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">门店信息：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="teamMsg" name="teamMsg"
+							class="form-control" placeholder="ERP编号、门店编号、名称" /> <br />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">优惠券编号：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="discountId" name="discountId"
+							class="form-control" /> <br />
+					</div>
+				</div>
+
+				<!-- <label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">优惠券名称：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="discountName" name="discountName"
+							class="form-control" /> <br />
+					</div>
+				</div> -->
+
+			</div>
+
+			<div class="row">
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">创建时间（开始）：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="startDate"
+							class="form-control datetimepicker" readonly /> <br />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">创建时间（结束）：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="endDate"
+							class="form-control datetimepicker" readonly /> <br />
+					</div>
+				</div>
+
+			</div>
+
+
+			<div class="row">
+				<div class="col-sm-4" style="float: right">
+					<div class="control-group">
+						<div>
+							<button onclick="clean()" class="btn btn-danger" name="Name"
+								id="search_tel" value="清空"
+								style="float: right; margin-right: 2%;">清空</button>
+						</div>
+						<div>
+							<button onclick="sorce()" class="btn btn-info" name="Name"
+								id="search_tel" value="查询"
+								style="float: right; margin-right: 2%;">查询</button>
+						</div>
+						<div>
+							<button id="search_btn" type="button" class="btn btn-success"
+								style="float: right; margin-right: 2%;"
+								onclick="exportAllPage()">导出全部</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<table id="mytab" class="table table-hover"></table>
+
+	</div>
+
+</body>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('.selectpicker').selectpicker({
+			'noneSelectedText' : '请选择',
+			'deselectAllText' : '全不选',
+			'selectAllText' : '全选',
+		})
+
+		getAllProvinceComplex();
+	})
+</script>
+
+<script type="text/javascript">
+	$('.datetimepicker').datetimepicker({
+		minView : "month",//设置只显示到月份
+		format : 'yyyy-mm-dd',
+		language : 'zh-CN',
+		autoclose : true,//选中关闭
+		todayBtn : true
+	//今日按钮
+	})
+	function clean() {
+		$("#a input").val("");
+		$("#a select").val("");
+		$('.selectpicker').selectpicker('refresh');
+	}
+
+	bootsearch(null);
+
+	var all;
+	function sorce() {
+		$("#mytab").bootstrapTable('destroy');
+		//生成用户数据
+		bootsearch("queryAllDiscountUseList.do");
+	}
+	//生成用户数据
+	function bootsearch(url) {
+		$('#mytab')
+				.bootstrapTable(
+						{
+							method : 'post',
+							contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+							url : url,//要请求数据的文件路径
+							dataType : 'json',
+							striped : true, //是否显示行间隔色
+							pageNumber : 1, //初始化加载第一页，默认第一页
+							pageSize : 10,//单页记录数
+							pageList : [ 5, 10, 20, 30 ],//分页步进值
+							pagination : true,//是否分页
+							queryParamsType : 'limit',//查询参数组织方式
+							sidePagination : 'server',//指定服务器端分页
+							queryParams : function(p) {
+								return params(p);
+							},
+							clickToSelect : true,//是否启用点击选中行
+							toolbarAlign : 'right',//工具栏对齐方式
+							buttonsAlign : 'right',//按钮对齐方式
+							toolbar : '#toolbar',//指定工作栏
+							showFooter : true,
+							columns : [
+									{
+										title : '订单号',
+										field : 'orderNo',
+										footerFormatter : function(value) {
+											return "当前页小计" + "</br>" + "合计";
+										}
+									},
+									{
+										title : '子订单号',
+										field : 'orderId'
+									},
+									{
+										title : '会员手机号',
+										field : 'userCell'
+									},
+									{
+										title : '商品标题',
+										field : 'proName'
+									},
+									{
+										title : '优惠券编号',
+										field : 'discountId'
+									},
+									{
+										title : '优惠券名称',
+										field : 'discountName'
+									},
+									{
+										title : '门店编号/ERP编号/名称',
+										field : 'teamId',
+										formatter : function(value, row, index) {
+											return checkEmpty(row.teamId)
+													+ "</br>"
+													+ checkEmpty(row.teamErpNo)
+													+ "</br>"
+													+ checkEmpty(row.teamName);
+										}
+									},
+									{
+										title : '门店地址',
+										field : 'teamAddress'
+									},
+									{
+										title : '省/市',
+										field : 'teamCity'
+									},
+									{
+										title : '订单原价',
+										field : 'orderPrice',
+										footerFormatter : function(value) {
+											var count = 0;
+											for ( var i in value) {
+												count += parseFloat(value[i].orderPrice)
+											}
+											return count.toFixed(2);
+										}
+									},
+									{
+										title : '优惠金额',
+										field : 'amount',
+										footerFormatter : function(value) {
+											var count = 0;
+											for ( var i in value) {
+												count += parseFloat(value[i].amount)
+											}
+											return count.toFixed(2);
+										}
+									},
+									{
+										title : '折扣比率（%）',
+										field : 'discountRate'
+									},
+									{
+										title : '创建时间',
+										field : 'gmtCreate',
+										formatter : function(value, row, index) {
+											return format(value);
+										}
+									} ],
+							locale : 'zh-CN',//中文支持,
+							formatNoMatches : function() {
+								if (isEmpty(url)) {
+									return "单击查询搜索记录"
+								} else {
+									return "没有找到匹配的记录"
+								}
+							},
+							onLoadSuccess : function(res) { //加载成功时执行
+								$(".fixed-table-footer")
+										.find(".th-inner")
+										.each(
+												function(index, item) {
+													if (index == 9) {
+														$(this)
+																.html(
+																		res.orderPrice_page
+																				+ '</br>'
+																				+ res.orderPrice_all);
+													}
+													if (index == 10) {
+														$(this)
+																.html(
+																		res.amount_page
+																				+ '</br>'
+																				+ res.amount_all);
+													}
+													if (index == 11) {
+														$(this)
+																.html(
+																		res.rate_page
+																				+ '</br>'
+																				+ res.rate_all);
+													}
+												});
+
+								$(".fixed-table-body").on("scroll", function() {
+									var sl = this.scrollLeft;
+									$(this).next()[0].scrollLeft = sl;
+								})
+							},
+							responseHandler : function(res) {
+								//在ajax获取到数据，渲染表格之前，修改数据源
+								all = res.rows;
+								return res;
+							}
+						})
+	}
+
+	//获取搜索的所有值
+	function params(params) {
+		$("#a input[type='text']").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		$("#a select").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+
+		params["linkProvince"] = $('#linkProvince').val();//array
+		params["linkCity"] = $('#linkCity').val();//array
+		return params;
+	}
+</script>
+
+<script type="text/javascript">
+	function exportAllPage() {
+		var linkProvince = $("#linkProvince").val();
+		var linkCity = $("#linkCity").val();
+		var teamMsg = $("#teamMsg").val();
+		var discountName = $("#discountName").val();
+		var discountId = $("#discountId").val();
+		var startDate = $("#startDate").val();
+		var endDate = $("#endDate").val();
+
+		var action = "exportAllDiscountUseList.do";
+		var form = $("<form></form>");
+		form.attr('action', action);
+		form.attr('method', 'post');
+		input2 = $("<input type='text' name='linkProvince' value='"+linkProvince+"' />");
+		form.append(input2);
+		input3 = $("<input type='text' name='linkCity' value='"+linkCity+"' />");
+		form.append(input3);
+		input4 = $("<input type='text' name='teamMsg' value='"+teamMsg+"' />");
+		form.append(input4);
+		input5 = $("<input type='text' name='discountName' value='"+discountName+"' />")
+		form.append(input5);
+		input6 = $("<input type='text' name='discountId' value='"+discountId+"' />");
+		form.append(input6);
+		input7 = $("<input type='text' name='startDate' value='"+startDate+"' />");
+		form.append(input7);
+		input8 = $("<input type='text' name='endDate' value='"+endDate+"' />");
+		form.append(input8);
+
+		form.appendTo("body");
+		form.css('display', 'none');
+		form.submit();
+	}
+</script>
+</html>

@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+#parse("content/importBase.vm")
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+#preview>img {
+	width: 100%;
+	height: 170px;
+}
+
+.fixed-table-container thead th:nth-child(1) .th-inner {
+	width: 100px
+}
+
+.fixed-table-container thead th:nth-child(6) .th-inner {
+	width: 100px
+}
+
+.fixed-table-container thead th:nth-child(7) .th-inner {
+	width: 100px
+}
+
+.fixed-table-container thead th:nth-child(8) .th-inner {
+	width: 100px
+}
+</style>
+</head>
+<body style="width: 100%; height: 100%;">
+	<div id="page-wrapper">
+		<!--BEGIN TITLE & BREADCRUMB PAGE-->
+		<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+			<div class="page-header pull-left">
+				<div class="page-title">庆余卡明细</div>
+			</div>
+			<ol class="breadcrumb page-breadcrumb pull-right">
+				<li><i class="fa fa-home"></i>&nbsp;<a href="#">庆余卡明细</a></li>
+			</ol>
+			<div class="clearfix"></div>
+		</div>
+
+
+		<div style="margin-top: 2%;" id="a">
+
+			<div class="row">
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">来源：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select name="fromWay" id="fromWay" class="form-control">
+							<option value="">请选择</option>
+							<!-- <option value="1">充值</option>
+							<option value="2">转赠</option>
+							<option value="3">退货</option> -->
+							<option value="1">充值</option>
+							<option value="2">购物</option>
+							<option value="2.1">购物退回</option>
+							<option value="3">转赠</option>
+							<option value="4">获赠</option>
+						</select> <br />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">审核状态（业务员）：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select name="checkStatus" id="checkStatus" class="form-control">
+							<option value="">请选择</option>
+							<option value="INIT">待审核</option>
+							<option value="ENABLED">通过</option>
+							<option value="UNABLED">驳回</option>
+						</select> <br />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">审核状态（财务）：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select name="checkStatusAcc" id="checkStatusAcc"
+							class="form-control">
+							<option value="">请选择</option>
+							<option value="INIT">待审核</option>
+							<option value="ENABLED">通过</option>
+							<option value="UNABLED">驳回</option>
+						</select> <br />
+					</div>
+				</div>
+
+			</div>
+
+			<div class="row">
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">所属用户信息：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="userMsg" name="userMsg"
+							class="form-control" /> <br />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">所属门店信息：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="teamMsg" name="teamMsg"
+							class="form-control" placeholder="ERP编号、门店编号、名称" /> <br />
+					</div>
+				</div>
+
+			</div>
+
+			<div class="row">
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">业务员信息：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="acerMsg" name="acerMsg"
+							class="form-control" /> <br />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">财务信息：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="cwerMsg" name="cwerMsg"
+							class="form-control" /> <br />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">创建者信息：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="createrMsg" name="createrMsg"
+							class="form-control" /> <br />
+					</div>
+				</div>
+
+			</div>
+
+			<div class="row">
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">创建开始时间：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="startDate"
+							class="form-control datetimepicker" readonly /> <br />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">创建结束时间：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="endDate"
+							class="form-control datetimepicker" readonly /> <br />
+					</div>
+				</div>
+
+			</div>
+
+			<div class="row">
+				<div class="col-sm-4" style="float: right">
+					<div class="control-group">
+						<div>
+							<button onclick="clean()" class="btn btn-danger" name="Name"
+								id="search_tel" value="清空"
+								style="float: right; margin-right: 2%;">清空</button>
+						</div>
+						<div>
+							<button onclick="sorce()" class="btn btn-info" name="Name"
+								id="search_tel" value="查询"
+								style="float: right; margin-right: 2%;">查询</button>
+						</div>
+						<div>
+							<button id="search_btn" type="button" class="btn btn-success"
+								style="float: right; margin-right: 2%;"
+								onclick="exportAllPage()">导出全部</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+
+
+		<!--END TITLE & BREADCRUMB PAGE-->
+		<!--BEGIN CONTENT-->
+		<table id="mytab" class="table table-hover"></table>
+
+		<div class="modal fade" id="queryVoucherDetailListModal"
+			data-backdrop="static" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog" style="width: 1000px;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">庆余卡明细</h4>
+					</div>
+					<div style="margin-top: 2%;" id="">
+						<div class="row">
+							<div class="col-sm-2">
+								<div class="control-group">
+									<button id="search_btn" type="button" class="btn btn-info"
+										onclick="refreshQueryVoucherDetailList()">刷新</button>
+								</div>
+							</div>
+						</div>
+						<table id="queryVoucherDetailListTable" class="table table-hover"></table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 查看图片模块 -->
+		<div class="modal fade" id="imgbig" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">查看图片</h4>
+					</div>
+					<div class="modal-body">
+						<img alt="" src="" id="bigbis" style="width: 100%; height: 100%;" />
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<input type="hidden" id="thisVoucherNo" readonly="readonly" />
+
+	<input type="hidden" id="offset" readonly="readonly" />
+	<input type="hidden" id="limit" readonly="readonly" />
+</body>
+
+<script type="text/javascript">
+	$('.datetimepicker').datetimepicker({
+		minView : "month",//设置只显示到月份
+		format : 'yyyy-mm-dd',
+		language : 'zh-CN',
+		autoclose : true,//选中关闭
+		todayBtn : true
+	//今日按钮
+	})
+	function clean() {
+		$("#a input").val("");
+		$("#a select").val("");
+		$('.selectpicker').selectpicker('refresh');
+	}
+
+	bootsearch(null);
+
+	var all;
+	function sorce() {
+		$("#mytab").bootstrapTable('destroy');
+		//生成用户数据
+		bootsearch("queryAllVoucherRecordList.do");
+	}
+
+	function bootsearch(url) {
+		//生成用户数据
+		$('#mytab')
+				.bootstrapTable(
+						{
+							method : 'post',
+							contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+							url : url,//要请求数据的文件路径
+							dataType : 'json',
+							striped : true, //是否显示行间隔色
+							pageNumber : 1, //初始化加载第一页，默认第一页
+							pageSize : 10,//单页记录数
+							pageList : [ 5, 10, 20, 30 ],//分页步进值
+							pagination : true,//是否分页
+							queryParamsType : 'limit',//查询参数组织方式
+							sidePagination : 'server',//指定服务器端分页
+							queryParams : function(p) {
+								return params(p);
+							},
+							clickToSelect : true,//是否启用点击选中行
+							toolbarAlign : 'right',//工具栏对齐方式
+							buttonsAlign : 'right',//按钮对齐方式
+							toolbar : '#toolbar',//指定工作栏
+							showFooter : true,//开启列计算
+							columns : [
+									{
+										title : '操&nbsp&nbsp&nbsp&nbsp作',
+										field : 'id',
+										align : 'center',
+										formatter : function(value, row, index) {
+											var url = '';
+											url += "<a href='#' onclick=queryVoucherDetailList('"
+													+ row.voucherNo
+													+ "')>查看明细</a>";
+											return url;
+										},
+										footerFormatter : function(value) {
+											return "当前页小计" + "</br>" + "合计";
+										}
+									},
+									{
+										title : '来源',
+										field : 'recordTypeStr'
+									},
+									{
+										title : '庆余卡编号',
+										field : 'voucherNo'
+									},
+									{
+										title : '操作金额',
+										field : 'recordAmount'
+									},
+									{
+										title : '关联编号',
+										field : 'recordLink'
+									},
+									{
+										title : '所属用户',
+										field : 'hu_cell',
+										formatter : function(value, row, index) {
+											return checkEmpty(row.hu_name)
+													+ "</br>"
+													+ checkEmpty(row.hu_cell);
+										}
+									},
+									{
+										title : '所属门店',
+										field : 'ht_teamId',
+										formatter : function(value, row, index) {
+											return checkEmpty(row.ht_teamId)
+													+ "</br>"
+													+ checkEmpty(row.ht_teamName)
+													+ "</br>"
+													+ checkEmpty(row.ht_teamCell)
+													+ "</br>"
+													+ checkEmpty(row.ht_teamErpNo);
+										}
+									},
+									{
+										title : '充值金额',
+										field : 'amount'
+									},
+									{
+										title : '剩余可用金额',
+										field : 'leftAmount'
+									},
+									{
+										title : '实付金额',
+										field : 'realAmount'
+									},
+									{
+										title : '余额（所属门店）',
+										field : 'voucherLeftTeam'
+									},
+									{
+										title : '备注',
+										field : 'memo'
+									},
+									{
+										title : '凭证号',
+										field : 'cerNo'
+									},
+									{
+										title : '凭证图片',
+										field : 'cerImg',
+										formatter : function(value, row, index) {
+											if (isEmpty(value)) {
+												return "无图片";
+											}
+											return '<img src="'+value+'" data-imgurl="'+value+'" width="100px" height="60px"/>';
+										}
+									},
+									{
+										title : '审核状态（业务员）',
+										field : 'checkStatusStr'
+									},
+									{
+										title : '审核（业务员）',
+										field : 'hucc_name',
+										formatter : function(value, row, index) {
+											return checkEmpty(row.hucc_name)
+													+ "</br>"
+													+ checkEmpty(row.hucc_cell);
+										}
+									},
+									{
+										title : '审核备注（业务员）',
+										field : 'checkMemo'
+									},
+									{
+										title : '审核时间（业务员）',
+										field : 'checkDate',
+										formatter : function(value, row, index) {
+											return format(value);
+										}
+									},
+									{
+										title : '审核状态（财务）',
+										field : 'checkStatusAccStr'
+									},
+									{
+										title : '审核（财务）',
+										field : 'hucca_name',
+										formatter : function(value, row, index) {
+											return checkEmpty(row.hucca_name)
+													+ "</br>"
+													+ checkEmpty(row.hucca_cell);
+										}
+									},
+									{
+										title : '审核备注（财务）',
+										field : 'checkMemoAcc'
+									},
+									{
+										title : '审核时间（财务）',
+										field : 'checkDateAcc',
+										formatter : function(value, row, index) {
+											return format(value);
+										}
+									},
+									{
+										title : '所属门店负责人',
+										field : 'ht_chargeUser',
+										formatter : function(value, row, index) {
+											return checkEmpty(row.ht_chargeUser)
+													+ "</br>"
+													+ checkEmpty(row.ht_chargeCell);
+										}
+									},
+									{
+										title : '创建者',
+										field : 'huc_cell',
+										formatter : function(value, row, index) {
+											return checkEmpty(row.huc_name)
+													+ "</br>"
+													+ checkEmpty(row.huc_cell);
+										}
+									},
+									{
+										title : '创建时间',
+										field : 'gmtCreate',
+										formatter : function(value, row, index) {
+											return format(value);
+										}
+									},
+									{
+										title : '修改时间',
+										field : 'gmtModified',
+										formatter : function(value, row, index) {
+											return format(value);
+										}
+									}
+
+							],
+							locale : 'zh-CN',//中文支持,
+							formatNoMatches : function() {
+								if (isEmpty(url)) {
+									return "单击查询搜索记录"
+								} else {
+									return "没有找到匹配的记录"
+								}
+							},
+							onLoadSuccess : function(res) { //加载成功时执行
+								$("img").load(
+										function() {
+											var viewer = new Viewer(document
+													.getElementById('mytab'), {
+												navbar : false,
+												toolbar : {
+													zoomIn : true,
+													zoomOut : true,
+													play : true,
+													rotateLeft : true,
+													rotateRight : true
+
+												},
+												show : function() {
+													viewer.update();
+												}
+											});
+										});
+
+								$(".fixed-table-footer")
+										.find(".th-inner")
+										.each(
+												function(index, item) {
+													if (index == 7) {
+														$(this)
+																.html(
+																		res.amount_page
+																				+ '</br>'
+																				+ res.amountSum);
+													}
+													if (index == 8) {
+														$(this)
+																.html(
+																		res.leftAmount_page
+																				+ '</br>'
+																				+ res.leftAmountSum);
+													}
+													if (index == 9) {
+														$(this)
+																.html(
+																		res.realAmount_page
+																				+ '</br>'
+																				+ res.realAmountSum);
+													}
+												});
+
+								$(".fixed-table-body").on("scroll", function() {
+									var sl = this.scrollLeft;
+									$(this).next()[0].scrollLeft = sl;
+								})
+							},
+							responseHandler : function(res) {
+								//在ajax获取到数据，渲染表格之前，修改数据源
+								all = res.rows;
+								return res;
+							}
+						})
+	}
+
+	//获取搜索的所有值
+	function params(params) {
+		$("#a input[type='text']").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		$("#a select").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+
+		$("#offset").val(params.offset);
+		$("#limit").val(params.limit);
+
+		return params;
+	}
+	//显示放大图片
+	function imgbig(url) {
+		$('#imgbig').modal('show');
+		$("#bigbis").attr('src', url);
+	}
+</script>
+
+<script type="text/javascript">
+	function exportAllPage(type) {
+		var fromWay = $("#fromWay").val();
+		var checkStatus = $("#checkStatus").val();
+		var checkStatusAcc = $("#checkStatusAcc").val();
+		var userMsg = $("#userMsg").val();
+		var teamMsg = $("#teamMsg").val();
+		var acerMsg = $("#acerMsg").val();
+		var cwerMsg = $("#cwerMsg").val();
+		var createrMsg = $("#createrMsg").val();
+		var startDate = $("#startDate").val();
+		var endDate = $("#endDate").val();
+
+		var action = "exportAllVoucherList.do";
+		var form = $("<form></form>");
+		form.attr('action', action);
+		form.attr('method', 'post');
+		input2 = $("<input type='text' name='fromWay' value='"+fromWay+"' />");
+		form.append(input2);
+		input3 = $("<input type='text' name='checkStatus' value='"+checkStatus+"' />");
+		form.append(input3);
+		input4 = $("<input type='text' name='checkStatusAcc' value='"+checkStatusAcc+"' />");
+		form.append(input4);
+		input5 = $("<input type='text' name='userMsg' value='"+userMsg+"' />")
+		form.append(input5);
+		input6 = $("<input type='text' name='teamMsg' value='"+teamMsg+"' />");
+		form.append(input6);
+		input7 = $("<input type='text' name='acerMsg' value='"+acerMsg+"' />");
+		form.append(input7);
+		input8 = $("<input type='text' name='cwerMsg' value='"+cwerMsg+"' />");
+		form.append(input8);
+		input9 = $("<input type='text' name='createrMsg' value='"+createrMsg+"' />");
+		form.append(input9);
+		input10 = $("<input type='text' name='startDate' value='"+startDate+"' />");
+		form.append(input10);
+		input11 = $("<input type='text' name='endDate' value='"+endDate+"' />");
+		form.append(input11);
+
+		form.appendTo("body");
+		form.css('display', 'none');
+		form.submit();
+	}
+</script>
+
+<script type="text/javascript">
+	function queryVoucherDetailList(voucherNo) {
+		$("#thisVoucherNo").val(voucherNo);
+
+		$("#queryVoucherDetailListTable").bootstrapTable('destroy');
+		askQueryVoucherDetailList();
+		$("#queryVoucherDetailListModal").modal("show");
+	}
+
+	function refreshQueryVoucherDetailList() {
+		$('#queryVoucherDetailListTable').bootstrapTable("selectPage", 1);
+	}
+
+	function askQueryVoucherDetailList() {
+		var allVoucherDetailList;
+		$('#queryVoucherDetailListTable').bootstrapTable({
+			method : 'post',
+			contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+			url : "queryVoucherDetailList.do?",//请求查询所有可同时使用的优惠券
+			dataType : 'json',
+			striped : true, //是否显示行间隔色
+			pageNumber : 1, //初始化加载第一页，默认第一页
+			pageSize : 10,//单页记录数
+			pageList : [ 5, 10, 20, 30 ],//分页步进值
+			pagination : true,//是否分页
+			queryParamsType : 'limit',//查询参数组织方式
+			sidePagination : 'server',//指定服务器端分页
+			queryParams : function(p) {
+				return paramsForQueryVoucherDetailList(p);
+			},
+			clickToSelect : false,//是否启用点击选中行
+			toolbarAlign : 'right',//工具栏对齐方式
+			buttonsAlign : 'right',//按钮对齐方式
+			toolbar : '#toolbar',//指定工作栏
+			columns : [ {
+				title : '类型',
+				field : 'recordTypeStr'
+			}, {
+				title : '金额',
+				field : 'recordAmount'
+			}, {
+				title : '关联编号',
+				field : 'recordLink'
+			}, {
+				title : '时间',
+				field : 'time'
+			} ],
+			locale : 'zh-CN',//中文支持,
+			responseHandler : function(res) {
+				//在ajax获取到数据，渲染表格之前，修改数据源
+				allRecordOrderCheck = res.rows;
+				return res;
+			}
+		})
+	}
+
+	function paramsForQueryVoucherDetailList(params) {
+		params['voucherNo'] = $("#thisVoucherNo").val();
+		return params;
+	}
+</script>
+
+</html>

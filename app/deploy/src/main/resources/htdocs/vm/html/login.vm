@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>胡庆余堂管理系统</title>
+<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+<script src="js/jquery-1.10.2.min.js"></script>
+<script type="application/x-javascript">
+	
+	
+	 
+addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
+
+
+</script>
+</head>
+<body>
+	<!-- main -->
+	<div class="main">
+		<h1>
+			<img src="images/loginlogo.png" width="500px" />
+		</h1>
+		<div class="login-form">
+			<h2>登录</h2>
+			<div class="agileits-top" id="loginbox">
+				<form action="" method="post">
+					<div class="styled-input">
+						<input type="text" name="userName" id="user_code"
+							required="required" /> <label>用户名</label> <span></span>
+					</div>
+					<div class="styled-input">
+						<input type="password" name="password" id="login_pwd"
+							required="required"> <label>密码</label> <span></span>
+					</div>
+				</form>
+			</div>
+			<div class="agileits-bottom">
+				<input type="submit" value="登     录" onclick="severCheck()"
+					id="btn-submit">
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="js/jquery.tips.js"></script>
+
+<script type="text/javascript">
+		$(function() {
+			init();//防止用户使用后退
+		});
+		function keypress(e){
+			var currKey=0,e=e||event;
+			if(e.keyCode==13){
+					severCheck();
+			}
+		}
+		document.onkeypress=keypress;
+		//客户端校验
+		function severCheck() {
+			var user_code = $("#user_code").val();
+			var login_pwd = $("#login_pwd").val();
+			if (user_code == "") {
+				$("#loginbox").tips({
+					side : 1,
+					msg : '用户名不得为空！',
+					bg : '#AE81FF',
+					time : 3
+				});
+				$("#user_code").focus();
+				return ;
+			} else if (login_pwd == "") {
+				$("#loginbox").tips({
+					side : 1,
+					msg : '密码不得为空!',
+					bg : '#AE81FF',
+					time : 3
+				});
+				$("#login_pwd").focus();
+				return ;
+			} else {
+				$("#btn-submit").attr("disabled", "disabled");
+				//ajax验证-提示
+				$("#loginbox").tips({
+					side : 1,
+					msg : '正在登录 , 请稍后 ...',
+					bg : '#68B500',
+					time : 3
+				});
+				//ajax验证
+				jQuery.ajax({
+					url : 'login.do',
+					type : 'post',
+					data : {'userName' : user_code,'password' : login_pwd},
+					contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+					dataType : 'json',
+					success : function(result){
+						if(result.flag){
+							window.location = "home.html";
+						}else{
+							$("#loginbox").tips({
+								side : 1,
+								msg : result.data,
+								bg : '#68B500',
+								time : 3
+							});
+							$("#btn-submit").removeAttr("disabled");
+							return ;
+						}
+					},
+					error : function(){
+						alert("error");	
+						$("#btn-submit").removeAttr("disabled");
+						return ;
+					}
+				})
+			}
+		}
+		function quxiao() {
+			$("#user_code").val('');
+			$("#login_pwd").val('');
+			return ;
+		}
+		function init(){
+	　　		if (window.history && window.history.pushState) {
+	　　			$(window).on('popstate', function () {
+	　　				window.history.pushState('forward', null, '#');
+	　　				window.history.forward(1);
+	　　			});
+	　　		}
+	　　		window.history.pushState('forward', null, '#'); //在IE中必须得有这两行
+	　　		window.history.forward(1);
+		}
+	</script>
+</html>

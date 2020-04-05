@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+#parse("content/importBase.vm")
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+#preview>img {
+	width: 100px;
+	height: 100px;
+}
+</style>
+</head>
+<body style="width: 100%; height: 100%;">
+	<div id="page-wrapper">
+		<!--BEGIN TITLE & BREADCRUMB PAGE-->
+		<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+			<div class="page-header pull-left">
+				<div class="page-title">推荐人返利方案管理</div>
+			</div>
+			<ol class="breadcrumb page-breadcrumb pull-right">
+				<li><i class="fa fa-home"></i>&nbsp;<a href="#">方案管理</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="hidden"><a href="#">推荐人返利方案信息</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="active">推荐人返利方案列表</li>
+			</ol>
+			<div class="clearfix"></div>
+		</div>
+
+		<div style="margin-top: 2%;" id="a">
+			<!-- 查询条件  -->
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">方案编号：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="returnId" name="returnId"
+							class="form-control">
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">方案名称：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="returnName" name="returnName"
+							class="form-control">
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">推荐者类型：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select class="form-control" id="returnType" name="returnType">
+							<option value="">请选择</option>
+							<option value="1">门店</option>
+							<option value="2">服务商</option>
+							<option value="3">代理商</option>
+							<option value="4">用户</option>
+							<option value="5">返购买者</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<br>
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">推荐者等级：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select class="form-control" id="recommendLevel"
+							name="recommendLevel">
+							<option value="">请选择</option>
+							<option value="1">V1</option>
+							<option value="2">V2</option>
+							<option value="3">V3</option>
+							<option value="4">V4</option>
+							<option value="5">V5</option>
+						</select>
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">团队编号：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="teamId" name="teamId" class="form-control">
+					</div>
+				</div>
+			</div>
+			<br>
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">个人返利开始时间：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="startTime" name="startTime"
+							class="form-control datetimepickers" readonly="readonly" /> <br />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">个人返利创建结束时间：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="endTime" name="endTime"
+							class="form-control datetimepickers" readonly="readonly" /> <br />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">状态：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select class="form-control" id="status" name="status">
+							<option value="">全部</option>
+							<option value="0" selected="selected">正在进行</option>
+							<option value="1">已结束</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<br>
+
+			<div class="col-sm-4" style="float: right">
+				<div class="control-group">
+					<div>
+						<button onclick="clean()" class="btn btn-danger" name="Name"
+							id="search_tel" value="清空"
+							style="float: right; margin-right: 2%;">清空</button>
+					</div>
+					<div>
+						<button onclick="sorce()" class="btn btn-info" name="Name"
+							id="search_tel" value="查询"
+							style="float: right; margin-right: 2%;">查询</button>
+					</div>
+					<div>
+						<button onclick="showAddModal('myModal','show')"
+							class="btn btn-warning" name="Name" id="search_tel"
+							value="添加推荐人返利" style="float: right; margin-right: 2%;">添加推荐人返利</button>
+					</div>
+					<div>
+						<button onclick="showAddSelfModal('selfModal')"
+							class="btn btn-warning" name="Name" id="search_tel"
+							value="添加购买人返利" style="float: right; margin-right: 2%;">添加购买人返利</button>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<table id="mytab" class="table table-hover"></table>
+
+		<!-- 新增模态框  -->
+		<div class="modal fade" id="myModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title">新增推荐人返利信息</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" role="form" name="form"
+							enctype="multipart/form-data" method="post">
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">方案名称<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<input type="text" id="addReturnName" name="addReturnName"
+										class="form-control">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">推荐者类型<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<select class="form-control" id="addReturnType"
+										name="addReturnType">
+										<option value="">请选择</option>
+										<option value="1">门店</option>
+										<option value="2">服务商</option>
+										<option value="3">代理商</option>
+										<option value="4">用户</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">推荐者等级<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<select class="form-control" id="addRecommendLevel"
+										name="addRecommendLevel">
+										<option value="">请选择</option>
+										<option value="1">V1</option>
+										<option value="2">V2</option>
+										<option value="3">V3</option>
+										<option value="4">V4</option>
+										<option value="5">V5</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">胡币返利百分比<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<input type="text" id="addReturnRate" name="addReturnRate"
+										class="form-control" min="0"
+										onkeyup="this.value=this.value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">特殊团队编号：</label>
+								<div class="col-sm-9">
+									<input type="text" id="addTeamId" name="addTeamId"
+										class="form-control" min="0"
+										onkeyup="this.value=this.value.replace(/\D/g,'')"
+										placeholder="当个别商家需要设置特殊的比率时再填写">
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary"
+							onclick="submitAdd()">确定</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 修改模态框  -->
+		<div class="modal fade" id="editModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title">修改推荐人返利信息</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" role="form" name="editForm"
+							enctype="multipart/form-data" method="post">
+
+							<input type="hidden" name="editReturnId" id="editReturnId">
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">方案名称<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<input type="text" id="editReturnName" name="editReturnName"
+										class="form-control">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">推荐者类型<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<select class="form-control" id="editReturnType"
+										name="editReturnType" disabled="disabled">
+										<option value="">请选择</option>
+										<option value="1">门店</option>
+										<option value="2">服务商</option>
+										<option value="3">代理商</option>
+										<option value="4">用户</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">推荐者等级<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<select class="form-control" id="editRecommendLevel"
+										name="editRecommendLevel" disabled="disabled">
+										<option value="">请选择</option>
+										<option value="1">V1</option>
+										<option value="2">V2</option>
+										<option value="3">V3</option>
+										<option value="4">V4</option>
+										<option value="5">V5</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">返利比率（百分比）<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<input type="text" id="editReturnRate" name="editReturnRate"
+										class="form-control" min="0"
+										onkeyup="this.value=this.value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">特殊团队编号：</label>
+								<div class="col-sm-9">
+									<input type="text" id="editTeamId" name="editTeamId"
+										class="form-control" min="0"
+										onkeyup="this.value=this.value.replace(/\D/g,'')"
+										readonly="readonly">
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary"
+							onclick="submitEdit()">确定</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 购买人返利 -->
+		<div class="modal fade" id="selfModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title">新增购买人返利</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" role="form" name="selfForm"
+							enctype="multipart/form-data" method="post">
+
+							<input type="hidden" name="selfReturnId" id="selfReturnId"
+								value="0">
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">方案名称<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<input type="text" id="selfReturnName" name="selfReturnName"
+										class="form-control">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">返利类型<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<select class="form-control" id="selfReturnSubType"
+										name="selfReturnSubType">
+										<option value="0">不返利</option>
+										<option value="1">按积分值返利</option>
+										<option value="2">按比例返利</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">积分返利值或百分比<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<input type="text" id="selfReturnValue" name="selfReturnValue"
+										class="form-control" min="0"
+										onkeyup="this.value=this.value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">开始日期<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<div class="control-group">
+										<input type="text" id="selfStartTime" name="selfStartTime"
+											class="form-control datetimepickers" readonly="readonly" />
+										<br />
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">结束日期<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<div class="control-group">
+										<input type="text" id="selfEndTime" name="selfEndTime"
+											class="form-control datetimepickers" readonly="readonly" />
+										<br />
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary"
+							onclick="submitSelf()">确定</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<input type="hidden" name="thisReturnId" id="thisReturnId" value="0">
+		<input type="hidden" name="thisProductId" id="thisProductId" value="0">
+
+		<!-- 关联商品选择框 -->
+		<div class="modal fade" id="selectGoodsModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" style="width: 1000px;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">关联商品</h4>
+					</div>
+					<div style="margin-top: 2%;" id="searchGoods">
+						<div class="row">
+							<label class="col-sm-1 control-label"
+								style="text-align: right; margin-top: 5px">商品名称：</label>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<input type="text" id="productName" name="alertGoodsName"
+										class="form-control" />
+								</div>
+							</div>
+
+							<label class="col-sm-1 control-label"
+								style="text-align: right; margin-top: 5px">商品编号：</label>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<input type="text" id="productId" name="alertGoodsId"
+										class="form-control" />
+								</div>
+							</div>
+
+							<label class="col-sm-1 control-label"
+								style="text-align: right; margin-top: 5px">商品erp编号：</label>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<input type="text" id="goodErpNo" name="alertGoodErpNo"
+										class="form-control" />
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<label class="col-sm-1 control-label"
+								style="text-align: right; margin-top: 5px">商品所属门店：</label>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<select class="form-control" id="goodFromTeam"
+										name="goodFromTeam">
+									</select>
+								</div>
+							</div>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<button id="search_btn" type="button" class="btn btn-info"
+										onclick="searchGoods()">查询</button>
+									<button id="btn_edit" type="button" class="btn btn-danger"
+										style="margin-left: 3px;" onclick="cleant()">清空</button>
+								</div>
+							</div>
+						</div>
+						<table id="goodsListTable" class="table table-hover"></table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 属性选择 -->
+		<div class="modal fade" id="selectGoodsAttrModal"
+			data-backdrop="static" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog" style="width: 1000px;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">选择属性</h4>
+					</div>
+					<div style="margin-top: 2%;" id="searchGoodsAttr">
+						<div class="row">
+							<div class="col-sm-2">
+								<div class="control-group">
+									<button id="search_btn" type="button" class="btn btn-info"
+										onclick="searchGoodsAttr()">刷新</button>
+								</div>
+							</div>
+						</div>
+						<table id="goodsAttrListTable" class="table table-hover"></table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</body>
+
+<script type="text/javascript">
+	$('.datetimepickers').datetimepicker({
+		minView : "month",//设置只显示到月份
+		format : 'yyyy-mm-dd',//文本框显示格式
+		language : 'zh-CN',//汉化
+		autoclose : true,//选中关闭
+		todayBtn : true
+	//今日按钮
+	})
+</script>
+
+<script type="text/javascript">
+	//显示添加框
+	function showAddModal(id, type) {
+		//添加的时候先清除一下缓存
+		claenmyModal(id);
+		$("#" + id).modal(type);
+	}
+
+	function showAddSelfModal(id) {
+		//添加的时候先清除一下缓存
+		claenmyModal(id);
+		$("#selfReturnId").val("0");
+		$("#selfModal").modal('show');
+	}
+
+	//提交添加表单
+	function submitAdd() {
+		$("form[name='form']").ajaxSubmit(
+				{
+					type : "post",
+					url : "addPlanReturn.do",
+					dataType : "json",
+					beforeSubmit : function() {
+						//表单数据校验  
+						if ($("#addReturnName").val() == null
+								|| $("#addReturnName").val() == "") {
+							alert("方案名称不能为空");
+							return false;
+						}
+						if ($("#addReturnType").val() == null
+								|| $("#addReturnType").val() == "") {
+							alert("推荐人类型不能为空");
+							return false;
+						}
+						if ($("#addRecommendLevel").val() == null
+								|| $("#addRecommendLevel").val() == "") {
+							alert("推荐人等级不能为空");
+							return false;
+						}
+						if ($("#addReturnRate").val() == null
+								|| $("#addReturnRate").val() == "") {
+							alert("返利比率不能为空");
+							return false;
+						}
+					},
+					success : function(data) {
+						if (!data.success) {
+							alert(data.message);
+							return false;
+						} else {
+							alert(data.message);
+							showAddModal('myModal', 'hide');
+							$("#mytab").bootstrapTable('refresh');
+						}
+
+					},
+					error : function(e) {
+						alert("异常!");
+					}
+
+				});
+	}
+
+	//显示修改框          
+	function showUpdateModal(index) {
+		$("#editReturnId").val(all[index].returnId);
+		$("#editReturnName").val(all[index].returnName);
+		$("#editReturnType").val(all[index].returnType);
+		$("#editRecommendLevel").val(all[index].recommendLevel);
+		$("#editReturnRate").val(all[index].returnRate * 100);
+		$('#editTeamId').val(all[index].teamId);
+		$("#editModal").modal('show');
+	}
+
+	//显示修改框          
+	function showUpdateSelfModal(index) {
+		$("#selfReturnId").val(all[index].returnId);
+		$("#selfReturnName").val(all[index].returnName);
+		$("#selfReturnSubType").val(all[index].returnSubType);
+		if (all[index].returnSubType == '2') {
+			$("#selfReturnValue").val(all[index].returnValue * 100);
+		} else {
+			$("#selfReturnValue").val(all[index].returnValue);
+		}
+		$("#selfEndTime").val(all[index].endTime);
+		$("#selfStartTime").val(all[index].startTime);
+		$("#selfModal").modal('show');
+	}
+
+	//提交修改表单
+	function submitEdit() {
+		$("form[name='editForm']").ajaxSubmit(
+				{
+					type : "post",
+					url : "updatePlanReturn.do",
+					dataType : "json",
+					beforeSubmit : function() {
+						//表单数据校验
+						if ($("#editReturnName").val() == null
+								|| $("#editReturnName").val() == "") {
+							alert("方案名称不能为空");
+							return false;
+						}
+						if ($("#editReturnRate").val() == null
+								|| $("#editReturnRate").val() == "") {
+							alert("返利比率不能为空");
+							return false;
+						}
+					},
+					success : function(data) {
+						if (!data.success) {
+							alert(data.message);
+							return false;
+						} else {
+							alert(data.message);
+							showAddModal('editModal', 'hide');
+							$("#mytab").bootstrapTable('refresh');
+						}
+
+					},
+					error : function(e) {
+						alert("异常!");
+					}
+
+				});
+	}
+
+	//删除操作
+	function doDelete(value) {
+		if (confirm("确认删除？删除后不可修改！")) {
+			jQuery.ajax({
+				url : "deletePlanReturn.do",
+				type : 'post',
+				data : {
+					"returnId" : value
+				},
+				dataType : 'json',
+				success : function(data) {
+					if (!data.success) {
+						alert(data.message);
+						return false;
+					} else {
+						alert(data.message);
+						$("#mytab").bootstrapTable('refresh');
+					}
+				},
+				error : function() {
+					alert("异常！");
+				}
+			});
+		}
+	}
+
+	bootsearch()
+	function sorce() {
+		$("#mytab").bootstrapTable('destroy');
+		//生成用户数据
+		bootsearch();
+	}
+
+	var all;
+	function bootsearch() {
+		//生成列表数据
+		$('#mytab')
+				.bootstrapTable(
+						{
+							method : 'post',
+							contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+							url : "selectPlanReturn.do",//要请求数据的文件路径
+							dataType : 'json',
+							striped : true, //是否显示行间隔色
+							pageNumber : 1, //初始化加载第一页，默认第一页
+							pageSize : 10,//单页记录数
+							pageList : [ 5, 10, 20, 30 ],//分页步进值
+							pagination : true,//是否分页
+							queryParamsType : 'limit',//查询参数组织方式
+							sidePagination : 'server',//指定服务器端分页
+							queryParams : function(p) {
+								return params(p);
+							},
+
+							clickToSelect : true,//是否启用点击选中行
+							toolbarAlign : 'right',//工具栏对齐方式
+							buttonsAlign : 'right',//按钮对齐方式
+							toolbar : '#toolbar',//指定工作栏
+							columns : [
+									{
+										title : '操作',
+										field : 'returnId',//删除操作时使用
+										formatter : function(value, row, index) {
+											if (row.returnType != '5') {
+												return "<a href='#' onclick=showUpdateModal('"
+														+ index
+														+ "')>修改 | </a>"
+														+ "<a href='#' onclick=doDelete('"
+														+ value + "')>删除</a>";
+											} else {
+												return "<a href='#' onclick=showUpdateSelfModal('"
+														+ index
+														+ "')>修改 | </a>"
+														+ "<a href='#' onclick=clickButtonTwo('"
+														+ value
+														+ "')>指定商品 | </a>"
+														+ "<a href='#' onclick=doDelete('"
+														+ value + "')>删除</a>";
+											}
+										}
+									},
+									{
+										title : '编号',
+										field : 'returnId'
+									},
+									{
+										title : '名称',
+										field : 'returnName'
+									},
+									{
+										title : '推荐人类型',
+										field : 'returnType',
+										formatter : function(value, row, index) {
+											if (value == "1") {
+												return "门店";
+											}
+											if (value == "2") {
+												return "服务商";
+											}
+											if (value == "3") {
+												return "代理商";
+											}
+											if (value == "4") {
+												return "用户";
+											}
+											if (value == "5") {
+												return "返购买者";
+											}
+										}
+									},
+									{
+										title : '推荐人等级',
+										field : 'recommendLevel',
+										formatter : function(value, row, index) {
+											if (value == "1") {
+												return "V1";
+											}
+											if (value == "2") {
+												return "V2";
+											}
+											if (value == "3") {
+												return "V3";
+											}
+											if (value == "4") {
+												return "V4";
+											}
+											if (value == "5") {
+												return "V5";
+											}
+										}
+									},
+									{
+										title : '推荐人胡币返利百分比',
+										field : 'returnRate',
+										formatter : function(value, row, index) {
+											return value * 100
+										}
+									},
+									{
+										title : '特殊团队编号',
+										field : 'teamId',
+										formatter : function(value, row, index) {
+											if (value == null || value == "") {
+												return "通用方案"
+											} else {
+												return value
+											}
+										}
+									},
+									{
+										title : '购买人返利类型',
+										field : 'returnSubType',
+										formatter : function(value, row, index) {
+											if (row.returnType == '5') {
+												if (value == "0") {
+													return "不返利";
+												}
+												if (value == "1") {
+													return "按积分值返利";
+												}
+												if (value == "2") {
+													return "按比例返利";
+												}
+											} else {
+												return "---";
+											}
+										}
+									},
+									{
+										title : '购买人积分返利值或百分比',
+										field : 'returnValue',
+										formatter : function(value, row, index) {
+											if (row.returnSubType == "2") {
+												return value * 100;
+											} else {
+												return value;
+											}
+										}
+									},
+									{
+										title : '购买人返利开始日期',
+										field : 'startTime',
+										formatter : function(value, row, index) {
+											if (value == '' || value == null) {
+												return '---';
+											}
+											return formatNoTime(value)
+										}
+									},
+									{
+										title : '购买人返利结束日期',
+										field : 'endTime',
+										formatter : function(value, row, index) {
+											if (value == '' || value == null) {
+												return '---';
+											}
+											return formatNoTime(value)
+										}
+									},
+									{
+										title : '创建者',
+										field : 'creater'
+									},
+									{
+										title : '创建时间',
+										field : 'gmtCreate',
+										formatter : function(value, row, index) {
+											return format(value)
+										}
+									},
+									{
+										title : '修改者',
+										field : 'modifier'
+									},
+									{
+										title : '修改时间',
+										field : 'gmtModified',
+										formatter : function(value, row, index) {
+											return format(value)
+										}
+									} ],
+							locale : 'zh-CN',//中文支持,
+							responseHandler : function(res) {
+								//在ajax获取到数据，渲染表格之前，修改数据源
+								all = res.rows;
+								return res;
+							}
+						})
+	}
+
+	//获取搜索的所有值
+	function params(params) {
+		$("#a input[type='text']").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		$("#a select").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		return params;
+	}
+
+	//清空搜索条件
+	function clean() {
+		$("#a input").val("");
+		$("#a select").val("");
+	}
+</script>
+
+<script type="text/javascript">
+	function submitSelf() {
+		var returnId = $("#selfReturnId").val();
+
+		var selfReturnName = $("#selfReturnName").val();
+		var selfReturnSubType = $("#selfReturnSubType").val();
+		var selfReturnValue = $("#selfReturnValue").val();
+		var selfEndTime = $("#selfEndTime").val();
+		var selfStartTime = $("#selfStartTime").val();
+
+		var formData = new FormData();
+		var url = "";
+		if (returnId == "0") {
+			url = "addPlanReturnForSelf.do";
+			formData.append("addReturnName", selfReturnName);
+			formData.append("addReturnSubType", selfReturnSubType);
+			formData.append("addReturnValue", selfReturnValue);
+			formData.append("addEndTime", selfEndTime);
+			formData.append("addStartTime", selfStartTime);
+		} else {
+			url = "editPlanReturnForSelf.do";
+			formData.append("editReturnName", selfReturnName);
+			formData.append("editReturnSubType", selfReturnSubType);
+			formData.append("editReturnValue", selfReturnValue);
+			formData.append("editEndTime", selfEndTime);
+			formData.append("editStartTime", selfStartTime);
+			formData.append("editReturnId", returnId);
+		}
+		jQuery.ajax({
+			url : url,
+			type : 'post',
+			data : formData,
+			dataType : 'json',
+			cache : false,
+			processData : false,
+			contentType : false,
+			success : function(data) {
+				if (data.success) {
+					$('#selfModal').modal('hide');
+					$("#mytab").bootstrapTable('refresh');
+				} else {
+					alert(data.message);
+				}
+			},
+			error : function() {
+				alert("操作失败！");
+			}
+		});
+	}
+</script>
+
+<script type="text/javascript">
+	/*   ******00选择关联商品开始******   */
+	//点击选择门店按钮触发
+	function clickButtonTwo(returnId) {
+		$("#thisReturnId").val(returnId);
+
+		//给店铺列表下拉框赋值
+		$("#goodFromTeam").empty();
+		jQuery.ajax({
+			url : "queryTeamList.do",
+			type : 'post',
+			success : function(data) {
+				for (var i = 0; i < data.length; i++) {
+					$("#goodFromTeam").append(
+							'<option value="'+data[i].teamId+'">'
+									+ data[i].teamName + '</option>')
+				}
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+
+		$("#goodsListTable").bootstrapTable('destroy');
+		askGoodsList();
+		$("#selectGoodsModal").modal("show");
+
+	}
+
+	//查询商品
+	function searchGoods() {
+		$('#goodsListTable').bootstrapTable("selectPage", 1);
+	}
+
+	//清除搜索
+	function cleanDis() {
+		$('#searchGoods input').val("");
+	}
+	//请求商品数据
+	function askGoodsList() {
+		var all2;
+		$('#goodsListTable')
+				.bootstrapTable(
+						{
+							method : 'post',
+							contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+							url : "selectGoodsForReturnSelf.do?",
+							dataType : 'json',
+							striped : true, //是否显示行间隔色
+							pageNumber : 1, //初始化加载第一页，默认第一页
+							pageSize : 10,//单页记录数
+							pageList : [ 10, 20, 30 ],//分页步进值
+							pagination : true,//是否分页
+							queryParamsType : 'limit',//查询参数组织方式
+							sidePagination : 'server',//指定服务器端分页
+							queryParams : function(p) {
+								return paramsForAlertGoodsTable(p);
+							},
+							clickToSelect : false,//是否启用点击选中行
+							toolbarAlign : 'right',//工具栏对齐方式
+							buttonsAlign : 'right',//按钮对齐方式
+							toolbar : '#toolbar',//指定工作栏
+							//点击全选框时触发的操作        
+							onCheckAll : function(rows) {
+								setAllLinkGoods(rows);
+							},
+							onUncheckAll : function(rows) {
+								unsetAllLinkGoods(rows);
+							},
+							//点击每一个单选框时触发的操作         
+							onCheck : function(row) {
+								setLinkGoods(row);
+							},
+							//取消每一个单选框时对应的操作；        
+							onUncheck : function(row) {
+								unsetLinkGoods(row);
+							},
+							columns : [
+									{
+										field : "id",
+										checkbox : true,
+										formatter : checkBoxFormatter
+									},
+									{
+										field : "productId",
+										formatter : function(value, row, index) {
+											return "<a href='#' onclick=clickButtonForAttr('"
+													+ value + "')>选择商品属性</a>"
+										}
+									}, {
+										title : 'erp编号',
+										field : 'erpNo'
+									}, {
+										title : '商品编号',
+										field : 'productId'
+									}, {
+										title : '商品名称',
+										field : 'productName'
+									} ],
+							locale : 'zh-CN',//中文支持,
+							responseHandler : function(res) {
+								//在ajax获取到数据，渲染表格之前，修改数据源
+								all2 = res.rows;
+								return res;
+							}
+						})
+	}
+
+	function paramsForAlertGoodsTable(params) {
+		$("#searchGoods input[type='text']").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		params["isDelete"] = "0";
+		params["onSale"] = "1";
+		params['returnId'] = $("#thisReturnId").val();
+		return params;
+	}
+
+	/*   ******选择关联商品结束******   */
+
+	function checkBoxFormatter(value, row, index) {
+		if (row.hasChoose) {
+			return {
+				disabled : false,//设置是否可用 
+				checked : true
+			//设置选中 
+			};
+		} else {
+			return {
+				disabled : false,//设置是否可用 
+				checked : false
+			//设置不选中 
+			};
+		}
+	}
+</script>
+
+<script type="text/javascript">
+	//选中 
+	function setLinkGoods(row) {
+		var returnId = $("#thisReturnId").val();
+		jQuery.ajax({
+			url : "returnPlanChooseGood.do",
+			type : 'post',
+			data : {
+				"returnId" : returnId,
+				"productId" : row.productId
+			},
+			dataType : 'json',
+			success : function(json) {
+				$("#goodsListTable").bootstrapTable('refresh');
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+	}
+
+	//取消 
+	function unsetLinkGoods(row) {
+		var returnId = $("#thisReturnId").val();
+		jQuery.ajax({
+			url : "returnPlanUnChooseGood.do",
+			type : 'post',
+			data : {
+				"returnId" : returnId,
+				"productId" : row.productId
+			},
+			dataType : 'json',
+			success : function(json) {
+				$("#goodsListTable").bootstrapTable('refresh');
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+	}
+
+	//全选 
+	function setAllLinkGoods(rows) {
+		var arrayObj = new Array();
+		for (var i = 0; i < rows.length; i++) {
+			arrayObj.push(rows[i].productId);
+		}
+		var returnId = $("#thisReturnId").val();
+		jQuery.ajax({
+			url : "returnPlanChooseGoodAll.do",
+			type : 'post',
+			data : {
+				"returnId" : returnId,
+				"productIdS" : arrayObj
+			},
+			dataType : 'json',
+			traditional : true,//这里设置为true 
+			success : function(json) {
+				$("#goodsListTable").bootstrapTable('refresh');
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+	}
+
+	//全选 取消
+	function unsetAllLinkGoods(rows) {
+		var arrayObj = new Array();
+		for (var i = 0; i < rows.length; i++) {
+			arrayObj.push(rows[i].productId);
+		}
+		var returnId = $("#thisReturnId").val();
+		jQuery.ajax({
+			url : "returnPlanUnChooseGoodAll.do",
+			type : 'post',
+			data : {
+				"returnId" : returnId,
+				"productIdS" : arrayObj
+			},
+			dataType : 'json',
+			traditional : true,//这里设置为true 
+			success : function(json) {
+				$("#goodsListTable").bootstrapTable('refresh');
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+	}
+</script>
+
+<script type="text/javascript">
+	/*   ******00选择关联商品属性开始******   */
+	function clickButtonForAttr(productId) {
+		$("#thisProductId").val(productId);
+
+		$("#goodsAttrListTable").bootstrapTable('destroy');
+		askGoodsAttrList();
+		$("#selectGoodsAttrModal").modal("show");
+
+	}
+
+	//查询商品属性
+	function searchGoodsAttr() {
+		$('#goodsAttrListTable').bootstrapTable("selectPage", 1);
+	}
+
+	//清除搜索
+	function cleanDisAttr() {
+		$('#searchGoodsAttr input').val("");
+	}
+	//请求商品数据
+	function askGoodsAttrList() {
+		var all2;
+		$('#goodsAttrListTable').bootstrapTable({
+			method : 'post',
+			contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+			url : "selectGoodsAttrForReturnSelf.do?",
+			dataType : 'json',
+			striped : true, //是否显示行间隔色
+			pageNumber : 1, //初始化加载第一页，默认第一页
+			pageSize : 10,//单页记录数
+			pageList : [ 10, 20, 30 ],//分页步进值
+			pagination : true,//是否分页
+			queryParamsType : 'limit',//查询参数组织方式
+			sidePagination : 'server',//指定服务器端分页
+			queryParams : function(p) {
+				return paramsForAlertGoodsAttrTable(p);
+			},
+			clickToSelect : false,//是否启用点击选中行
+			toolbarAlign : 'right',//工具栏对齐方式
+			buttonsAlign : 'right',//按钮对齐方式
+			toolbar : '#toolbar',//指定工作栏
+			checkboxHeader : false,
+			//点击全选框时触发的操作        
+			onCheckAll : function(rows) {
+				setAllLinkGoodsAttr(rows);
+			},
+			onUncheckAll : function(rows) {
+				unsetAllLinkGoodsAttr(rows);
+			},
+			//点击每一个单选框时触发的操作         
+			onCheck : function(row) {
+				setLinkGoodsAttr(row);
+			},
+			//取消每一个单选框时对应的操作；        
+			onUncheck : function(row) {
+				unsetLinkGoodsAttr(row);
+			},
+			columns : [ {
+				field : "id",
+				checkbox : true,
+				formatter : checkBoxFormatterAttr
+			}, {
+				title : '属性名',
+				field : 'attrNames'
+			}, {
+				title : '属性值名',
+				field : 'valuees'
+			}, {
+				title : '原价',
+				field : 'price',
+				formatter : function(value, row, index) {
+					return value.amount;
+				}
+			}, {
+				title : '购买价',
+				field : 'goodAmount',
+				formatter : function(value, row, index) {
+					return value.amount;
+				}
+			}, {
+				title : '是否有属性',
+				field : 'type',
+				formatter : function(value, row, index) {
+					if (value == "1")
+						return "无属性";
+
+					if (value == "2")
+						return "有属性";
+				}
+			} ],
+			locale : 'zh-CN',//中文支持,
+			responseHandler : function(res) {
+				//在ajax获取到数据，渲染表格之前，修改数据源
+				all2 = res.rows;
+				return res;
+			}
+		})
+	}
+
+	function paramsForAlertGoodsAttrTable(params) {
+		params['returnId'] = $("#thisReturnId").val();
+		params['productId'] = $("#thisProductId").val();
+		return params;
+	}
+
+	/*   ******选择关联商品结束******   */
+
+	function checkBoxFormatterAttr(value, row, index) {
+		if (row.hasChoose) {
+			return {
+				disabled : false,//设置是否可用 
+				checked : true
+			//设置选中 
+			};
+		} else {
+			return {
+				disabled : false,//设置是否可用 
+				checked : false
+			//设置不选中 
+			};
+		}
+	}
+</script>
+
+<script type="text/javascript">
+	//选中 
+	function setLinkGoodsAttr(row) {
+		var returnId = $("#thisReturnId").val();
+		var productId = $("#thisProductId").val();
+		jQuery.ajax({
+			url : "returnPlanChooseGoodAttr.do",
+			type : 'post',
+			data : {
+				"returnId" : returnId,
+				"productId" : productId,
+				"chooseId" : row.stockId
+			},
+			dataType : 'json',
+			success : function(json) {
+				$("#goodsAttrListTable").bootstrapTable('refresh');
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+	}
+
+	//取消 
+	function unsetLinkGoodsAttr(row) {
+		var returnId = $("#thisReturnId").val();
+		var productId = $("#thisProductId").val();
+		jQuery.ajax({
+			url : "returnPlanUnChooseGoodAttr.do",
+			type : 'post',
+			data : {
+				"returnId" : returnId,
+				"productId" : productId,
+				"chooseId" : row.stockId
+			},
+			dataType : 'json',
+			success : function(json) {
+				$("#goodsAttrListTable").bootstrapTable('refresh');
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+	}
+
+	//全选 
+	/* function setAllLinkGoodsAttr(rows){
+		var arrayObj = new Array();
+		for(var i = 0;i<rows.length;i++){
+			arrayObj.push(rows[i].stockId);
+		}
+		var returnId = $("#thisReturnId").val();
+		var productId = $("#thisProductId").val();
+		jQuery.ajax({
+			url : "returnPlanChooseGoodAttrAll.do",
+			type : 'post',
+			data : {
+				"returnId" : returnId,
+				"productId" : productId,
+				"chooseIdS" : arrayObj
+			},
+			dataType : 'json',
+			traditional: true,//这里设置为true 
+			success : function(json) {
+				$("#goodsAttrListTable").bootstrapTable('refresh');
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+	} */
+
+	//全选 取消
+	/* function unsetAllLinkGoodsAttr(rows){
+		var arrayObj = new Array();
+		for(var i = 0;i<rows.length;i++){
+			arrayObj.push(rows[i].stockId);
+		}
+		var returnId = $("#thisReturnId").val();
+		var productId = $("#thisProductId").val();
+		jQuery.ajax({
+			url : "returnPlanUnChooseGoodAttrAll.do",
+			type : 'post',
+			data : {
+				"returnId" : returnId,
+				"productId" : productId,
+				"chooseIdS" : arrayObj
+			},
+			dataType : 'json',
+			traditional: true,//这里设置为true 
+			success : function(json) {
+				$("#goodsAttrListTable").bootstrapTable('refresh');
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+	} */
+</script>
+
+</html>

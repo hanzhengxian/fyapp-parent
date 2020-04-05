@@ -1,0 +1,2887 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+#parse("content/importBase.vm")
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+#preview>img {
+	width: 60%;
+}
+
+#container {
+	height: 100%
+}
+
+.fixed-table-container thead th:nth-child(1) .th-inner {
+	width: 120px
+}
+
+.fixed-table-container thead th:nth-child(17) .th-inner {
+	width: 120px
+}
+</style>
+<script type="text/javascript"
+	src="https://api.map.baidu.com/api?v=2.0&ak=jCSeS7WuFqYGrOujF69isaRPYE4AgiAF"></script>
+<script type="text/javascript"
+	src="https://webapi.amap.com/maps?v=1.4.4&key=104042ea39a909a3b5e9077bf53d94d2&plugin=AMap.Autocomplete"></script>
+</head>
+<body style="width: 100%; height: 100%;">
+	<div id="page-wrapper">
+		<!--BEGIN TITLE & BREADCRUMB PAGE-->
+		<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+			<div class="page-header pull-left">
+				<div class="page-title">团队管理</div>
+			</div>
+			<ol class="breadcrumb page-breadcrumb pull-right">
+				<li><i class="fa fa-home"></i>&nbsp;<a href="#">团队管理</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="hidden"><a href="#">团队管理</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="active">团队管理</li>
+			</ol>
+
+			<div class="clearfix"></div>
+		</div>
+
+
+		<div style="margin-top: 2%;" id="a">
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">用户昵称：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="nickName" name="nickName"
+							class="form-control" />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">用户真实姓名：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="realName" name="realName"
+							class="form-control" />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">用户手机号码：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="userCell" name="userCell"
+							class="form-control" />
+					</div>
+				</div>
+			</div>
+			<br />
+
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">团队erp编号：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="teamErpNo" name="teamErpNo"
+							class="form-control" />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">团队名称：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" name="teamName" id="teamName"
+							class="form-control">
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">是否删除：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select name="delflg" id="delflg" class="form-control">
+							<option value="">请选择</option>
+							<option value="1">是</option>
+							<option value="0">否</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<br />
+
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">团队类型：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select name="teamType" id="teamType" class="form-control">
+							<option value="">请选择</option>
+							<option value="1">门店</option>
+							<option value="2">服务商</option>
+							<option value="3">代理商</option>
+						</select>
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">团队等级：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select name="teamLevel" id="teamLevel" class="form-control">
+							<option value="">请选择</option>
+							<option value="1">V1</option>
+							<option value="2">V2</option>
+							<option value="3">V3</option>
+							<option value="4">V4</option>
+							<option value="5">V5</option>
+						</select>
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">是否总店：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select name="isTop" id="isTop" class="form-control">
+							<option value="">请选择</option>
+							<option value="1">是</option>
+							<option value="0">否</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<br />
+
+			<div class="row">
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">审核角色：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select name="teamCheckRole" id="teamCheckRole"
+							class="form-control">
+						</select>
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">审核手机号码：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" name="teamCheckCell" id="teamCheckCell"
+							class="form-control">
+					</div>
+				</div>
+
+			</div>
+			<br />
+
+			<div class="row">
+				<div class="col-sm-4" style="float: right">
+					<div class="control-group">
+						<div>
+							<button id="btnTransfer" type="button" class="btn btn-success"
+								style="float: right; margin-right: 2%; margin-bottom: 10px;"
+								onclick="exportAllPage('thisPage')">导出当页</button>
+						</div>
+						<div>
+							<button id="search_btn" type="button" class="btn btn-success"
+								style="float: right; margin-right: 2%; margin-bottom: 10px;"
+								onclick="exportAllPage('all')">导出全部</button>
+						</div>
+						<div>
+							<button onclick="clean()" class="btn btn-danger" name="Name"
+								id="search_tel" value="清空"
+								style="float: right; margin-right: 2%;">清空</button>
+						</div>
+						<div>
+							<button onclick="sorce()" class="btn btn-info" name="Name"
+								id="search_tel" value="查询"
+								style="float: right; margin-right: 2%;">查询</button>
+						</div>
+						<div>
+							<button onclick="addteam('myModal','show')"
+								class="btn btn-warning" style="float: right; margin-right: 2%;">添加</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<table id="mytab" class="table table-hover"></table>
+	</div>
+
+	<input type="hidden" id="offset" readonly="readonly" />
+	<input type="hidden" id="limit" readonly="readonly" />
+
+	<!--添加-->
+
+	<div class="modal fade" id="myModal" data-backdrop="static"
+		tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">添加团队信息</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" role="form" name="form" id="addt"
+						method="post" enctype="multipart/form-data">
+						<div class="form-group">
+							<label for="lastname" class="col-sm-2 control-label">团队图片：</label>
+							<div class="col-sm-10">
+								<input type="file" id="ateamImg" name="ateamImg"
+									class="form-control" multiple="multiple"
+									onchange="preview(this)" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-2 control-label"></label>
+							<div class="col-sm-10">
+								<div id="preview" style="display: none" class=""></div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-3 control-label">erp编号：</label>
+							<div class="col-sm-9">
+								<input type="text" id="aerp" class="form-control" name="aerp" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-3 control-label">团队名称<span
+								style="color: red;">*</span>：
+							</label>
+							<div class="col-sm-9">
+								<input type="text" id="ateamname" class="form-control"
+									name="ateamname" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-3 control-label">团队全称<span
+								style="color: red;">*</span>：
+							</label>
+							<div class="col-sm-9">
+								<input type="text" id="ateamAllName" class="form-control"
+									name="ateamAllName" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">经营类别</label>
+							<div class="col-sm-9" id="businessCategoryDiv1"></div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-3 control-label">团队等级<span
+								style="color: red;">*</span>：
+							</label>
+							<div class="col-sm-9">
+								<select class="form-control" id="alev" name="alev">
+									<option value="1" selected="selected">V1</option>
+									<option value="2">V2</option>
+									<option value="3">V3</option>
+									<option value="4">V4</option>
+									<option value="5">V5</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-3 control-label">健康值：</label>
+							<div class="col-sm-9">
+								<input type="text" id="devoteAmount" class="form-control"
+									name="devoteAmount" readonly="readonly" value="0" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-3 control-label">胡币：</label>
+							<div class="col-sm-9">
+								<input type="text" id="repoint" class="form-control"
+									name="repoint" readonly="readonly" value="0" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-3 control-label">积分：</label>
+							<div class="col-sm-9">
+								<input type="text" id="point" class="form-control" name="point"
+									readonly="readonly" value="0" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-3 control-label">团队类型<span
+								style="color: red;">*</span>：
+							</label>
+							<div class="col-sm-9">
+								<select class="form-control" id="ateamtype" name="ateamtype"
+									onchange="changeAddIsTop(this.value)">
+									<option selected="selected" value="">请选择</option>
+									<option value="1">门店</option>
+									<option value="2">服务商</option>
+									<option value="3">代理商</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-3 control-label">是否为总店<span
+								style="color: red;">*</span>：
+							</label>
+							<div class="col-sm-9">
+								<input type="radio" name="aistop" value="1" id="isMainAdd"><span
+									id="spanAdd">是</span> <input type="radio" name="aistop"
+									value="0" id="notMainAdd">否
+							</div>
+
+						</div>
+						<div class="form-group" id="zongdian" style="display: none">
+							<label for="lastname" class="col-sm-3 control-label">选择总店：</label>
+							<div class="col-sm-9">
+								<select id='name' class="form-control selectpicker"
+									name="ateamtop" data-live-search="true">
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-3 control-label">团队电话：</label>
+							<div class="col-sm-9">
+								<input type="text" id="atel" class="form-control" name="atel" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-3 control-label">团队负责人：</label>
+							<div class="col-sm-9">
+								<input type="text" id="achargePersonName" class="form-control"
+									name="achargePersonName" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-3 control-label">负责人电话：</label>
+							<div class="col-sm-9">
+								<input type="text" id="achargePersonCell" class="form-control"
+									name="achargePersonCell" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-3 control-label">税号：</label>
+							<div class="col-sm-9">
+								<input type="text" id="ataxNo" class="form-control"
+									name="ataxNo" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-3 control-label">开户行：</label>
+							<div class="col-sm-9">
+								<input type="text" id="abankName" class="form-control"
+									name="abankName" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-3 control-label">银行账号：</label>
+							<div class="col-sm-9">
+								<input type="text" id="abankNo" class="form-control"
+									name="abankNo" />
+							</div>
+						</div>
+
+						<!-- 选中地址后地图切换到对应地方  -->
+						<div class="form-group">
+							<label for="lastname" class="col-sm-2 control-label">地址<span
+								style="color: red;">*请填写完善地址包含省市区</span>：
+							</label>
+							<div class="col-sm-8">
+								<input type="text" id="address" class="form-control"
+									name="address" />
+							</div>
+							<div class="col-sm-2">
+								<!--  <input type="button" class="form-control" onclick="searchAddr()"
+									value="搜索" id=""/> -->
+								<button type="button" class="btn btn-primary"
+									onclick="searchAddr()">搜索</button>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="lastname" class="col-sm-2 control-label">经度<span
+								style="color: red;">*</span>：
+							</label>
+							<div class="col-sm-10">
+								<input type="text" id="ajd" class="form-control" name="ajd"
+									onkeyup="this.value=this.value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="lastname" class="col-sm-2 control-label">纬度<span
+								style="color: red;">*</span>：
+							</label>
+							<div class="col-sm-10">
+								<input type="text" id="awd" class="form-control" name="awd"
+									onkeyup="this.value=this.value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" />
+							</div>
+						</div>
+
+						<!-- 地图div -->
+						<div id="container" style="width: 570px; height: 350px;"></div>
+
+					</form>
+				</div>
+				<div class="modal-footer" id="butt">
+					<button type="button" class="btn btn-primary" onclick="submit()">确定</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--添加duiyuan-->
+
+	<div class="modal fade" id="dyModal" data-backdrop="static"
+		tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" style="width: 1000px;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">添加团队成员</h4>
+				</div>
+				<div style="margin-top: 2%;" id="a">
+					<div class="row">
+						<label class="col-sm-2 control-label"
+							style="text-align: right; margin-top: 5px;">真实姓名：</label>
+						<div class="col-sm-2">
+							<div class="control-group">
+								<input type="text" id="frealName" name="frealName"
+									class="form-control" />
+							</div>
+						</div>
+						<label class="col-sm-2 control-label"
+							style="text-align: right; margin-top: 5px;">用户昵称：</label>
+						<div class="col-sm-2">
+							<div class="control-group">
+								<input type="text" id="fnickName" name="fnickName"
+									class="form-control" />
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<label class="col-sm-2 control-label"
+							style="text-align: right; margin-top: 5px;">手机：</label>
+						<div class="col-sm-2">
+							<div class="control-group">
+								<input type="text" id="fcell" name="fcell" class="form-control" />
+							</div>
+						</div>
+
+						<div class="control-group">
+							<div>
+								<button onclick="cleant()" class="btn btn-danger" name="Name"
+									id="search_tel" value="清空"
+									style="float: right; margin-right: 2%;">清空</button>
+							</div>
+							<div>
+								<button onclick="sorcet()" class="btn btn-info" name="Name"
+									id="search_tel" value="查询"
+									style="float: right; margin-right: 2%;">查询</button>
+							</div>
+							<div>
+								<button onclick="addteamcy()" class="btn btn-success"
+									style="float: right; margin-right: 2%;">添加</button>
+							</div>
+						</div>
+					</div>
+
+					<table id="tdtab" class="table table-hover"></table>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--添加ld-->
+
+	<div class="modal fade" id="ldModal" data-backdrop="static"
+		tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" style="width: 1000px;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">添加团队领导</h4>
+				</div>
+				<div style="margin-top: 2%;" id="a">
+					<div class="row">
+						<label class="col-sm-2 control-label"
+							style="text-align: right; margin-top: 5px;">用户昵称：</label>
+						<div class="col-sm-2">
+							<div class="control-group">
+								<input type="text" id="lnickName" name="fnickName"
+									class="form-control" />
+							</div>
+						</div>
+						<label class="col-sm-2 control-label"
+							style="text-align: right; margin-top: 5px;">手机：</label>
+						<div class="col-sm-2">
+							<div class="control-group">
+								<input type="text" id="lcell" name="fcell" class="form-control" />
+							</div>
+						</div>
+
+						<div class="control-group">
+							<div>
+								<button onclick="cleanl()" class="btn btn-danger" name="Name"
+									id="search_tel" value="清空"
+									style="float: right; margin-right: 2%;">清空</button>
+							</div>
+							<div>
+								<button onclick="sorcel()" class="btn btn-info" name="Name"
+									id="search_tel" value="查询"
+									style="float: right; margin-right: 2%;">查询</button>
+							</div>
+							<div>
+								<button onclick="addleder()" class="btn btn-success"
+									style="float: right; margin-right: 2%;">添加</button>
+							</div>
+
+
+						</div>
+					</div>
+					<table id="ldtab" class="table table-hover"></table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<!--查询队员-->
+
+	<div class="modal fade" id="taModal" data-backdrop="static"
+		tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" style="width: 1000px;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">查看团队成员</h4>
+				</div>
+				<div style="margin-top: 2%;" id="a">
+					<div class="row">
+						<label class="col-sm-2 control-label"
+							style="text-align: right; margin-top: 5px;">用户昵称：</label>
+						<div class="col-sm-2">
+							<div class="control-group">
+								<input type="text" id="tanickName" name="tanickName"
+									class="form-control" />
+							</div>
+						</div>
+
+						<label class="col-sm-2 control-label"
+							style="text-align: right; margin-top: 5px;">真实姓名：</label>
+						<div class="col-sm-2">
+							<div class="control-group">
+								<input type="text" id="tarealName" name="tarealName"
+									class="form-control" />
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<label class="col-sm-2 control-label"
+							style="text-align: right; margin-top: 5px;">手机：</label>
+						<div class="col-sm-2">
+							<div class="control-group">
+								<input type="text" id="tacell" name="tacell"
+									class="form-control" />
+							</div>
+						</div>
+
+						<label class="col-sm-2 control-label"
+							style="text-align: right; margin-top: 5px;">角色：</label>
+						<div class="col-sm-2">
+							<div class="control-group">
+								<select class="form-control" id="taroletype" name="taroletype">
+									<option selected="selected" value="">请选择</option>
+									<option value="0">营业员</option>
+									<option value="1">领导</option>
+									<!-- <option value="2">业务员</option>
+									<option value="3">财务</option> -->
+									<!-- <option value="4">质管</option>
+									<option value="5">客服</option> -->
+								</select>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="control-group">
+							<div>
+								<button onclick="cleanta()" class="btn btn-danger" name="Name"
+									id="search_tel" value="清空"
+									style="float: right; margin-right: 2%;">清空</button>
+							</div>
+							<div>
+								<button onclick="sorceta()" class="btn btn-info" name="Name"
+									id="search_tel" value="查询"
+									style="float: right; margin-right: 2%;">查询</button>
+							</div>
+						</div>
+					</div>
+
+					<table id="tatab" class="table table-hover"></table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--修改-->
+
+	<div class="modal fade" id="editteam" data-backdrop="static"
+		tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">修改团队消息</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" role="form" name="form" id="editt"
+						method="post" enctype="multipart/form-data">
+						<input type="hidden" value="0" id="eteamid" name="eteamid" />
+
+						<div class="form-group">
+							<label for="lastname" class="col-sm-2 control-label">缩略图：</label>
+							<div class="col-sm-10">
+								<input type="file" id="eteamImg" name="eteamImg"
+									onchange="previewE(this)" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-2 control-label"></label>
+							<div class="col-sm-10">
+								<div id="previewE" style="display: none" class=""></div>
+							</div>
+						</div>
+
+						<input type="hidden" name="topId" id="topId">
+						<div class="form-group">
+							<label for="lastname" class="col-sm-3 control-label">erp编号：</label>
+							<div class="col-sm-9">
+								<input type="text" id="erp" class="form-control" name="erp" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-3 control-label">团队名称<span
+								style="color: red;">*</span>：
+							</label>
+							<div class="col-sm-9">
+								<input type="text" id="eteamname" class="form-control"
+									name="eteamname" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="lastname" class="col-sm-3 control-label">团队全称<span
+								style="color: red;">*</span>：
+							</label>
+							<div class="col-sm-9">
+								<input type="text" id="eteamAllName" class="form-control"
+									name="eteamAllName" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-3 control-label">经营类别</label>
+							<div class="col-sm-9" id="businessCategoryDiv2"></div>
+						</div>
+
+						<div class="form-group">
+							<label for="lastname" class="col-sm-3 control-label">团队等级<span
+								style="color: red;">*</span>：
+							</label>
+							<div class="col-sm-9">
+								<select class="form-control" id="elev" name="elev"
+									disabled="disabled">
+									<option value="1">V1</option>
+									<option value="2">V2</option>
+									<option value="3">V3</option>
+									<option value="4">V4</option>
+									<option value="5">V5</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-3 control-label">健康值：</label>
+							<div class="col-sm-9">
+								<input type="text" id="edevoteAmount" class="form-control"
+									name="edevoteAmount" readonly="readonly" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-3 control-label">胡币：</label>
+							<div class="col-sm-9">
+								<input type="text" id="erepoint" class="form-control"
+									name="erepoint" readonly="readonly" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-3 control-label">积分：</label>
+							<div class="col-sm-9">
+								<input type="text" id="epoint" class="form-control"
+									name="epoint" readonly="readonly" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-3 control-label">团队类型<span
+								style="color: red;">*</span>：
+							</label>
+							<div class="col-sm-9">
+
+								<select class="form-control" id="eteamtype" name="eteamtype"
+									onchange="changeEditIsTop(this.value)">
+									<option selected="selected" value="">请选择</option>
+									<option value="1">门店</option>
+									<option value="2">服务商</option>
+									<option value="3">代理商</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-3 control-label">是否为总店<span
+								style="color: red;">*</span>：
+							</label>
+							<div class="col-sm-9">
+								<input type="radio" name="eistop" value="1" id="isMainEdit"><span
+									id="spanEdit">是</span> <input type="radio" name="eistop"
+									value="0">否
+							</div>
+
+						</div>
+						<div class="form-group" id="ezongdian" style="display: none">
+							<label for="lastname" class="col-sm-3 control-label">选择总店：</label>
+							<div class="col-sm-9">
+								<select id='ename' class="form-control selectpicker"
+									name="eteamtop" data-live-search="true">
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="lastname" class="col-sm-3 control-label">团队电话：</label>
+							<div class="col-sm-9">
+								<input type="text" id="etel" class="form-control" name="etel" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="lastname" class="col-sm-3 control-label">团队负责人：</label>
+							<div class="col-sm-9">
+								<input type="text" id="echargePersonName" class="form-control"
+									name="echargePersonName" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-3 control-label">负责人电话：</label>
+							<div class="col-sm-9">
+								<input type="text" id="echargePersonCell" class="form-control"
+									name="echargePersonCell" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-3 control-label">税号：</label>
+							<div class="col-sm-9">
+								<input type="text" id="etaxNo" class="form-control"
+									name="etaxNo" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-3 control-label">开户行：</label>
+							<div class="col-sm-9">
+								<input type="text" id="ebankName" class="form-control"
+									name="ebankName" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-3 control-label">银行账号：</label>
+							<div class="col-sm-9">
+								<input type="text" id="ebankNo" class="form-control"
+									name="ebankNo" />
+							</div>
+						</div>
+						<!-- <div class="form-group">
+							<label for="lastname" class="col-sm-3 control-label">优惠活动：</label>
+							<div class="col-sm-9">
+								<input type="text" id="eactive" class="form-control"
+									name="eactive" />
+							</div>
+						</div> -->
+
+						<!-- 选中地址后地图切换到对应地方  -->
+						<div class="form-group">
+							<label for="lastname" class="col-sm-2 control-label">地址<span
+								style="color: red;">*请填写完善地址包含省市区</span>：
+							</label>
+							<div class="col-sm-8">
+								<input type="text" id="eaddress" class="form-control"
+									name="eaddress" />
+							</div>
+							<div class="col-sm-2">
+								<input type="button" class="form-control"
+									onclick="searchAddre()" value="搜索" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="lastname" class="col-sm-2 control-label">经度<span
+								style="color: red;">*</span>：
+							</label>
+							<div class="col-sm-10">
+								<input type="text" id="ejd" class="form-control" name="ejd"
+									onkeyup="this.value=this.value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-2 control-label">纬度<span
+								style="color: red;">*</span>：
+							</label>
+							<div class="col-sm-10">
+								<input type="text" id="ewd" class="form-control" name="ewd"
+									onkeyup="this.value=this.value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" />
+							</div>
+						</div>
+						<!-- 地图div -->
+						<div id="econtainer" style="width: 570px; height: 350px;"></div>
+					</form>
+				</div>
+				<div class="modal-footer" id="butt">
+					<button type="button" class="btn btn-primary"
+						onclick="editsubmit()">确定</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<input type="hidden" name="addTeamId" id="addTeamId">
+
+
+	<div class="modal fade" id="changeRoleModel" data-backdrop="static"
+		tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">修改成员角色信息</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" role="form" name="form"
+						id="changeTeamRole" method="post">
+						<input type="hidden" value="0" id="changeRoleUserId"
+							name="changeRoleUserId" />
+						<div class="form-group">
+							<label for="lastname" class="col-sm-3 control-label">角色：</label>
+							<div class="col-sm-9">
+								<select class="form-control" id="changeRoleType"
+									name="changeRoleType">
+									<option selected="selected" value="">请选择</option>
+									<option value="0">营业员</option>
+									<option value="1">领导</option>
+									<!-- <option value="2">业务员</option>
+									<option value="3">财务</option> -->
+									<!-- <option value="4">质管</option>
+									<option value="5">客服</option> -->
+								</select>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer" id="butt">
+					<button type="button" class="btn btn-primary"
+						onclick="changeRoleType()">确定</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="modal fade" id="checkUserModal" data-backdrop="static"
+		tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" style="width: 1000px;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">查看团队审核</h4>
+				</div>
+				<div style="margin-top: 2%;" id="a">
+					<div class="row">
+
+						<label class="col-sm-2 control-label"
+							style="text-align: right; margin-top: 5px;">用户昵称：</label>
+						<div class="col-sm-2">
+							<div class="control-group">
+								<input type="text" id="checkNickName" name="checkNickName"
+									class="form-control" />
+							</div>
+						</div>
+
+						<label class="col-sm-2 control-label"
+							style="text-align: right; margin-top: 5px;">真实姓名：</label>
+						<div class="col-sm-2">
+							<div class="control-group">
+								<input type="text" id="checkRealName" name="checkRealName"
+									class="form-control" />
+							</div>
+						</div>
+
+					</div>
+
+					<div class="row">
+						<label class="col-sm-2 control-label"
+							style="text-align: right; margin-top: 5px;">手机：</label>
+						<div class="col-sm-2">
+							<div class="control-group">
+								<input type="text" id="checkCell" name="checkCell"
+									class="form-control" />
+							</div>
+						</div>
+
+						<label class="col-sm-2 control-label"
+							style="text-align: right; margin-top: 5px;">角色：</label>
+						<div class="col-sm-2">
+							<div class="control-group">
+								<select class="form-control" id="checkRoleType"
+									name="checkRoleType">
+									<option selected="selected" value="">请选择</option>
+									<option value="2">业务员</option>
+									<option value="3">财务</option>
+									<option value="4">质管</option>
+									<!--<option value="5">客服</option> -->
+									<option value="7">业务经理</option>
+									<option value="8">大区经理</option>
+									<option value="9">督导</option>
+									<option value="10">财务经理</option>
+									<option value="11">财务内勤</option>
+								</select>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="control-group">
+							<div>
+								<button onclick="sorceCheck()" class="btn btn-info" name="Name"
+									id="search_tel" value="查询"
+									style="float: right; margin-right: 2%;">查询</button>
+							</div>
+							<div>
+								<button onclick="openCheckDyModal()" class="btn btn-success"
+									style="float: right; margin-right: 2%;">修改审核成员</button>
+							</div>
+						</div>
+					</div>
+
+					<table id="checkUserTab" class="table table-hover"></table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="checkDyModal" data-backdrop="static"
+		tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" style="width: 1000px;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true" onclick="closeCheckDyModal()">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">修改审核成员</h4>
+				</div>
+				<div style="margin-top: 2%;" id="a">
+					<div class="row">
+						<label class="col-sm-2 control-label"
+							style="text-align: right; margin-top: 5px;">用户昵称：</label>
+						<div class="col-sm-2">
+							<div class="control-group">
+								<input type="text" id="checkMoName" name="checkMoName"
+									class="form-control" />
+							</div>
+						</div>
+
+						<label class="col-sm-2 control-label"
+							style="text-align: right; margin-top: 5px;">真实姓名：</label>
+						<div class="col-sm-2">
+							<div class="control-group">
+								<input type="text" id="checkMoRealName" name="checkMoRealName"
+									class="form-control" />
+							</div>
+						</div>
+
+
+					</div>
+
+					<div class="row">
+						<label class="col-sm-2 control-label"
+							style="text-align: right; margin-top: 5px;">手机号：</label>
+						<div class="col-sm-2">
+							<div class="control-group">
+								<input type="text" id="checkMoCell" name="checkMoCell"
+									class="form-control" />
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="control-group">
+							<div>
+								<button onclick="sorceCheckForUser()" class="btn btn-info"
+									name="Name" id="search_tel" value="查询"
+									style="float: right; margin-right: 2%;">查询</button>
+							</div>
+							<!-- <div>
+								<button onclick="changeTeamCheckRole()" class="btn btn-success"
+									style="float: right; margin-right: 2%;">添加</button>
+							</div> -->
+						</div>
+					</div>
+
+				</div>
+
+				<table id="checkForUserTab" class="table table-hover"></table>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- 查看图片模块 -->
+	<div class="modal fade" id="imgbig" data-backdrop="static"
+		tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">查看图片</h4>
+				</div>
+				<div class="modal-body">
+					<img alt="" src="" id="bigbis" style="width: 100%; height: 100%;" />
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		businessCategory();
+		userCheckRoleEnum();
+	})
+</script>
+
+<script type="text/javascript">
+	function changeAddIsTop(value) {
+		if (value == "3") {
+			$("#isMainAdd").hide();
+			$("#spanAdd").hide();
+		} else {
+			$("#isMainAdd").show();
+			$("#spanAdd").show();
+		}
+	}
+
+	function changeEditIsTop(value) {
+		if (value == "3") {
+			$("#isMainEdit").hide();
+			$("#spanEdit").hide();
+		} else {
+			$("#isMainEdit").show();
+			$("#spanEdit").show();
+		}
+	}
+
+	//张月
+	$('.datetimepicker').datetimepicker({
+		minView : "month",//设置只显示到月份
+		format : 'yyyy-mm-dd',
+		language : 'zh-CN',
+		autoclose : true,//选中关闭
+		todayBtn : true
+
+	})
+
+	function clean() {
+		$("#a input").val("");
+		$("#a select").val("");
+	}
+	function cleant() {
+		$("#a input").val("");
+
+	}
+	function sorcet() {
+		$('#tdtab').bootstrapTable("selectPage", 1);
+	}
+	function cleanl() {
+		$("#a input").val("");
+
+	}
+	function sorcel() {
+		$('#ldtab').bootstrapTable("selectPage", 1);
+	}
+	function cleanta() {
+		$("#a input").val("");
+	}
+	function sorceta() {
+		$('#tatab').bootstrapTable("selectPage", 1);
+	}
+
+	bootsearch(null);
+
+	var all;
+	function sorce() {
+		$("#mytab").bootstrapTable('destroy');
+		//生成用户数据
+		bootsearch("selectteam.do");
+	}
+
+	function bootsearch(url) {
+		//团队列表
+		$('#mytab')
+				.bootstrapTable(
+						{
+							method : 'post',
+							contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+							url : url,//要请求数据的文件路径
+							dataType : 'json',
+							striped : true, //是否显示行间隔色
+							pageNumber : 1, //初始化加载第一页，默认第一页
+							pageSize : 5,//单页记录数
+							pageList : [ 5, 10, 20, 30 ],//分页步进值
+							pagination : true,//是否分页
+							queryParamsType : 'limit',//查询参数组织方式
+							sidePagination : 'server',//指定服务器端分页
+							queryParams : function(p) {
+								return params(p);
+							},
+
+							clickToSelect : true,//是否启用点击选中行
+							toolbarAlign : 'right',//工具栏对齐方式
+							buttonsAlign : 'right',//按钮对齐方式
+							toolbar : '#toolbar',//指定工作栏
+							columns : [
+									{
+										title : '操作',
+										field : 'id',
+										formatter : function(value, row, index) {
+											if (row.delFlg == '0') {
+												return "<a href='#' onclick=addmember('"
+														+ index
+														+ "')>添加团员 </a>|<a href='#' onclick=see('"
+														+ index
+														+ "')>查看成员</a>|<a href='#' onclick=checkUser('"
+														+ index
+														+ "')>审核成员</a>|<a href='#' onclick=updatet('"
+														+ index
+														+ "')>修改 </a>|<a href='#' onclick=deletet('"
+														+ index + "')>删除</a>";
+											}
+											if (row.delFlg == '1') {
+												return "<a href='#' onclick=resumTeam('"
+														+ index + "')>恢复</a>";
+											}
+										}
+									},
+									{
+										title : '主图',
+										field : 'imgUrl',
+										formatter : function(value, row, index) {
+											return '<img src="'+value+'" data-imgurl="'+value+'" width="100px" height="60px"/>';
+										}
+									},
+									{
+										title : '团队名称',
+										field : 'teamName'
+									},
+									{
+										title : '团队全称',
+										field : 'teamAllName'
+									},
+									{
+										title : 'erp编号',
+										field : 'erpNo'
+									},
+									{
+										title : '团队类型',
+										field : 'teamType',
+										formatter : function(value, row, index) {
+											if (value == "1") {
+												return "门店";
+											}
+											if (value == "2") {
+												return "服务商";
+											}
+											if (value == "3") {
+												return "代理商";
+											}
+										}
+
+									},
+									{
+										title : '团队等级',
+										field : 'teamLevelStr'
+									},
+									{
+										title : '是否删除',
+										field : 'delFlg',
+										formatter : function(value, row, index) {
+											if (value == "1") {
+												return "是";
+											}
+											if (value == "0") {
+												return "否  ";
+											}
+										}
+
+									},
+									{
+										title : '是否总店',
+										field : 'isTop',
+										formatter : function(value, row, index) {
+											if (value == "1") {
+												return "是";
+											}
+											if (value == "0") {
+												return "否  ";
+											}
+
+										}
+									},
+									{
+										title : '所属总店',
+										field : 'topTeamName'
+									},
+									{
+										title : '团队电话',
+										field : 'cell'
+									},
+									{
+										title : '负责人姓名',
+										field : 'chargePersonName'
+									},
+									{
+										title : '负责人电话',
+										field : 'chargePersonCell'
+									},
+									{
+										title : '税号',
+										field : 'taxNo'
+									},
+									{
+										title : '开户行',
+										field : 'bankName'
+									},
+									{
+										title : '卡账号',
+										field : 'bankNo'
+									},
+									{
+										title : '地址',
+										field : 'address'
+									},
+									{
+										title : '经度',
+										field : 'longitude'
+									},
+									{
+										title : '纬度',
+										field : 'latitude'
+									},
+									{
+										title : '健康值',
+										field : 'devoteAmount'
+									},
+									{
+										title : '胡币',
+										field : 'repoint'
+									},
+									{
+										title : '积分',
+										field : 'point'
+									},
+									{
+										title : '创建人',
+										field : 'creater'
+									},
+									{
+										title : '创建时间',
+										field : 'gmtCreate',
+										formatter : function(value, row, index) {
+											return format(value);
+										}
+									},
+									{
+										title : '修改人',
+										field : 'modifier'
+									},
+									{
+										title : '修改时间',
+										field : 'gmtModified',
+										formatter : function(value, row, index) {
+											return format(value);
+										}
+
+									}, {
+										title : '团队编号',
+										field : 'teamId'
+									} ],
+							locale : 'zh-CN',//中文支持,
+							formatNoMatches : function() {
+								if (isEmpty(url)) {
+									return "单击查询搜索记录"
+								} else {
+									return "没有找到匹配的记录"
+								}
+							},
+							onLoadSuccess : function() { //加载成功时执行
+								$("img").load(
+										function() {
+											var viewer = new Viewer(document
+													.getElementById('mytab'), {
+												navbar : false,
+												toolbar : {
+													zoomIn : true,
+													zoomOut : true,
+													play : true,
+													rotateLeft : true,
+													rotateRight : true
+
+												},
+												show : function() {
+													viewer.update();
+												}
+											});
+										})
+							},
+							responseHandler : function(res) {
+								//在ajax获取到数据，渲染表格之前，修改数据源
+								all = res.rows;
+								return res;
+							}
+						})
+	}
+	//cy列表
+	function create() {
+		var all2;
+		$('#tdtab').bootstrapTable({
+			method : 'post',
+			contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+			url : "findteamuser.do?",//要请求数据的文件路径
+			dataType : 'json',
+			striped : true, //是否显示行间隔色
+			pageNumber : 1, //初始化加载第一页，默认第一页
+			pageSize : 20,//单页记录数
+			pageList : [ 20, 30 ],//分页步进值
+			pagination : true,//是否分页
+			queryParamsType : 'limit',//查询参数组织方式
+			sidePagination : 'server',//指定服务器端分页
+			queryParams : function(p) {
+				return params2(p);
+			},
+
+			clickToSelect : true,//是否启用点击选中行
+			toolbarAlign : 'right',//工具栏对齐方式
+			buttonsAlign : 'right',//按钮对齐方式
+			toolbar : '#toolbar',//指定工作栏
+
+			columns : [ {
+				field : "id",
+				checkbox : true,
+				align : 'center',
+			}, {
+				title : '昵称',
+				field : 'nickName'
+			}, {
+				title : '真实姓名',
+				field : 'realName'
+			}, {
+				title : '手机',
+				field : 'cell'
+			} ],
+			locale : 'zh-CN',//中文支持,
+			responseHandler : function(res) {
+				//在ajax获取到数据，渲染表格之前，修改数据源
+				all2 = res.rows;
+				return res;
+			}
+		})
+	}
+	function params2(params) {
+		params["fnickName"] = $("#fnickName").val();
+		params["fcell"] = $("#fcell").val();
+		params["frealName"] = $("#frealName").val();
+		return params;
+	}
+	//领导列表
+	function createl() {
+		var all3;
+		$('#ldtab').bootstrapTable({
+			method : 'post',
+			contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+			url : "findteamuser.do?",//要请求数据的文件路径
+			dataType : 'json',
+			striped : true, //是否显示行间隔色
+			pageNumber : 1, //初始化加载第一页，默认第一页
+			pageSize : 20,//单页记录数
+			pageList : [ 20, 30 ],//分页步进值
+			pagination : true,//是否分页
+			queryParamsType : 'limit',//查询参数组织方式
+			sidePagination : 'server',//指定服务器端分页
+			queryParams : function(p) {
+				return params3(p);
+			},
+
+			clickToSelect : true,//是否启用点击选中行
+			toolbarAlign : 'right',//工具栏对齐方式
+			buttonsAlign : 'right',//按钮对齐方式
+			toolbar : '#toolbar',//指定工作栏
+
+			columns : [ {
+				field : "id",
+				checkbox : true,
+				align : 'center',
+			}, {
+				title : '用户编号',
+				field : 'userId'
+			}, {
+				title : '昵称',
+				field : 'nickName'
+			}, {
+				title : '手机',
+				field : 'cell'
+			} ],
+			locale : 'zh-CN',//中文支持,
+			responseHandler : function(res) {
+				//在ajax获取到数据，渲染表格之前，修改数据源
+				all3 = res.rows;
+				return res;
+			}
+		})
+	}
+	function params3(params) {
+		params["fnickName"] = $("#lnickName").val();
+		params["fcell"] = $("#lcell").val();
+
+		return params;
+	}
+
+	//获取搜索的所有值
+	function params(params) {
+		$("#a input[type='text']").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		$("#a select").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		$("#offset").val(params.offset);
+		$("#limit").val(params.limit);
+		return params;
+	}
+
+	function addteam(id, type) {
+		//获取总店数据 遍历生成下拉框 
+		jQuery.ajax({
+			// get请求地址  
+			url : "findtop.do",
+			dataType : "json",
+			success : function(data) {
+				var ht = '<option value=" "></option>';
+				var hb = '';
+				for (var i = 0; i < data.teams.length; i++) {
+
+					hb += '<option value="'+ data.teams[i].teamId + '">'
+							+ data.teams[i].teamName + '</option>';
+				}
+				$('#name').html(ht + hb);
+				// 缺一不可  
+				$('#name').selectpicker('refresh');
+				$('#name').selectpicker('render');
+			}
+		});
+		$("#" + id).modal(type);
+
+		$("#myModal input[type='text']").val("");
+		$("#myModal input[type='number']").val("");
+		$("#myModal select").val("");
+		$("#preview").html("");
+		$("#preview").css("display", "none");
+		$('#myModal input:radio[name="aistop"]').removeAttr('checked');
+
+		$("input:checkbox[name='businessCategory']:checked").each(function() {
+			$(this).removeAttr("checked");
+		});
+
+		$("#isMainAdd").val("1");
+		$("#notMainAdd").val("0");
+
+		$("#devoteAmount").val("0");
+		$("#point").val("0");
+		$("#repoint").val("0");
+		$("#alev").val("1");
+
+		initMap();
+	}
+	function ValidatePhone(val) {
+		//return true;
+
+		var isPhone = /^1[34578][0-9]{9}$/;//手机号码
+
+		if (isPhone.test(val)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	function submit() {
+		if (ValidatePhone($("#atel").val()) == false) {
+			alert('联系电话格式错误');
+
+			return false;
+		}
+		if (confirm("正在添加数据，确认继续！")) {
+
+			$("form[id='addt']").ajaxSubmit({
+				type : "post",
+				url : "addteam.do",
+				dataType : "json",//       
+				beforeSubmit : function() {
+					/*if ($("#ateamname").val() == null
+							|| $("#ateamname").val() == "") {
+						alert("团队名称不能为空");
+						return false;
+					}
+					if ($("#alev").val() == null
+							|| $("#alev").val() == "") {
+						alert("团队等级不能为空");
+						return false;
+					}
+					if ($("#ateamtype").val() == null
+							|| $("#ateamtype").val() == "") {
+						alert("团队类型不能为空");
+						return false;
+					}
+					if ($("#atel").val() == null
+							|| $("#atel").val() == "") {
+						alert("手机号不能为空");
+						return false;
+					}
+					if ($("#aerp").val() == null
+							|| $("#aerp").val() == "") {
+						alert("erp编号不能为空");
+						return false;
+					}
+					if ($("#address").val() == null
+							|| $("#address").val() == "") {
+						alert("地址不能为空");
+						return false;
+					}
+					if ($("#ajd").val() == null
+							|| $("#ajd").val() == "") {
+						alert("经度不能为空");
+						return false;
+					}
+					if ($("#awd").val() == null
+							|| $("#awd").val() == "") {
+						alert("纬度不能为空");
+						return false;
+					}*/
+				},
+				success : function(data) {
+					if (data.success) {
+						alert("添加成功");
+						$("#myModal").modal("hide");
+						$("#mytab").bootstrapTable('refresh');
+					} else {
+						alert(data.message);
+					}
+				},
+
+			});
+		}
+	}
+	function updatet(index) {
+		//获取总店数据 遍历生成下拉框 
+		jQuery
+				.ajax({
+					// get请求地址  
+					url : "findtop.do",
+					dataType : "json",
+					success : function(data) {
+						var ht = '<option value=""></option>';
+						var hb = '';
+						var topId = $("#topId").val();
+						for (var i = 0; i < data.teams.length; i++) {
+							if (topId == data.teams[i].teamId) {
+								hb += '<option value="' + data.teams[i].teamId + '" selected="selected">'
+										+ data.teams[i].teamName + '</option>';
+							} else {
+								hb += '<option value="'+ data.teams[i].teamId + '">'
+										+ data.teams[i].teamName + '</option>';
+							}
+
+						}
+						$('#ename').html(ht + hb);
+						// 缺一不可  
+						$('#ename').selectpicker('refresh');
+						$('#ename').selectpicker('render');
+					}
+				});
+		$("input:radio[name='eistop']").removeAttr('checked');
+		$("input:radio[name='eistop'][value=" + all[index].isTop + "]").prop(
+				'checked', 'checked');
+		$("#ename").val(all[index].topTeamId);
+		$("#elev").val(all[index].teamLevel);
+		$("#eteamid").val(all[index].teamId);
+		$("#eteamname").val(all[index].teamName);
+		$("#eteamtype").val(all[index].teamType);
+		$("#ejd").val(all[index].longitude);
+		$("#erp").val(all[index].erpNo);
+		$("#ewd").val(all[index].latitude);
+		$("#etel").val(all[index].cell);
+		$("#eaddress").val(all[index].address);
+		$("#topId").val(all[index].topTeamId);
+
+		//当前修改位置
+		$("#oldImg").val(all[index].imgUrl);
+		$("#eteamImg").val("");
+		$("#previewE").html(
+				"<img src=" + all[index].imgUrl + " style='width:50%'/>");
+		$("#previewE").css("display", "block");
+
+		$("#eteamAllName").val(all[index].teamAllName);
+		$("#echargePersonName").val(all[index].chargePersonName);
+		$("#echargePersonCell").val(all[index].chargePersonCell);
+		$("#etaxNo").val(all[index].taxNo);
+		$("#ebankName").val(all[index].bankName);
+		$("#ebankNo").val(all[index].bankNo);
+
+		//$("#eactive").val(all[index].favourableActive);
+		if (all[index].isTop == '0') {
+
+			$("#ezongdian").show();
+
+		}
+		$("#eid").val(all[index].id);
+
+		$("input:checkbox[name='businessCategory']:checked").each(function() {
+			$(this).removeAttr("checked");
+		});
+
+		var businessCategory = all[index].businessCategory;
+		if (!isEmpty(businessCategory)) {
+			$("input:checkbox[name='businessCategory']").each(function() {
+				var thisMsg = $(this).val();
+				if (businessCategory.indexOf(thisMsg) >= 0) {
+					$(this).prop("checked", 'true');
+				}
+			});
+		}
+
+		$("#edevoteAmount").val(all[index].devoteAmount);
+		$("#epoint").val(all[index].point);
+		$("#erepoint").val(all[index].repoint);
+
+		$("#editteam").modal("show");
+		initMap2();
+	}
+	function editsubmit() {
+		if (ValidatePhone($("#etel").val()) == false) {
+			alert('联系电话格式错误');
+
+			return false;
+		}
+		if (confirm("正在更新数据，确认继续！")) {
+
+			$("form[id='editt']").ajaxSubmit({
+				type : "post",
+				url : "updateteam.do",
+				dataType : "json",
+				beforeSubmit : function() {
+					/*if ($("#eteamname").val() == null
+							|| $("#eteamname").val() == "") {
+						alert("团队名称不能为空");
+						return false;
+					}
+					if ($("#elev").val() == null
+							|| $("#elev").val() == "") {
+						alert("团队等级不能为空");
+						return false;
+					}
+					if ($("#eteamtype").val() == null
+							|| $("#eteamtype").val() == "") {
+						alert("团队类型不能为空");
+						return false;
+					}
+					if ($("#etel").val() == null
+							|| $("#etel").val() == "") {
+						alert("手机号不能为空");
+						return false;
+					}
+					if ($("#erp").val() == null
+							|| $("#erp").val() == "") {
+						alert("erp编号不能为空");
+						return false;
+					}
+					if ($("#eaddress").val() == null
+							|| $("#eaddress").val() == "") {
+						alert("地址不能为空");
+						return false;
+					}
+					if ($("#ejd").val() == null
+							|| $("#ejd").val() == "") {
+						alert("经度不能为空");
+						return false;
+					}
+					if ($("#ewd").val() == null
+							|| $("#ewd").val() == "") {
+						alert("纬度不能为空");
+						return false;
+					}*/
+				},
+				success : function(data) {
+					if (data.success) {
+						alert("更新成功");
+						$("#editteam").modal("hide");
+						$("#mytab").bootstrapTable('refresh');
+					} else {
+						alert(data.message);
+					}
+				},
+
+			});
+		}
+	}
+	//删除门店
+	function deletet(index) {
+		var teamid = all[index].teamId;
+		if (confirm("确定删除此信息？")) {
+			jQuery.ajax({
+				url : "deleteteam.do",
+				type : 'post',
+				data : {
+					"teamid" : teamid
+				},
+				dataType : 'json',
+				success : function(json) {
+					if (json) {
+						alert(json.message);
+						$("#mytab").bootstrapTable('refresh');
+					} else {
+						alert(json.message);
+					}
+				},
+				error : function() {
+					alert("异常！");
+				}
+			});
+		} else {
+			return;
+		}
+	}
+	//门店恢复
+	function resumTeam(index) {
+		var teamid = all[index].teamId;
+		if (confirm("确定恢复此信息？")) {
+			jQuery.ajax({
+				url : "resumTeam.do",
+				type : 'post',
+				data : {
+					"teamid" : teamid
+				},
+				dataType : 'json',
+				success : function(json) {
+					if (json) {
+						alert(json.message);
+						$("#mytab").bootstrapTable('refresh');
+					} else {
+						alert(json.message);
+					}
+				},
+				error : function() {
+					alert("异常！");
+				}
+			});
+		} else {
+			return;
+		}
+	}
+
+	function submitdy() {
+
+		if (confirm("正在添加数据，确认继续！")) {
+			$("form[id='addtu']").ajaxSubmit({
+				type : "post",
+				url : "addteamuser.do",
+				dataType : "json",
+				beforeSubmit : function() {
+				},
+				success : function(data) {
+					if (data.success) {
+						alert("添加成功");
+
+					} else {
+						alert("添加失败");
+					}
+				},
+				error : function() {
+					alert("添加失败");
+				}
+
+			});
+		}
+	}
+	function addmember(index) {
+		$("#fnickName").val("");
+		$("#fcell").val("");
+		$("#addTeamId").val(all[index].teamId);
+		$("#tdtab").bootstrapTable('destroy');
+		create();
+		$("#dyModal").modal("show");
+	}
+	function addld(index) {
+		$("#lnickName").val("");
+		$("#lcell").val("");
+		$("#addTeamId").val(all[index].teamId);
+		$("#ldtab").bootstrapTable('destroy');
+		createl();
+		$("#ldModal").modal("show");
+	}
+
+	function changeRoleModel(index) {
+		$("#changeRoleUserId").val(all4[index].userId);
+		$("#changeRoleType").val(all4[index].teamLeder);
+		$("#changeRoleModel").modal("show");
+	}
+
+	function addteamcy() {
+		//使用getSelections即可获得，row是json格式的数据
+		var row = $('#tdtab').bootstrapTable('getSelections');
+		if (row.length < 1) {
+			alert("请选择用户");
+			return;
+		}
+		var t = [];
+
+		var tid = $("#addTeamId").val();
+		for (var i = 0; i < row.length; i++) {
+			t.push(row[i].userId);
+
+		}
+		b = JSON.stringify(t);
+		//alert(b);
+		jQuery.ajax({
+			type : 'post',
+			url : 'addcy.do',
+
+			data : {
+				"b" : b,
+				"tid" : tid
+			},
+			success : function(data) {
+				if (data.success) {
+					alert("添加成功");
+					$("#tdtab").bootstrapTable('refresh');
+				} else {
+					alert("添加失败");
+				}
+			}
+		});
+
+	}
+	function addleder() {
+		//使用getSelections即可获得，row是json格式的数据
+		var row = $('#ldtab').bootstrapTable('getSelections');
+		if (row.length < 1) {
+			alert("请选择用户");
+			return;
+		}
+		var lid = row[0].userId;
+		// alert(lid);
+		var tid = $("#addTeamId").val();
+		jQuery.ajax({
+			type : 'post',
+			url : 'addld.do',
+
+			data : {
+				"lid" : lid,
+				"tid" : tid
+			},
+			success : function(data) {
+				if (data.success) {
+					alert("添加成功");
+					window.location.reload();
+
+				} else {
+					alert(data.message);
+				}
+			}
+		});
+	}
+	var all4;
+	function see(index) {
+		$("#tanickName").val("");
+		$("#tacell").val("");
+		$("#tarealName").val("");
+		$("#tatab").bootstrapTable('destroy');
+		$("#addTeamId").val(all[index].teamId);
+		var tid = $("#addTeamId").val();
+		//alert(tid);
+
+		$('#tatab')
+				.bootstrapTable(
+						{
+							method : 'post',
+							contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+							url : "finduserbyteamid.do?tid=" + tid,//要请求数据的文件路径
+							dataType : 'json',
+							striped : true, //是否显示行间隔色
+							pageNumber : 1, //初始化加载第一页，默认第一页
+							pageSize : 20,//单页记录数
+							pageList : [ 20, 30 ],//分页步进值
+							pagination : true,//是否分页
+							queryParamsType : 'limit',//查询参数组织方式
+							sidePagination : 'server',//指定服务器端分页
+							queryParams : function(p) {
+								return params4(p);
+							},
+
+							clickToSelect : true,//是否启用点击选中行
+							toolbarAlign : 'right',//工具栏对齐方式
+							buttonsAlign : 'right',//按钮对齐方式
+							toolbar : '#toolbar',//指定工作栏
+
+							columns : [
+									{
+										title : '昵称',
+										field : 'nickName'
+									},
+									{
+										title : '真实姓名',
+										field : 'realName'
+									},
+									{
+										title : '手机',
+										field : 'cell'
+									},
+									{
+										title : '角色',
+										field : 'teamLederStr',
+									/* formatter : function(value, row, index) {
+										if (value == "0") {
+											return "否";
+										}
+										if (value == "1") {
+											return "是";
+										}
+									} */
+									},
+									{
+										title : '操作',
+										field : 'userId',
+										formatter : function(value, row, index) {
+
+											return "<a href='#' onclick=deletecy('"
+													+ index
+													+ "')>删除</a>|"
+													+ "<a href='#' onclick=changeRoleModel('"
+													+ index + "')>修改成员角色</a>";
+
+										}
+									} ],
+							locale : 'zh-CN',//中文支持,
+							responseHandler : function(res) {
+								//在ajax获取到数据，渲染表格之前，修改数据源
+								all4 = res.rows;
+								return res;
+							}
+						})
+		$("#taModal").modal("show");
+	}
+	function params4(params) {
+		params["tanickName"] = $("#tanickName").val();
+		params["tacell"] = $("#tacell").val();
+		params["taroletype"] = $("#taroletype").val();
+		params["tarealName"] = $("#tarealName").val();
+		return params;
+	}
+	function deletecy(index) {
+		var userid = all4[index].userId;
+		if (confirm("确定删除此信息？删除后不可恢复")) {
+			jQuery.ajax({
+				url : "deleteteamuser.do",
+				type : 'post',
+				data : {
+					"userid" : userid
+				},
+				dataType : 'json',
+				success : function(json) {
+					if (json) {
+						alert("删除成功");
+						$("#tatab").bootstrapTable('refresh');
+					} else {
+						alert("删除失败");
+					}
+				},
+				error : function() {
+					alert("异常！");
+				}
+			});
+		} else {
+			return;
+		}
+	}
+</script>
+
+<script type="text/javascript">
+	var map;
+	// 百度地图API功能
+	function initMap() {
+		map = new BMap.Map("container");// 创建Map实例
+		map.centerAndZoom("{$杭州}", 12);
+		map.enableScrollWheelZoom();//启用滚轮放大缩小，默认禁用
+		map.enableContinuousZoom();//启用地图惯性拖拽，默认禁用
+		map.addControl(new BMap.NavigationControl());//添加默认缩放平移控件
+		map.addControl(new BMap.OverviewMapControl());//添加默认缩略地图控件
+		map.addControl(new BMap.OverviewMapControl({
+			isOpen : true,
+			anchor : BMAP_ANCHOR_BOTTOM_RIGHT
+		}));//右下角，打开
+
+		local = new BMap.LocalSearch(map, {
+			renderOptions : {
+				map : map,
+				autoViewport : true,
+				selectFirstResult : false
+			},
+			pageCapacity : 10
+		});
+
+		myIcon = new BMap.Icon("http://api.map.baidu.com/img/markers.png",
+				new BMap.Size(23, 25), {
+					offset : new BMap.Size(10, 25),
+					imageOffset : new BMap.Size(0, 0 - 10 * 25)
+				});
+
+		var keys = new Array("{杭州}");
+
+		local.setSearchCompleteCallback(function(searchResults) {
+			if (typeof (searchResults) == "undefined") {
+				alert("百度地图没有搜索到该地址");
+				return;
+			}
+			if (searchResults.length > 0) {
+				var searchResult = searchResults[0];
+			} else {
+				var searchResult = searchResults;
+			}
+
+			var contents = [];
+			for (var i = 0; i < searchResult.getCurrentNumPois(); i++) {
+				//获得需要得到的坐标
+				var poi = searchResult.getPoi(i);
+				if (!poi) {
+					alert("百度地图没有搜索到该地址");
+				}
+
+				//设置中心点
+				map.centerAndZoom(poi.point, 13);
+				// 创建标注，为要查询的地方对应的经纬度
+				var marker = new BMap.Marker(new BMap.Point(poi.point.lng,
+						poi.point.lat), {
+					icon : myIcon
+				});
+				//alert("["+poi.point.lng+","+poi.point.lat+"]");
+				//在地图上添加标识
+				map.addOverlay(marker);
+				//点击标识后显示的内容
+				contents[i] = "你要查找的地方:【" + poi.title + "】<br/>地址："
+						+ poi.address + "<br/>经度：" + poi.point.lng + "<br/>纬度："
+						+ poi.point.lat;
+				$("#ajd").val(poi.point.lng);
+				$("#awd").val(poi.point.lat);
+				marker.setTitle(contents[i]);
+				//添加点击事件监听
+				marker.addEventListener("click", makerClick);
+				if (i == 0) {
+					var infoWindow = new BMap.InfoWindow(
+							"<p style='font-size:14px;'>" + contents[0]
+									+ "</p>");
+					marker.openInfoWindow(infoWindow);
+				}
+
+			}
+
+		});
+		local.search(keys);
+
+		var makerClick = function() {
+			var infoWindow = new BMap.InfoWindow("<p style='font-size:14px;'>"
+					+ this.getTitle() + "</p>");
+			this.openInfoWindow(infoWindow);
+		}
+	}
+
+	function searchAddr() {
+		var keys = document.getElementById("address").value;
+		local.search(keys);
+	}
+	var map2;
+	// 百度地图API功能
+	function initMap2() {
+		map2 = new BMap.Map("econtainer");// 创建Map实例
+		map2.centerAndZoom("{$杭州}", 12);
+		map2.enableScrollWheelZoom();//启用滚轮放大缩小，默认禁用
+		map2.enableContinuousZoom();//启用地图惯性拖拽，默认禁用
+		map2.addControl(new BMap.NavigationControl());//添加默认缩放平移控件
+		map2.addControl(new BMap.OverviewMapControl());//添加默认缩略地图控件
+		map2.addControl(new BMap.OverviewMapControl({
+			isOpen : true,
+			anchor : BMAP_ANCHOR_BOTTOM_RIGHT
+		}));//右下角，打开
+
+		local = new BMap.LocalSearch(map2, {
+			renderOptions : {
+				map2 : map2,
+				autoViewport : true,
+				selectFirstResult : false
+			},
+			pageCapacity : 10
+		});
+
+		myIcon = new BMap.Icon("http://api.map.baidu.com/img/markers.png",
+				new BMap.Size(23, 25), {
+					offset : new BMap.Size(10, 25),
+					imageOffset : new BMap.Size(0, 0 - 10 * 25)
+				});
+
+		var keys = new Array("{杭州}");
+
+		local.setSearchCompleteCallback(function(searchResults) {
+			if (typeof (searchResults) == "undefined") {
+				alert("百度地图没有搜索到该地址");
+				return;
+			}
+			if (searchResults.length > 0) {
+				var searchResult = searchResults[0];
+			} else {
+				var searchResult = searchResults;
+			}
+
+			var contents = [];
+			for (var i = 0; i < searchResult.getCurrentNumPois(); i++) {
+				//获得需要得到的坐标
+				var poi = searchResult.getPoi(i);
+				if (!poi) {
+					alert("百度地图没有搜索到该地址");
+				}
+
+				//设置中心点
+				map2.centerAndZoom(poi.point, 13);
+				// 创建标注，为要查询的地方对应的经纬度
+				var marker = new BMap.Marker(new BMap.Point(poi.point.lng,
+						poi.point.lat), {
+					icon : myIcon
+				});
+				//alert("["+poi.point.lng+","+poi.point.lat+"]");
+				//在地图上添加标识
+				map2.addOverlay(marker);
+				//点击标识后显示的内容
+				contents[i] = "你要查找的地方:【" + poi.title + "】<br/>地址："
+						+ poi.address + "<br/>经度：" + poi.point.lng + "<br/>纬度："
+						+ poi.point.lat;
+				$("#ejd").val(poi.point.lng);
+				$("#ewd").val(poi.point.lat);
+				marker.setTitle(contents[i]);
+				//添加点击事件监听
+				marker.addEventListener("click", makerClick);
+				if (i == 0) {
+					var infoWindow = new BMap.InfoWindow(
+							"<p style='font-size:14px;'>" + contents[0]
+									+ "</p>");
+					marker.openInfoWindow(infoWindow);
+				}
+
+			}
+
+		});
+		local.search(keys);
+
+		var makerClick = function() {
+			var infoWindow = new BMap.InfoWindow("<p style='font-size:14px;'>"
+					+ this.getTitle() + "</p>");
+			this.openInfoWindow(infoWindow);
+		}
+	}
+
+	function searchAddre() {
+		var keys = document.getElementById("eaddress").value;
+		local.search(keys);
+	}
+	$("input[name=aistop]").click(function() {
+
+		if ($(this).val() == '0') {
+			$("#zongdian").show();
+		} else {
+			$("#zongdian").hide();
+		}
+	});
+	$("input[name=eistop]").click(function() {
+
+		if ($(this).val() == '0') {
+			$("#ezongdian").show();
+		} else {
+			$("#ezongdian").hide();
+		}
+	});
+
+	function changeRoleType() {
+		if (confirm("正在更新数据，确认继续！")) {
+			$("form[id='changeTeamRole']").ajaxSubmit({
+				type : "post",
+				url : "changeTeamRole.do",
+				dataType : "json",
+				success : function(data) {
+					if (data.success) {
+						alert("更新成功");
+						$("#changeRoleModel").modal("hide");
+						$('#tatab').bootstrapTable("selectPage", 1);
+					} else {
+						alert(data.message);
+					}
+				},
+
+			});
+		}
+	}
+</script>
+
+<script>
+	function checkUserList() {
+		var tid = $("#addTeamId").val();
+		var all5;
+		$('#checkUserTab').bootstrapTable(
+				{
+					method : 'post',
+					contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+					url : "queryTeamCheckUser.do?teamId=" + tid,//要请求数据的文件路径
+					dataType : 'json',
+					striped : true, //是否显示行间隔色
+					pageNumber : 1, //初始化加载第一页，默认第一页
+					pageSize : 20,//单页记录数
+					pageList : [ 20, 30 ],//分页步进值
+					pagination : true,//是否分页
+					queryParamsType : 'limit',//查询参数组织方式
+					sidePagination : 'server',//指定服务器端分页
+					queryParams : function(p) {
+						return params5(p);
+					},
+
+					clickToSelect : true,//是否启用点击选中行
+					toolbarAlign : 'right',//工具栏对齐方式
+					buttonsAlign : 'right',//按钮对齐方式
+					toolbar : '#toolbar',//指定工作栏
+
+					columns : [
+							{
+								title : '昵称',
+								field : 'nickName'
+							},
+							{
+								title : '真实姓名',
+								field : 'realName'
+							},
+							{
+								title : '手机',
+								field : 'cell'
+							},
+							{
+								title : '角色',
+								field : 'checkRoleStr'
+							},
+							{
+								title : '操作',
+								field : 'userId',
+								formatter : function(value, row, index) {
+
+									return "<a href='#' onclick=deleteTeamCy('"
+											+ row.id + "')>删除</a>";
+								}
+							} ],
+					locale : 'zh-CN',//中文支持,
+					responseHandler : function(res) {
+						//在ajax获取到数据，渲染表格之前，修改数据源
+						all5 = res.rows;
+						return res;
+					}
+				})
+	}
+
+	function checkUser(index) {
+		$("#checkNickName").val("");
+		$("#checkCell").val("");
+		$("#checkRoleType").val("");
+		$("#checkUserTab").bootstrapTable('destroy');
+		$("#addTeamId").val(all[index].teamId);
+
+		$("#checkForUserTab").bootstrapTable('destroy');
+
+		checkUserList();
+		$("#checkUserModal").modal("show");
+	}
+
+	function params5(params) {
+		params["checkNickName"] = $("#checkNickName").val();
+		params["checkCell"] = $("#checkCell").val();
+		params["checkRoleType"] = $("#checkRoleType").val();
+		params["checkRealName"] = $("#checkRealName").val();
+		return params;
+	}
+
+	function sorceCheck() {
+		$('#checkUserTab').bootstrapTable("selectPage", 1);
+	}
+
+	var all6;
+	function openCheckDyModal() {
+
+		$("#checkMoName").val("");
+		$("#checkMoCell").val("");
+		$("#checkRoleType").val("");
+		$("#checkMoRealName").val("");
+
+		$("#checkForUserTab").bootstrapTable('destroy');
+
+		$('#checkForUserTab').bootstrapTable({
+			method : 'post',
+			contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+			url : "selectuserforteamcheck.do",//要请求数据的文件路径
+			dataType : 'json',
+			striped : true, //是否显示行间隔色
+			pageNumber : 1, //初始化加载第一页，默认第一页
+			pageSize : 10,//单页记录数
+			pageList : [ 20, 30 ],//分页步进值
+			pagination : true,//是否分页
+			queryParamsType : 'limit',//查询参数组织方式
+			sidePagination : 'server',//指定服务器端分页
+			queryParams : function(p) {
+				return params6(p);
+			},
+
+			clickToSelect : true,//是否启用点击选中行
+			toolbarAlign : 'right',//工具栏对齐方式
+			buttonsAlign : 'right',//按钮对齐方式
+			toolbar : '#toolbar',//指定工作栏
+			singleSelect : true,//设置为单选
+			columns : [
+			/* {
+				field : "id",
+				checkbox: true,
+				align : 'center',
+			}, */
+			{
+				title : '昵称',
+				field : 'nickName'
+			}, {
+				title : '真实姓名',
+				field : 'realName'
+			}, {
+				title : '手机',
+				field : 'cell'
+			}, {
+				field : 'userId',
+				title : '审核角色',
+				formatter : setChecked
+			/* events: {'change .ss': function (e, value, row, index) {
+			            var valueSelected = $(this).children('option:selected').val();
+			            $('#checkForUserTab').bootstrapTable('updateCheckTeamRole', {
+			                        index: index,
+			                        field: 'cell',
+			                        value: valueSelected
+			                 })
+			        }
+			} */
+			} ],
+			locale : 'zh-CN',//中文支持,
+			responseHandler : function(res) {
+				//在ajax获取到数据，渲染表格之前，修改数据源
+				all6 = res.rows;
+				return res;
+			}
+		})
+
+		$("#checkDyModal").modal("show");
+	}
+
+	function setChecked(value, row, index) {
+		var userId = value;
+
+		var checkRoleFirst = all6[index].checkRoleFirst;
+		var checkRoleIdFirst = all6[index].checkRoleIdFirst;
+
+		var checkRoleSecond = all6[index].checkRoleSecond;
+		var checkRoleIdSecond = all6[index].checkRoleIdSecond;
+
+		var checkRoleThird = all6[index].checkRoleThird;
+		var checkRoleIdThird = all6[index].checkRoleIdThird;
+
+		var checkRoleFour = all6[index].checkRoleFour;
+		var checkRoleIdFour = all6[index].checkRoleIdFour;
+
+		var checkRoleFive = all6[index].checkRoleFive;
+		var checkRoleIdFive = all6[index].checkRoleIdFive;
+
+		var checkRoleSix = all6[index].checkRoleSix;
+		var checkRoleIdSix = all6[index].checkRoleIdSix;
+
+		var checkRoleSeven = all6[index].checkRoleSeven;
+		var checkRoleIdSeven = all6[index].checkRoleIdSeven;
+
+		var checkRoleEigth = all6[index].checkRoleEigth;
+		var checkRoleIdEigth = all6[index].checkRoleIdEigth;
+
+		var strHtml = "";
+		if (checkRoleFirst == '2') {
+			strHtml += '<input type="checkbox" value="6" checked="checked" onclick="updateCheckTeamRole(\''
+					+ userId
+					+ '\',\''
+					+ checkRoleIdFirst
+					+ '\',this)">业务员</input>';
+		} else {
+			strHtml += '<input type="checkbox" value="2" onclick="updateCheckTeamRole(\''
+					+ userId
+					+ '\',\''
+					+ checkRoleIdFirst
+					+ '\',this)">业务员</input>';
+		}
+		if (checkRoleSecond == '3') {
+			strHtml += '<input type="checkbox" value="6" checked="checked" onclick="updateCheckTeamRole(\''
+					+ userId
+					+ '\',\''
+					+ checkRoleIdSecond
+					+ '\',this)">财务</input>';
+		} else {
+			strHtml += '<input type="checkbox" value="3" onclick="updateCheckTeamRole(\''
+					+ userId
+					+ '\',\''
+					+ checkRoleIdSecond
+					+ '\',this)">财务</input>';
+		}
+		if (checkRoleThird == '4') {
+			strHtml += '<input type="checkbox" value="6" checked="checked" onclick="updateCheckTeamRole(\''
+					+ userId
+					+ '\',\''
+					+ checkRoleIdThird
+					+ '\',this)">质管</input>';
+		} else {
+			strHtml += '<input type="checkbox" value="4" onclick="updateCheckTeamRole(\''
+					+ userId
+					+ '\',\''
+					+ checkRoleIdThird
+					+ '\',this)">质管</input>';
+		}
+
+		if (checkRoleFour == '7') {
+			strHtml += '<input type="checkbox" value="6" checked="checked" onclick="updateCheckTeamRole(\''
+					+ userId
+					+ '\',\''
+					+ checkRoleIdFour
+					+ '\',this)">业务经理</input>';
+		} else {
+			strHtml += '<input type="checkbox" value="7" onclick="updateCheckTeamRole(\''
+					+ userId
+					+ '\',\''
+					+ checkRoleIdFour
+					+ '\',this)">业务经理</input>';
+		}
+
+		if (checkRoleFive == '8') {
+			strHtml += '<input type="checkbox" value="6" checked="checked" onclick="updateCheckTeamRole(\''
+					+ userId
+					+ '\',\''
+					+ checkRoleIdFive
+					+ '\',this)">大区经理</input>';
+		} else {
+			strHtml += '<input type="checkbox" value="8" onclick="updateCheckTeamRole(\''
+					+ userId
+					+ '\',\''
+					+ checkRoleIdFive
+					+ '\',this)">大区经理</input>';
+		}
+
+		if (checkRoleSix == '9') {
+			strHtml += '<input type="checkbox" value="6" checked="checked" onclick="updateCheckTeamRole(\''
+					+ userId
+					+ '\',\''
+					+ checkRoleIdSix
+					+ '\',this)">督导</input>';
+		} else {
+			strHtml += '<input type="checkbox" value="9" onclick="updateCheckTeamRole(\''
+					+ userId
+					+ '\',\''
+					+ checkRoleIdSix
+					+ '\',this)">督导</input>';
+		}
+
+		if (checkRoleSeven == '10') {
+			strHtml += '<input type="checkbox" value="6" checked="checked" onclick="updateCheckTeamRole(\''
+					+ userId
+					+ '\',\''
+					+ checkRoleIdSeven
+					+ '\',this)">财务经理</input>';
+		} else {
+			strHtml += '<input type="checkbox" value="10" onclick="updateCheckTeamRole(\''
+					+ userId
+					+ '\',\''
+					+ checkRoleIdSeven
+					+ '\',this)">财务经理</input>';
+		}
+
+		if (checkRoleEigth == '11') {
+			strHtml += '<input type="checkbox" value="6" checked="checked" onclick="updateCheckTeamRole(\''
+					+ userId
+					+ '\',\''
+					+ checkRoleIdEigth
+					+ '\',this)">财务内勤</input>';
+		} else {
+			strHtml += '<input type="checkbox" value="11" onclick="updateCheckTeamRole(\''
+					+ userId
+					+ '\',\''
+					+ checkRoleIdEigth
+					+ '\',this)">财务内勤</input>';
+		}
+
+		return strHtml;
+	}
+
+	/* function setSelect(value, row, index) {
+		var userId = value;
+
+		var checkRoleFirst = all6[index].checkRoleFirst;
+		var checkRoleIdFirst = all6[index].checkRoleIdFirst;
+		var strHtml = '<select class="ss" onchange="updateCheckTeamRole(\''
+				+ userId + '\',\'' + checkRoleIdFirst + '\',this)">';
+		if (checkRoleFirst == '6') {
+			strHtml += '<option value="6" selected="selected">请选择角色一</option>'
+					+ '<option value="2">业务员</option>'
+					+ '<option value="3">财务</option>'
+					+ '<option value="4">质管</option>';
+		}
+		if (checkRoleFirst == '2') {
+			strHtml += '<option value="6" >请选择角色一</option>'
+					+ '<option value="2" selected="selected">业务员</option>'
+					+ '<option value="3">财务</option>'
+					+ '<option value="4">质管</option>';
+		}
+		if (checkRoleFirst == '3') {
+			strHtml += '<option value="6" >请选择角色一</option>'
+					+ '<option value="2" >业务员</option>'
+					+ '<option value="3" selected="selected">财务</option>'
+					+ '<option value="4">质管</option>';
+		}
+		if (checkRoleFirst == '4') {
+			strHtml += '<option value="6" >请选择角色一</option>'
+					+ '<option value="2" >业务员</option>'
+					+ '<option value="3" >财务</option>'
+					+ '<option value="4" selected="selected">质管</option>';
+		}
+		strHtml += '</select>';
+
+		var checkRoleSecond = all6[index].checkRoleSecond;
+		var checkRoleIdSecond = all6[index].checkRoleIdSecond;
+
+		strHtml += '<select class="ss" onchange="updateCheckTeamRole(\''
+				+ userId + '\',\'' + checkRoleIdSecond + '\',this)">';
+		if (checkRoleSecond == '6') {
+			strHtml += '<option value="6" selected="selected">请选择角色二</option>'
+					+ '<option value="2">业务员</option>'
+					+ '<option value="3">财务</option>'
+					+ '<option value="4">质管</option>';
+		}
+		if (checkRoleSecond == '2') {
+			strHtml += '<option value="6" >请选择角色二</option>'
+					+ '<option value="2" selected="selected">业务员</option>'
+					+ '<option value="3">财务</option>'
+					+ '<option value="4">质管</option>';
+		}
+		if (checkRoleSecond == '3') {
+			strHtml += '<option value="6" >请选择角色二</option>'
+					+ '<option value="2" >业务员</option>'
+					+ '<option value="3" selected="selected">财务</option>'
+					+ '<option value="4">质管</option>';
+		}
+		if (checkRoleSecond == '4') {
+			strHtml += '<option value="6" >请选择角色二</option>'
+					+ '<option value="2" >业务员</option>'
+					+ '<option value="3" >财务</option>'
+					+ '<option value="4" selected="selected">质管</option>';
+		}
+		strHtml += '</select>';
+
+		var checkRoleThird = all6[index].checkRoleThird;
+		var checkRoleIdThird = all6[index].checkRoleIdThird;
+
+		strHtml += '<select class="ss" onchange="updateCheckTeamRole(\''
+				+ userId + '\',\'' + checkRoleIdThird + '\',this)">';
+		if (checkRoleThird == '6') {
+			strHtml += '<option value="6" selected="selected">请选择角色三</option>'
+					+ '<option value="2">业务员</option>'
+					+ '<option value="3">财务</option>'
+					+ '<option value="4">质管</option>';
+		}
+		if (checkRoleThird == '2') {
+			strHtml += '<option value="6" >请选择角色三</option>'
+					+ '<option value="2" selected="selected">业务员</option>'
+					+ '<option value="3">财务</option>'
+					+ '<option value="4">质管</option>';
+		}
+		if (checkRoleThird == '3') {
+			strHtml += '<option value="6" >请选择角色三</option>'
+					+ '<option value="2" >业务员</option>'
+					+ '<option value="3" selected="selected">财务</option>'
+					+ '<option value="4">质管</option>';
+		}
+		if (checkRoleThird == '4') {
+			strHtml += '<option value="6" >请选择角色三</option>'
+					+ '<option value="2" >业务员</option>'
+					+ '<option value="3" >财务</option>'
+					+ '<option value="4" selected="selected">质管</option>';
+		}
+		strHtml += '</select>';
+
+		return strHtml;
+	} */
+
+	function params6(params) {
+		params["teamId"] = $("#addTeamId").val();
+		params["nickName"] = $("#checkMoName").val();
+		params["selectcell"] = $("#checkMoCell").val();
+		params["realName"] = $("#checkMoRealName").val();
+		return params;
+	}
+
+	function sorceCheckForUser() {
+		$('#checkForUserTab').bootstrapTable("selectPage", 1);
+	}
+
+	/* function changeTeamCheckRole(){
+	 //使用getSelections即可获得，row是json格式的数据
+	 var row = $('#checkForUserTab').bootstrapTable('getSelections');
+	
+	 if (row.length < 1) {
+	 alert("请选择审核成员");
+	 return;
+	 }
+	
+	 var checkRoleType = $("#checkMoRoleType").val();
+	 if (checkRoleType == '') {
+	 alert("请选择审核角色");
+	 return;
+	 }
+
+	 var checkteamId = $("#addTeamId").val();
+	
+	 var checkUserId = row[0].userId;
+	
+	 jQuery.ajax({
+	 type : 'post',
+	 url : 'changeTeamCheckRole.do',
+	 data : {
+	 "checkteamId" : checkteamId,
+	 "checkUserId" : checkUserId,
+	 "checkRoleType" : checkRoleType
+	 },
+	 success : function(data) {
+	 if (data.success) {
+	 alert("添加成功");
+	 $("#checkDyModal").modal("hide");
+	 $("#checkUserTab").bootstrapTable('refresh');
+	 checkUserList();
+	 } else {
+	 alert("添加失败");
+	 }
+	 }
+	 });
+	 } */
+
+	function closeCheckDyModal() {
+		$("#checkDyModal").modal("hide");
+		$("#checkUserTab").bootstrapTable('destroy');
+		checkUserList();
+	}
+
+	function deleteTeamCy(id) {
+
+		if (confirm("确定删除此信息？删除后不可恢复")) {
+			jQuery.ajax({
+				url : "delTeamCheckRole.do",
+				type : 'post',
+				data : {
+					"id" : id
+				},
+				dataType : 'json',
+				success : function(data) {
+					if (data.success) {
+						alert("删除成功");
+						$("#checkUserTab").bootstrapTable('refresh');
+					} else {
+						alert("删除失败");
+					}
+				},
+				error : function() {
+					alert("异常！");
+				}
+			});
+		} else {
+			return;
+		}
+	}
+
+	function updateCheckTeamRole(checkUserId, checkRoleId, ele) {
+
+		var checkRoleType = $(ele).val();
+
+		var checkteamId = $("#addTeamId").val();
+
+		jQuery.ajax({
+			type : 'post',
+			url : 'changeTeamCheckRole.do',
+			data : {
+				"checkteamId" : checkteamId,
+				"checkUserId" : checkUserId,
+				"checkRoleType" : checkRoleType,
+				"id" : checkRoleId
+			},
+			success : function(data) {
+				if (data.success) {
+					$("#checkForUserTab").bootstrapTable('refresh');
+					checkUserList();
+				} else {
+					alert("添加失败");
+				}
+			}
+		});
+	}
+
+	//图片预览
+	function preview(target) {
+		$("#preview").html("");
+		var length = 0;
+		var imgContent = document.getElementById('preview');
+		imgContent.style.display = "block";
+		//imgContent为图片展示的区域
+		var reader = new FileReader();
+		reader.readAsDataURL(target.files[length]);
+		//异步读取图片，读取完会触onload
+		reader.onload = function() {
+			imgContent.innerHTML += "<img src='" + this.result
+					+ "' style='width:50%'/>";
+			length++;
+			if (length < target.files.length) {
+				reader.readAsDataURL(target.files[length]);
+			}
+		}
+	}
+
+	function previewE(target) {
+		$("#previewE").html("");
+		var length = 0;
+		var imgContent = document.getElementById('previewE');
+		imgContent.style.display = "block";
+		//imgContent为图片展示的区域
+		var reader = new FileReader();
+		reader.readAsDataURL(target.files[length]);
+		//异步读取图片，读取完会触onload
+		reader.onload = function() {
+			imgContent.innerHTML += "<img src='" + this.result
+					+ "' style='width:50%'/>";
+			length++;
+			if (length < target.files.length) {
+				reader.readAsDataURL(target.files[length]);
+			}
+		}
+	}
+
+	//显示放大图片
+	function imgbig(url) {
+		$('#imgbig').modal('show');
+		$("#bigbis").attr('src', url);
+	}
+</script>
+
+<script>
+	//按条件导出全部数据 
+	function exportAllPage(type) {
+
+		var nickName = $("#nickName").val();
+		var userCell = $("#userCell").val();
+		var teamErpNo = $("#teamErpNo").val();
+		var teamName = $("#teamName").val();
+		var teamType = $("#teamType").val();
+
+		var isTop = $("#isTop").val();
+		var delFlg = $("#delFlg").val();
+		var teamLevel = $("#teamLevel").val();
+		var realName = $("#realName").val();
+
+		var teamCheckRole = $("#teamCheckRole").val();
+		var teamCheckCell = $("#teamCheckCell").val();
+
+		var offset = $("#offset").val();
+		var limit = $("#limit").val();
+
+		var action = "exportAllPageForTeam.do";
+		var form = $("<form></form>");
+		form.attr('action', action);
+		form.attr('method', 'post');
+		input2 = $("<input type='text' name='nickName' value='"+nickName+"' />");
+		form.append(input2);
+		input3 = $("<input type='text' name='userCell' value='"+userCell+"' />");
+		form.append(input3);
+		input4 = $("<input type='text' name='teamErpNo' value='"+teamErpNo+"' />");
+		form.append(input4);
+		input5 = $("<input type='text' name='teamName' value='"+teamName+"' />")
+		form.append(input5);
+		input6 = $("<input type='text' name='teamType' value='"+teamType+"' />");
+		form.append(input6);
+		input7 = $("<input type='text' name='isTop' value='"+isTop+"' />");
+		form.append(input7);
+		input8 = $("<input type='text' name='delFlg' value='"+delFlg+"' />");
+		form.append(input8);
+		input9 = $("<input type='text' name='teamLevel' value='"+teamLevel+"' />");
+		form.append(input9);
+		input10 = $("<input type='text' name='realName' value='"+realName+"' />");
+		form.append(input10);
+		input11 = $("<input type='text' name='offset' value='"+offset+"' />");
+		form.append(input11);
+		input12 = $("<input type='text' name='limit' value='"+limit+"' />");
+		form.append(input12);
+		input13 = $("<input type='text' name='type' value='"+type+"' />");
+		form.append(input13);
+		input14 = $("<input type='text' name='teamCheckRole' value='"+teamCheckRole+"' />");
+		form.append(input14);
+		input15 = $("<input type='text' name='teamCheckCell' value='"+teamCheckCell+"' />");
+		form.append(input15);
+
+		form.appendTo("body");
+		form.css('display', 'none');
+		form.submit();
+	}
+</script>
+
+</html>

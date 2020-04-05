@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+#parse("content/importBase.vm")
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link type="text/css" rel="stylesheet" href="css/wuliu.css">
+<style type="text/css">
+#preview>img {
+	width: 80%;
+	height: auto;
+}
+</style>
+</head>
+<body style="width: 100%; height: 100%;">
+	<div id="page-wrapper">
+		<!--BEGIN TITLE & BREADCRUMB PAGE-->
+		<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+			<div class="page-header pull-left">
+				<div class="page-title">活动管理</div>
+			</div>
+			<ol class="breadcrumb page-breadcrumb pull-right">
+				<li><i class="fa fa-home"></i>&nbsp;<a href="#">活动管理</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="hidden"><a href="#">活动管理</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+			</ol>
+
+			<div class="clearfix"></div>
+		</div>
+
+
+		<div style="margin-top: 2%;" id="a">
+			<label class="col-sm-1 control-label"
+				style="text-align: right; margin-top: 5px">活动标题：</label>
+			<div class="col-sm-2">
+				<div class="control-group">
+					<input type="text" id="title" name="title" class="form-control" />
+				</div>
+			</div>
+
+			<label class="col-sm-1 control-label"
+				style="text-align: right; margin-top: 5px">活动类型：</label>
+			<div class="col-sm-2">
+				<div class="control-group">
+					<select class="form-control" id="type" name="type">
+						<option value="">请选择</option>
+						<option value="1">店铺活动</option>
+					</select>
+				</div>
+			</div>
+
+			<label class="col-sm-1 control-label"
+				style="text-align: right; margin-top: 5px">活动状态：</label>
+			<div class="col-sm-2">
+				<div class="control-group">
+					<select class="form-control" id="state" name="state">
+						<option value="">请选择</option>
+						<option value="ENABLED">可用</option>
+						<option value="UNABLED">不可用</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div>
+			<input type="button" onclick="clean()" class="btn btn-danger"
+				name="Name" id="search_tel" value="清空"
+				style="float: right; margin-right: 2%; margin-bottom: 20px;" />
+		</div>
+		<div>
+			<input type="button" onclick="sorce()" class="btn btn-info"
+				name="Name" id="search_tel" value="查询"
+				style="float: right; margin-right: 2%;" />
+		</div>
+		<div>
+			<input type="button" onclick="showEditModal()"
+				class="btn btn-primary" name="Name" id="search_tel" value="添加"
+				style="float: right; margin-right: 2%;" />
+		</div>
+
+		<!--END TITLE & BREADCRUMB PAGE-->
+		<!--BEGIN CONTENT-->
+		<table id="mytab" class="table table-hover"></table>
+		<div class="modal fade" id="editModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" style="width: 50%">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">活动信息</h4>
+						<div class="modal-body">
+							<form class="form-horizontal" role="form" method="post">
+								<input type="hidden" id="edId" name="edId" class="form-control" />
+								<div class="form-group">
+									<label for="lastname" class="col-sm-2 control-label">活动标题：</label>
+									<div class="col-sm-8">
+										<input type="text" id="edTitle" name="edTitle"
+											class="form-control" />
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="lastname" class="col-sm-2 control-label">活动背景图：</label>
+									<div class="col-sm-8">
+										<input type="file" id="backImg" name="backImg"
+											onchange="preview(this)" />
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="lastname" class="col-sm-2 control-label"></label>
+									<div class="col-sm-6">
+										<div id="preview" style="display: none" class=""></div>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="lastname" class="col-sm-2 control-label">描述：</label>
+									<div class="col-sm-6">
+										<textarea rows="10" id="edInfo" name="edInfo"
+											class="form-control"></textarea>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="lastname" class="col-sm-2 control-label">活动类型：</label>
+									<div class="col-sm-8">
+										<select class="form-control" id="edType" name="edType">
+											<option value="1">店铺活动</option>
+										</select>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="lastname" class="col-sm-2 control-label">链接地址：</label>
+									<div id="edit" class="col-sm-8"></div>
+								</div>
+
+								<div class="form-group">
+									<label for="lastname" class="col-sm-2 control-label">活动状态：</label>
+									<div class="col-sm-8">
+										<select class="form-control" id="edState" name="edState">
+											<option value="ENABLED">可用</option>
+											<option value="UNABLED">不可用</option>
+										</select>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="lastname" class="col-sm-2 control-label">排序：</label>
+									<div class="col-sm-8">
+										<input type="number" id="edNum" name="edNum"
+											class="form-control" />
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="submitReply" class="btn btn-primary"
+							onclick="edit()">确定</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="js/wangEditor/wangEditor.js"></script>
+	<script type="text/javascript">
+		var E = window.wangEditor
+		var editor = new E('#edit')
+		// 或者 var editor = new E( document.getElementById('editor') )
+		// 隐藏“网络图片”tab
+		editor.customConfig.showLinkImg = false
+		// 关闭粘贴样式的过滤
+		editor.customConfig.pasteFilterStyle = false
+		//editor.customConfig.debug = location.href.indexOf('wangeditor_debug_mode=1') > 0
+		// 下面两个配置，使用其中一个即可显示“上传图片”的tab。但是两者不要同时使用！！！
+		// editor.customConfig.uploadImgShowBase64 = true   // 使用 base64 保存图片
+		// 上传图片（举例）
+		editor.customConfig.uploadImgServer = 'fileUploadForEditor.do';
+		//限制上传图片数 
+		editor.customConfig.uploadImgMaxLength = 1;
+
+		editor.customConfig.uploadImgParams = {
+			token : 'abcdef12345' // 属性值会自动进行 encode ，此处无需 encode
+		}
+		//图片上传时的属性名 
+		editor.customConfig.uploadFileName = 'photo'
+
+		editor.customConfig.uploadImgHeaders = {
+			'Accept' : 'text/x-json'
+		}
+
+		editor.customConfig.uploadImgHooks = {
+			before : function(xhr, editor, files) {
+				// 图片上传之前触发
+				// xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，files 是选择的图片文件
+
+				// 如果返回的结果是 {prevent: true, msg: 'xxxx'} 则表示用户放弃上传
+				// return {
+				//     prevent: true,
+				//     msg: '放弃上传'
+				// }
+			},
+			success : function(xhr, editor, result) {
+				// 图片上传并返回结果，图片插入成功之后触发
+				// xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，result 是服务器端返回的结果
+				//alert(result.data);
+
+			},
+			fail : function(xhr, editor, result) {
+				// 图片上传并返回结果，但图片插入错误时触发
+				// xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，result 是服务器端返回的结果
+				//alert(result);
+			},
+			error : function(xhr, editor) {
+				// 图片上传出错时触发
+				// xhr 是 XMLHttpRequst 对象，editor 是编辑器对象
+			},
+			timeout : function(xhr, editor) {
+				// 图片上传超时时触发
+				// xhr 是 XMLHttpRequst 对象，editor 是编辑器对象
+			},
+
+			// 如果服务器端返回的不是 {errno:0, data: [...]} 这种格式，可使用该配置
+			// （但是，服务器端返回的必须是一个 JSON 格式字符串！！！否则会报错）
+			customInsert : function(insertImg, result, editor) {
+				// 图片上传并返回结果，自定义插入图片的事件（而不是编辑器自动插入图片！！！）
+				// insertImg 是插入图片的函数，editor 是编辑器对象，result 是服务器端返回的结果
+
+				// 举例：假如上传图片成功后，服务器端返回的是 {url:'....'} 这种格式，即可这样插入图片：
+				var url = result.data
+				/* var htmlStr = '<p style="margin:0;padding: 0;border:0;"><img src="'+url+'" style="max-width:100%;"><br></p>'; */
+				/* editor.txt.html(htmlStr); */
+				insertImg(url)
+
+				// result 必须是一个 JSON 格式字符串！！！否则报错
+			}
+		}
+		editor.create();
+		$('#editor').attr('style', 'height:auto;');
+	</script>
+
+</body>
+
+<script type="text/javascript">
+	function claenmyModal() {
+		$("#myModal input").val("");
+	}
+
+	function clean() {
+		$("#a input").val("");
+		$("#a select").val("");
+	}
+	function sorce() {
+		$('#mytab').bootstrapTable("selectPage", 1);
+	}
+
+	bootsearch();
+
+	var all;
+	function sorce() {
+		$("#mytab").bootstrapTable('destroy');
+		//生成用户数据
+		bootsearch();
+	}
+
+	function bootsearch() {
+		//生成用户数据
+		$('#mytab')
+				.bootstrapTable(
+						{
+							method : 'post',
+							contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+							url : "selectActivity.do",//要请求数据的文件路径
+							dataType : 'json',
+							striped : true, //是否显示行间隔色
+							pageNumber : 1, //初始化加载第一页，默认第一页
+							pageSize : 10,//单页记录数
+							pageList : [ 5, 10, 20, 30 ],//分页步进值
+							pagination : true,//是否分页
+							queryParamsType : 'limit',//查询参数组织方式
+							sidePagination : 'server',//指定服务器端分页
+							queryParams : function(p) {
+								return params(p);
+							},
+
+							clickToSelect : true,//是否启用点击选中行
+							toolbarAlign : 'right',//工具栏对齐方式
+							buttonsAlign : 'right',//按钮对齐方式
+							toolbar : '#toolbar',//指定工作栏
+							columns : [
+									{
+										title : '操&nbsp&nbsp&nbsp&nbsp作',
+										field : 'id',
+										formatter : function(value, row, index) {
+											var url = "<a href='#' onclick=showEditModal('"
+													+ index + "')>修改</a>";
+											return url;
+										}
+									},
+									{
+										title : '活动标题',
+										field : 'title'
+									},
+									{
+										title : '活动背景图',
+										field : 'backImg',
+										formatter : function(value, row, index) {
+											if (value == "" || value == null) {
+												return "";
+											} else {
+												return "<img src="
+														+ value
+														+ " onclick=imgbig('"
+														+ value
+														+ "')  width='65px;' height='50px;' />";
+											}
+										}
+									},
+									{
+										title : '活动描述',
+										field : 'info',
+										formatter : function(value, row, index) {
+											if (value == "" || value == null) {
+												return "";
+											} else {
+												return value.substr(0, 15)
+														+ "...";
+											}
+										}
+									},
+									{
+										title : '活动类型',
+										field : 'type',
+										formatter : function(value, row, index) {
+											if (value == "1") {
+												return "店铺活动";
+											} else {
+												return value;
+											}
+										}
+									},
+									{
+										title : '状态',
+										field : 'state',
+										formatter : function(value, row, index) {
+											if (value == "ENABLED") {
+												return "可用";
+											} else if (value == "UNABLED") {
+												return "不可用";
+											} else {
+												return value;
+											}
+										}
+									},
+									{
+										title : '排序',
+										field : 'num'
+									},
+									{
+										title : '创建者',
+										field : 'creater'
+									},
+									{
+										title : '创建时间',
+										field : 'gmtCreate',
+										formatter : function(value, row, index) {
+											return format(value);
+										}
+									},
+									{
+										title : '修改者',
+										field : 'modifier'
+									},
+									{
+										title : '修改时间',
+										field : 'gmtModified',
+										formatter : function(value, row, index) {
+											return format(value);
+										}
+									} ],
+							locale : 'zh-CN',//中文支持,
+							responseHandler : function(res) {
+								//在ajax获取到数据，渲染表格之前，修改数据源
+								all = res.rows;
+								return res;
+							}
+						})
+	}
+
+	//显示模态框
+	function showEditModal(index) {
+		$("#editModal input").val("");
+		$("#editModal select").val("");
+		$("#editModal textarea").val("");
+		$('#preview').html("");
+		if (index) {
+			$("#edId").val(all[index].id);
+			$("#edTitle").val(all[index].title);
+			$("#preview").html('<img src='+all[index].backImg+' />');
+			$("#preview").show();
+			$("#edInfo").val(all[index].info);
+			$("#edType").val(all[index].type);
+			editor.txt.html(all[index].url);//富文本回显
+			$("#edState").val(all[index].state);
+			$("#edNum").val(all[index].num);
+		}
+		$('#editModal').modal('show');
+	}
+
+	function edit() {
+		var formData = new FormData();
+		formData.append("id", $("#edId").val());
+		formData.append("title", $("#edTitle").val());
+		formData.append("info", $("#edInfo").val());
+		formData.append("type", $("#edType").val());
+		formData.append("url", editor.txt.html());
+		formData.append("state", $("#edState").val());
+		formData.append("num", $("#edNum").val());
+		formData.append("img", $("#backImg")[0].files[0]);
+		jQuery.ajax({
+			url : "editActivity.do",
+			type : 'post',
+			data : formData,
+			dataType : 'json',
+			cache : false,
+			processData : false,
+			contentType : false,
+			success : function(data) {
+				if (data.success) {
+					$('#editModal').modal('hide');
+					$("#mytab").bootstrapTable('refresh');
+				} else {
+					alert(data.message);
+				}
+			},
+			error : function() {
+				alert("操作失败！");
+			}
+		});
+	}
+
+	$(document).ready(function() {
+
+		// 注册change事件       
+		jQuery('#replyChatType').change(function() {
+			var type = $(this).children('option:selected').val();
+			if (type == "1") {
+				$('#commentFile').val("");
+				$('#preview').html("");
+				$('#commentInput').show();
+				$('#commentFile').hide();
+			} else if (type == "2") {
+				$('#commentInput').val("");
+				$('#commentInput').hide();
+				$('#commentFile').show();
+			} else {
+				$('#commentInput').val("");
+				$('#commentInput').hide();
+				$('#commentFile').hide();
+				$('#preview').html("");
+				$('#commentFile').val("");
+				alert("请选择有效值");
+				return;
+			}
+		})
+	})
+
+	//图片预览
+	function preview(file) {
+		var prevDiv = document.getElementById('preview');
+		prevDiv.style.display = "block";
+		if (file.files && file.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function(evt) {
+				prevDiv.innerHTML = '<img src="' + evt.target.result + '" />';
+			}
+			reader.readAsDataURL(file.files[0]);
+		} else {
+			prevDiv.innerHTML = '<div class="img" style="filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src=\'' + file.value + '\'"></div>';
+		}
+	}
+
+	//显示放大图片
+	function imgbig(url) {
+		$('#imgbig').modal('show');
+		$("#bigbis").attr('src', url);
+	}
+
+	//获取搜索的所有值
+	function params(params) {
+		$("#a input[type='text']").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		$("#a select").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		return params;
+	}
+</script>
+</html>

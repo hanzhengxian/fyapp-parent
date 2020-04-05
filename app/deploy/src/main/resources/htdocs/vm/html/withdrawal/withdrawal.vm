@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+#parse("content/importBase.vm")
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link type="text/css" rel="stylesheet" href="css/imgsindex.css">
+<link type="text/css" rel="stylesheet" href="css/imgscommon.css">
+<link type="text/css" rel="stylesheet" href="css/bootstrap-select.css">
+<link type="text/css" rel="stylesheet" href="css/liandong.css">
+<script src="js/imgUp.js"></script>
+<style type="text/css">
+#preview>img {
+	width: 100%;
+	height: 170px;
+}
+</style>
+</head>
+<body style="width: 100%; height: 100%;">
+	<div id="page-wrapper">
+		<!--BEGIN TITLE & BREADCRUMB PAGE-->
+		<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+			<div class="page-header pull-left">
+				<div class="page-title">提现管理</div>
+			</div>
+			<ol class="breadcrumb page-breadcrumb pull-right">
+				<li><i class="fa fa-home"></i>&nbsp;<a href="#">提现管理</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="hidden"><a href="#">用户提现管理</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="active">用户提现管理</li>
+			</ol>
+
+			<div class="clearfix"></div>
+		</div>
+
+
+		<div style="margin-top: 2%;" id="a">
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">用户手机号：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="cell" class="form-control" /> <br />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">用户昵称：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="nickName" class="form-control" /> <br />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">用户真实姓名：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="realName" class="form-control" /> <br />
+					</div>
+				</div>
+
+			</div>
+
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">提现状态：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select name="status" id="status" class="form-control">
+							<option value="">请选择</option>
+							<option value="APPLY" selected="selected">申请</option>
+							<option value="CANCEL">取消</option>
+							<option value="REFUSE">拒绝</option>
+							<option value="PROCESSING">处理中</option>
+							<option value="FINISH">成功</option>
+							<option value="FAILED">失败</option>
+							<option value="OFF_LINE">线下打款</option>
+						</select> <br />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">提现方式：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select name="withDrawType" id="withDrawType" class="form-control">
+							<option value="">请选择</option>
+							<option value="ALIPAY">支付宝</option>
+							<option value="WEIXIN">微信</option>
+						</select> <br />
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">创建开始时间：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="startDate"
+							class="form-control datetimepicker" readonly /> <br />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">创建结束时间：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="endDate"
+							class="form-control datetimepicker" readonly /> <br />
+					</div>
+				</div>
+
+			</div>
+
+			<div class="col-sm-4" style="float: right">
+				<div class="control-group">
+					<div>
+						<button onclick="clean()" class="btn btn-danger" name="Name"
+							id="search_tel" value="清空"
+							style="float: right; margin-right: 2%;">清空</button>
+					</div>
+					<div>
+						<button onclick="sorce()" class="btn btn-info" name="Name"
+							id="search_tel" value="查询"
+							style="float: right; margin-right: 2%;">查询</button>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+
+
+		<!--END TITLE & BREADCRUMB PAGE-->
+		<!--BEGIN CONTENT-->
+		<table id="mytab" class="table table-hover"></table>
+		<div class="modal fade" id="myModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">审核</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" role="form" name="noticeform"
+							method="post">
+							<input type="hidden" id="id" class="form-control" /> <input
+								type="hidden" id="withdrawNo" class="form-control" />
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label">状态：</label>
+								<div class="col-sm-10">
+									<select name="checkType" id="checkType" class="form-control">
+										<option value="FINISH">通过</option>
+										<option value="REFUSE">拒绝</option>
+										<option value="OFF_LINE">线下打款</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label">线下打款凭证：</label>
+								<div class="img-box">
+									<section class="img-section">
+										<div class="z_photo upimg-div clear" id="container1">
+											<section class="z_file fl">
+												<img src="img/a11.png" class="add-img"> <input
+													type="file" name="file" id="file" class="file" value=""
+													accept="image/jpg,image/jpeg,image/png,image/bmp" />
+											</section>
+										</div>
+									</section>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label">备注说明：</label>
+								<div class="col-sm-10">
+									<textarea class="form-control" id="failReason"
+										name="failReason"></textarea>
+								</div>
+							</div>
+
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary"
+							onclick="submit(this)">确定</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="showmenu" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">备注说明</h4>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label for="lastname" class="col-sm-2 control-label">备注说明</label>
+							<div class="col-sm-10">
+								<textarea class="form-control" id="erreymeno" name="erreymeno"
+									cols="25" rows="10">
+                                    </textarea>
+							</div>
+						</div>
+						<div class="form-group" id="offLine">
+							<label class="col-sm-2 control-label">线下打款凭证：</label>
+							<div class="img-box">
+								<section class="img-section">
+									<div class="z_photo z_photo2 upimg-div clear" id="container2">
+										<!-- <section class="z_file fl">
+											<img src="img/a11.png" class="add-img"> <input
+												type="file" name="file" id="file2" class="file" value=""
+												accept="image/jpg,image/jpeg,image/png,image/bmp" />
+										</section> -->
+									</div>
+								</section>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</body>
+
+<script type="text/javascript">
+	$('.datetimepicker').datetimepicker({
+		minView : "month",//设置只显示到月份
+		format : 'yyyy-mm-dd',
+		language : 'zh-CN',
+		autoclose : true,//选中关闭
+		todayBtn : true
+	//今日按钮
+	})
+
+	function clean() {
+		$("#a input").val("");
+		$("#a select").val("");
+	}
+
+	bootsearch()
+	function sorce() {
+		$("#mytab").bootstrapTable('destroy');
+		//生成用户数据
+		bootsearch();
+	}
+
+	var all;
+	function bootsearch() {
+		//生成用户数据
+		$('#mytab')
+				.bootstrapTable(
+						{
+							method : 'post',
+							contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+							url : "queryAllUserWithdrawList.do",//要请求数据的文件路径
+							dataType : 'json',
+							striped : true, //是否显示行间隔色
+							pageNumber : 1, //初始化加载第一页，默认第一页
+							pageSize : 10,//单页记录数
+							pageList : [ 5, 10, 20, 30 ],//分页步进值
+							pagination : true,//是否分页
+							queryParamsType : 'limit',//查询参数组织方式
+							sidePagination : 'server',//指定服务器端分页
+							queryParams : function(p) {
+								return params(p);
+							},
+
+							clickToSelect : true,//是否启用点击选中行
+							toolbarAlign : 'right',//工具栏对齐方式
+							buttonsAlign : 'right',//按钮对齐方式
+							toolbar : '#toolbar',//指定工作栏
+							columns : [
+									{
+										title : '操作',
+										field : 'ID',
+										formatter : function(value, row, index) {
+											if (row.WITHDRAW_STATUS == "APPLY") {
+												return "<a href='#' onclick=showaccount('"
+														+ index + "')>审核</a>";
+											} else {
+												return "<a href='#' onclick=showmeno('"
+														+ index
+														+ "')>查看备注信息</a>";
+											}
+										}
+									},
+									{
+										title : '系统流水号',
+										field : 'WITHDRAW_NO'
+									},
+									{
+										title : '用户编号',
+										field : 'USER_ID'
+									},
+									{
+										title : '用户昵称',
+										field : 'NICK_NAME'
+									},
+									{
+										title : '真实姓名',
+										field : 'REAL_NAME'
+									},
+									{
+										title : '注册手机号',
+										field : 'CELL'
+									},
+									{
+										title : '支付宝真实姓名',
+										field : 'al_name'
+									},
+									{
+										title : '支付宝账号',
+										field : 'al_account'
+									},
+									{
+										title : '提现金额',
+										field : 'AMOUNT'
+									},
+									{
+										title : '提现胡币值',
+										field : 'HU_AMOUNT'
+									},
+									{
+										title : '提现比率',
+										field : 'RATE'
+									},
+									{
+										title : '提现状态',
+										field : 'STATUS_STR'
+									},
+									{
+										title : '操作来源',
+										field : 'WITHDRAW_FROM'
+									},
+									{
+										title : '提现方式',
+										field : 'WITHDRAW_TYPE_STR'
+									},
+									{
+										title : '微信OPENID',
+										field : 'OPEN_ID'
+									},
+									{
+										title : '创建时间',
+										field : 'GMT_CREATE',
+										formatter : function(value, row, index) {
+											if (value == '' || value == null)
+												return "----"
+											return format(value);
+										}
+									},
+									{
+										title : '审核者',
+										field : 'modifier'
+									},
+									{
+										title : '审核时间',
+										field : 'GMT_FINISH',
+										formatter : function(value, row, index) {
+											if (value == '' || value == null)
+												return "----"
+											return format(value);
+										}
+									}
+
+							],
+							locale : 'zh-CN',//中文支持,
+							responseHandler : function(res) {
+								//在ajax获取到数据，渲染表格之前，修改数据源
+								all = res.rows;
+								return res;
+							}
+						})
+	}
+
+	function showmeno(number) {
+		$("#erreymeno").val(all[number].FAIL_REASON);
+
+		$("#container2").children(".up-section").remove();
+		if (all[number].STATUS == 'OFF_LINE') {
+			//$("#offLine").show();
+			var voucherImg = all[number].voucherImg;
+			if (null != voucherImg) {
+				var delParent;
+				var imgContainer = $("#container2");
+				for (var i = 0; i < voucherImg.length; i++) {
+					var imgUrl = voucherImg[i];
+					var $section = $("<section class='up-section fl'>");
+					imgContainer.append($section);
+					var $span = $("<span class='up-span'>");
+					$span.appendTo($section);
+
+					/* var $img0 = $("<img class='close-upimg close-upimg1'>").on(
+							"click", function(event) {
+								event.preventDefault();
+								event.stopPropagation();
+								delParent = $(this).parent();
+								var numUp = delParent.siblings().length;
+								if (numUp < 6) {
+									delParent.parent().find(".z_file").show();
+								}
+								delParent.remove();
+							});
+					$img0.attr("src", "img/a7.png").appendTo($section); */
+					var $img = $("<img class='up-img up-img1'>");
+					$img.attr("src", imgUrl);
+					$img.appendTo($section);
+					var $p = $("<p class='img-name-p'>");
+					$p.html("name").appendTo($section);
+					var $input = $("<input id='taglocation' name='taglocation' value='' type='hidden'>");
+					$input.appendTo($section);
+					var $input2 = $("<input id='tags' name='tags' value='' type='hidden'/>");
+					$input2.appendTo($section);
+				}
+
+				$("img").load(
+						function() {
+							var viewer = new Viewer(document
+									.getElementById('container2'), {
+								navbar : false,
+								toolbar : {
+									zoomIn : true,
+									zoomOut : true,
+									play : true,
+									rotateLeft : true,
+									rotateRight : true
+
+								},
+								show : function() {
+									viewer.update();
+								}
+							});
+						})
+			}
+		} else {
+			//$("#offLine").hide();
+		}
+
+		$("#showmenu").modal("show");
+	}
+	//显示审核
+	function showaccount(number) {
+
+		$("#id").val(all[number].ID);
+		$("#withdrawNo").val(all[number].WITHDRAW_NO);
+
+		$("#container1").children(".up-section").remove();
+
+		$("#myModal").modal("show");
+	}
+	//审核操作
+	function submit(ele) {
+
+		var len = $(".up-img1").length;
+		var imgArr = [];
+		for (var i = 0; i < len; i++) {
+			var imgUrl = $(".up-img1").eq(i).attr('src');
+			imgArr.push(imgUrl);
+		}
+
+		$(ele).attr("disabled", true);
+
+		jQuery.ajax({
+			url : "shenhe.do",
+			type : 'post',
+			data : {
+				"eid" : $("#id").val(),
+				"withdrawNo" : $("#withdrawNo").val(),
+				"checkType" : $("#checkType").val(),
+				"failReason" : $("#failReason").val(),
+				"listFile" : JSON.stringify(imgArr)
+			},
+			dataType : 'json',
+			success : function(json) {
+				$(ele).attr("disabled", false);
+
+				if (!json.success) {
+					alert(json.message);
+					return false;
+				} else {
+					alert(json.message);
+					$("#failReason").val("");
+					$("#myModal").modal("hide");
+					$("#mytab").bootstrapTable('refresh');
+				}
+			},
+			error : function() {
+				alert("操作失败！");
+			}
+		})
+	}
+	//获取搜索的所有值
+	function params(params) {
+		$("#a input[type='text']").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		$("#a select").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		return params;
+	}
+</script>
+</html>

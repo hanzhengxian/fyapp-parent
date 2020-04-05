@@ -1,0 +1,3558 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+#parse("content/importBase.vm")
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link type="text/css" rel="stylesheet" href="css/imgsindex.css">
+<link type="text/css" rel="stylesheet" href="css/imgscommon.css">
+<link type="text/css" rel="stylesheet" href="css/bootstrap-select.css">
+<link type="text/css" rel="stylesheet" href="css/liandong.css">
+<script src="js/imgUp.js"></script>
+<style type="text/css">
+#preview>img {
+	width: 100%;
+	height: 170px;
+}
+
+.fixed-table-container thead th:nth-child(1) .th-inner {
+	width: 120px
+}
+
+.fixed-table-container thead th:nth-child(2) .th-inner {
+	width: 120px
+}
+
+.fixed-table-container thead th:nth-child(4) .th-inner {
+	width: 170px
+}
+
+.fixed-table-container thead th:nth-child(22) .th-inner {
+	width: 120px
+}
+
+.fixed-table-container thead th:nth-child(24) .th-inner {
+	width: 120px
+}
+</style>
+</head>
+<body style="width: 100%; height: 100%;">
+	<div id="page-wrapper">
+		<!--BEGIN TITLE & BREADCRUMB PAGE-->
+		<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+			<div class="page-header pull-left">
+				<div class="page-title">商品列表</div>
+			</div>
+			<ol class="breadcrumb page-breadcrumb pull-right">
+				<li><i class="fa fa-home"></i>&nbsp;<a href="#">商品管理</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="hidden"><a href="#">商品管理</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+			</ol>
+			<div class="clearfix"></div>
+		</div>
+
+		<div style="margin-top: 2%;" id="a">
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">商品编号：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="productId" value="" class="form-control" />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">门店编号：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="teamId" value="" class="form-control" />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">门店名称：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="teamName" value="" class="form-control" />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">是否删除：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select class="form-control" id="isDelete" name="isDelete">
+							<option value="">请选择</option>
+							<option value="0">未删除</option>
+							<option value="1">已删除</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<br>
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">商品标题行：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="productName" value="" class="form-control" />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">上架状态：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select class="form-control" id="onSale" name="onSale">
+							<option value="">请选择</option>
+							<option value="1">正常</option>
+							<option value="2">下架</option>
+						</select>
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">购买群体：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select class="form-control" id="canBuy" name="canBuy">
+							<option value="">请选择</option>
+							<option value="2">个人+团队</option>
+							<option value="1">仅团队</option>
+
+						</select>
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">批准文号：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" name="licenseNo" id="licenseNo"
+							class="form-control">
+					</div>
+				</div>
+			</div>
+			<br>
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">是否包邮：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select class="form-control" id="freeLuggage" name="freeLuggage">
+							<option value="">请选择</option>
+							<option value="true">包邮</option>
+							<option value="false">不包邮</option>
+						</select>
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">erp编号：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" name="goodErpNo" id="goodErpNo"
+							class="form-control">
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">条形码：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" name="goodbarCode" id="goodbarCode"
+							class="form-control">
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">是否有属性：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select class="form-control" id="hasStockPrice"
+							name="hasStockPrice">
+							<option value="">请选择</option>
+							<option value="0">无</option>
+							<option value="1">有</option>
+						</select>
+					</div>
+				</div>
+
+			</div>
+			<br>
+			<div class="row">
+				<div class="col-sm-4" style="float: right">
+					<div class="control-group">
+						<div>
+							<button id="search_btn" type="button" class="btn btn-success"
+								onclick="goDownDemo()" style="float: right; margin-right: 2%;">模板下载</button>
+						</div>
+						<div>
+							<button id="search_btn" type="button" class="btn btn-success"
+								onclick="handCleanStock(this)"
+								style="float: right; margin-right: 2%; margin-bottom: 10px;">手动同步中间库存</button>
+						</div>
+						<div>
+							<button id="btn_edit" type="button" class="btn btn-danger"
+								onclick="clean()" style="float: right; margin-right: 2%;">清空</button>
+						</div>
+						<div>
+							<button id="search_btn" type="button" class="btn btn-info"
+								onclick="sorce()" style="float: right; margin-right: 2%;">查询</button>
+						</div>
+						<div>
+							<button id="AddBtn" type="button" class="btn btn-warning"
+								onclick="addPanel()" style="float: right; margin-right: 2%;">添加</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- table表格 -->
+		<table id="mytab" class="table table-hover"
+			style="word-break: break-all; word-wrap: break-all;"></table>
+
+		<!-- 展示商品详情 -->
+		<div class="modal fade" id="showDetailModel" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">商品详情</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" role="form" id="showDetailForm">
+							<div class="form-group">
+								<label class="col-sm-2 control-label">商品编码</label>
+								<div class="col-sm-4">
+									<input type="text" id="showProductId" name="showProductId"
+										class="form-control" readonly="readonly" />
+								</div>
+								<label class="col-sm-2 control-label">商品标题行</label>
+								<div class="col-sm-4">
+									<input type="text" id="showProductName" name="showProductName"
+										class="form-control" readonly="readonly" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">商品名称</label>
+								<div class="col-sm-4">
+									<input type="text" id="showProName" name="showProName"
+										class="form-control" readonly="readonly" />
+								</div>
+								<label class="col-sm-2 control-label">商品类型</label>
+								<div class="col-sm-4">
+									<select class="form-control" id="showProType"
+										name="showProType" disabled="disabled">
+										<option value="1">普通商品</option>
+										<option value="2">服务商品</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">商品产地</label>
+								<div class="col-sm-4">
+									<input type="text" id="showProductArea" name="showProductArea"
+										class="form-control" readonly="readonly" />
+								</div>
+								<label class="col-sm-2 control-label">品牌</label>
+								<div class="col-sm-4">
+									<input type="text" id="showBrand" name="showBrand"
+										class="form-control" readonly="readonly" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">生产厂商</label>
+								<div class="col-sm-4">
+									<input type="text" id="showManufacturer"
+										name="showManufacturer" class="form-control"
+										readonly="readonly" />
+								</div>
+								<label class="col-sm-2 control-label">批准文号</label>
+								<div class="col-sm-4">
+									<input type="text" id="showLicenseNo" name="showLicenseNo"
+										class="form-control" readonly="readonly" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">商品分类</label>
+								<div class="col-sm-4">
+									<input type="text" id="showFatherCate" name="showFatherCate"
+										class="form-control" readonly="readonly" />
+								</div>
+								<label class="col-sm-2 control-label">分类详情</label>
+								<div class="col-sm-4">
+									<input type="text" id="showChildCate" name="showChildCate"
+										class="form-control" readonly="readonly" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">功效分类</label>
+								<div class="col-sm-4">
+									<input type="text" id="showFatherEfectCate"
+										name="showFatherEfectCate" class="form-control"
+										readonly="readonly" />
+								</div>
+								<label class="col-sm-2 control-label">功效详情</label>
+								<div class="col-sm-4">
+									<input type="text" id="showChildEfectCate"
+										name="showChildEfectCate" class="form-control"
+										readonly="readonly" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">购买人群</label>
+								<div class="col-sm-4">
+									<select class="form-control" id="showCanBuy" name="showCanBuy"
+										disabled="disabled">
+										<option value="2">个人+团队</option>
+										<option value="1">仅团队</option>
+									</select>
+								</div>
+								<label class="col-sm-2 control-label">上架情况</label>
+								<div class="col-sm-4">
+									<select class="form-control" id="showOnSale" name="showOnSale"
+										disabled="disabled">
+										<option value="1">上架</option>
+										<option value="2">下架</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">进销存编号</label>
+								<div class="col-sm-4">
+									<input type="text" id="showErpNo" name="showErpNo"
+										class="form-control" readonly="readonly" />
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 属性库存列表 -->
+		<div class="modal fade" id="stockPriceModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" style="width: 70%;">
+				<div class="modal-content">
+					<input type="hidden" id="proId_stock_price"
+						name="proId_stock_price" readonly="readonly" /> <input
+						type="hidden" id="proName_stock_price" name="proName_stock_price"
+						readonly="readonly" />
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">属性库存详情</h4>
+					</div>
+					<div class="modal-body">
+						<table id="stockPriceTab" class="table table-hover"></table>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="addstockpbtn" class="btn btn-danger"
+							onclick="showAddStockAttrModal()">新增库存属性</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 评论详情  -->
+		<div class="modal fade" id="contentInfoModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" style="width: 50%;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">评论详情</h4>
+					</div>
+					<div class="modal-body">
+						<textarea rows="20" cols="30" id="contentInfoText"
+							name="contentInfoText"></textarea>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 门店列表 -->
+		<div class="modal fade" id="pdTeamModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" style="width: 50%;">
+				<div class="modal-content">
+					<input type="hidden" id="pdTeam_proId" name="pdTeam_proId" /> <input
+						type="hidden" id="pdTeam_proName" name="pdTeam_proName" />
+					<div class="modal-header">
+						<button type="button" class="close" onclick="closeAddPdTeam()"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">门店列表</h4>
+					</div>
+					<div class="modal-body">
+						<table id="pdTeamTab" class="table table-hover"></table>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="addPdTeamBtn" class="btn btn-danger"
+							onclick="showAddPdTeam()">添加商品门店</button>
+						<button type="button" class="btn btn-danger"
+							onclick="closeAddPdTeam()">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="addPdTeamModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" style="width: 50%;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">添加商品门店</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" role="form" name="addDetailForm"
+							id="addDetailForm" enctype="multipart/form-data">
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">商品编号</label>
+								<div class="col-sm-8">
+									<input type="text" id="teamProdId" name="teamProdId"
+										class="form-control" disabled="disabled" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">商品名称</label>
+								<div class="col-sm-8">
+									<input type="text" id="teamProductName" name="teamProductName"
+										class="form-control" disabled="disabled" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">门店 </label>
+								<div class="col-sm-4">
+									<select class="form-control" id="pdTeamId" name="pdTeamId">
+									</select>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="addstock" onclick="addPdTeam()"
+							class="btn btn-primary">提交</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 添加商品 -->
+		<div class="modal fade" id="addModel" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true" style="overflow-y: auto">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">商品信息</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" role="form" name="addDetailForm"
+							id="addDetailForm" enctype="multipart/form-data">
+
+							<input type="hidden" name="addProdId" class="form-control"
+								id="addProdId" /> <input type="hidden" name="addDelFlg"
+								id="addDelFlg" value="0">
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">序号（数字越大越靠前）<span
+									style="color: red;">*</span></label>
+								<div class="col-sm-10">
+									<input type="number" id="rankNum" name="rankNum"
+										class="form-control" min="0" step="1" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">经营类别</label>
+								<div class="col-sm-10" id="businessCategoryDiv"></div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">商品标题行<span
+									style="color: red;">*</span></label>
+								<div class="col-sm-10">
+									<input type="text" id="addProductName" name="addProductName"
+										class="form-control" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">品牌</label>
+								<div class="col-sm-4">
+									<input type="text" id="addBrand" name="addBrand"
+										class="form-control" />
+								</div>
+
+								<label class="col-sm-2 control-label">进销存编号</label>
+								<div class="col-sm-4">
+									<input type="text" name="addErpNo" class="form-control"
+										id="addErpNo" maxlength="32" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">商品名称<span
+									style="color: red;">*</span></label>
+								<div class="col-sm-10">
+									<input type="text" id="addProName" name="addProName"
+										class="form-control" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">商品规格</label>
+								<div class="col-sm-10">
+									<input type="text" id="addSpecification"
+										name="addSpecification" class="form-control" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">计量单位</label>
+								<div class="col-sm-4">
+									<input type="text" id="unit" name="unit" class="form-control" />
+								</div>
+
+								<label class="col-sm-2 control-label">产地</label>
+								<div class="col-sm-4">
+									<input type="text" id="addProductArea" name="addProductArea"
+										class="form-control" />
+								</div>
+							</div>
+
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">原产地</label>
+								<div class="col-sm-4">
+									<input type="text" id="resourceArea" name="resourceArea"
+										class="form-control" />
+								</div>
+
+								<label class="col-sm-2 control-label">生产厂商</label>
+								<div class="col-sm-4">
+									<input type="text" id="addManufacturer" name="addManufacturer"
+										class="form-control" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">批准文号</label>
+								<div class="col-sm-4">
+									<input type="text" name="addLicenseNo" class="form-control"
+										id="addLicenseNo" />
+								</div>
+
+								<label class="col-sm-2 control-label">保质期</label>
+								<div class="col-sm-4">
+									<input type="text" id="keepDate" name="keepDate"
+										class="form-control" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">储存方式</label>
+								<div class="col-sm-4">
+									<input type="text" id="keepWay" name="keepWay"
+										class="form-control" />
+								</div>
+
+								<label class="col-sm-2 control-label">注意事项</label>
+								<div class="col-sm-4">
+									<input type="text" id="attentionMemo" name="attentionMemo"
+										class="form-control" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">是否显示原价<span
+									style="color: red;">*</span></label>
+								<div class="col-sm-4">
+									<select class="form-control" id="addShowOld" name="addShowOld">
+										<option value="1">显示</option>
+										<option value="2">不显示</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">是否包邮<span
+									style="color: red;">*</span></label>
+								<div class="col-sm-10">
+									<select class="form-control" id="addfreeLuggage"
+										name="freeLuggage">
+										<option value="false">不包邮</option>
+										<option value="true">包邮</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">商品类型<span
+									style="color: red;">*</span></label>
+								<div class="col-sm-4">
+									<select class="form-control" id="addProType" name="addProType">
+										<option value=""></option>
+										<option value="1">商品</option>
+										<option value="2">服务</option>
+										<option value="3">积分</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">自定义类型<span
+									style="color: red;">*</span></label>
+								<div class="col-sm-4">
+									<select class="form-control" id="addType" name="addType"></select>
+								</div>
+								<label class="col-sm-2 control-label">是否新品<span
+									style="color: red;">*</span></label>
+								<div class="col-sm-4">
+									<select class="form-control" id="addIsNew" name="addIsNew">
+										<option value="true">是</option>
+										<option value="false">否</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">购买人群<span
+									style="color: red;">*</span></label>
+								<div class="col-sm-4">
+									<select class="form-control" id="addCanBuy" name="addCanBuy">
+										<option value="2">个人+团队</option>
+										<option value="1">仅团队</option>
+									</select>
+								</div>
+
+								<label class="col-sm-2 control-label">提货方式<span
+									style="color: red;">*</span></label>
+								<div class="col-sm-4">
+									<select class="form-control" id="addPickType"
+										name="addPickType">
+										<option value="1">仅自提</option>
+										<option value="2">仅快递</option>
+										<option value="3">快递+自提</option>
+									</select>
+								</div>
+								<!-- 新增商品默认未上架  待绑定店铺后再上架 -->
+								<input type="hidden" id="addOnSale" name="addOnSale" value="2">
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">限制等级<span
+									style="color: red;">*</span></label>
+								<div class="col-sm-4">
+									<select class="form-control" id="addUserLevel"
+										name="addUserLevel">
+										<option value="1" selected="selected">V1</option>
+										<option value="2">V2</option>
+										<option value="3">V3</option>
+										<option value="4">V4</option>
+										<option value="5">V5</option>
+									</select>
+								</div>
+								<label class="col-sm-2 control-label">最大折扣（百分比）<span
+									style="color: red;">*</span></label>
+								<div class="col-sm-4">
+									<input type="number" id="maxDiscount" name="maxDiscount"
+										min="0" max="100" step="1" class="form-control" />
+								</div>
+							</div>
+
+							<div id="proCategoryAll">
+
+								<div class="form-group proCategory" id="proCategory">
+									<label class="col-sm-2 control-label">一级分类<span
+										style="color: red;">*</span></label>
+									<div class="col-sm-4">
+										<select class="form-control" id="addFirstCate"
+											name="addFirstCate" onchange="changeAddFirstCate(this)">
+										</select>
+									</div>
+									<label class="col-sm-2 control-label">二级分类<span
+										style="color: red;">*</span></label>
+									<div class="col-sm-4">
+										<select class="form-control" id="addSecondCate"
+											name="addSecondCate" onchange="changeAddSecondCate(this)">
+										</select>
+									</div>
+									<label class="col-sm-2 control-label">三级分类<span
+										style="color: red;">*</span></label>
+									<div class="col-sm-4">
+										<select class="form-control" id="addThirdCate"
+											name="addThirdCate" onchange="changeAddThirdCate(this)">
+										</select>
+									</div>
+									<button type="button" id="addCategoryButton"
+										onclick="addCategorySelect(this)" class="btn btn-info">新增分类</button>
+								</div>
+
+
+								<script type="text/javascript">
+								function changeAddFirstCate(ele){
+									var selectValue = $(ele).val();
+									if(selectValue != ''){
+										jQuery.ajax({
+											url : "queryCateByTopId.do",
+											type : 'post',
+											data : {
+												"topId":selectValue
+								 			},
+											dataType : 'json',
+											traditional: true,
+											success : function(result) {
+												var rows = result.rows;
+												var option = '<option value="">请选择二级分类</option>';
+												for (var i = 0; i < rows.length; i++) {
+													var row = rows[i];
+													option+='<option value="' + row.ID + '">'
+															+ row.CATEGORY_NAME + '</option>';
+												}
+												$(ele).parents("#proCategory").find("#addSecondCate").html(option);
+												$(ele).parents("#proCategory").find("#addThirdCate").html("");
+											},
+											error : function() {
+												$(ele).parents("#proCategory").find("#addSecondCate").html("");
+												$(ele).parents("#proCategory").find("#addThirdCate").html("");
+											}
+										});
+									}else{
+										$(ele).parents("#proCategory").find("#addSecondCate").html("");
+										$(ele).parents("#proCategory").find("#addThirdCate").html("");
+									}
+								}
+								
+								function changeAddSecondCate(ele){
+									var selectValue = $(ele).val();
+									if(selectValue != ''){
+										jQuery.ajax({
+											url : "queryCateByTopId.do",
+											type : 'post',
+											data : {
+												"topId":selectValue
+								 			},
+											dataType : 'json',
+											traditional: true,
+											success : function(result) {
+												var rows = result.rows;
+												var option = '<option value="">请选择三级分类</option>';
+												for (var i = 0; i < rows.length; i++) {
+													var row = rows[i];
+													option+='<option value="' + row.ID + '">'
+															+ row.CATEGORY_NAME + '</option>';
+												}
+												$(ele).parents("#proCategory").find("#addThirdCate").html(option);
+											},
+											error : function() {
+												$(ele).parents("#proCategory").find("#addThirdCate").html("");
+											}
+										});
+									}else{
+										$(ele).parents("#proCategory").find("#addThirdCate").html("");
+									}
+								}
+								
+								function addCategorySelect(ele){
+									
+									jQuery.ajax({
+										url : "queryCateByTopId.do",
+										type : 'post',
+										data : {
+											"topId":0
+							 			},
+										dataType : 'json',
+										traditional: true,
+										success : function(result) {
+											var rows = result.rows;
+											var option = 
+												'<div class="form-group proCategory" id="proCategory" name="addDivCategory">'+
+													'<label class="col-sm-2 control-label">一级分类</label>'+
+													'<div class="col-sm-4">'+
+														'<select class="form-control" id="addFirstCate" name="addFirstCate" onchange="changeAddFirstCate(this)">'+
+														'<option value="">请选择一级分类</option>';
+											for (var i = 0; i < rows.length; i++) {
+												var row = rows[i];
+												option+='<option value="' + row.ID + '">'
+														+ row.CATEGORY_NAME + '</option>';
+											}
+											option+=
+												'</select>'+
+												'</div>'+
+												'<label class="col-sm-2 control-label">二级分类</label>'+
+												'<div class="col-sm-4">'+
+													'<select class="form-control" id="addSecondCate" name="addSecondCate" onchange="changeAddSecondCate(this)">'+
+													'</select>'+
+												'</div>'+
+												'<label class="col-sm-2 control-label">三级分类</label>'+
+												'<div class="col-sm-4">'+
+													'<select class="form-control" id="addThirdCate" name="addThirdCate">'+
+													'</select>'+
+												'</div>'+
+												'<button type="button" id="removeCategoryButton" onclick="removeCategorySelect(this)" class="btn btn-info">删除分类</button>'+
+											'</div>';
+											$(ele).parents("#proCategoryAll").append(option);
+										},
+										error : function() {
+											$(ele).parents("#proCategoryAll").append("");
+										}
+									});
+								}
+							
+								function removeCategorySelect(ele){
+									$(ele).parents("#proCategory").remove();
+								}
+							</script>
+
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label">列表图片<span
+									style="color: red;">*</span>：<span style="color: red;">*</span></label>
+								<div class="img-box">
+									<section class="img-section">
+										<div class="z_photo upimg-div clear" id="container1">
+											<section class="z_file fl">
+												<img src="img/a11.png" class="add-img"> <input
+													type="file" name="file" id="file" class="file" value=""
+													accept="image/jpg,image/jpeg,image/png,image/bmp" />
+											</section>
+										</div>
+									</section>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label">商品图片<span
+									style="color: red;">*</span>：<span style="color: red;">*</span></label>
+								<div class="img-box">
+									<section class="img-section">
+										<div class="z_photo z_photo2 upimg-div clear" id="container2">
+											<section class="z_file fl">
+												<img src="img/a11.png" class="add-img"> <input
+													type="file" name="file" id="file2" class="file" value=""
+													accept="image/jpg,image/jpeg,image/png,image/bmp" />
+											</section>
+										</div>
+									</section>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label">商品详情：<span
+									style="color: red;">*</span></label>
+
+							</div>
+							<div class="form-group">
+								<div id="editor" style="width: 100%">
+									<!-- <p>
+										欢迎使用 <b>wangEditor</b>编辑您的页面内容
+									</p> -->
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="submitAdd" onclick="submitAdd(this)"
+							class="btn btn-primary">提交</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 选择支付方式 -->
+		<div class="modal fade" id="alertModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" style="width: 1000px;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">选择支付方式</h4>
+					</div>
+					<div style="margin-top: 2%;">
+						<div class="control-group">
+							<div>
+								<button onclick="addInfoHidden()" class="btn btn-success"
+									style="float: right; margin-right: 2%;">确定添加</button>
+							</div>
+						</div>
+						<table id="alertTable" class="table table-hover"></table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 添加属性库存 -->
+		<div class="modal fade" id="addStockPriceModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" style="width: 50%;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">编辑属性库存</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" role="form" name="addDetailForm"
+							id="addDetailForm" enctype="multipart/form-data">
+
+							<input type="hidden" id="stockPriceId" name="stockPriceId"
+								class="form-control" disabled="disabled" />
+							<div class="form-group">
+								<label class="col-sm-2 control-label">商品编号</label>
+								<div class="col-sm-4">
+									<input type="text" id="stockProdId" name="stockProdId"
+										class="form-control" disabled="disabled" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">商品名称</label>
+								<div class="col-sm-4">
+									<input type="text" id="stockProductName"
+										name="stockProductName" class="form-control"
+										disabled="disabled" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">是否有属性</label>
+								<div class="col-sm-4">
+									<select class="form-control" id="isHadAttr" name="isHadAttr"
+										onchange="changeAttrImgDiv(this.value)">
+										<option value=""></option>
+										<option value="2">有属性</option>
+										<option value="1">无属性</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group" id="attrFromGroup">
+								<label class="col-sm-2 control-label">属性</label>
+								<div id="attrMulSelectDiv1">
+									<div class="col-sm-4">
+										<select id="attrSelect"
+											class="selectpicker show-menu-arrow form-control" multiple>
+										</select>
+									</div>
+									<button type="button" id="showAttrValueBtn"
+										onclick="showAttrValue()" class="btn btn-info">确定</button>
+								</div>
+								<div id="attrMulSelectDiv2" style="display: none">
+									<div class="col-sm-4">
+										<input type="text" id="attrSelectStr" name="attrSelectStr"
+											class="form-control" disabled="disabled" />
+									</div>
+								</div>
+							</div>
+							<div class="div_contentlist" id="contentlist"></div>
+
+							<div class="form-group" id="attrImgDiv">
+								<label for="lastname" class="col-sm-2 control-label">属性图片：</label>
+								<div class="col-sm-10">
+									<input type="file" id="stockImgSrc" name="stockImgSrc"
+										onchange="preview(this)">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label"></label>
+								<div class="col-sm-6">
+									<div id="preview" style="display: none" class=""></div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">购买上限（0为无上限）</label>
+								<div class="col-sm-4">
+									<input type="number" id="stockPickLimit" name="stockPickLimit"
+										min="0" step="1" class="form-control" placeholder="0为无上限" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">原价</label>
+								<div class="col-sm-4">
+									<input type="number" id="stockPrice" name="stockPrice"
+										min="0.00" step="0.01" class="form-control" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">支付方式</label>
+								<div class="col-sm-4">
+									<select class="form-control" id="payType" name="payType"
+										onchange="changeDiv(this.value)">
+										<option value="1">现金</option>
+										<option value="2">现金+积分比例</option>
+										<option value="3">现金+积分</option>
+										<option value="4">积分</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group" id="amountDiv">
+								<label class="col-sm-2 control-label">购买价</label>
+								<div class="col-sm-4">
+									<input type="number" id="stockGoodAmount"
+										name="stockGoodAmount" min="0.00" step="0.01"
+										class="form-control" />
+								</div>
+							</div>
+
+							<div class="form-group" id="pointDiv">
+								<label class="col-sm-2 control-label">购买积分值</label>
+								<div class="col-sm-4">
+									<input type="number" id="stockPoint" name="stockPoint" min="1"
+										step="1" class="form-control" />
+								</div>
+							</div>
+
+							<div class="form-group" id="rateDiv">
+								<label class="col-sm-2 control-label">积分比例（百分比）</label>
+								<div class="col-sm-4">
+									<input type="number" id="pointRate" name="pointRate" min="0"
+										step="1" max="100" class="form-control" placeholder="请输入百分比" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">库存</label>
+								<div class="col-sm-4">
+									<input type="number" id="stockStock" name="stockStock" min="1"
+										step="1" class="form-control" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">是否控制库存</label>
+								<div class="col-sm-4">
+									<select class="form-control" id="controlStock"
+										name="controlStock">
+										<option value="1">不控制</option>
+										<option value="2">控制</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">条形码</label>
+								<div class="col-sm-4">
+									<input type="text" id="stockBarCode" name="stockBarCode"
+										class="form-control" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">erp编号</label>
+								<div class="col-sm-4">
+									<input type="text" id="stockErpNo" name="stockErpNo"
+										class="form-control" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">备注</label>
+								<div class="col-sm-4">
+									<input type="text" id="stockMemo" name="stockMemo"
+										class="form-control" />
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="addStocks" onclick="addstock(this)"
+							class="btn btn-primary">提交</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 商品库存属性导入  -->
+	<div class="modal fade" id="excelModal" data-backdrop="static"
+		tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" style="width: 40%">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">商品库存属性导入</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" role="form" id="excelForm"
+						enctype="multipart/form-data" method="post">
+						<input type="hidden" id="excelGoodNo" name="excelGoodNo"
+							class="form-control" />
+						<div class="form-group">
+							<label class="col-sm-2 control-label">商品标题行</label>
+							<div class="col-sm-4">
+								<input type="text" id="excelGoodName" name="excelGoodName"
+									class="form-control" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-2 control-label">选择excel文件：</label>
+							<div class="col-sm-10">
+								<input type="file" id="excelFile" name="excelFile" />
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" id="submitReply" class="btn btn-primary"
+						onclick="submitImportExcel()">确定</button>
+					<button type="button" class="btn btn-danger"
+						onclick="closeExcelModal()">关闭</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--评论  -->
+	<div class="modal fade" id="pl" data-backdrop="static" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog" style="width: 50%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myel">评论详情</h4>
+
+					<div class="row">
+						<label class="col-sm-2 control-label"
+							style="text-align: right; margin-top: 5px">开始时间：</label>
+						<div class="col-sm-3">
+							<div class="control-group">
+								<input type="hidden" id="linkid" name="linkid"
+									readonly="readonly" /> <input type="text" id="startDate"
+									name="startDate" class="form-control datetimepicker"
+									readonly="readonly" /> <br />
+							</div>
+						</div>
+
+						<label class="col-sm-2 control-label"
+							style="text-align: right; margin-top: 5px">结束时间：</label>
+						<div class="col-sm-3">
+							<div class="control-group">
+								<input type="text" id="endDate" name="endDate"
+									class="form-control datetimepicker" readonly="readonly" /> <br />
+							</div>
+						</div>
+						<button onclick="cleanpl()" class="btn btn-danger" name="Name"
+							id="search_tel" value="清空"
+							style="float: right; margin-right: 2%;">清空</button>
+						<button onclick="comment2()" class="btn btn-info" name="Name"
+							id="search_tel" value="查询"
+							style="float: right; margin-right: 2%;">查询</button>
+					</div>
+				</div>
+				<div class="modal-body">
+					<table id="pltab" class="table table-hover"></table>
+				</div>
+				<div class="modal-footer">
+					<!-- <button type="button" class="btn btn-danger" onclick="showStockPrioceModal()">新增库存属性</button> -->
+					<button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 注意， 只需要引用 JS，无需引用任何 CSS！！！-->
+	<script type="text/javascript" src="js/wangEditor/wangEditor.js"></script>
+	<script type="text/javascript">
+		var E = window.wangEditor
+		 
+	     var editor2 = new E('#editor2')
+	     editor2.create()
+		var editor = new E('#editor')
+		// 或者 var editor = new E( document.getElementById('editor') )
+		// 隐藏“网络图片”tab
+		editor.customConfig.showLinkImg = false
+		// 关闭粘贴样式的过滤
+		editor.customConfig.pasteFilterStyle = false
+		//editor.customConfig.debug = location.href.indexOf('wangeditor_debug_mode=1') > 0
+		// 下面两个配置，使用其中一个即可显示“上传图片”的tab。但是两者不要同时使用！！！
+		// editor.customConfig.uploadImgShowBase64 = true   // 使用 base64 保存图片
+		// 上传图片（举例）
+		editor.customConfig.uploadImgServer = 'fileUploadForEditor.do';
+		//限制上传图片数 
+		editor.customConfig.uploadImgMaxLength = 1;
+
+		editor.customConfig.uploadImgParams = {
+			token : 'abcdef12345' // 属性值会自动进行 encode ，此处无需 encode
+		}
+
+		editor.customConfig.uploadFileName = 'photo'
+
+		editor.customConfig.uploadImgHeaders = {
+			'Accept' : 'text/x-json'
+		}
+
+		editor.customConfig.uploadImgHooks = {
+			before : function(xhr, editor, files) {
+				// 图片上传之前触发
+				// xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，files 是选择的图片文件
+
+				// 如果返回的结果是 {prevent: true, msg: 'xxxx'} 则表示用户放弃上传
+				// return {
+				//     prevent: true,
+				//     msg: '放弃上传'
+				// }
+			},
+			success : function(xhr, editor, result) {
+				// 图片上传并返回结果，图片插入成功之后触发
+				// xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，result 是服务器端返回的结果
+				//alert(result.data);
+
+			},
+			fail : function(xhr, editor, result) {
+				// 图片上传并返 回结果，但图片插入错误时触发
+				// xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，result 是服务器端返回的结果
+				//alert(result);
+			},
+			error : function(xhr, editor) {
+				// 图片上传出错时触发
+				// xhr 是 XMLHttpRequst 对象，editor 是编辑器对象
+			},
+			timeout : function(xhr, editor) {
+				// 图片上传超时时触发
+				// xhr 是 XMLHttpRequst 对象，editor 是编辑器对象
+			},
+
+			// 如果服务器端返回的不是 {errno:0, data: [...]} 这种格式，可使用该配置
+			// （但是，服务器端返回的必须是一个 JSON 格式字符串！！！否则会报错）
+			customInsert : function(insertImg, result, editor) {
+				// 图片上传并返回结果，自定义插入图片的事件（而不是编辑器自动插入图片！！！）
+				// insertImg 是插入图片的函数，editor 是编辑器对象，result 是服务器端返回的结果
+
+				// 举例：假如上传图片成功后，服务器端返回的是 {url:'....'} 这种格式，即可这样插入图片：
+				var url = result.data
+				insertImg(url)
+			}
+		}
+		editor.create();
+		$('#editor').attr('style', 'height:auto;');
+	</script>
+</body>
+
+<script src='js/bootstrap-select.js'></script>
+
+<script type="text/javascript">
+		$(document).ready(function(){
+			businessCategory()
+		})
+</script>
+
+<script type="text/javascript">
+function initAddStockAttrModal(){
+	jQuery.ajax({
+		url : "selectAllGoodAttr.do",
+		type : 'post',
+		async : false,
+		data : "",
+		dataType : 'json',
+		success : function(data) {
+			if (data.success) {
+				
+				var attrSelect = jQuery("#attrSelect");
+                 jQuery.each(data.obj.attrList, function(name, value) {
+                    jQuery("<option value='"+this.id+"'>"+this.attrName+"</option>").appendTo(attrSelect);
+                 });
+			} else {
+				alert(data.message);
+			}
+		},
+		error : function() {
+			alert("操作失败！");
+		}
+	});
+}
+initAddStockAttrModal();
+</script>
+
+<script type="text/javascript">
+function addstock(ele){
+	
+	$(ele).attr("disabled", true); 
+	$(ele).html("正在处理中...");
+	
+	var formData = new FormData();
+	formData.append("id", $("#stockPriceId").val());
+	formData.append("goodsNo", $("#stockProdId").val());
+	formData.append("type", $("#isHadAttr").val());
+	formData.append("payType", $("#payType").val());
+	var attrIdArr = $('#attrSelect').val();
+	if(attrIdArr!=null){
+		formData.append("attrIds", JSON.stringify(attrIdArr));
+	}
+	//判断是否有选中的属性值
+	var SKUObj = $(".Father_Title");
+	if(SKUObj.length>0){
+		var order = new Array();
+    	jQuery.each(SKUObj, function (i,item){
+    		var itemName = "Father_Item" + i;
+            $("." + itemName + " input[type=radio]:checked").each(function (){
+                order.push($(this).val());
+            });
+    	});
+    	if(order.length>0){
+    		formData.append("valueIds", JSON.stringify(order));
+    	}
+	}
+	formData.append("controlStock", $("#controlStock").val());
+	formData.append("price", $("#stockPrice").val());
+	formData.append("goodAmount", $("#stockGoodAmount").val());
+	formData.append("pointRate", $("#pointRate").val());
+	formData.append("point", $("#stockPoint").val());
+	formData.append("stock", $("#stockStock").val());
+	formData.append("barCode", $("#stockBarCode").val());
+	formData.append("erpNo", $("#stockErpNo").val());
+	formData.append("pickLimit", $("#stockPickLimit").val());
+	formData.append("memo", $("#stockMemo").val());
+	formData.append("img", $("#stockImgSrc")[0].files[0]);
+	
+	formData.append("returnType", $("#returnType").val());
+	formData.append("returnValue", $("#returnValue").val());
+	
+	jQuery.ajax({
+		url : "addStockPrice.do",
+		type : 'post',
+		data : formData,
+		cache : false,
+		processData : false,
+		contentType : false,
+		dataType : 'json',
+		success : function(data) {
+			$(ele).attr("disabled", false); 
+			$(ele).html("提交");
+			if (data.success) {
+				alert(data.message);
+				$("#addStockPriceModal").modal("hide");
+				$("#stockPriceTab").bootstrapTable('refresh');
+			} else {
+				alert(data.message);
+			}
+		},
+		error : function() {
+			alert("操作失败！");
+		}
+	}); 
+}
+
+/* 控制input框的显隐 */
+function changeDiv(value){
+	$("#stockGoodAmount").val("");
+	$("#stockPoint").val("");
+	$("#pointRate").val("");
+	if (value == "1"){
+		$('#amountDiv').css("display", "block");
+		$('#pointDiv').css("display", "none");
+		$('#rateDiv').css("display", "none");
+	} else if (value == "2"){
+		$('#amountDiv').css("display", "block");
+		$('#pointDiv').css("display", "none");
+		$('#rateDiv').css("display", "block");
+	} else if (value == "3"){
+		$('#amountDiv').css("display", "block");
+		$('#pointDiv').css("display", "block");
+		$('#rateDiv').css("display", "none");
+	} else if (value == "4"){
+		$('#amountDiv').css("display", "none");
+		$('#pointDiv').css("display", "block");
+		$('#rateDiv').css("display", "none");
+	}
+}
+
+//控制属性图片框展示
+function changeAttrImgDiv(value){
+	//1 无属性   2有属性
+	if (value == "1"){
+		$('#attrImgDiv').hide();
+	} else if (value == "2"){
+		$('#attrImgDiv').show();
+	} 
+}
+
+function showAddStockAttrModal(){
+	$("#addStocks").attr("disabled", false); 
+	$("#addStocks").html("提交");
+	
+	$("#preview").html("");
+	$("#addStockPriceModal input").val("");
+	$("#isHadAttr").val("");
+	$("#isHadAttr").removeAttr('disabled');
+	$("#addStockPriceModal textarea").val("");
+	$('#contentlist').html("");
+	
+	$("#returnType").val('0');
+	$("#returnValue").val('');
+	
+	$('#amountDiv').css("display", "block");
+	$('#pointDiv').css("display", "none");
+	$('#rateDiv').css("display", "none");
+	
+	var prodId = $('#proId_stock_price').val();
+	$('#stockProdId').val(prodId);
+	$('#stockProductName').val($('#proName_stock_price').val());
+	$('#attrMulSelectDiv2').hide();
+	$('#attrMulSelectDiv1').show();
+	$('#addStockPriceModal').modal('show');
+	jQuery.ajax({
+		url : "selectAllGoodAttr.do",
+		type : 'post',
+		data : {prodId:prodId},
+		dataType : 'json',
+		success : function(data) {
+			if (data.success) {
+				if(data.obj.stockPrice){
+					var stockInfo =  data.obj.stockPrice;
+					if(stockInfo){
+						$('#attrMulSelectDiv1').hide();
+						$('#attrSelectStr').val(stockInfo.attrNames);
+						$('#isHadAttr').val(stockInfo.type);
+						$("#isHadAttr").attr('disabled','disabled');
+						if(stockInfo.type=="2"){
+							showAttrValue(stockInfo.attrIds);
+						}
+						$('#attrMulSelectDiv2').show();
+					}
+				}
+				
+				
+			} else {
+				alert(data.message);
+			}
+		},
+		error : function() {
+			alert("操作失败！");
+		}
+	});
+}
+
+function showUpdateStock(index){
+	$("#addStocks").attr("disabled", false); 
+	$("#addStocks").html("提交");
+	
+	$("#preview").html("");
+	$("#addStockPriceModal input").val("");
+	$("#isHadAttr").val("");
+	$("#isHadAttr").removeAttr('disabled');
+	$("#addStockPriceModal textarea").val("");
+	$('#contentlist').html("");
+	var data = stockPriceData['rows'][index];
+	$('#controlStock').val(data.controlStock);
+	$('#stockProdId').val($('#proId_stock_price').val());
+	$('#stockProductName').val($('#proName_stock_price').val());
+	$('#attrMulSelectDiv1').hide();
+	$('#attrSelectStr').val(data.attrNames);
+	$('#isHadAttr').val(data.type);
+	$("#isHadAttr").attr('disabled','disabled');
+	$("#stockPriceId").val(data.id);
+	$('#attrMulSelectDiv2').show();
+	if(data.type=="2"){
+		var innerHtml = '<div class="form-group"><label  class="col-sm-2 control-label">属性值</label><div class="col-sm-4"><input type="text"  name="attrvalues" value="'+data.valuees+'" class="form-control" disabled="disabled"/></div></div>'
+		$('#attrImgDiv').show();
+		$("#preview").html("<img src="+data.imgSrc+" />");
+		$("#preview").css("display", "block");
+	}
+	if(data.type=="1"){
+		$('#attrImgDiv').hide();
+		$("#preview").css("display", "none");
+		$('#attrImgDiv').hide();
+	}
+	$('#contentlist').html(innerHtml);
+	
+	$("#stockPrice").val(data.price.amount);
+	$("#stockGoodAmount").val(data.goodAmount.amount);
+	$("#stockPoint").val(data.point.amount);
+	$("#stockStock").val(data.stock);
+	$("#stockMemo").val(data.memo);
+	$("#stockErpNo").val(data.erpNo);
+	$("#stockPickLimit").val(data.pickLimit);
+	$("#stockBarCode").val(data.barCode);
+	$("#payType").val(data.payType);
+	/* $("#payType1").val("1");
+	$("#payType2").val("2");
+	$("#payType3").val("3");
+	$("#payType4").val("4"); */
+	$("#stockGoodAmount").val("");
+	$("#stockPoint").val("");
+	$("#pointRate").val("");
+	if (data.payType == "1"){
+		$('#amountDiv').css("display", "block");
+		$('#pointDiv').css("display", "none");
+		$('#rateDiv').css("display", "none");
+		$("#stockGoodAmount").val(data.goodAmount.amount);
+	} else if (data.payType == "2"){
+		$('#amountDiv').css("display", "block");
+		$('#pointDiv').css("display", "none");
+		$('#rateDiv').css("display", "block");
+		$("#stockGoodAmount").val(data.goodAmount.amount);
+		$("#pointRate").val(data.pointRate);
+	} else if (data.payType == "3"){
+		$('#amountDiv').css("display", "block");
+		$('#pointDiv').css("display", "block");
+		$('#rateDiv').css("display", "none");
+		$("#stockGoodAmount").val(data.goodAmount.amount);
+		$("#stockPoint").val(data.point.amount);
+	} else if (data.payType == "4"){
+		$('#amountDiv').css("display", "none");
+		$('#pointDiv').css("display", "block");
+		$('#rateDiv').css("display", "none");
+		$("#stockPoint").val(data.point.amount);
+	}
+	$("#returnType").val(data.returnType);
+	$("#returnValue").val(data.returnValue);
+	$('#addStockPriceModal').modal('show');
+}
+
+var showAttrValue = function(attrIdsStr){
+	
+	var attrIds = "";
+	if(!attrIdsStr){
+		var attrIdArr = $('#attrSelect').val();
+		if(attrIdArr==null){
+			alert("至少选择一个属性");
+			$('#contentlist').html("");
+			return;
+		}
+		attrIds = JSON.stringify(attrIdArr);
+	}else{
+		attrIds = JSON.stringify(attrIdsStr.split(","));
+	}
+	jQuery.ajax({
+		url : "selectAttrValueByInfo.do",
+		type : 'post',
+		data : {attrIds:attrIds},
+		dataType : 'json',
+		success : function(data) {
+			if (data.success) {
+				
+				var datalist = data.obj;
+				var innerHtml = "";
+				for(var i=0; i<datalist.length; i++){
+					innerHtml += '<div class="form-group"><ul class="Father_Title col-sm-2 control-label"><li style="margin-right: 0px;">'+ datalist[i].attrName+'</li></ul>';
+					innerHtml += '<ul class="Father_Item'+i+' col-sm-6" style="margin-top:  7px">';
+					for(var j=0; j<datalist[i].valueList.length; j++){
+						var values= datalist[i].valueList[j];
+						innerHtml +=' <li class="li_width"><label><input id="Checkbox" type="radio" class="chcBox_Width" value="'+values.id+'" name="'+datalist[i].attrName+'"/>'+values.value+'<span class="li_empty"  contentEditable="true"></span></label></li>'
+					}
+					innerHtml += '</ul></div>';
+				}
+				$('#contentlist').html(innerHtml);
+				
+				
+			} else {
+				alert(data.message);
+			}
+		},
+		error : function() {
+			alert("操作失败！");
+		}
+	});
+}
+
+$('.form_date').datetimepicker({
+    language:  'zh-CN',
+    weekStart: 1,
+    todayBtn:  1,
+	autoclose: 1,
+	todayHighlight: 1,
+	startView: 2,
+	minView: 2,
+	forceParse: 0
+});
+
+$('.datetimepicker').datetimepicker({
+    format: 'yyyy-mm-dd hh:ii:ss',
+    language:  'zh-CN'
+});
+
+function cleanAdd(){
+	$("#searchGoodNoAdd").val("");
+	$("#searchListTitleAdd").val("");
+}
+function clean1(){
+	$("#searchGoodNo").val("");
+	$("#searchListTitle").val("");
+}
+function clean(){
+	$("#a input").val("");
+	$("#onSale").val("");
+	$("#proType").val("");
+	$("#canBuy").val("");
+	$("#isDelete").val("");
+}
+
+//根据窗口调整表格高度
+$(window).resize(function() {
+    $('#mytab').bootstrapTable('resetView', {
+        height: tableHeight()
+    })
+})
+
+function tableHeight(){
+     //可以根据自己页面情况进行调整
+     return $(window).height() -280;
+}
+ 
+bootsearch();
+
+var allData;
+function sorce() {
+	$("#mytab").bootstrapTable('destroy');
+	//生成用户数据
+	bootsearch();
+}
+
+function bootsearch() {
+//生成表格数据
+$('#mytab').bootstrapTable({
+	    method: 'post',
+	    contentType: "application/x-www-form-urlencoded",//必须要有！！！！
+	    url:"selectGoods.do",//要请求数据的文件路径
+	    dataType : 'json',
+	    striped: true, //是否显示行间隔色
+	    pageNumber: 1, //初始化加载第一页，默认第一页
+	    pagination:true,//是否分页
+	    //获取参数的函数
+	    queryParams: function(p){
+	    	 return params(p);
+	     }, 
+	    queryParamsType:'limit',//查询参数组织方式
+	    dataType : 'json',
+	    sidePagination:'server',//指定服务器端分页
+	    pageSize:10,//单页记录数
+	    pageList:[5,10,20,30],//分页步进值
+	    clickToSelect: true,//是否启用点击选中行
+	    toolbarAlign:'right',//工具栏对齐方式
+	    buttonsAlign:'right',//按钮对齐方式
+	    toolbar:'#toolbar',//指定工作栏
+	    columns:[{
+     title:'操作',
+     field:'id',
+     formatter:function (value,row,index){
+     	if(row.delFlg == "1"){
+     		/* return "该商品已删除，禁止进行操作"; */
+     		return "<a href=javascript:recoverGoods('"+ index +"')>恢复</a>";
+     	} else {
+         	var url = "";
+         	url = url + "<a href=javascript:comment('"+ index +"')>查看评论</a>";
+         	if(row.onSale == '2'){
+         		url = url +" | "+ "<a href=javascript:addPanel('"+ index +"')>编辑</a>";
+         	}
+         	url = url +" | "+ "<a href=javascript:deleteGoods('"+ index +"')>删除</a>";
+         	url = url +" | "+ "<a href=javascript:showPdTeam('"+ index +"')>商品门店 | </a>";
+         	url = url + "<a href=javascript:addPanel('"+ index +"','1')>详情 | </a>"; 
+         	//1 上架  2 下架
+         	if(row.onSale == '1'){
+         		url = url + "<a href=javascript:changeOnSale('"+ index +"')>下架</a>"; 
+         	}
+         	if(row.onSale == '2'){
+         		url = url + "<a href=javascript:changeOnSale('"+ index +"')>上架</a>"; 
+         	}
+			return url;
+     	}
+     }
+ },{
+    title:'属性',
+    field:'ID',
+    formatter:function (value,row,index){
+    	var url = "";
+    	if(row.delFlg == "1"){
+     		return "该商品已删除，禁止进行操作";
+     	} else {
+     		url = url + "<a href=javascript:showStockPrice('"+ index +"')>属性库存  </a>";
+        	url = url + "| <a href=javascript:showImportStock('"+ index +"')>导入excel</a>";
+     	}
+		return url;
+    }
+},{
+	title: '序号',
+	field:'rankNum'
+},{
+    title:'商品标题行',
+    field:'productName',
+    formatter: function (value,row,index){
+    	return value.substr(0,15)+"...";
+    }
+},
+{
+    title:'进销存编号',
+    field:'erpNo'
+},
+{
+    title:'商品名称',
+    field:'proName',
+    formatter: function (value,row,index){
+    	if(value == "" || value == null){
+    		return '';
+    	}else{
+    		return value.substr(0,15)+"...";
+    	}
+    }
+},
+{
+    title:'商品规格',
+    field:'specification'
+},
+{
+    title:'计量单位',
+    field:'unit'
+},
+{
+    title:'产地',
+    field:'productArea'
+},
+{
+    title:'生产厂商',
+    field:'manufacturer'
+},
+{
+    title:'总销量',
+    field:'sales'
+},
+{
+    title:'月销量',
+    field:'mounthSales'
+},
+{
+    title:'所属门店',
+    field:'teamName',
+    formatter: function (value,row,index){
+    	if(value == "" || value == null){
+    		return "未分配";
+    	}else{
+    		return value;
+    	}
+    }
+},
+			{
+			    title:'商品编码',
+			    field:'productId'
+			},
+	        {
+	            title:'批准文号',
+	            field:'licenseNo'
+	        },
+	        {
+	            title:'助记码',
+	            field:'proZjm'
+	        },
+	        {
+	            title:'门店类型',
+	            field:'teamType',
+	            formatter: function (value,row,index){
+	            	if(value=="1"){
+	            		return "门店";
+	            	}else if(value=="2"){
+	            		return "服务商"
+	            	}else if(value=="3"){
+	            		return "代理商"
+	            	}else{
+	            		return "-"
+	            	}
+	            }
+	        },
+	        {
+	            title:'是否删除',
+	            field:'delFlg',
+	            formatter: function (value,row,index){
+	            	if(value=="0"){
+	            		return "未删除";
+	            	}else if(value=="1"){
+	            		return "已删除"
+	            	}
+	            }
+	        },
+	        {
+	            title:'类型',
+	            field:'proType',
+	            formatter: function (value,row,index){
+	            	if(value=="1"){
+	            		return "商品";
+	            	}else if(value=="2"){
+	            		return "服务"
+	            	}else if(value=="3"){
+	            		return "积分"
+	            	}
+	            }
+	        },
+	        {
+	            title:'购买范围',
+	            field:'canBuy',
+	            formatter: function (value,row,index){
+	            	if(value=="1"){
+	            		return "仅团队";
+	            	}else if(value=="2"){
+	            		return "个人+团队"
+	            	}
+	            }
+	        },
+	        {
+	            title:'上架状态',
+	            field:'onSale',
+	            formatter: function (value,row,index){
+	            	if(value=="1"){
+	            		return "上架";
+	            	}else if(value=="2"){
+	            		return "下架"
+	            	}
+	            }
+	        },
+	        {
+	            title:'是否新品',
+	            field:'isNew',
+	            formatter: function (value,row,index){
+	            	if(value=="true"){
+	            		return "是";
+	            	}else if(value=="false"){
+	            		return "否"
+	            	}
+	            }
+	        },
+	        {
+	            title:'提货方式',
+	            field:'pickType',
+	            formatter: function (value,row,index){
+	            	if(value=="1"){
+	            		return "仅自提";
+	            	}else if(value=="2"){
+	            		return "仅快递"
+	            	}else if(value=="3"){
+	            		return "快递+自提"
+	            	}
+	            }
+	        },
+	        {
+	            title:'等级限制',
+	            field:'userLevel',
+	            formatter: function (value,row,index){
+	            	if(value=="1"){
+	            		return "V1及以上";
+	            	}else if(value=="2"){
+	            		return "V2及以上"
+	            	}else if(value=="3"){
+	            		return "V3及以上"
+	            	}else if(value=="4"){
+	            		return "V4及以上"
+	            	}else if(value=="5"){
+	            		return "V5及以上"
+	            	}
+	            }
+	        },
+	        {
+	            title:'是否包邮',
+	            field:'freeLuggage',
+	            formatter: function (value,row,index){
+	            	if(value == "true"){
+	            		return "包邮";
+	            	}else if(value == "false"){
+	            		return "不包邮";
+	            	}
+	            }
+	        },
+	        {
+	            title:'创建者',
+	            field:'creater'
+	        },
+	        {
+	            title:'创建时间',
+	            field:'gmtCreate',
+	            formatter: function (value, row, index) {
+	                return formatDateTime(value)
+	            }
+	        },
+	        {
+	            title:'修改者',
+	            field:'modifier'
+	        },
+	        {
+	            title:'修改时间',
+	            field:'gmtModified',
+	            formatter: function (value, row, index) {
+	                return formatDateTime(value)
+	            }
+	        }
+	    ],
+	    locale:'zh-CN',//中文支持,
+	    responseHandler:function(res){
+	    	allData = res;
+	        //在ajax获取到数据，渲染表格之前，修改数据源
+	        return res;
+	    }
+	})
+}
+
+function deleteGoods(index){
+	var data = allData['rows'][index];
+	if(confirm("确定当前操作？操作后不可恢复")){
+		jQuery.ajax({
+			url : 'deleteGoods.do',
+			type : 'post',
+			dataType : 'json', 
+			data:{"goodsId":data.productId},
+			success : function(result){
+				if(result.success){
+					alert("删除成功");
+					$('#mytab').bootstrapTable('refresh');
+				}else{
+					alert("删除失败");
+					$('#mytab').bootstrapTable('refresh');
+				}
+			},
+			error:function (result){
+				alert("操作失败！");
+			}
+		})
+	}else{
+		return ;
+	}
+}
+
+function recoverGoods(index){
+	var data = allData['rows'][index];
+	if(confirm("确定当前操作？将会以下架状态恢复")){
+		jQuery.ajax({
+			url : 'recoverGoods.do',
+			type : 'post',
+			dataType : 'json', 
+			data:{"goodsId":data.productId},
+			success : function(result){
+				if(result.success){
+					alert("恢复成功");
+					$('#mytab').bootstrapTable('refresh');
+				}else{
+					alert(result.message);
+					$('#mytab').bootstrapTable('refresh');
+				}
+			},
+			error:function (result){
+				alert("操作失败！");
+			}
+		})
+	}else{
+		return ;
+	}
+}
+
+function changeOnSale(index){
+	var team = allData.rows[index].teamName;
+	var id = allData.rows[index].id;
+	if(team==null||team==""){
+		alert("该商品没有选择门店，不能进行上下架操作！");
+		return false;
+	}else{
+		var onSale = allData.rows[index].onSale;
+		var msg = "";
+		if(onSale == '1'){
+			msg = "确定执行下架操作？";
+		}
+		if(onSale == '2'){
+			msg = "确定执行上架操作？";
+		}
+		if(confirm(msg)){
+			jQuery.ajax({
+				url : 'changeOnSale.do',
+				type : 'post',
+				dataType : 'json', 
+				data:{"goodsId":id},
+				success : function(result){
+					if(result.success){
+						alert(result.message);
+						$('#mytab').bootstrapTable('refresh');
+					}else{
+						alert(result.message);
+						$('#mytab').bootstrapTable('refresh');
+					}
+				},
+				error:function (result){
+					alert("操作失败！");
+				}
+			})
+		}else{
+			alert("您取消了操作");
+			return ;
+		}
+	}
+}
+
+function addPanel(index, type){
+	claenmyModal();
+	$("#addType").empty();
+		jQuery.ajax({
+			url : "queryGoodsTypesList.do",
+			type : 'post',
+			success : function(data) {
+				for (var i = 0; i < data.length; i++) {
+					$("#addType").append(
+							'<option value="'+data[i].typeId+'">'
+									+ data[i].typeName + '</option>')
+				};
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+	
+	//清理分类框 
+	jQuery("#addSecondCate").children('option').remove();
+	jQuery("#addThirdCate").children('option').remove();
+	jQuery("#addThirdCate").children('option').remove();
+	$('div[name="addDivCategory"]').remove();
+	//给第一个一级分类赋值
+	jQuery.ajax({
+		url : "queryCateByTopId.do",
+		type : 'post',
+		data : {
+			"topId":0
+			},
+		dataType : 'json',
+		traditional: true,
+		success : function(result) {
+			var rows = result.rows;
+			var option = '<option value="">请选择一级分类</option>';
+			for (var i = 0; i < rows.length; i++) {
+				var row = rows[i];
+				option+='<option value="' + row.ID + '">'
+						+ row.CATEGORY_NAME + '</option>';
+			}
+			$("#addFirstCate").html(option);
+		},
+		error : function() {
+			$(ele).parents("#proCategory").find("#addThirdCate").html("");
+		}
+	});
+		
+	jQuery("#addFatherEfectCate").children('option').remove();
+	jQuery("#addFatherCate").children('option').remove();
+	jQuery("#addChildEfectCate").children('option').remove();
+	jQuery("#addChildCate").children('option').remove();
+	jQuery("#addTeamId").children('option').remove();
+	$("#addProductArea").removeAttr('disabled');
+	$("#addBrand").removeAttr('disabled');
+	$("#addManufacturer").removeAttr('disabled');
+	$("#addLicenseNo").removeAttr('disabled');
+	$("#addFatherCate").removeAttr('disabled');
+	$("#addChildCate").removeAttr('disabled');
+	$("#addFatherEfectCate").removeAttr('disabled');
+	$("#addChildEfectCate").removeAttr('disabled');
+	var prodId = "";
+	if(index){
+		prodId = allData['rows'][index].productId;
+	}else{
+		$("input:checkbox[name='businessCategory']:checked").each(function () {
+		    $(this).removeAttr("checked");
+		});
+	}
+	$("#container1").children(".up-section").remove();
+	$("#container2").children(".up-section").remove();
+	
+	$("#addProdId").val("");
+	
+	jQuery.ajax({
+		url : "initAddPdPage.do",
+		type : 'post',
+		data : {prodId:prodId},
+		dataType : 'json',
+		success : function(data) {
+			if (data.success) {
+                
+                if(data.obj.prodInfo){
+                	var prodInfo = data.obj.prodInfo;
+                	
+                	$("#rankNum").val(prodInfo.rankNum);
+                	
+                	$("#addfreeLuggage").val(prodInfo.freeLuagger);
+                	
+                	$("#maxDiscount").val(prodInfo.maxDiscount*100);
+                	$("#unit").val(prodInfo.unit);
+                	
+                	$("#resourceArea").val(prodInfo.productAreaSource);
+                	$("#keepDate").val(prodInfo.keepDate);
+                	$("#keepWay").val(prodInfo.keepWay);
+                	$("#attentionMemo").val(prodInfo.attenMemo);
+                	$("#addSpecification").val(prodInfo.specification);
+                	
+                	$("#addProdId").val(prodInfo.productId);
+                	$("#addErpNo").val(prodInfo.erpNo);
+                	$("#addProductName").val(prodInfo.productName);
+                	$("#addProName").val(prodInfo.proName);
+                	$("#addTeamId").val(prodInfo.teamId);
+                	$("#addShowOld").val(prodInfo.showOld);
+                	$("#addProductArea").val(prodInfo.productArea);
+                	$("#addBrand").val(prodInfo.brand);
+                	$("#addManufacturer").val(prodInfo.manufacturer);
+                	$("#addLicenseNo").val(prodInfo.licenseNo);
+                	$("#addType").val(prodInfo.type);
+                	$("#addFatherCate").val(prodInfo.fatherCate);
+                	var childSelect = jQuery("#addChildCate");
+                	if(prodInfo.childCate&& prodInfo.childCate!="null"){
+		            	jQuery("<option value='"+prodInfo.childCate+"'>"+prodInfo.childCate+"</option>").appendTo(childSelect);
+                	}
+                	//$("#addChildCate").val(prodInfo.childCate);
+                	$("#addFatherEfectCate").val(prodInfo.fatherEfectCate);
+                	//$("#addChildEfectCate").val(prodInfo.childEfectCate);
+                	if(prodInfo.childEfectCate && prodInfo.childEfectCate!="null"){
+                	 	jQuery("<option value='"+prodInfo.childEfectCate+"'>"+prodInfo.childEfectCate+"</option>").appendTo(jQuery("#addChildEfectCate"));
+                	}
+                	$("#addDelFlg").val(prodInfo.delFlg);
+                	$("#addProType").val(prodInfo.proType);
+                	$("#addType").val(prodInfo.type);
+                	$("#addCanBuy").val(prodInfo.canBuy);
+                	$("#addOnSale").val(prodInfo.onSale);
+                	$("#addIsNew").val(prodInfo.isNew); 
+                	$("#addPickType").val(prodInfo.pickType);
+                	$("#addUserLevel").val(prodInfo.userLevel);
+                	if(prodInfo.proType == "2"){
+		        		$("#addProductArea").val("");
+		        		$("#addProductArea").attr('disabled','disabled');
+		        		$("#addBrand").val("");
+		        		$("#addBrand").attr('disabled','disabled');
+		        		$("#addManufacturer").val("");
+		        		$("#addManufacturer").attr('disabled','disabled');
+		        		$("#addLicenseNo").val("");
+		        		$("#addLicenseNo").attr('disabled','disabled');
+		        		$("#addFatherCate").val("");
+		        		$("#addFatherCate").attr('disabled','disabled');
+		        		$("#addChildCate").val("");
+		        		$("#addChildCate").attr('disabled','disabled');
+		        		$("#addFatherEfectCate").val("");
+		        		$("#addFatherEfectCate").attr('disabled','disabled');
+		        		$("#addChildEfectCate").val("");
+		        		$("#addChildEfectCate").attr('disabled','disabled');
+		        	}
+                	editor.txt.html(data.obj.detail);
+                	if(data.obj.goodsImg){
+                		var delParent;
+                		var imgContainer = $("#container2");
+                		for(var i = 0;i<data.obj.goodsImg.length;i++){
+							 var imgUrl = data.obj.goodsImg[i];
+							 var $section = $("<section class='up-section fl'>");
+							     imgContainer.append($section);
+							 var $span = $("<span class='up-span'>");
+							     $span.appendTo($section);
+							
+						     var $img0 = $("<img class='close-upimg close-upimg2'>").on("click",function(event){
+								    event.preventDefault();
+									event.stopPropagation();
+									delParent = $(this).parent();
+									var numUp = delParent.siblings().length;
+									if(numUp < 6){
+										delParent.parent().find(".z_file").show();
+									}
+									 delParent.remove();
+								});   
+								$img0.attr("src","img/a7.png").appendTo($section);
+						     var $img = $("<img class='up-img up-img2'>");
+						         $img.attr("src",imgUrl);
+						         $img.appendTo($section);
+						     var $p = $("<p class='img-name-p'>");
+						         $p.html("name").appendTo($section);
+						     var $input = $("<input id='taglocation' name='taglocation' value='' type='hidden'>");
+						         $input.appendTo($section);
+						     var $input2 = $("<input id='tags' name='tags' value='' type='hidden'/>");
+						         $input2.appendTo($section);
+						      
+						   }
+                	}
+                	
+                	if(data.obj.listImg){
+                		var delParent;
+                		var imgContainer = $("#container1");
+                		for(var i = 0;i<data.obj.listImg.length;i++){
+							 var imgUrl = data.obj.listImg[i];
+							 var $section = $("<section class='up-section fl'>");
+							     imgContainer.append($section);
+							 var $span = $("<span class='up-span'>");
+							     $span.appendTo($section);
+							
+						     var $img0 = $("<img class='close-upimg close-upimg1'>").on("click",function(event){
+								    event.preventDefault();
+									event.stopPropagation();
+									delParent = $(this).parent();
+									var numUp = delParent.siblings().length;
+									if(numUp < 6){
+										delParent.parent().find(".z_file").show();
+									}
+									 delParent.remove();
+								});   
+								$img0.attr("src","img/a7.png").appendTo($section);
+						     var $img = $("<img class='up-img up-img1'>");
+						         $img.attr("src",imgUrl);
+						         $img.appendTo($section);
+						     var $p = $("<p class='img-name-p'>");
+						         $p.html("name").appendTo($section);
+						     var $input = $("<input id='taglocation' name='taglocation' value='' type='hidden'>");
+						         $input.appendTo($section);
+						     var $input2 = $("<input id='tags' name='tags' value='' type='hidden'/>");
+						         $input2.appendTo($section);
+						      
+						   }
+                	}
+                	
+                	$("input:checkbox[name='businessCategory']:checked").each(function () {
+                	    $(this).removeAttr("checked");
+                	});
+                	
+                	var businessCategory = prodInfo.businessCategory;
+                	if(!isEmpty(businessCategory)){
+                		$("input:checkbox[name='businessCategory']").each(function () {
+                    	    var thisMsg = $(this).val();
+                    	    if(businessCategory.indexOf(thisMsg) >= 0){
+                    	    	 $(this).prop("checked",'true');
+                    	    }
+                    	});
+                	}
+                	
+                	var hasCats = data.obj.hasCats;
+                	if(hasCats){
+                		var proCateSize = data.obj.proCateSize;
+                		var cateMap = data.obj.cateList;
+                		//分类拼接
+                		var cnum = 0;
+                		jQuery.each(cateMap,function(key,cateList){
+                			var appendHtml = '';
+                			appendHtml+= 
+								'<div class="form-group proCategory" id="proCategory" name="addDivCategory">';
+									
+						    for(var j=0;j<cateList.length;j++){
+						    	var thisId = cateList[j].id;
+                				if(j==0){
+                					//一级
+                					if(cnum == 0){
+                						jQuery.ajax({
+                    						url : "queryCateByTopId.do",
+                    						type : 'post',
+                    						data : {
+                    							"topId":0
+                    						},
+                    						dataType : 'json',
+                    						traditional: true,
+                    						async:false,
+                    						success : function(result) {
+                    							var rows = result.rows;
+                    							var option = '<option value="">请选择一级分类</option>';
+                    							for (var i = 0; i < rows.length; i++) {
+                    								var row = rows[i];
+                    								if(thisId == row.ID){
+                    									option+='<option value="' + row.ID + '" selected="selected">'
+                										+ row.CATEGORY_NAME + '</option>';
+                    								}else{
+                    									option+='<option value="' + row.ID + '">'
+                											+ row.CATEGORY_NAME + '</option>';
+                    								}
+                    							}
+                    							$("#addFirstCate").html(option);
+                    						},
+                    						error : function() {
+                    							$("#addFirstCate").html("");
+                    						}
+                    					});
+                					}else{
+                						jQuery.ajax({
+                    						url : "queryCateByTopId.do",
+                    						type : 'post',
+                    						data : {
+                    							"topId":0
+                    						},
+                    						dataType : 'json',
+                    						traditional: true,
+                    						async:false,
+                    						success : function(result) {
+                    							var rows = result.rows;
+                    							appendHtml+=
+                    								'<label class="col-sm-2 control-label">一级分类</label>'+
+                									'<div class="col-sm-4">'+
+                    								'<select class="form-control" id="addFirstCate" name="addFirstCate" onchange="changeAddFirstCate(this)">'+
+	        										'<option value="">请选择一级分类</option>';
+	        										for (var i = 0; i < rows.length; i++) {
+	                    								var row = rows[i];
+	                    								if(thisId == row.ID){
+	                    									appendHtml+='<option value="' + row.ID + '" selected="selected">'
+	                										+ row.CATEGORY_NAME + '</option>';
+	                    								}else{
+	                    									appendHtml+='<option value="' + row.ID + '">'
+	                											+ row.CATEGORY_NAME + '</option>';
+	                    								}
+	                    							}
+	        										appendHtml+='</select></div>';
+                    						},
+                    						error : function() {
+                    						}
+                    					});
+                					}
+                				}
+                				if(j==1){
+                					//二级
+                					if(cnum == 0){
+                						var option = '<option value="' + thisId + '" selected="selected">'
+										+ cateList[j].categoryName + '</option>';
+            							$("#addSecondCate").html(option);
+                					}else{
+                						appendHtml+=
+                							'<label class="col-sm-2 control-label">二级分类</label>'+
+            								'<div class="col-sm-4">'+
+            									'<select class="form-control" id="addSecondCate" name="addSecondCate" onchange="changeAddSecondCate(this)">'+
+            										'<option value="' + thisId + '" selected="selected">'+ cateList[j].categoryName + '</option>'+
+            									'</select>'+
+            								'</div>';
+                					}
+                				}
+                				if(j==2){
+                					//三级
+                					if(cnum == 0){
+                						var option = '<option value="' + thisId + '" selected="selected">'
+										+ cateList[j].categoryName + '</option>';
+            							$("#addThirdCate").html(option);
+                					}else{
+                						appendHtml+=
+                							'<label class="col-sm-2 control-label">三级分类</label>'+
+            								'<div class="col-sm-4">'+
+            									'<select class="form-control" id="addThirdCate" name="addThirdCate">'+
+            										'<option value="' + thisId + '" selected="selected">'+ cateList[j].categoryName + '</option>'+
+            									'</select>'+
+            								'</div>';
+                					}
+                				}
+                			}
+						    if(cnum > 0){
+						    	appendHtml+=
+								    '<button type="button" id="removeCategoryButton" onclick="removeCategorySelect(this)" class="btn btn-info">删除分类</button>'+
+									'</div>';
+								$("#proCategoryAll").append(appendHtml);
+						    }
+						    cnum++;
+						});  
+                	}
+                }
+                
+                if(type == '1'){
+                	$("#submitAdd").hide();
+                	$("#addCategoryButton").hide();
+                	$("#removeCategoryButton").hide();
+                }else{
+                	$("#submitAdd").show();
+                	$("#addCategoryButton").show();
+                	$("#removeCategoryButton").show();
+                }
+				$('#addModel').modal('show');
+			} else {
+				alert(data.message);
+			}
+		},
+		error : function() {
+			alert("操作失败！");
+		}
+	});
+	
+}       
+
+var isEmpty = function (str) {
+	if(typeof str == "undefined" || str == null || str == "" || str == 'null'){
+        return true;
+    }else{
+        return false;
+    }
+}
+	
+//添加 
+function submitAdd(ele){
+	
+	var formData = new FormData();
+	
+	var addFirstCate = new Array();
+	var addSecondCate = new Array();
+	var addThirdCate = new Array();
+	$('.proCategory').each(function(){
+		var addFirstCateVal = $(this).find("#addFirstCate").val();
+		var addSecondCateVal =  $(this).find("#addSecondCate").val();
+		var addThirdCateVal =  $(this).find("#addThirdCate").val();
+		if(isEmpty(addFirstCateVal)){
+			addFirstCate.push("defaultnull");
+			formData.append("addFirstCate", "defaultnull");
+		}else{
+			addFirstCate.push(addFirstCateVal);
+			formData.append("addFirstCate", addFirstCateVal);
+		}
+		if(isEmpty(addSecondCateVal)){
+			addSecondCate.push("defaultnull");
+			formData.append("addSecondCate", "defaultnull");
+		}else{
+			addSecondCate.push(addSecondCateVal);
+			formData.append("addSecondCate", addSecondCateVal);
+		}
+		if(isEmpty(addThirdCateVal)){
+			addThirdCate.push("defaultnull");
+			formData.append("addThirdCate", "defaultnull");
+		}else{
+			addThirdCate.push(addThirdCateVal);
+			formData.append("addThirdCate", addThirdCateVal);
+		}
+	})
+	
+	formData.append("prodId", $("#addProdId").val());
+	formData.append("productName", $("#addProductName").val());
+	formData.append("proName", $("#addProName").val());
+	formData.append("teamId", $("#addTeamId").val());
+	formData.append("showOld", $("#addShowOld").val());
+	formData.append("productArea", $("#addProductArea").val());
+	formData.append("brand", $("#addBrand").val());
+	formData.append("manufacturer", $("#addManufacturer").val());
+	formData.append("licenseNo", $("#addLicenseNo").val());
+	formData.append("type", $("#addType").val());
+	formData.append("fatherCate", $("#addFatherCate").val());
+	formData.append("childCate", $("#addChildCate").val());
+	formData.append("fatherEfectCate", $("#addFatherEfectCate").val());
+	formData.append("childEfectCate", $("#addChildEfectCate").val());
+	formData.append("delFlg", "0");
+	formData.append("proType", $("#addProType").val());
+	formData.append("canBuy", $("#addCanBuy").val());
+	formData.append("onSale", $("#addOnSale").val());
+	formData.append("erpNo", $("#addErpNo").val());
+	formData.append("isNew", $("#addIsNew").val());
+	formData.append("pickType", $("#addPickType").val());
+	formData.append("userLevel", $("#addUserLevel").val());
+	formData.append("payType", $("#addPayType").val());
+	formData.append("maxDiscount", $("#maxDiscount").val());
+	formData.append("unit", $("#unit").val());
+	
+	formData.append("resourceArea", $("#resourceArea").val());
+	formData.append("keepDate", $("#keepDate").val());
+	formData.append("keepWay", $("#keepWay").val());
+	formData.append("attentionMemo", $("#attentionMemo").val());
+	formData.append("specification", $("#addSpecification").val());
+	formData.append("rankNum", $("#rankNum").val());
+	formData.append("freeLuggage", $("#addfreeLuggage").val());
+	
+	var businessCategory= "";
+    $("input:checkbox[name='businessCategory']:checked").each(function () {
+    	businessCategory+= $(this).val() + ",";
+    });
+	formData.append("businessCategory", businessCategory);
+	
+	formData.append("html", editor.txt.html());
+	var len = $(".up-img1").length;
+    var imgArr=[];
+    for(var i=0;i<len;i++){
+        var imgUrl=$(".up-img1").eq(i).attr('src');
+        imgArr.push(imgUrl);
+    }
+    if(imgArr.length>0){
+		formData.append("listFile", JSON.stringify(imgArr));
+	}
+    
+	var len = $(".up-img2").length;
+	var imgArr2=[];
+	for(var i=0;i<len;i++){
+	    var imgUrl=$(".up-img2").eq(i).attr('src');
+	    imgArr2.push(imgUrl);
+	}
+	if(imgArr2.length>0){
+		formData.append("goodsFile", JSON.stringify(imgArr2));
+	}
+	
+	$(ele).attr("disabled",true);
+	
+	jQuery.ajax({
+        url:"editGoods.do",
+        type : 'post',
+		dataType : "json",
+		cache : false,
+		data : formData,
+		processData : false,
+		contentType : false,
+        success:function(data){
+        	$(ele).attr("disabled",false);
+            if(!data.success){
+                alert(data.message);
+                return false;
+            }else{
+				alert(data.message);
+				//做一次缓存清除 防止多次修改出现的BUG
+				claenmyModal();
+				$("#addModel").modal("hide");
+				$("#mytab").bootstrapTable('refresh');
+            }
+        },
+        error:function(e){
+            alert("异常!");
+        }
+	});
+}
+
+function claenmyModal(){
+	$("#addModel input[type='text']").val("");
+	$("#addModel input[type='number']").val("");
+	$("#addModel select").val("");
+	$("#addModel textarea").val("");
+	editor.txt.html("");
+}
+
+function imgbig(url){
+	$('#imgbig').modal('show');
+	$("#bigbis").attr('src',url);
+}
+
+//展示详情 
+function showDetail(index){
+	var data = allData['rows'][index];
+	
+	$('#showProductId').val(data.productId);
+	$('#showErpNo').val(data.erpNo);
+	$('#showProductName').val(data.productName);
+	$('#showProName').val(data.proName);
+	$('#showProType').val(data.proType);
+	$('#showProductArea').val(data.productArea);
+	$('#showBrand').val(data.brand);
+	$('#showManufacturer').val(data.manufacturer);
+	$('#showLicenseNo').val(data.licenseNo);
+	$('#showFatherCate').val(data.fatherCate);
+	$('#showChildCate').val(data.childCate);
+	$('#showFatherEfectCate').val(data.fatherEfectCate);
+	$('#showChildEfectCate').val(data.childEfectCate);
+	$('#showCanBuy').val(data.canBuy);
+	$('#showOnSale').val(data.onSale);
+	
+	$('#showDetailModel').modal('show');
+}
+
+function editproduct(index){
+	
+	var data = allData['rows'][index];
+	editor2.txt.html(data.msgContent);
+	$('#eProdId').val(data.productId);
+	
+	$('#eProductName').val(data.productName);
+	$('#eProType').val(data.proType);
+	$('#eProductArea').val(data.productArea);
+	$('#eBrand').val(data.brand);
+	$('#eManufacturer').val(data.manufacturer);
+	$('#eLicenseNo').val(data.licenseNo);
+	$('#eFatherCate').val(data.fatherCate);
+	$('#eChildCate').val(data.childCate);
+	$('#eFatherEfectCate').val(data.fatherEfectCate);
+	$('#eChildEfectCate').val(data.childEfectCate);
+	$('#eCanBuy').val(data.canBuy);
+	$('#eOnSale').val(data.onSale);
+	$('#maxDiscount').val(data.maxDiscount);
+	var prodId = "";
+
+	prodId = allData['rows'][index].productId;
+
+	$("#con1").children(".up-section").remove();
+	$("#con2").children(".up-section").remove();
+	
+	jQuery.ajax({
+		url : "initAddPdPage.do",
+		type : 'post',
+		data : {prodId:prodId},
+		dataType : 'json',
+		success : function(data) {
+			if (data.success) {
+                
+                	editor2.txt.html(data.obj.detail);
+                	if(data.obj.goodsImg){
+                		var delParent;
+                		var imgContainer = $("#con2");
+                		for(var i = 0;i<data.obj.goodsImg.length;i++){
+							 var imgUrl = data.obj.goodsImg[i];
+							 var $section = $("<section class='up-section fl'>");
+							     imgContainer.append($section);
+							 var $span = $("<span class='up-span'>");
+							     $span.appendTo($section);
+							
+						     var $img0 = $("<img class='close-upimg close-upimg2'>").on("click",function(event){
+								    event.preventDefault();
+									event.stopPropagation();
+									delParent = $(this).parent();
+									var numUp = delParent.siblings().length;
+									if(numUp < 6){
+										delParent.parent().find(".z_file").show();
+									}
+									 delParent.remove();
+								});   
+								$img0.attr("src","img/a7.png").appendTo($section);
+						     var $img = $("<img class='up-img up-img2'>");
+						         $img.attr("src",imgUrl);
+						         $img.appendTo($section);
+						     var $p = $("<p class='img-name-p'>");
+						         $p.html("name").appendTo($section);
+						     var $input = $("<input id='taglocation' name='taglocation' value='' type='hidden'>");
+						         $input.appendTo($section);
+						     var $input2 = $("<input id='tags' name='tags' value='' type='hidden'/>");
+						         $input2.appendTo($section);
+						      
+						   }
+                	}
+                	
+                	if(data.obj.listImg){
+                		var delParent;
+                		var imgContainer = $("#con1");
+                		for(var i = 0;i<data.obj.listImg.length;i++){
+							 var imgUrl = data.obj.listImg[i];
+							 var $section = $("<section class='up-section fl'>");
+							     imgContainer.append($section);
+							 var $span = $("<span class='up-span'>");
+							     $span.appendTo($section);
+							
+						     var $img0 = $("<img class='close-upimg close-upimg1'>").on("click",function(event){
+								    event.preventDefault();
+									event.stopPropagation();
+									delParent = $(this).parent();
+									var numUp = delParent.siblings().length;
+									if(numUp < 6){
+										delParent.parent().find(".z_file").show();
+									}
+									 delParent.remove();
+								});   
+								$img0.attr("src","img/a7.png").appendTo($section);
+						     var $img = $("<img class='up-img up-img1'>");
+						         $img.attr("src",imgUrl);
+						         $img.appendTo($section);
+						     var $p = $("<p class='img-name-p'>");
+						         $p.html("name").appendTo($section);
+						     var $input = $("<input id='taglocation' name='taglocation' value='' type='hidden'>");
+						         $input.appendTo($section);
+						     var $input2 = $("<input id='tags' name='tags' value='' type='hidden'/>");
+						         $input2.appendTo($section);
+						      
+						   }
+                	}
+                	
+                	var businessCategory = prodInfo.businessCategory;
+                	if(!isEmpty(businessCategory)){
+                		$("input:checkbox[name='businessCategory']").each(function () {
+                    	    var thisMsg = $(this).val();
+                    	    if(businessCategory.indexOf(thisMsg) >= 0){
+                    	    	 $(this).prop("checked",'true');
+                    	    }
+                    	});
+                	}
+                }
+				
+				$('#editModel').modal('show');
+			} 
+		});
+}
+
+//修改——转换日期格式(时间戳转换为datetime格式)
+function formatDateTime(inputTime) {    
+    var date = new Date(inputTime);  
+    var y = date.getFullYear();    
+    var m = date.getMonth() + 1;    
+    m = m < 10 ? ('0' + m) : m;    
+    var d = date.getDate();    
+    d = d < 10 ? ('0' + d) : d;    
+    var h = date.getHours();  
+    h = h < 10 ? ('0' + h) : h;  
+    var minute = date.getMinutes();  
+    var second = date.getSeconds();  
+    minute = minute < 10 ? ('0' + minute) : minute;    
+    second = second < 10 ? ('0' + second) : second;   
+    return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;    
+}
+
+//获取搜索的所有值
+function params(params){
+	 $("#a input[type='text']").each(function(){
+		    params[$(this).attr("id")] = $(this).val();
+	 });
+	 $("#a select").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+	});
+	 return params;
+}
+
+//展示属性库存列表
+function showStockPrice(index) {
+	var data = allData['rows'][index];
+	var productId = data.productId;
+	$('#proId_stock_price').val(productId);
+	$('#proName_stock_price').val(data.productName);
+	showStockPriceTab();
+	$('#stockPriceModal').modal('show');
+}
+
+var stockPriceData;
+function showStockPriceTab(){
+	//先销毁表单 
+	$("#stockPriceTab").bootstrapTable('destroy'); 
+	//生成用户数据
+	$('#stockPriceTab').bootstrapTable(
+	{
+		method : 'post',
+		contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+		url : "selectGoodsStockPrice.do",//要请求数据的文件路径
+		dataType : 'json',
+		/*   toolbar: '#toolbar',//指定工具栏 */
+		striped : true, //是否显示行间隔色
+		//   dataField: "res",//bootstrap table 可以前端分页也可以后端分页，这里
+		//我们使用的是后端分页，后端分页时需返回含有total：总记录数,这个键值好像是固定的  
+		//rows： 记录集合 键值可以修改  dataField 自己定义成自己想要的就好
+		pageNumber : 1, //初始化加载第一页，默认第一页
+		pagination : true,//是否分页
+		queryParams : function(p) {
+			return params2(p);
+		},
+		undefinedText : "",
+		queryParamsType : 'limit',//查询参数组织方式
+		sidePagination : 'server',//指定服务器端分页
+		pageSize : 10,//单页记录数
+		pageList : [ 5, 10, 20, 30 ],//分页步进值
+		/* showRefresh:true,//刷新按钮
+		showColumns:true, */
+		clickToSelect : false,//是否启用点击选中行
+		toolbarAlign : '',//工具栏对齐方式
+		buttonsAlign : '',//按钮对齐方式
+		toolbar : '#toolbar',//指定工作
+		columns : [
+				{
+				    title:'操作',
+				    field:'id',
+				    formatter:function (value,row,index){
+				    	var url = "";
+				    	if(row.onSale == '2'){
+				    		url = url + "<a href=javascript:showUpdateStock('"+ index+"')>修改 </a>";
+				    		url = url + "|<a onclick='delStockPrice("+value+")'>删除 </a>";
+				   		 }
+						return url;
+				    },
+				    cellStyle : {
+						css : {
+							'width' : '200px'
+						}
+					}
+				},
+				{
+				    title:'商品编号',
+				    field:'goodsNo'
+				},
+				{
+				    title:'商品名称',
+				    field:'proName'
+				},
+				{
+		            title:'是否有属性',
+		            field:'type',
+					formatter:function (value,row,index){
+		            	if(value=="1")
+							return "无属性";
+						
+						if(value=="2")
+							return "有属性";
+		            }
+		        },
+				{
+				    title:'属性',
+				    field:'attrNames',
+				    formatter:function (value,row,index){
+						return checkEmpty(row.attrNames) + "/" + checkEmpty(row.valuees);
+		            }
+				},
+				{
+				    title:'ERP编号',
+				    field:'erpNo'
+				},
+				{
+				    title:'条形码',
+				    field:'barCode'
+				},
+				{
+				    title:'原价',
+				    field:'price',
+				    formatter:function (value,row,index){
+				    	return value.amount;
+				    }
+				},
+				{
+				    title:'支付方式',
+				    field:'payTypeStr'
+				},
+				{
+				    title:'购买价',
+				    field:'goodAmount',
+				    formatter:function (value,row,index){
+				    	return value.amount;
+				    }
+				},
+				{
+				    title:'购买积分值',
+				    field:'point',
+				    formatter:function (value,row,index){
+				    	return value.amount;
+				    }
+				},
+				{
+				    title:'购买上限',
+				    field:'pickLimit'
+				},
+				{
+				    title:'库存',
+				    field:'stock'
+				},
+				{
+				    title:'是否控制库存',
+				    field:'controlStock',
+				    formatter:function (value,row,index){
+				    	if(value == '1'){
+				    		return "不控制";
+				    	}
+				    	if(value == '2'){
+				    		return "控制";
+				    	}
+				    }
+				},
+				{
+				    title:'备注',
+				    field:'memo'
+				},
+		        
+		        {
+				    title:'属性图片',
+				    field:'imgSrc',
+				    formatter:function (value,row,index){
+				    	if(value=="" || value==null){
+				    		return null;
+				    	}else{
+				    		return "<img src="+value+" width='65px;' height='50px;' />";
+				    	}
+				    }
+				},
+		        {
+		            title:'创建者',
+		            field:'creater'
+		        },
+		        {
+		            title:'创建时间',
+		            field:'gmtCreate',
+		            formatter : function(value, row, index) {
+						return format(value);
+					}
+		        },
+				{
+			        title:'修改者',
+			        field:'modifier'
+			    },
+			    {
+			        title:'修改时间',
+			        field:'gmtModified',
+			        formatter : function(value, row, index) {
+						return format(value);
+					}
+			    }
+			 ],
+		locale : 'zh-CN',//中文支持,
+		responseHandler : function(res) {
+			$("#addstockpbtn").attr('disabled','disabled');
+			stockPriceData = res;
+			if(res.rows.length>0){
+				if(stockPriceData){
+					if(stockPriceData['rows'][0].type == "1"){
+						$("#addstockpbtn").attr('disabled','disabled');
+					}else{
+						$("#addstockpbtn").removeAttr('disabled');
+					}
+				}
+			} else {
+				$("#addstockpbtn").removeAttr('disabled');
+			}
+			return res;
+		}
+	});
+	
+	
+}
+
+
+$(document).ready(function(){ 
+    	
+        // 注册change事件       
+        jQuery('#addFatherCate').change(function(){ 
+        	var topId = $(this).children('option:selected').attr("id");
+        	jQuery("#addChildCate").children('option').remove();
+        	if(!topId){
+        		alert("请选择有效值");
+        		return;
+        	}
+        	
+        	jQuery.ajax({
+				url : "selectCateByTopId.do",
+				type : 'post',
+				data : {topId:topId},
+				dataType : 'json',
+				success : function(data) {
+					if (data.success) {
+						 var childSelect = jQuery("#addChildCate");
+						 jQuery("<option value=''></option>").appendTo(childSelect);
+		                 jQuery.each(data.obj.childList, function(name, value) {
+		                    jQuery("<option value='"+this.categoryName+"'>"+this.categoryName+"</option>").appendTo(childSelect);
+		                 });
+						
+					} else {
+						alert(data.message);
+					}
+				},
+				error : function() {
+					alert("操作失败！");
+				}
+			});
+          
+        }) 
+        
+        jQuery('#addFatherEfectCate').change(function(){ 
+        	var topId = $(this).children('option:selected').attr("id");
+        	jQuery("#addChildEfectCate").children('option').remove();
+        	if(!topId){
+        		alert("请选择有效值");
+        		return;
+        	}
+        	jQuery.ajax({
+				url : "selectCateByTopId.do",
+				type : 'post',
+				data : {topId:topId},
+				dataType : 'json',
+				success : function(data) {
+					if (data.success) {
+						var childSelect = jQuery("#addChildEfectCate");
+						 jQuery("<option value=''></option>").appendTo(childSelect);
+		                 jQuery.each(data.obj.childList, function(name, value) {
+		                    jQuery("<option value='"+this.categoryName+"'>"+this.categoryName+"</option>").appendTo(childSelect);
+		                 });
+					} else {
+						alert(data.message);
+					}
+				},
+				error : function() {
+					alert("操作失败！");
+				}
+			});
+        
+        }) 
+        
+        jQuery('#addProType').change(function(){ 
+        	var topId = $(this).children('option:selected').val();
+        	if(topId == "2"){
+        		$("#addProductArea").val("");
+        		$("#addProductArea").attr('disabled','disabled');
+        		$("#addBrand").val("");
+        		$("#addBrand").attr('disabled','disabled');
+        		$("#addManufacturer").val("");
+        		$("#addManufacturer").attr('disabled','disabled');
+        		$("#addLicenseNo").val("");
+        		$("#addLicenseNo").attr('disabled','disabled');
+        		$("#addFatherCate").val("");
+        		$("#addFatherCate").attr('disabled','disabled');
+        		$("#addChildCate").val("");
+        		$("#addChildCate").attr('disabled','disabled');
+        		$("#addFatherEfectCate").val("");
+        		$("#addFatherEfectCate").attr('disabled','disabled');
+        		$("#addChildEfectCate").val("");
+        		$("#addChildEfectCate").attr('disabled','disabled');
+        	}else{
+        		$("#addProductArea").removeAttr('disabled');
+        		$("#addBrand").removeAttr('disabled');
+        		$("#addManufacturer").removeAttr('disabled');
+        		$("#addLicenseNo").removeAttr('disabled');
+        		$("#addFatherCate").removeAttr('disabled');
+        		$("#addChildCate").removeAttr('disabled');
+        		$("#addFatherEfectCate").removeAttr('disabled');
+        		$("#addChildEfectCate").removeAttr('disabled');
+        	}
+        }) 
+        
+        
+        // 注册change事件       
+        jQuery('#isHadAttr').change(function(){ 
+        	
+        	var slectId = $(this).children('option:selected').val();
+        	if(slectId == "1"){
+        		$("#attrFromGroup").hide();
+        		$("#attrSelect").attr('disabled','disabled');
+        		$("#showAttrValueBtn").attr('disabled','disabled');
+        		$("#contentlist").html("");
+        	}else{
+        		$("#attrFromGroup").show();
+        		$("#attrSelect").removeAttr('disabled');
+        		$("#showAttrValueBtn").removeAttr('disabled');
+        	}
+          
+        })
+       
+    }) 
+    
+//图片预览
+function preview(file) {
+	var prevDiv = document.getElementById('preview');
+	prevDiv.style.display = "block";
+	if (file.files && file.files[0]) {
+		var reader = new FileReader();
+		reader.onload = function(evt) {
+			prevDiv.innerHTML = '<img src="' + evt.target.result + '" />';
+		}
+		reader.readAsDataURL(file.files[0]);
+	} else {
+		prevDiv.innerHTML = '<div class="img" style="filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src=\'' + file.value + '\'"></div>';
+	}
+}
+
+//获取搜索的所有值
+function params2(params) {
+	params['productId'] = $('#proId_stock_price').val();
+	return params;
+}
+
+function params4(params) {
+	params['productId'] = $('#pdTeam_proId').val();
+	return params;
+}
+
+//门店管理
+var pdTeamData;
+function showPdTeamModal(){
+	//先销毁表单 
+	$("#pdTeamTab").bootstrapTable('destroy'); 
+	//生成用户数据
+	$('#pdTeamTab').bootstrapTable(
+	{
+		method : 'post',
+		contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+		url : "queryPdTemaList.do",//要请求数据的文件路径
+		dataType : 'json',
+		/*   toolbar: '#toolbar',//指定工具栏 */
+		striped : true, //是否显示行间隔色
+		//   dataField: "res",//bootstrap table 可以前端分页也可以后端分页，这里
+		//我们使用的是后端分页，后端分页时需返回含有total：总记录数,这个键值好像是固定的  
+		//rows： 记录集合 键值可以修改  dataField 自己定义成自己想要的就好
+		pageNumber : 1, //初始化加载第一页，默认第一页
+		pagination : true,//是否分页
+		queryParams : function(p) {
+			return params4(p);
+		},
+		undefinedText : "",
+		queryParamsType : 'limit',//查询参数组织方式
+		sidePagination : 'server',//指定服务器端分页
+		pageSize : 10,//单页记录数
+		pageList : [ 5, 10, 20, 30 ],//分页步进值
+		/* showRefresh:true,//刷新按钮
+		showColumns:true, */
+		clickToSelect : false,//是否启用点击选中行
+		toolbarAlign : '',//工具栏对齐方式
+		buttonsAlign : '',//按钮对齐方式
+		toolbar : '#toolbar',//指定工作
+		columns : [
+				{
+				    title:'门店编号',
+				    field:'teamId'
+				},
+				 {
+		            title:'门店名字',
+		            field:'teamName'
+		        },
+		        {
+		            title:'门店类型',
+		            field:'teamType',
+		            formatter:function (value,row,index){
+		            	if(value=="1")
+							return "门店";
+						
+						if(value=="2")
+							return "服务商";
+							
+						if(value=="3")
+							return "代理商";
+		            }
+		        },
+				{
+				    title:'联系电话',
+				    field:'cell'
+				},
+				{
+		            title:'地址',
+		            field:'address'
+		        },
+		        {
+		            title:'优惠活动',
+		            field:'favourableActive'
+		        },
+				{
+		            title:'操作',
+		            field:'id',
+		            formatter:function (value,row,index){
+		            	var url = "";
+		            	url = url + "<a href=javascript:deletePDTeam('"+ index+"')>删除</a>";
+						return url;
+		            }
+		        },
+			 ],
+		locale : 'zh-CN',//中文支持,
+		responseHandler : function(res) {
+			pdTeamData = res.rows;
+			if(pdTeamData.length != 0){
+				$("#addPdTeamBtn").attr("disabled",true);
+			}else{
+				$("#addPdTeamBtn").attr("disabled",false);
+			}
+			return res;
+		}
+	});
+}
+
+function showPdTeam(index){
+	$("#pdTeam_proId").val(allData['rows'][index].productId);
+	$("#pdTeam_proName").val(allData['rows'][index].productName);
+	
+	showPdTeamModal();
+	$('#pdTeamModal').modal('show');
+}
+
+function showAddPdTeam(){
+	$("#addPdTeamModal input").val("");
+	$("#addPdTeamModal select").val("");
+	jQuery("#pdTeamId").children('option').remove();
+	$("#teamProdId").val($("#pdTeam_proId").val());
+	$("#teamProductName").val($("#pdTeam_proName").val());
+	jQuery.ajax({
+			url : "initAddTeam.do",
+			type : 'post',
+			data : "",
+			dataType : 'json',
+			success : function(data) {
+				if (data.success) {
+					if(data.obj){
+						//给门店赋值
+						var teamSelect = jQuery("#pdTeamId");
+						jQuery("<option value=''></option>").appendTo(teamSelect);
+		                jQuery.each(data.obj, function(name, value) {
+		                    jQuery("<option value='"+this.teamId+"'>"+this.teamName+"</option>").appendTo(teamSelect);
+		                });
+					}
+				} else {
+					alert(data.message);
+				}
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+	$('#addPdTeamModal').modal('show');
+}
+
+function closeAddPdTeam(){
+	$('#mytab').bootstrapTable('refresh');
+	$('#pdTeamModal').modal('hide');
+}
+
+function addPdTeam(){
+	var prodId = $("#teamProdId").val();
+	var teamId = $("#pdTeamId").val()
+	jQuery.ajax({
+			url : "addPdTeamList.do",
+			type : 'post',
+			data : {
+				prodId:prodId,
+				teamId:teamId
+			},
+			dataType : 'json',
+			success : function(data) {
+				if (data.success) {
+					$('#addPdTeamModal').modal('hide');
+					$("#pdTeamTab").bootstrapTable('refresh');
+				} else {
+					alert(data.message);
+				}
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+}
+
+function deletePDTeam(index){
+	var prodId = $("#pdTeam_proId").val();
+	var teamId = pdTeamData[index].teamId;
+	if (confirm("确定删除此信息？删除后不可恢复")) {
+		jQuery.ajax({
+			url : "delPdTeam.do",
+			type : 'post',
+			data : {
+				prodId:prodId,
+				teamId:teamId
+			},
+			dataType : 'json',
+			success : function(data) {
+				if (data.success) {
+					$("#pdTeamTab").bootstrapTable('refresh');
+				} else {
+					alert(data.message);
+				}
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+	} else {
+		return;
+	}
+}
+
+function delStockPrice(id){
+	if (confirm("确定删除此属性？删除后不可恢复")) {
+		jQuery.ajax({
+			url : "delStockPrice.do",
+			type : 'post',
+			data : {
+				id:id
+			},
+			dataType : 'json',
+			success : function(data) {
+				if (data.success) {
+					$("#stockPriceTab").bootstrapTable('refresh');
+				} else {
+					alert(data.message);
+				}
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+	} else {
+		return;
+	}
+}
+
+
+
+<!--张月 -->
+
+function comment(index) {
+	$("#pltab").bootstrapTable('destroy');
+	$("#startDate").val("");
+	$("#endDate").val("");
+	var data = allData['rows'][index];
+	var u = data.productId;
+	$('#linkid').val(u);
+	showcomment();
+	$("#pl").modal("show");
+}
+function comment2() {
+	$("#pltab").bootstrapTable('destroy'); 
+	showcomment();
+}
+function contentInfo(row){
+	$("#contentInfoText").val(row.evaluateContent);
+	$("#contentInfoModal").modal("show");
+}
+var all2;
+function showcomment(){
+	$('#pltab').bootstrapTable(
+			{
+			    method: 'post',
+			    contentType: "application/x-www-form-urlencoded",//必须要有！！！！
+			    url:"selectep.do",//要请求数据的文件路径
+			    dataType : 'json',
+			    striped: true, //是否显示行间隔色
+			  	pageNumber: 1, //初始化加载第一页，默认第一页
+			    pageSize:10,//单页记录数
+			    pageList:[5,10,20,30],//分页步进值
+			    pagination:true,//是否分页
+			    queryParamsType:'limit',//查询参数组织方式
+			    sidePagination:'server',//指定服务器端分页
+			    queryParams: function(p){
+			    	 return params3(p);
+			    },
+			  	
+			    clickToSelect: true,//是否启用点击选中行
+			    toolbarAlign:'right',//工具栏对齐方式
+			    buttonsAlign:'right',//按钮对齐方式
+			    toolbar:'#toolbar',//指定工作栏
+	    columns:[
+	{
+		title : '评价星级',
+		field : 'evaluateStar',
+		formatter : function(value, row, index) {
+			if (value == "1") {
+				return "★";
+			}
+			if (value == "2") {
+				return "★★";
+			}
+			if (value == "3") {
+				return "★★★";
+			}
+			if (value == "4") {
+				return "★★★★";
+			}
+			if (value == "5") {
+				return "★★★★★";
+			}
+		}
+	},
+			 { title:'评价商品属性',
+        field:'goodAttr'
+	           
+	        },
+			{
+	        	 title:'评价内容',
+		            field:'evaluateContent',
+				formatter: function (value,row,index){
+					if(value!=null){
+						return value.substr(0,20)+"...";
+					}
+				}
+	        },
+	        
+	        {
+				title : '创建时间',
+				field : 'gmtCreate',
+				formatter : function(value, row, index) {
+					return format(value);
+				}
+			},
+			{
+				title : '修改时间',
+				field : 'gmtModified',
+				formatter : function(value, row, index) {
+					return format(value);
+				}
+			},
+			{
+	            title:'操作',
+	            field:'id',
+	            formatter: function (value,row,index){
+	                return "<a href='#' onclick=contentInfo('"+row+"')>详情</a> | <a href='#' onclick=deletepl('"+index+"')>删除</a>";
+	            }
+			}
+	    ],
+	    locale:'zh-CN',//中文支持,
+	    responseHandler:function(res){
+	        //在ajax获取到数据，渲染表格之前，修改数据源
+			all2 = res.rows;
+	        return res;
+	    }
+})
+}
+$('.datetimepicker').datetimepicker({
+	minView : "month",//设置只显示到月份
+	format : 'yyyy-mm-dd',
+	language : 'zh-CN',
+	autoclose : true,//选中关闭
+	todayBtn : true//今日按钮
+})
+function params3(params){
+	 params["linkid"] = $("#linkid").val();
+	 params["startDate"] = $("#startDate").val();
+	 params["endDate"] = $("#endDate").val();
+	 return params;
+}
+function cleanpl(){
+	$("#a input").val("");
+	$("#a select").val("");
+}
+function deletepl(index) {
+	var id = all2[index].id;
+	if (confirm("确定删除此信息？删除后不可恢复")) {
+		jQuery.ajax({
+			url : "deletepl.do",
+			type : 'post',
+			data : {
+				"id" : id
+			},
+			dataType : 'json',
+			success : function(json) {
+				if (json) {
+					alert("删除成功");
+					$("#pltab").bootstrapTable('refresh');
+				} else {
+					alert("删除失败");
+				}
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+	} else {
+		return;
+	}
+} 
+
+function doAlert(){
+	$("#alertTable").bootstrapTable('destroy');
+	askModalInfoList();
+	$("#alertModal").modal("show");
+}
+
+function askModalInfoList(){
+	var all2;
+	$('#alertTable').bootstrapTable({
+		method : 'get',
+		contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+		url : "html/type.json",//请求查询
+		dataType : 'json',
+		striped : true, //是否显示行间隔色
+		pageNumber : 1, //初始化加载第一页，默认第一页
+		pageSize : 10,//单页记录数
+		pageList : [ 10, 20, 30 ],//分页步进值
+		pagination : true,//是否分页
+		queryParamsType : 'limit',//查询参数组织方式
+		sidePagination : 'server',//指定服务器端分页
+		clickToSelect : true,//是否启用点击选中行
+		toolbarAlign : 'right',//工具栏对齐方式
+		buttonsAlign : 'right',//按钮对齐方式
+		toolbar : '#toolbar',//指定工作栏
+		columns : [ {
+			field : "id",
+			checkbox : true
+		}, {
+			title : '编号',
+			field : 'payId'
+		}, {
+			title : '支付方式',
+			field : 'payName'
+		} ],
+		locale : 'zh-CN',//中文支持,
+		responseHandler : function(res) {
+			//在ajax获取到数据，渲染表格之前，修改数据源
+			all2 = res.rows;
+			return res;
+		}
+	})
+}
+
+function addInfoHidden() {
+	$(document.body).addClass('modal-open');
+	//使用getSelections即可获得，row是json格式的数据
+	var row = $('#alertTable').bootstrapTable('getSelections');
+	if (row.length < 1) {
+		alert("请至少选择一种支付方式");
+		return;
+	}
+	//创建一个数组，将选中的数据row中所需要的列放到数组
+	var t = [];
+	for (var i = 0; i < row.length; i++) {
+		t.push(row[i].payTypeId);
+	}
+	//系列化对象  (把对象的类型转换为字符串类型)
+	var b = JSON.stringify(t);
+	//放入隐藏域中
+	$("#addPayType").val(b);
+	$("#alertModal").modal("hide");
+}
+</script>
+
+<script type="text/javascript">
+
+	function showImportStock(index){
+		$("#submitReply").attr("disabled",false);
+		$("#submitReply").html("提交");
+		var productId = allData.rows[index].productId;
+		var productName = allData.rows[index].productName;
+		$("#excelGoodNo").val(productId);
+		$("#excelGoodName").val(productName);
+		$("#excel").val('');
+		$("#excelModal").modal("show");
+	}
+	
+	function closeExcelModal(){
+		$("#excelGoodNo").val('');
+		$("#excelGoodName").val('');
+		$("#excel").val('');
+		$("#excelModal").modal("hide");
+	}
+	
+	function submitImportExcel(){
+		
+		$("#submitReply").attr("disabled",true);
+		$("#submitReply").html("数据处理中...");
+		
+		var goodNo = $("#excelGoodNo").val();
+		var formData = new FormData();
+		
+		formData.append("goodNo", goodNo);
+		formData.append("file", $("#excelFile")[0].files[0]);
+		
+		jQuery.ajax({
+			url : 'importExcelUtil.do',
+			type : 'post',
+			data : formData,
+			dataType : 'json',
+			cache : false,
+			processData : false,
+			contentType : false,
+			success : function(data) {
+				if (data.success) {
+					alert(data.message);
+					closeExcelModal();
+				} else {
+					alert(data.message);
+				}
+				$("#submitReply").attr("disabled",false);
+				$("#submitReply").html("提交");
+			},
+			error : function() {
+				alert("操作失败！");
+			}
+		});
+	}
+	
+	function goDownDemo(){
+		window.location.href="http://admin.hqytls.com/demo/demo.xls";
+	}
+	
+	function handCleanStock(ele){
+		
+		if (confirm("确定已经处理好有效数据，同步库存？")) {
+			$(ele).attr("disabled", true); 
+			$(ele).html("正在处理中...");
+			
+			jQuery.ajax({
+				url : "handCleanStock.do",
+				type : 'post',
+				cache : false,
+				processData : false,
+				contentType : false,
+				dataType : 'json',
+				success : function(data) {
+					$(ele).attr("disabled", false); 
+					$(ele).html("手动同步中间库存");
+					if (data.success) {
+						alert(data.message);
+					} else {
+						alert(data.message);
+					}
+				},
+				error : function() {
+					alert("操作失败！");
+				}
+			}); 
+		}
+	}
+
+</script>
+
+</html>

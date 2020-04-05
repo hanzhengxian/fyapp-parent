@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
+	default-autowire="byName">
+
+
+	<!-- 流水号生成器组件 -->
+	<bean id="codeGenerateComponent" class="com.onway.core.service.code.CodeGenerateComponentImpl" />
+	<!-- 事务模板 -->
+	<bean id="serviceTemplate" class="com.onway.platform.common.service.template.impl.ServiceTemplateImpl" />
+	
+	<bean id="controllerTemplate" class="com.onway.web.template.ControllerTemplateImpl" />
+	
+	<!-- 事件发送组件 -->	
+	<bean id="eventPublishComponent" class="com.onway.web.controller.service.EventPublishComponentImpl" />
+	
+	<!-- 提现操作组件 -->
+	<bean id="withdrawService" class="com.onway.core.service.impl.WithdrawServiceImpl" />
+	
+	
+	<bean id="wechatComponent" class="com.onway.core.service.impl.WechatComponentImpl" />
+	
+	<bean id="alipayComponent" class="com.onway.core.service.impl.AlipayComponentImpl" />
+	
+	<bean id="accountTransComponent" class="com.onway.core.service.impl.AccountTransComponentImpl" />
+	
+	<bean id="expressComponent" class="com.onway.core.service.impl.ExpressComponentImpl" />
+	
+	
+	<bean id="msgService" class="com.onway.core.service.impl.MsgServiceImpl" />
+	
+	<bean id="stockPriceComponent" class="com.onway.core.service.impl.StockPriceComponentImpl" />
+	
+	<bean id="zjmComponent" class="com.onway.core.service.impl.ZjmComponentImpl" />
+	
+	<bean id="shunfengService" class="com.onway.shunfeng.service.ShunfengServiceImpl" />
+	
+	<bean id="autoReceiveService" class="com.onway.core.service.impl.AutoReceiveServiceImpl" />
+	
+	<bean id="userQueryService" class="com.onway.core.service.impl.UserQueryServiceImpl" />
+	
+	<bean id="cacheManager" class="com.onway.core.service.impl.cache.CacheManagerImpl" />
+</beans>

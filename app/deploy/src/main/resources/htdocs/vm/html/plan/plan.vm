@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+#parse("content/importBase.vm")
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+#preview>img {
+	width: 100%;
+	height: 170px;
+}
+</style>
+</head>
+<!-- 张月 -->
+<body style="width: 100%; height: 100%;">
+	<div id="page-wrapper">
+		<!--BEGIN TITLE & BREADCRUMB PAGE-->
+		<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+			<div class="page-header pull-left">
+				<div class="page-title">方案列表</div>
+			</div>
+
+			<ol class="breadcrumb page-breadcrumb pull-right">
+				<li><i class="fa fa-home"></i>&nbsp;<a href="#">方案管理</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="hidden"><a href="#">方案管理</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="active">方案列表</li>
+			</ol>
+			<div class="clearfix"></div>
+		</div>
+
+		<div style="margin-top: 2%;" id="a">
+
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">方案ID：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="planId" name="planId" class="form-control" /><br />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">方案名：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="planName" name="planName"
+							class="form-control" /><br />
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">方案主类型：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select class="form-control" id="mainType" name="mainType">
+							<option selected="selected" value="">请选择</option>
+
+							<option value="1">优惠方案</option>
+							<option value="2">返利方案</option>
+						</select>
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">是否按百分比：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select class="form-control" id="planChildType"
+							name="planChildType">
+							<option value="">请选择</option>
+							<option value="0">是</option>
+							<option value="1">不是</option>
+						</select>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="col-sm-4" style="float: right">
+				<div class="control-group">
+					<div>
+						<button onclick="clean()" class="btn btn-danger" name="Name"
+							id="search_tel" value="清空"
+							style="float: right; margin-right: 2%;">清空</button>
+					</div>
+					<div>
+						<button onclick="sorce()" class="btn btn-info" name="Name"
+							id="search_tel" value="查询"
+							style="float: right; margin-right: 2%;">查询</button>
+					</div>
+					<div>
+						<button onclick="addModel()" class="btn btn-warning" name="Name"
+							id="search_tel" value="添加"
+							style="float: right; margin-right: 2%;">添加</button>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<!--BEGIN CONTENT-->
+		<table id="mytab" class="table table-hover"></table>
+
+		<!-- 添加方案  -->
+		<div class="modal fade" id="addplan" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" style="width: 70%; margin-left: 20%;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<div id="xz">
+							<h4 class="modal-title" id="myModalLabel">新增方案</h4>
+						</div>
+						<div id="xq">
+							<h4 class="modal-title" id="myModalLabel">方案详情</h4>
+						</div>
+						<div id="xg">
+							<h4 class="modal-title" id="myModalLabel">修改方案</h4>
+						</div>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" role="form" name="aplan" id="aplan"
+							enctype="multipart/form-data">
+							<div
+								style="background-color: #FFFFE0; width: 100%; height: 35px; margin: 0 auto;">
+								<table style="width: 100%;">
+									<tr>
+										<td width="10%">方案名称<span style="color: red;">*</span></td>
+										<td width="40%"><input type="text" id="aplanname"
+											name="aplanname" class="form-control" /> <input
+											type="hidden" id="aplanId" name="aplanId"> <input
+											type="hidden" id="eid" name="eid" /></td>
+										<td width="10%">方案主类型<span style="color: red;">*</span></td>
+										<td width="40%"><select class="form-control"
+											id="amaintype" name="amaintype">
+												<option value="">请选择</option>
+												<option value="1">优惠方案</option>
+												<option value="2">返利方案</option>
+										</select></td>
+									</tr>
+								</table>
+							</div>
+							<br />
+							<div
+								style="background-color: #F0FFFF; width: 100%; height: 130px; margin: 0 auto;">
+								<table style="width: 100%;">
+									<tr>
+										<td width="10%">支出金额<span style="color: red;">*</span></td>
+										<td width="40%"><input type="text" id="alimitamount"
+											name="alimitamount" class="form-control" /></td>
+										<td width="10%">限制件数<span style="color: red;">*</span></td>
+										<td width="40%"><input type="text" id="alimitcount"
+											name="alimitcount" class="form-control" /></td>
+									</tr>
+									<tr>
+										<td width="10%">是否应用<span style="color: red;">*</span></td>
+										<td width="40%"><input type="radio" name="ayouhuiflg"
+											value="2">是<input type="radio" name="ayouhuiflg"
+											value="1">否</td>
+									</tr>
+									<tr>
+										<td width="10%">有效开始日期<span style="color: red;">*</span></td>
+										<td width="40%"><input type="text" id="astartdate"
+											name="astartdate" class="form-control datetimepicker"
+											readonly="readonly" /></td>
+										<td width="10%">有效结束日期<span style="color: red;">*</span></td>
+										<td width="40%"><input type="text" id="aenddate"
+											name="aenddate" class="form-control datetimepicker"
+											readonly="readonly" /></td>
+									</tr>
+									<tr>
+										<td width="10%">操作对象<span style="color: red;">*</span></td>
+										<td width="40%"><select class="form-control"
+											id="aoperateobj" name="aoperateobj">
+												<option value="">请选择</option>
+												<option value="1">现金</option>
+												<option value="2">积分</option>
+										</select></td>
+										<td width="10%">是否按百分比<span style="color: red;">*</span></td>
+										<td width="40%"><select class="form-control"
+											id="aplanchildtype" name="aplanchildtype">
+												<option value="">请选择</option>
+												<option value="0">是</option>
+												<option value="1">不是</option>
+										</select></td>
+
+									</tr>
+								</table>
+							</div>
+							<br />
+							<div id="fanli"
+								style="background-color: #E6E6FA; width: 50%; height: 430px; margin: 0 auto; display: none">
+								<table align="center" style="width: 100%;">
+									<tr bgcolor="#E6E6FA">
+										<td><font color="	#BA55D3">积分返比<span
+												style="color: red;">*</span>：
+										</font></td>
+									</tr>
+									<tr bgcolor="#E6E6FA">
+										<td width="10%">一级</td>
+										<td width="40%"><input type="number" id="apointone"
+											name="apointone" class="form-control" /></td>
+
+									</tr>
+									<tr bgcolor="#E6E6FA">
+										<td width="10%">二级</td>
+										<td width="40%"><input type="number" id="apointtwo"
+											name="apointtwo" class="form-control" /></td>
+
+									</tr>
+									<tr bgcolor="#E6E6FA">
+										<td width="10%">三级</td>
+										<td width="40%"><input type="number" id="apointthree"
+											name="apointthree" class="form-control" /></td>
+									</tr>
+									<tr bgcolor="#E6E6FA">
+										<td width="10%">四级</td>
+										<td width="40%"><input type="number" id="apointfour"
+											name="apointfour" class="form-control" /></td>
+									</tr>
+									<tr bgcolor="#E6E6FA">
+										<td width="10%">五级</td>
+										<td width="40%"><input type="number" id="apointfive"
+											name="apointfive" class="form-control" /></td>
+									</tr>
+									<tr bgcolor="#E6E6FA">
+										<td><font color="	#BA55D3">胡币返比<span
+												style="color: red;">*</span>：
+										</font></td>
+									</tr>
+									<tr bgcolor="#E6E6FA">
+										<td width="10%">一级</td>
+										<td width="40%"><input type="number" id="ahubalanceone"
+											name="ahubalanceone" class="form-control" /></td>
+										<td width="10%">一级临时</td>
+										<td width="40%"><input type="number"
+											id="atemphubalanceone" name="atemphubalanceone"
+											class="form-control" /></td>
+									</tr>
+									<tr bgcolor="#E6E6FA">
+										<td width="10%">二级</td>
+										<td width="40%"><input type="number" id="ahubalancetwo"
+											name="ahubalancetwo" class="form-control" /></td>
+										<td width="10%">二级临时</td>
+										<td width="40%"><input type="number"
+											id="atemphubalancetwo" name="atemphubalancetwo"
+											class="form-control" /></td>
+									</tr>
+									<tr bgcolor="#E6E6FA">
+										<td width="10%">三级</td>
+										<td width="40%"><input type="number" id="ahubalancethree"
+											name="ahubalancethree" class="form-control" /></td>
+										<td width="10%">三级临时</td>
+										<td width="400px"><input type="number"
+											id="atemphubalancethree" name="atemphubalancethree"
+											class="form-control" /></td>
+									</tr>
+									<tr bgcolor="#E6E6FA">
+										<td width="10%">四级</td>
+										<td width="40%"><input type="number" id="ahubalancefour"
+											name="ahubalancefour" class="form-control" /></td>
+										<td width="10%">四级临时</td>
+										<td width="40%"><input type="number"
+											id="atemphubalancefour" name="atemphubalancefour"
+											class="form-control" /></td>
+									</tr>
+									<tr bgcolor="#E6E6FA">
+										<td width="10%">五级</td>
+										<td width="40%"><input type="number" id="ahubalancefive"
+											name="ahubalancefive" class="form-control" /></td>
+										<td width="10%">五级临时</td>
+										<td width="40%"><input type="number"
+											id="atemphubalancefive" name="atemphubalancefive"
+											class="form-control" /></td>
+									</tr>
+								</table>
+							</div>
+							<br />
+							<div id="youhui"
+								style="background-color: #FFF0F5; width: 50%; height: 230px; margin: 0 auto;">
+								<table align="center" style="width: 100%;">
+									<tr bgcolor="#FFF0F5">
+
+										<td width="10%">优惠方案子类型<span style="color: red;">*</span></td>
+										<td width="40%"><select class="form-control"
+											id="aplangrandtype" name="aplangrandtype">
+												<option value="">请选择</option>
+												<option value="1">立减金额</option>
+												<option value="2">立减临时胡币</option>
+										</select></td>
+										<td width="10%"></td>
+										<td width="40%"></td>
+									</tr>
+									<tr bgcolor="#FFF0F5">
+										<td width="10%">一级</td>
+										<td width="400px"><input type="number" id="areachoffone"
+											name="areachoffone" class="form-control" /></td>
+
+									</tr>
+									<tr bgcolor="#FFF0F5">
+										<td width="10%">二级</td>
+										<td width="40%"><input type="number" id="areachofftwo"
+											name="areachofftwo" class="form-control" /></td>
+
+									</tr>
+									<tr bgcolor="#FFF0F5">
+										<td width="10%">三级</td>
+										<td width="40%"><input type="number" id="areachoffthree"
+											name="areachoffthree" class="form-control" /></td>
+
+									</tr>
+									<tr bgcolor="#FFF0F5">
+										<td width="10%">四级</td>
+										<td width="40%"><input type="number" id="areachofffour"
+											name="areachofffour" class="form-control" /></td>
+
+									</tr>
+									<tr bgcolor="#FFF0F5">
+										<td width="10%">五级</td>
+										<td width="40%"><input type="number" id="areachofffive"
+											name="areachofffive" class="form-control" /></td>
+
+									</tr>
+								</table>
+								<!-- <table align="center">
+									<tr bgcolor="#FFF0F5">
+										<td><font color="red">(方案子类选择等级类别的时候 满减率/折扣率
+												1~5级必填 方案子类选择其他类别的时候 满减率/折扣率 只需填1级 支出金额必填 （是否按比例为是时 固定100）)</font></td>
+									</tr>
+								</table> -->
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="butte" onclick="editPlan()"
+							class="btn btn-primary">修改</button>
+						<button type="button" id="butt" onclick="AddPlan()"
+							class="btn btn-primary">添加</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</body>
+
+
+<script type="text/javascript">
+	$('.form_date').datetimepicker({
+		language : 'zh-CN',
+		weekStart : 1,
+		todayBtn : 1,
+		autoclose : 1,
+		todayHighlight : 1,
+		startView : 2,
+		minView : 2,
+		forceParse : 0
+	});
+
+	$('.datetimepicker').datetimepicker({
+		minView : "month",//设置只显示到月份
+		format : 'yyyy-mm-dd',
+		language : 'zh-CN',
+		autoclose : true,//选中关闭
+		todayBtn : true
+	//今日按钮
+	})
+
+	function clean() {
+		$("#a input").val("");
+		$("#a select").val("");
+	}
+
+	//根据窗口调整表格高度
+	$(window).resize(function() {
+		$('#mytab').bootstrapTable('resetView', {
+			height : tableHeight()
+		})
+	})
+
+	function tableHeight() {
+		//可以根据自己页面情况进行调整
+		return $(window).height() - 280;
+	}
+
+	bootsearch()
+	function sorce() {
+		$("#mytab").bootstrapTable('destroy');
+		//生成用户数据
+		bootsearch();
+	}
+
+	var all;
+	function bootsearch() {
+		//生成表格数据
+		$('#mytab').bootstrapTable(
+				{
+					method : 'post',
+					contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+					url : "getPlanList.do",//要请求数据的文件路径
+					dataType : 'json',
+					striped : true, //是否显示行间隔色
+					pageNumber : 1, //初始化加载第一页，默认第一页
+					pagination : true,//是否分页
+					//获取参数的函数
+					queryParams : function(p) {
+						return params(p);
+					},
+					queryParamsType : 'limit',//查询参数组织方式
+					dataType : 'json',
+					sidePagination : 'server',//指定服务器端分页
+					pageSize : 10,//单页记录数
+					pageList : [ 5, 10, 20, 30 ],//分页步进值
+					clickToSelect : true,//是否启用点击选中行
+					toolbarAlign : 'right',//工具栏对齐方式
+					buttonsAlign : 'right',//按钮对齐方式
+					toolbar : '#toolbar',//指定工作栏
+					columns : [
+							{
+								title : '操作',
+								field : 'ID',
+								formatter : function(value, row, index) {
+									var url = "";
+									url = url + "<a href=javascript:detail('"
+											+ index + "')>详情 | </a>";
+									url = url + "<a href=javascript:edit('"
+											+ index + "')>修改 | </a>";
+									url = url + "<a href=javascript:deletep('"
+											+ index + "')>删除| </a>";
+									return url;
+								}
+							}, {
+								title : '方案ID',
+								field : 'planId',
+							},
+
+							{
+								title : '方案名称',
+								field : 'planName'
+							}, {
+								title : '方案主类型',
+								field : 'mainType',
+								formatter : function(value, row, index) {
+									if (value == "2") {
+										return "返利方案";
+									} else if (value == "1") {
+										return "优惠方案"
+									}
+								}
+							},
+
+							{
+								title : '是否按百分比',
+								field : 'planChildType',
+								formatter : function(value, row, index) {
+									if (value == "0") {
+										return "是";
+									}
+									if (value == "1") {
+										return "不是";
+									}
+
+								}
+
+							}, {
+								title : '操作对象',
+								field : 'operateObj',
+								formatter : function(value, row, index) {
+									if (value == "1") {
+										return "现金";
+									}
+									if (value == "2") {
+										return "积分";
+									}
+
+								}
+
+							}, {
+								title : '是否应用',
+								field : 'youhuiFlg',
+								formatter : function(value, row, index) {
+									if (value == "1") {
+										return "否";
+									}
+									if (value == "2") {
+										return " 是";
+									}
+
+								}
+							}, {
+								title : '限制件数',
+								field : 'limitCount'
+							},
+
+							{
+								title : '创建时间',
+								field : 'gmtCreate',
+								formatter : function(value, row, index) {
+									return format(value)
+								}
+							}, {
+								title : '修改时间',
+								field : 'gmtModified',
+								formatter : function(value, row, index) {
+									return format(value)
+								}
+							},
+
+					],
+					locale : 'zh-CN',//中文支持,
+					responseHandler : function(res) {
+						all = res;
+						//在ajax获取到数据，渲染表格之前，修改数据源
+						return res;
+					}
+				})
+	}
+
+	//显示添加方案弹框
+	function addModel() {
+
+		$("#aplanname").val("");
+		$("#amaintype").val("");
+		$("#acategory").val("");
+		$("#aroletype").val("");
+		$("#aoperateobj").val("");
+		$("#apointone").val("");
+		$("#atemppointone").val("");
+		$("#ahubalanceone").val("");
+		$("#atemphubalanceone").val("");
+		$("#apointtwo").val("");
+		$("#atemppointtwo").val("");
+		$("#ahubalancetwo").val("");
+		$("#atemphubalancetwo").val("");
+		$("#apointthree").val("");
+		$("#atemppointthree").val("");
+		$("#ahubalancethree").val("");
+		$("#atemphubalancethree").val("");
+		$("#apointfour").val("");
+		$("#atemppointfour").val("");
+		$("#ahubalancefour").val("");
+		$("#atemphubalancefour").val("");
+		$("#apointfive").val("");
+		$("#atemppointfive").val("");
+		$("#ahubalancefive").val("");
+		$("#atemphubalancefive").val("");
+		$("input:radio(name='ayouhuiflg')").removeAttr('checked');
+		$("input:radio(name='abuyflg')").removeAttr('checked');
+		$("#alimitamount").val("");
+		$("#astartdate").val("");
+		$("#aenddate").val("");
+		$("#aplanchildtype").val("");
+		$("#aplangrandtype").val("");
+		$("#alimitcount").val("");
+		$("#atemppointthree").val("");
+		$("#areachoffone").val("");
+		$("#areachofftwo").val("");
+		$("#areachoffthree").val("");
+		$("#areachofffour").val("");
+		$("#areachofffive").val("");
+
+		$("#fanli").attr("style", "display:none;");
+		$("#youhui").attr("style", "display:none;");
+		$("#butte").hide();
+		$("#butt").show();
+		$("#xg").hide();
+		$("#xq").hide();
+		$("#xz").show();
+		$('#addplan').modal('show');
+	}
+
+	//获取搜索的所有值
+	function params(params) {
+		$("#a input[type='text']").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		$("#a select").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		return params;
+	}
+</script>
+
+<script type="text/javascript">
+	$("#amaintype").change(function() {
+
+		if ($(this).val() == '') {
+			$("#fanli").attr("style", "display:none;");
+			$("#youhui").attr("style", "display:none;");
+		}
+
+		if ($(this).val() == '1') {
+			$("#fanli").attr("style", "display:none;");
+			$("#youhui").attr("style", "display:block;");
+		}
+
+		if ($(this).val() == '2') {
+			$("#youhui").attr("style", "display:none;");
+			$("#fanli").attr("style", "display:block;");
+		}
+	});
+
+	function AddPlan() {
+		if (confirm("正在添加数据，确认继续！")) {
+
+			$("form[id='aplan']").ajaxSubmit({
+				type : "post",
+				url : "storePlan.do",
+				dataType : "json",
+				beforeSubmit : function() {
+				},
+				success : function(data) {
+					if (data.success) {
+						alert("添加成功");
+						window.location.reload();
+
+					} else {
+						alert(data.message);
+					}
+				},
+				error : function() {
+					alert("添加失败！");
+				}
+
+			});
+		}
+	}
+
+	function editPlan() {
+		if (confirm("正在更新数据，确认继续！")) {
+
+			$("form[id='aplan']").ajaxSubmit({
+				type : "post",
+				url : "updatePlan.do",
+				dataType : "json",
+				beforeSubmit : function() {
+				},
+				success : function(data) {
+					if (data.success) {
+						alert("更新成功");
+						window.location.reload();
+
+					} else {
+						alert(data.message);
+					}
+				},
+				error : function() {
+					alert("更新失败！");
+				}
+
+			});
+		}
+	}
+	//删除
+	function deletep(index) {
+		var planId = all.rows[index].planId;
+		if (confirm("确定删除此信息？删除后不可恢复")) {
+			jQuery.ajax({
+				url : "delPlan.do",
+				type : 'post',
+				data : {
+					"planId" : planId
+				},
+				dataType : 'json',
+				success : function(json) {
+					if (json) {
+						alert("删除成功");
+						$("#mytab").bootstrapTable('refresh');
+					} else {
+						alert("删除失败");
+					}
+				},
+				error : function() {
+					alert("异常！");
+				}
+			});
+		} else {
+			return;
+		}
+	}
+
+	//修改
+	function edit(index) {
+		$("#eid").val(all.rows[index].id);
+		$("#aplanId").val(all.rows[index].planId);
+		$("#aplanname").val(all.rows[index].planName);
+		$("#amaintype").val(all.rows[index].mainType);
+		$("#acategory").val(all.rows[index].category);
+		$("#aroletype").val(all.rows[index].roleType);
+		$("#aoperateobj").val(all.rows[index].operateObj);
+		$("#apointone").val(all.rows[index].pointOne);
+		$("#atemppointone").val(all.rows[index].tempPointOne);
+		$("#ahubalanceone").val(all.rows[index].huBalanceOne);
+		$("#atemphubalanceone").val(all.rows[index].tempHuBalanceOne);
+		$("#apointtwo").val(all.rows[index].pointTwo);
+		$("#atemppointtwo").val(all.rows[index].tempPointTwo);
+		$("#ahubalancetwo").val(all.rows[index].huBalanceTwo);
+		$("#atemphubalancetwo").val(all.rows[index].tempHuBalanceTwo);
+		$("#apointthree").val(all.rows[index].pointThree);
+		$("#atemppointthree").val(all.rows[index].tempPointThree);
+		$("#ahubalancethree").val(all.rows[index].huBalanceThree);
+		$("#atemphubalancethree").val(all.rows[index].tempHuBalanceThree);
+		$("#apointfour").val(all.rows[index].pointFour);
+		$("#atemppointfour").val(all.rows[index].tempPointFour);
+		$("#ahubalancefour").val(all.rows[index].huBalanceFour);
+		$("#atemphubalancefour").val(all.rows[index].tempHuBalanceFour);
+		$("#apointfive").val(all.rows[index].pointFive);
+		$("#atemppointfive").val(all.rows[index].tempPointFive);
+		$("#ahubalancefive").val(all.rows[index].huBalanceFive);
+		$("#atemphubalancefive").val(all.rows[index].tempHuBalanceFive);
+
+		$("#alimitamount").val(all.rows[index].limitAmount.amount);
+		$("#areachoff").val(all.rows[index].reachOff);
+		$("#astartdate").val(format(all.rows[index].startDate));
+		$("#aenddate").val(format(all.rows[index].endDate));
+		$("input:radio[name='ayouhuiflg']").removeAttr('checked');
+		$("input:radio[name='abuyflg']").removeAttr('checked');
+		$("input:radio[name='abuyflg'][value=" + all.rows[index].buyFlg + "]")
+				.prop('checked', 'checked');
+		$(
+				"input:radio[name='ayouhuiflg'][value="
+						+ all.rows[index].youhuiFlg + "]").prop('checked',
+				'checked');
+		$("#aplanchildtype").val(all.rows[index].planChildType);
+		$("#aplangrandtype").val(all.rows[index].planGrandType);
+
+		$("#alimitcount").val(all.rows[index].limitCount);
+
+		$("#atemppointthree").val(all.rows[index].tempPointThree);
+		$("#areachoffone").val(all.rows[index].reachOffOne);
+		$("#areachofftwo").val(all.rows[index].reachOffTwo);
+		$("#areachoffthree").val(all.rows[index].reachOffThree);
+		$("#areachofffour").val(all.rows[index].reachOffFour);
+		$("#areachofffive").val(all.rows[index].reachOffFive);
+		if ($("#amaintype").val() == '') {
+			$("#fanli").attr("style", "display:none;");
+			$("#youhui").attr("style", "display:none;");
+		}
+
+		if ($("#amaintype").val() == '1') {
+			$("#fanli").attr("style", "display:none;");
+			$("#youhui").attr("style", "display:block;");
+		}
+
+		if ($("#amaintype").val() == '2') {
+			$("#youhui").attr("style", "display:none;");
+			$("#fanli").attr("style", "display:block;");
+		}
+		$("#xq").hide();
+		$("#xz").hide();
+		$("#xg").show();
+		$("#butt").hide();
+		$("#butte").show();
+		$("#addplan").modal("show");
+	}
+
+	//详情
+	function detail(index) {
+		$("#aplangrandtype").val(all.rows[index].planGrandType);
+		$("#aplanteamid").val(all.rows[index].planTeamId);
+		$("#aplanname").val(all.rows[index].planName);
+		$("#amaintype").val(all.rows[index].mainType);
+		$("#acategory").val(all.rows[index].category);
+		$("#aroletype").val(all.rows[index].roleType);
+		$("#aoperateobj").val(all.rows[index].operateObj);
+		$("#apointone").val(all.rows[index].pointOne);
+		$("#atemppointone").val(all.rows[index].tempPointOne);
+		$("#ahubalanceone").val(all.rows[index].huBalanceOne);
+		$("#atemphubalanceone").val(all.rows[index].tempHuBalanceOne);
+		$("#apointtwo").val(all.rows[index].pointTwo);
+		$("#atemppointtwo").val(all.rows[index].tempPointTwo);
+		$("#ahubalancetwo").val(all.rows[index].huBalanceTwo);
+		$("#atemphubalancetwo").val(all.rows[index].tempHuBalanceTwo);
+		$("#apointthree").val(all.rows[index].pointThree);
+		$("#atemppointthree").val(all.rows[index].tempPointThree);
+		$("#ahubalancethree").val(all.rows[index].huBalanceThree);
+		$("#atemphubalancethree").val(all.rows[index].tempHuBalanceThree);
+		$("#apointfour").val(all.rows[index].pointFour);
+		$("#atemppointfour").val(all.rows[index].tempPointFour);
+		$("#ahubalancefour").val(all.rows[index].huBalanceFour);
+		$("#atemphubalancefour").val(all.rows[index].tempHuBalanceFour);
+		$("#apointfive").val(all.rows[index].pointFive);
+		$("#atemppointfive").val(all.rows[index].tempPointFive);
+		$("#ahubalancefive").val(all.rows[index].huBalanceFive);
+		$("#atemphubalancefive").val(all.rows[index].tempHuBalanceFive);
+
+		$("#alimitamount").val(all.rows[index].limitAmount.amount);
+		$("#areachoff").val(all.rows[index].reachOff);
+		$("#astartdate").val(format(all.rows[index].startDate));
+		$("#aenddate").val(format(all.rows[index].endDate));
+		$("input:radio[name='ayouhuiflg']").removeAttr('checked');
+		$("input:radio[name='abuyflg']").removeAttr('checked');
+		$("input:radio[name='abuyflg'][value=" + all.rows[index].buyFlg + "]")
+				.prop('checked', 'checked');
+		$(
+				"input:radio[name='ayouhuiflg'][value="
+						+ all.rows[index].youhuiFlg + "]").prop('checked',
+				'checked');
+		$("#aplanchildtype").val(all.rows[index].planChildType);
+		$("#alimitcount").val(all.rows[index].limitCount);
+
+		$("#atemppointthree").val(all.rows[index].tempPointThree);
+		$("#areachoffone").val(all.rows[index].reachOffOne);
+		$("#areachofftwo").val(all.rows[index].reachOffTwo);
+		$("#areachoffthree").val(all.rows[index].reachOffThree);
+		$("#areachofffour").val(all.rows[index].reachOffFour);
+		$("#areachofffive").val(all.rows[index].reachOffFive);
+		if ($("#amaintype").val() == '') {
+			$("#fanli").attr("style", "display:none;");
+			$("#youhui").attr("style", "display:none;");
+		}
+
+		if ($("#amaintype").val() == '1') {
+			$("#fanli").attr("style", "display:none;");
+			$("#youhui").attr("style", "display:block;");
+		}
+
+		if ($("#amaintype").val() == '2') {
+			$("#youhui").attr("style", "display:none;");
+			$("#fanli").attr("style", "display:block;");
+		}
+		$("#xg").hide();
+		$("#xz").hide();
+		$("#xq").show();
+		$("#butt").hide();
+		$("#butte").hide();
+		$("#addplan").modal("show");
+	}
+</script>
+
+</html>

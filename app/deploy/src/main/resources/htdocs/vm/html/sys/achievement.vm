@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+#parse("content/importBase.vm")
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+#preview>img {
+	width: 100px;
+	height: 100px;
+}
+</style>
+</head>
+<body style="width: 100%; height: 100%;">
+	<div id="page-wrapper">
+		<!--BEGIN TITLE & BREADCRUMB PAGE-->
+		<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+			<div class="page-header pull-left">
+				<div class="page-title">意见反馈</div>
+			</div>
+			<ol class="breadcrumb page-breadcrumb pull-right">
+				<li><i class="fa fa-home"></i>&nbsp;<a href="#">系统配置</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="hidden"><a href="#">意见反馈</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="active">意见反馈</li>
+			</ol>
+
+			<div class="clearfix"></div>
+		</div>
+		<div style="margin-top: 2%;" id="a">
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">手机：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="cell" class="form-control" /> <br />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">昵称：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="nickName" class="form-control" /> <br />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">年龄：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="age" class="form-control" /> <br />
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">性别：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select class="form-control" id="sex">
+							<option selected="selected" value="">请选择</option>
+							<option value="0">未知</option>
+							<option value="1">男</option>
+							<option value="2">女</option>
+						</select> <br />
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-4" style="float: right">
+				<div class="control-group">
+					<div>
+						<button onclick="clean()" class="btn btn-danger" name="Name"
+							id="search_tel" value="清空"
+							style="float: right; margin-right: 2%;">清空</button>
+					</div>
+					<div>
+						<button onclick="sorce()" class="btn btn-info" name="Name"
+							id="search_tel" value="查询"
+							style="float: right; margin-right: 2%;">查询</button>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<table id="mytab" class="table table-hover"></table>
+	</div>
+
+	<!-- 详情模态框  -->
+	<div class="modal fade" id="myModal" data-backdrop="static"
+		tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">意见反馈详情</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" role="form">
+						<div class="form-group">
+							<label for="lastname" class="col-sm-2 control-label">用户编号：</label>
+							<div class="col-sm-4">
+								<input type="text" id="infoUserId" class="form-control"
+									name="infoUserId" readonly="readonly" />
+							</div>
+							<label for="lastname" class="col-sm-2 control-label">用户昵称：</label>
+							<div class="col-sm-4">
+								<input type="text" id="infoNickName" class="form-control"
+									name="nickName" readonly="readonly" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="lastname" class="col-sm-2 control-label">手机号：</label>
+							<div class="col-sm-4">
+								<input type="text" id="infoCell" class="form-control"
+									name="infoCell" readonly="readonly" />
+							</div>
+							<label for="lastname" class="col-sm-2 control-label">年龄：</label>
+							<div class="col-sm-4">
+								<input type="text" id="infoAge" class="form-control"
+									name="infoAge" readonly="readonly" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-2 control-label">反馈时间：</label>
+							<div class="col-sm-4">
+								<input type="text" id="infoDate" class="form-control"
+									name="infoSex" readonly="readonly" />
+							</div>
+							<label for="lastname" class="col-sm-2 control-label">标题：</label>
+							<div class="col-sm-4">
+								<input type="text" id="infoTitle" class="form-control"
+									name="infoTitle" readonly="readonly" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-2 control-label">反馈内容：</label>
+							<div id="amsg" class="col-sm-10">
+								<textarea rows="4" cols="8" name="infoContent" id="infoContent"
+									class="form-control" readonly="readonly"></textarea>
+							</div>
+						</div>
+					</form>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+</body>
+
+<script type="text/javascript">
+	bootsearch()
+	function sorce() {
+		$("#mytab").bootstrapTable('destroy');
+		//生成用户数据
+		bootsearch();
+	}
+
+	var all;
+	function bootsearch() {
+		$('#mytab')
+				.bootstrapTable(
+						{
+							method : 'post',
+							contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+							url : "selectoption.do",//要请求数据的文件路径
+							dataType : 'json',
+							striped : true, //是否显示行间隔色
+							pageNumber : 1, //初始化加载第一页，默认第一页
+							pageSize : 10,//单页记录数
+							pageList : [ 5, 10, 20, 30 ],//分页步进值
+							pagination : true,//是否分页
+							queryParamsType : 'limit',//查询参数组织方式
+							sidePagination : 'server',//指定服务器端分页
+							queryParams : function(p) {
+								return params(p);
+							},
+
+							clickToSelect : true,//是否启用点击选中行
+							toolbarAlign : 'right',//工具栏对齐方式
+							buttonsAlign : 'right',//按钮对齐方式
+							toolbar : '#toolbar',//指定工作栏
+							columns : [
+									{
+										title : '操作',
+										field : 'id',
+										formatter : function(value, row, index) {
+
+											return "<a href='#' onclick=detail('"
+													+ index
+													+ "')>查看详情</a>|<a href='#' onclick=deleteoption('"
+													+ index + "')>删除</a>";
+
+										}
+									},
+									{
+										title : '用户编号',
+										field : 'userId'
+
+									},
+									{
+										title : '昵称',
+										field : 'nickName'
+
+									},
+									{
+										title : '标题',
+										field : 'title'
+									},
+									{
+										title : '内容',
+										field : 'content',
+										formatter : function(value, row, index) {
+											if (value != null) {
+												return value.substr(0, 10)
+														+ "...";
+											}
+										}
+									},
+									{
+										title : '创建时间',
+										field : 'gmtCreate',
+										formatter : function(value, row, index) {
+											return format(value);
+										}
+									} ],
+							locale : 'zh-CN',//中文支持,
+							responseHandler : function(res) {
+								//在ajax获取到数据，渲染表格之前，修改数据源
+								all = res.rows;
+								return res;
+							}
+						})
+	}
+	function clean() {
+		$("#a input").val("");
+		$("#a select").val("");
+	}
+	function detail(index) {
+		var info = all[index];
+		$("#infoTitle").val(info.title);
+		$("#infoUserId").val(info.userId);
+		$("#infoContent").val(info.content);
+		$("#infoDate").val(format(info.gmtCreate));
+		$("#infoAge").val(info.age);
+		$("#infoCell").val(info.cell);
+		$("#infoNickName").val(info.nickName);
+		$("#myModal").modal("show");
+	}
+
+	//删除
+	function deleteoption(index) {
+		var id = all[index].id;
+		if (confirm("确定删除此信息？删除后不可恢复")) {
+			jQuery.ajax({
+				url : "deleteoption.do",
+				type : 'post',
+				data : {
+					"id" : id
+				},
+				dataType : 'json',
+				success : function(json) {
+					if (json) {
+						alert("删除成功");
+						$("#mytab").bootstrapTable('refresh');
+					} else {
+						alert("删除失败");
+					}
+				},
+				error : function() {
+					alert("异常！");
+				}
+			});
+		} else {
+			return;
+		}
+	}
+
+	//获取搜索的所有值
+	function params(params) {
+		$("#a input[type='text']").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		$("#a select").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		return params;
+	}
+</script>
+</html>

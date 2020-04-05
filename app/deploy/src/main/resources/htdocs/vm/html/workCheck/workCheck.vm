@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+#parse("content/importBase.vm")
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+#preview>img {
+	width: 100%;
+	height: 170px;
+}
+</style>
+</head>
+<body style="width: 100%;">
+	<div id="page-wrapper">
+		<!--BEGIN TITLE & BREADCRUMB PAGE-->
+		<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+			<div class="page-header pull-left">
+				<div class="page-title">考勤记录</div>
+			</div>
+			<ol class="breadcrumb page-breadcrumb pull-right">
+				<li><i class="fa fa-home"></i>&nbsp;<a href="#">考勤记录</a></li>
+			</ol>
+			<div class="clearfix"></div>
+		</div>
+
+		<div style="margin-top: 2%;" id="a">
+
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">营业员信息：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="userMsg" class="form-control" /> <br />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">门店信息：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="teamMsg" class="form-control" /> <br />
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+			
+				<!-- <label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">门店erp编号：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="erpNo" class="form-control" /> <br />
+					</div>
+				</div> -->
+				
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">考勤类型：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select name="type" id="type" class="form-control">
+						</select> <br />
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">考勤开始时间：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="startTime" name="startTime"
+							class="form-control datetimepicker" readonly="readonly" /> <br />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">考勤结束时间：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="endTime" name="endTime"
+							class="form-control datetimepicker" readonly="readonly" /> <br />
+					</div>
+				</div>
+
+			</div>
+
+			<div class="row">
+				<div class="col-sm-4" style="float: right">
+					<div class="control-group">
+						<div>
+							<button onclick="clean()" class="btn btn-danger" name="Name"
+								id="search_tel" value="清空"
+								style="float: right; margin-right: 2%;">清空</button>
+						</div>
+						<div>
+							<button onclick="sorce()" class="btn btn-info" name="Name"
+								id="search_tel" value="查询"
+								style="float: right; margin-right: 2%;">查询</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- 添加banner -->
+		<table id="mytab" class="table table-hover"></table>
+
+	</div>
+</body>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		workCheckTypeEnum();
+	})
+</script>
+
+
+<script type="text/javascript">
+	$('.datetimepicker').datetimepicker({
+		minView : "month",//设置只显示到月份
+		format : 'yyyy-mm-dd',
+		language : 'zh-CN',
+		autoclose : true,//选中关闭
+		todayBtn : true //今日按钮
+	})
+
+	function clean() {
+		$("#a input").val("");
+		$("#a select").val("");
+	}
+	
+	bootsearch(null);
+
+	var all;
+	function sorce() {
+		$("#mytab").bootstrapTable('destroy');
+		//生成用户数据
+		bootsearch("queryAllWorkCheck.do");
+	}
+
+	function bootsearch(url) {
+	//生成用户数据
+	$('#mytab')
+			.bootstrapTable(
+					{
+						method : 'post',
+						contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+						url : url,//要请求数据的文件路径
+						dataType : 'json',
+						striped : true, //是否显示行间隔色
+						pageNumber : 1, //初始化加载第一页，默认第一页
+						pageSize : 10,//单页记录数
+						pageList : [ 5, 10, 20, 30 ],//分页步进值
+						pagination : true,//是否分页
+						queryParamsType : 'limit',//查询参数组织方式
+						sidePagination : 'server',//指定服务器端分页
+						queryParams : function(p) {
+							return params(p);
+						},
+						clickToSelect : false,//是否启用点击选中行
+						toolbarAlign : 'right',//工具栏对齐方式
+						buttonsAlign : 'right',//按钮对齐方式
+						toolbar : '#toolbar',//指定工作栏
+						columns : [
+								{
+									title : '打卡日',
+									field : 'workDay',
+									formatter : function(value, row, index) {
+										return formatNoTime(value)
+									}
+								},
+								{
+									title : '打卡时间',
+									field : 'gmtCreate',
+									formatter : function(value, row, index) {
+										return format(value)
+									}
+								}, {
+									title : '考勤类型',
+									field : 'type'
+								}, {
+									title : '门店编号',
+									field : 'teamId'
+								}, {
+									title : '门店名称',
+									field : 'teamName',
+								}, {
+									title : '门店erp编号',
+									field : 'erpNo',
+								}, {
+									title : '营业员编号',
+									field : 'userId'
+								}, {
+									title : '营业员erp编号',
+									field : 'userErpNo',
+								}, {
+									title : '营业员手机号',
+									field : 'userCell'
+								}, {
+									title : '营业员昵称',
+									field : 'userNickName',
+								}, {
+									title : '营业员姓名',
+									field : 'userRealName',
+								}, {
+									title : '门店gps与当前gps距离（米）',
+									field : 'distance',
+								}, {
+									title : '门店经纬度',
+									formatter : function(value, row, index) {
+										return row.longitudeTeam + ";" + row.latitudeTeam;
+									}
+								}, {
+									title : '营业员经纬度',
+									formatter : function(value, row, index) {
+										return row.longitudeUser + ";" + row.latitudeUser;
+									}
+								}],
+						locale : 'zh-CN',//中文支持,
+						formatNoMatches : function() {
+							if (isEmpty(url)) {
+								return "单击查询搜索记录"
+							} else {
+								return "没有找到匹配的记录"
+							}
+						},
+						responseHandler : function(res) {
+							//在ajax获取到数据，渲染表格之前，修改数据源
+							all = res.rows;
+							return res;
+						}
+					})
+	}
+
+	//获取搜索的所有值
+	function params(params) {
+		$("#a input[type='text']").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		$("#a select").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		return params;
+	}
+</script>
+
+
+</html>

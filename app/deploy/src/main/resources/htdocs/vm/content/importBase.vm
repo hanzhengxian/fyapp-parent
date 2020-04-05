@@ -1,0 +1,533 @@
+
+<!--公共引入文件-->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=8" />
+<meta http-equiv="X-UA-Compatible" content="IE=7" />
+<meta http-equiv="X-UA-Compatible" content="IE=6" />
+
+<!--css-->
+<link type="text/css" rel="stylesheet"
+	href="css/bootstrap-responsive.min.css">
+<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
+<link type="text/css" rel="stylesheet" href="css/font-awesome.min.css">
+<link type="text/css" rel="stylesheet" href="css/main.css">
+<link type="text/css" rel="stylesheet"
+	href="css/bootstrap-table.min.css">
+<link type="text/css" rel="stylesheet"
+	href="css/bootstrap-datetimepicker.min.css">
+<link type="text/css" rel="stylesheet" href="css/bootstrap-select.css">
+
+<!--js-->
+<script src="js/jquery-1.10.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap-table.min.js"></script>
+<script src="js/bootstrap-table-zh-CN.min.js"></script>
+<script src="js/bootstrap-datetimepicker.min.js"></script>
+<script src="js/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src="js/jquery.form.js"></script>
+<script src="js/Verification.js"></script>
+<script src="js/bootstrap-select.js"></script>
+
+<!-- BootStrap-Table导出所需要的js -->
+<!-- <script src="js/bootstrap-table-export.js"></script>
+<script src="js/xlsx.core.min.js"></script>
+<script src="js/tableExport.min.js"></script>
+<script src="js/FileSaver.min.js"></script> -->
+
+
+<script src="js/shim.js"></script>
+<script src="js/xlsx.full.min.js"></script>
+<script src="js/utils.js"></script>
+<!-- <link href="css/bootstrap-editable.css" rel="stylesheet" />
+<script src="js/bootstrap-editable.min.js"></script>
+<script src="js/bootstrap-table.js"></script>
+<script src="js/bootstrap-table-editable.js"></script> -->
+
+
+<script src="js/viewer/viewer.min.js"></script>
+<link type="text/css" rel="stylesheet" href="css/viewer/viewer.min.css">
+
+<script src="js/g2/g2.min.js"></script>
+
+<script src="js/echarts/echarts.min.js"></script>
+
+<script>
+	//回车搜索 
+	document.onkeypress=keypress;
+	function keypress(e) {
+		var currKey = 0, e = e || event;
+		if (e.keyCode == 13) {
+			sorce();
+		}
+	}
+
+	//时间戳转换时间
+	function format(timestamp) {
+		//timestamp是整数，否则要parseInt转换,不会出现少个0的情况
+		if (isEmpty(timestamp)) {
+			return null;
+		}
+
+		var time = new Date(timestamp);
+		var year = time.getFullYear();
+		var month = time.getMonth() + 1;
+		var date = time.getDate();
+		var hours = time.getHours();
+		var minutes = time.getMinutes();
+		var seconds = time.getSeconds();
+		return year + '-' + add0(month) + '-' + add0(date) + ' ' + add0(hours)
+				+ ':' + add0(minutes) + ':' + add0(seconds);
+	}
+	function formatNoTime(timestamp) {
+		//timestamp是整数，否则要parseInt转换,不会出现少个0的情况
+
+		var time = new Date(timestamp);
+		var year = time.getFullYear();
+		var month = time.getMonth() + 1;
+		var date = time.getDate();
+		return year + '-' + add0(month) + '-' + add0(date);
+	}
+	//时间戳转换时间
+	function formatnoshowtime(timestamp) {
+		//timestamp是整数，否则要parseInt转换,不会出现少个0的情况
+
+		var time = new Date(timestamp);
+		var year = time.getFullYear();
+		var month = time.getMonth() + 1;
+		var date = time.getDate();
+		var hours = time.getHours();
+		var minutes = time.getMinutes();
+		var seconds = time.getSeconds();
+		return year + '-' + add0(month) + '-' + add0(date) + ' ';
+	}
+	function add0(m) {
+		return m < 10 ? '0' + m : m
+	}
+	//删除
+	function deletetable(ID, table) {
+		if (confirm("确定删除此信息？删除后不可恢复")) {
+			jQuery.ajax({
+				url : "deletealltablebyid.do",
+				type : 'post',
+				data : {
+					"id" : ID,
+					"table" : table
+				},
+				dataType : 'json',
+				success : function(json) {
+					if (json) {
+						alert("删除成功");
+						window.location.reload();
+					} else {
+						alert("删除失败");
+					}
+				},
+				error : function() {
+				}
+			});
+		} else {
+			return;
+		}
+	}
+	//清除悬浮框的选择值
+	function claenmyModal(id) {
+		$("#" + id + " input").val("");
+		$("#" + id + " select").val("");
+	}
+
+	var isEmpty = function(str) {
+		if (typeof str == "undefined" || str == null || str == ""
+				|| str == 'null') {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	var checkEmpty = function(str) {
+		if (typeof str == "undefined" || str == null || str == ""
+				|| str == 'null') {
+			return "";
+		} else {
+			return str;
+		}
+	}
+
+	function getAllProvince() {
+		jQuery.ajax({
+			url : "selectAllPro.do",
+			type : 'post',
+			data : {
+				"isUse" : '1',
+				"depth" : '1',
+				"limit" : 100,
+				"offset" : 0
+			},
+			dataType : 'json',
+			success : function(result) {
+				var rows = result.rows;
+				var bodyHtml = "";
+				bodyHtml = bodyHtml + '<option value="">请选择</option>';
+				for (var i = 0; i < rows.length; i++) {
+					var row = rows[i];
+					bodyHtml = bodyHtml + '<option value="' + row.id + '">'
+							+ row.cityName + '</option>';
+				}
+				$('#linkProvince').html(bodyHtml);
+			},
+			error : function() {
+			}
+		});
+	}
+
+	function getAllCity(chooseProvinceId) {
+		jQuery.ajax({
+			url : "getAllCity.do",
+			type : 'post',
+			data : {
+				"chooseProvinceId" : chooseProvinceId,
+				"isUse" : '1',
+				"depth" : '1',
+				"limit" : 100,
+				"offset" : 0
+			},
+			dataType : 'json',
+			success : function(result) {
+				var rows = result.rows;
+				var bodyHtml = "";
+				bodyHtml = bodyHtml + '<option value="">请选择</option>';
+				for (var i = 0; i < rows.length; i++) {
+					var row = rows[i];
+					bodyHtml = bodyHtml + '<option value="' + row.id + '">'
+							+ row.cityName + '</option>';
+				}
+				$('#linkCity').html(bodyHtml);
+			},
+			error : function() {
+			}
+		});
+	}
+
+	function businessCategory() {
+		jQuery
+				.ajax({
+					url : "businessCategory.do",
+					type : 'post',
+					dataType : 'json',
+					success : function(result) {
+						var success = result.success;
+						if (success) {
+							var returnList = result.obj;
+							var checkBoxHtml = '';
+							for (var i = 0; i < returnList.length; i++) {
+								var msg = returnList[i];
+								//checkBoxHtml+='<input type="checkbox" name="businessCategory" value="'+msg+'"/>'+msg;
+								checkBoxHtml += '<input type="checkbox" value="'+msg+'" name="businessCategory">'
+										+ msg + '</input>';
+							}
+							$("#businessCategoryDiv").html(checkBoxHtml);
+							$("#businessCategoryDiv1").html(checkBoxHtml);
+							$("#businessCategoryDiv2").html(checkBoxHtml);
+						}
+					},
+					error : function() {
+					}
+				});
+	}
+</script>
+
+<script type="text/javascript">
+	function getAllProvinceComplex() {
+		jQuery.ajax({
+			url : "selectAllPro.do",
+			type : 'post',
+			data : {
+				"isUse" : '1',
+				"depth" : '1',
+				"limit" : 100,
+				"offset" : 0
+			},
+			dataType : 'json',
+			success : function(result) {
+				var rows = result.rows;
+				var bodyHtml = "";
+				for (var i = 0; i < rows.length; i++) {
+					var row = rows[i];
+					bodyHtml += '<option value="' + row.id + '">'
+							+ row.cityName + '</option>';
+				}
+				$('#linkProvince').html(bodyHtml);
+				//刷新 !!!
+				$('#linkProvince').selectpicker('refresh');
+			},
+			error : function() {
+			}
+		});
+	}
+
+	function getAllCityComplex(ele) {
+		var chooseProvinceId = $('#linkProvince').val();//array
+		jQuery.ajax({
+			url : "getAllCityComplex.do",
+			type : 'post',
+			data : {
+				"chooseProvinceId" : chooseProvinceId,
+				"isUse" : '1',
+				"depth" : '1',
+				"limit" : 100,
+				"offset" : 0
+			},
+			dataType : 'json',
+			traditional : true,
+			success : function(result) {
+				var rows = result.rows;
+				var bodyHtml = "";
+				for (var i = 0; i < rows.length; i++) {
+					var row = rows[i];
+					bodyHtml += '<option value="' + row.id + '">'
+							+ row.cityName + '</option>';
+				}
+				$('#linkCity').html(bodyHtml);
+				//刷新 !!!
+				$('#linkCity').selectpicker('refresh');
+			},
+			error : function() {
+			}
+		});
+	}
+
+	function getAllTeamMsg() {
+		jQuery.ajax({
+			url : "getAllTeamMsg.do",
+			type : 'post',
+			dataType : 'json',
+			traditional : true,
+			success : function(result) {
+				var rows = result.rows;
+				var bodyHtml = "";
+				for (var i = 0; i < rows.length; i++) {
+					var row = rows[i];
+					bodyHtml += '<option value="' + row.teamId + '">'
+							+ row.teamName + '</option>';
+				}
+				$('#teamIds').html(bodyHtml);
+				//刷新 !!!
+				$('#teamIds').selectpicker('refresh');
+			},
+			error : function() {
+			}
+		});
+	}
+
+	function workCheckTypeEnum() {
+		jQuery.ajax({
+			url : "workCheckTypeEnum.do",
+			type : 'post',
+			dataType : 'json',
+			traditional : true,
+			success : function(result) {
+				var rows = result.obj;
+				var bodyHtml = "";
+				bodyHtml = bodyHtml + '<option value="">请选择</option>';
+				for (var i = 0; i < rows.length; i++) {
+					var row = rows[i];
+					bodyHtml += '<option value="' + row.code + '">'
+							+ row.message + '</option>';
+				}
+				$('#type').html(bodyHtml);
+			},
+			error : function() {
+			}
+		});
+	}
+
+	function userCheckRoleEnum() {
+		jQuery.ajax({
+			url : "userCheckRoleEnum.do",
+			type : 'post',
+			dataType : 'json',
+			traditional : true,
+			success : function(result) {
+				var rows = result.obj;
+				var bodyHtml = "";
+				bodyHtml = bodyHtml + '<option value="">请选择</option>';
+				for (var i = 0; i < rows.length; i++) {
+					var row = rows[i];
+					bodyHtml += '<option value="' + row.code + '">'
+							+ row.message + '</option>';
+				}
+				$('#teamCheckRole').html(bodyHtml);
+			},
+			error : function() {
+			}
+		});
+	}
+
+	function ageGroupEnum() {
+		jQuery.ajax({
+			url : "ageGroupEnum.do",
+			type : 'post',
+			dataType : 'json',
+			traditional : true,
+			success : function(result) {
+				var rows = result.obj;
+				var bodyHtml = "";
+				bodyHtml = bodyHtml + '<option value="">请选择</option>';
+				for (var i = 0; i < rows.length; i++) {
+					var row = rows[i];
+					bodyHtml += '<option value="' + row.code + '">'
+							+ row.message + '</option>';
+				}
+				$('#ageGroup').html(bodyHtml);
+			},
+			error : function() {
+			}
+		});
+	}
+</script>
+
+<script type="text/javascript">
+	function getFatherCategory(type) {
+		jQuery.ajax({
+			url : "queryFatherCategory.do",
+			type : 'post',
+			data : {
+				"type" : type
+			},
+			dataType : 'json',
+			success : function(result) {
+				var rows = result.rows;
+				var bodyHtml = "";
+				for (var i = 0; i < rows.length; i++) {
+					var row = rows[i];
+					bodyHtml += '<option value="' + row.id + '">'
+							+ row.categoryName + '</option>';
+				}
+				if (type == '0') {
+					$('#fatherCategory').html(bodyHtml);
+					//刷新 !!!
+					$('#fatherCategory').selectpicker('refresh');
+				}
+				if (type == '1') {
+					$('#childCategory').html(bodyHtml);
+					//刷新 !!!
+					$('#childCategory').selectpicker('refresh');
+				}
+			},
+			error : function() {
+			}
+		});
+	}
+
+	function getChildCategory(type) {
+		var topId;
+		if (type == '0') {
+			topId = "0";//array
+		}
+		if (type == '1') {
+			topId = $('#fatherCategory').val();//array
+		}
+		if (type == '2') {
+			topId = $('#childCategory').val();//array
+		}
+		jQuery.ajax({
+			url : "queryChildCategory.do",
+			type : 'post',
+			data : {
+				"topId" : topId,
+			},
+			dataType : 'json',
+			traditional : true,
+			success : function(result) {
+				var rows = result.rows;
+				var bodyHtml = "";
+				for (var i = 0; i < rows.length; i++) {
+					var row = rows[i];
+					bodyHtml += '<option value="' + row.id + '">'
+							+ row.categoryName + '</option>';
+				}
+				//一级分类
+				if (type == '0') {
+					$('#fatherCategory').html(bodyHtml);
+					//刷新 !!!
+					$('#fatherCategory').selectpicker('refresh');
+				}
+				//二级分类
+				if (type == '1') {
+					$('#childCategory').html(bodyHtml);
+					//刷新 !!!
+					$('#childCategory').selectpicker('refresh');
+				}
+				//三级分类
+				if (type == '2') {
+					$('#childCategorys').html(bodyHtml);
+					//刷新 !!!
+					$('#childCategorys').selectpicker('refresh');
+				}
+			},
+			error : function() {
+			}
+		});
+	}
+
+	function timeTypeChange(ele) {
+		var timeType = $(ele).val();
+		$('.datetimepicker').datetimepicker('remove');
+		$('#startDate').val('');
+		$('#endDate').val('');
+		if (timeType == 'YEAR') {
+			$('.datetimepicker').datetimepicker({
+				startView : "4",
+				minView : "4",
+				format : 'yyyy',
+				language : 'zh-CN',
+				autoclose : true
+			//选中关闭
+			})
+		}
+
+		if (timeType == 'YEAR_HALF') {
+			$('.datetimepicker').datetimepicker({
+				startView : "4",
+				minView : "4",
+				format : 'yyyy',
+				language : 'zh-CN',
+				autoclose : true
+			//选中关闭
+			})
+		}
+
+		if (timeType == 'MOUNTH') {
+			$('.datetimepicker').datetimepicker({
+				startView : "3",
+				minView : "3",
+				format : 'yyyy-mm',
+				language : 'zh-CN',
+				autoclose : true
+			//选中关闭
+			})
+		}
+
+		if (timeType == 'DAYS') {
+			$('.datetimepicker').datetimepicker({
+				startView : "2",
+				minView : "2",
+				format : 'yyyy-mm-dd',
+				language : 'zh-CN',
+				autoclose : true
+			//选中关闭
+			})
+		}
+
+		if (timeType == 'HOURS') {
+			$('.datetimepicker').datetimepicker({
+				startView : "1",
+				minView : "1",
+				format : 'yyyy-mm-dd hh',
+				language : 'zh-CN',
+				autoclose : true
+			//选中关闭
+			})
+		}
+	}
+</script>

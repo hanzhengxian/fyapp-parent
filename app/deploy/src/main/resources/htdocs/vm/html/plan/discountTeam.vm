@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+#parse("content/importBase.vm")
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+#previewAdd>img {
+	width: 100%;
+	height: 170px;
+}
+
+#previewAddPcs>img {
+	width: 100%;
+	height: 170px;
+}
+
+#previewEdit>img {
+	width: 100%;
+	height: 170px;
+}
+
+#previewEditPc>img {
+	width: 100%;
+	height: 170px;
+}
+</style>
+</head>
+<body style="width: 100%; height: 100%;">
+	<div id="page-wrapper">
+		<!--BEGIN TITLE & BREADCRUMB PAGE-->
+		<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+			<div class="page-header pull-left">
+				<div class="page-title">优惠券组管理</div>
+			</div>
+			<ol class="breadcrumb page-breadcrumb pull-right">
+				<li><i class="fa fa-home"></i>&nbsp;<a href="#">方案管理</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="hidden"><a href="#">优惠券组信息</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="active">优惠券组列表</li>
+			</ol>
+			<div class="clearfix"></div>
+		</div>
+
+		<div style="margin-top: 2%;" id="a">
+			<!-- 查询条件  -->
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">组编号：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="discountTeamId" name="discountTeamId"
+							class="form-control">
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">组标题：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="discountTitle" name="discountTitle"
+							class="form-control">
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-4" style="float: right">
+				<div class="control-group">
+					<div>
+						<button onclick="clean()" class="btn btn-danger" name="Name"
+							id="search_tel" value="清空"
+							style="float: right; margin-right: 2%;">清空</button>
+					</div>
+					<div>
+						<button onclick="sorce()" class="btn btn-info" name="Name"
+							id="search_tel" value="查询"
+							style="float: right; margin-right: 2%;">查询</button>
+					</div>
+					<div>
+						<button onclick="showAddModal('myModal','show')"
+							class="btn btn-warning" name="Name" id="search_tel" value="添加"
+							style="float: right; margin-right: 2%;">添加</button>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<table id="mytab" class="table table-hover"
+			style="word-break: break-all; word-wrap: break-all;"></table>
+
+		<!-- 新增模态框  -->
+		<div class="modal fade" id="myModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title">新增优惠券组</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" role="form" name="addForm"
+							enctype="multipart/form-data" method="post" id="addForm">
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">组标题<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<input type="text" id="addDiscountTitle"
+										name="addDiscountTitle" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">组描述：</label>
+								<div class="col-sm-9">
+									<input type="text" id="addDiscountDesc" name="addDiscountDesc"
+										class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label"
+									style="color: red;">颜色代码参考：http://www.w3school.com.cn/cssref/css_colors.asp</label>
+							</div>
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">组标题字体颜色：</label>
+								<div class="col-sm-9">
+									<input type="text" id="addTitleColor" name="addTitleColor"
+										class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">组描述字体颜色：</label>
+								<div class="col-sm-9">
+									<input type="text" id="addDescColor" name="addDescColor"
+										class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">背景图（微信端）（尺寸:宽365px，高190px）<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<input type="file" class="form-control"
+										id="addDiscountBackground" name="addDiscountBackground"
+										onchange="preview(this,1)">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label"></label>
+								<div class="col-sm-10">
+									<div id="previewAdd" style="display: none" class=""></div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">背景图（PC端）（尺寸:宽1150px，高314px）<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<input type="file" class="form-control"
+										id="addDiscountBackgroundPc" name="addDiscountBackgroundPc"
+										onchange="preview(this,2)">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label"></label>
+								<div class="col-sm-10">
+									<div id="previewAddPcs" style="display: none" class=""></div>
+								</div>
+							</div>
+
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary"
+							onclick="submitAdd()">确定</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal"
+							onclick="cleanAlertModal()">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 组内优惠券列表  -->
+		<div class="modal fade" id="selectDiscountModal"
+			data-backdrop="static" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog" style="width: 1000px;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">组内优惠券列表</h4>
+					</div>
+					<input type="hidden" id="alertDiscountTeamId"
+						name="alertDiscountTeamId">
+					<div style="margin-top: 2%;" id="serchDiscount">
+						<div class="row">
+							<label class="col-sm-2 control-label" style="text-align: right;">优惠券名称：</label>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<input type="text" id="alertDiscountName"
+										name="alertDiscountName" class="form-control" />
+								</div>
+							</div>
+							<label class="col-sm-2 control-label" style="text-align: right;">优惠券编号：</label>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<input type="text" id="alertDiscountId" name="alertDiscountId"
+										class="form-control" />
+								</div>
+							</div>
+
+							<div class="control-group">
+								<div>
+									<button onclick="cleanDis()" class="btn btn-danger" name="Name"
+										id="search_tel" value="清空"
+										style="float: right; margin-right: 2%;">清空</button>
+								</div>
+								<div>
+									<button onclick="searchDiscount()" class="btn btn-info"
+										name="Name" id="search_tel" value="查询"
+										style="float: right; margin-right: 2%;">查询</button>
+								</div>
+								<!-- <div>
+									<button onclick="addDiscountHidden()" class="btn btn-success"
+										style="float: right; margin-right: 2%;">添加</button>
+								</div> -->
+							</div>
+						</div>
+						<table id="discountTable" class="table table-hover"></table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 修改模态框  -->
+		<div class="modal fade" id="editModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title">修改优惠券</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" role="form" name="editForm"
+							enctype="multipart/form-data" method="post">
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">组标题<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<input type="text" id="editDiscountTitle"
+										name="editDiscountTitle" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">组描述：</label>
+								<div class="col-sm-9">
+									<input type="text" id="editDiscountDesc"
+										name="editDiscountDesc" class="form-control">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label"
+									style="color: red;">颜色代码参考：http://www.w3school.com.cn/cssref/css_colors.asp</label>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">组标题字体颜色：</label>
+								<div class="col-sm-9">
+									<input type="text" id="editTitleColor" name="editTitleColor"
+										class="form-control">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">组描述字体颜色：</label>
+								<div class="col-sm-9">
+									<input type="text" id="editDescColor" name="editDescColor"
+										class="form-control">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">背景图（微信端）（尺寸:宽365px，高190px）<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<input type="file" class="form-control"
+										id="editDiscountBackground" name="editDiscountBackground"
+										onchange="preview(this,3)">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label"></label>
+								<div class="col-sm-10">
+									<div id="previewEdit" style="display: none" class=""></div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">背景图（PC端）（尺寸:宽1150px，高314px）<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<input type="hidden" name="oldImgPc" id="oldImgPc"> <input
+										type="file" class="form-control" id="editDiscountBackgroundPc"
+										name="editDiscountBackgroundPc" onchange="preview(this,4)">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label"></label>
+								<div class="col-sm-10">
+									<div id="previewEditPc" style="display: none" class=""></div>
+								</div>
+							</div>
+
+							<!-- id -->
+							<input type="hidden" id="editDiscountTeamId"
+								name="editDiscountTeamId">
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary"
+							onclick="submitEdit()">确定</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal"
+							onclick="cleanAlertModal()">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 查看图片模块 -->
+		<div class="modal fade" id="imgbig" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">查看图片</h4>
+					</div>
+					<div class="modal-body">
+						<img alt="" src="" id="bigbis" style="width: 100%; height: 100%;" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+<script type="text/javascript">
+	bootsearch()
+	function sorce() {
+		$("#mytab").bootstrapTable('destroy');
+		//生成用户数据
+		bootsearch();
+	}
+
+	//用来接收数据
+	var all;
+	function bootsearch() {
+		//生成列表数据
+		$('#mytab')
+				.bootstrapTable(
+						{
+							method : 'post',
+							contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+							url : "selectDiscountTeam.do",//要请求数据的文件路径
+							dataType : 'json',
+							striped : true, //是否显示行间隔色
+							pageNumber : 1, //初始化加载第一页，默认第一页
+							pageSize : 10,//单页记录数
+							pageList : [ 5, 10, 20, 30 ],//分页步进值
+							pagination : true,//是否分页
+							queryParamsType : 'limit',//查询参数组织方式
+							sidePagination : 'server',//指定服务器端分页
+							queryParams : function(p) {
+								return params(p);
+							},
+							clickToSelect : true,//是否启用点击选中行
+							toolbarAlign : 'right',//工具栏对齐方式
+							buttonsAlign : 'right',//按钮对齐方式
+							toolbar : '#toolbar',//指定工作栏
+							columns : [
+									{
+										title : '操作',
+										field : 'discountTeamId',//删除操作时使用
+										formatter : function(value, row, index) {
+											return "<a href='#' onclick=showUpdateModal('"
+													+ index
+													+ "')>修改 | </a>"
+													+ "<a href='#' onclick=showDiscountList('"
+													+ value
+													+ "')>列表 | </a>"
+													+ "<a href='#' onclick=doDelete('"
+													+ value + "')>删除</a>";
+										}
+									},
+									{
+										title : '优惠券组编号',
+										field : 'discountTeamId'
+									},
+									{
+										title : '优惠券组名称',
+										field : 'discountTitle'
+									},
+									{
+										title : '优惠券组描述',
+										field : 'discountDesc'
+									},
+									{
+										title : '优惠券组名称字体',
+										field : 'titleColor'
+									},
+									{
+										title : '优惠券组描述字体',
+										field : 'descColor'
+									},
+									{
+										title : '背景图（微信端）',
+										field : 'discountBackground',
+										formatter : function(value, row, index) {
+											return '<img src="'+value+'" data-imgurl="'+value+'" width="100px" height="60px"/>';
+										}
+									},
+									{
+										title : '背景图（PC端）',
+										field : 'discountBackgroundPc',
+										formatter : function(value, row, index) {
+											return '<img src="'+value+'" data-imgurl="'+value+'" width="100px" height="60px"/>';
+										}
+									},
+									{
+										title : '创建者',
+										field : 'creater'
+									},
+									{
+										title : '创建时间',
+										field : 'gmtCreate',
+										formatter : function(value, row, index) {
+											return format(value)
+										}
+									},
+									{
+										title : '修改者',
+										field : 'modifier'
+									},
+									{
+										title : '修改时间',
+										field : 'gmtModified',
+										formatter : function(value, row, index) {
+											return format(value)
+										}
+									} ],
+							locale : 'zh-CN',//中文支持,
+							onLoadSuccess : function() { //加载成功时执行
+								$("img").load(
+										function() {
+											var viewer = new Viewer(document
+													.getElementById('mytab'), {
+												navbar : false,
+												toolbar : {
+													zoomIn : true,
+													zoomOut : true,
+													play : true,
+													rotateLeft : true,
+													rotateRight : true
+
+												},
+												show : function() {
+													viewer.update();
+												}
+											});
+										})
+							},
+							responseHandler : function(res) {
+								//在ajax获取到数据，渲染表格之前，修改数据源
+								all = res.rows;
+								return res;
+							}
+						})
+	}
+
+	//显示添加框
+	function showAddModal(id, type) {
+		$("#myModal input").val("");
+		$("#myModal select").val("");
+
+		$("#previewAdd").html("");
+		$("#previewAddPcs").html("");
+		$("#previewAdd").css("display", "none");
+		$("#previewAddPcs").css("display", "none");
+
+		$("#" + id).modal(type);
+	}
+
+	//提交添加表单
+	function submitAdd() {
+		$("form[name='addForm']").ajaxSubmit(
+				{
+					type : "post",
+					url : "addDiscountTeam.do",
+					dataType : "json",
+					beforeSubmit : function() {
+						//表单数据校验  
+						if ($("#addDiscountTitle").val() == null
+								|| $("#addDiscountTitle").val() == "") {
+							alert("请输入组标题");
+							return false;
+						}
+						if ($("#addDiscountDesc").val() == null
+								|| $("#addDiscountDesc").val() == "") {
+							alert("请输入组描述");
+							return false;
+						}
+					},
+					success : function(data) {
+						if (!data.success) {
+							alert(data.message);
+							return false;
+						} else {
+							alert(data.message);
+							showAddModal('myModal', 'hide');
+							$("#mytab").bootstrapTable('refresh');
+						}
+
+					},
+					error : function(e) {
+						alert("异常!");
+					}
+
+				});
+	}
+
+	//显示修改框     
+	function showUpdateModal(index) {
+		$("#editDiscountTitle").val(all[index].discountTitle);
+		$("#editDiscountDesc").val(all[index].discountDesc);
+		$("#editTitleColor").val(all[index].titleColor);
+		$("#editDescColor").val(all[index].descColor);
+		//$("#oldImg").val(all[index].discountBackground);
+		//$("#oldImgPc").val(all[index].discountBackgroundPc);
+		$("#previewEdit").html("<img src="+all[index].discountBackground+" />");
+		$("#previewEditPc").html(
+				"<img src="+all[index].discountBackgroundPc+" />");
+		$("#previewEdit").css("display", "block");
+		$("#previewEditPc").css("display", "block");
+
+		$("#editDiscountTeamId").val(all[index].discountTeamId);
+		$("#editModal").modal('show');
+	}
+
+	//提交修改表单
+	function submitEdit() {
+		$("form[name='editForm']").ajaxSubmit(
+				{
+					type : "post",
+					url : "updateDiscountTeamInfo.do",
+					dataType : "json",
+					beforeSubmit : function() {
+						//表单数据校验  
+						if ($("#editDiscountTitle").val() == null
+								|| $("#editDiscountTitle").val() == "") {
+							alert("请输入标题");
+							return false;
+						}
+						if ($("#editDiscountDesc").val() == null
+								|| $("#editDiscountDesc").val() == "") {
+							alert("请输入描述");
+							return false;
+						}
+					},
+					success : function(data) {
+						if (!data.success) {
+							alert(data.message);
+							return false;
+						} else {
+							alert(data.message);
+							$("#editModal").modal('hide');
+							$("#mytab").bootstrapTable('refresh');
+						}
+
+					},
+					error : function(e) {
+						alert("异常!");
+					}
+
+				});
+	}
+
+	//清除弹出框数据
+	function cleanAlertModal() {
+		$("#myModal input").val("");
+		$("#myModal select").val("");
+		$("#editModal input").val("");
+		$("#editModal select").val("");
+
+		$("#previewEdit").html("");
+		$("#previewEditPc").html("");
+		$("#previewEdit").css("display", "none");
+		$("#previewEditPc").css("display", "none");
+
+		$("#previewAdd").html("");
+		$("#previewAddPcs").html("");
+		$("#previewAdd").css("display", "none");
+		$("#previewAddPcs").css("display", "none");
+
+		$("#myModal").modal('hide');
+		$("#editModal").modal('hide');
+	}
+
+	//删除操作
+	function doDelete(value) {
+		if (confirm("确认删除？删除后不可恢复！")) {
+			jQuery.ajax({
+				url : "deleteDiscountTeam.do",
+				type : 'post',
+				data : {
+					"discountTeamId" : value
+				},
+				dataType : 'json',
+				success : function(data) {
+					if (!data.success) {
+						alert(data.message);
+						return false;
+					} else {
+						alert(data.message);
+						$("#mytab").bootstrapTable('refresh');
+					}
+				},
+				error : function() {
+					alert("异常！");
+				}
+			});
+		}
+	}
+
+	function showDiscountList(value) {
+		//先销毁表格  后面再重新生成
+		$("#discountTable").bootstrapTable('destroy');
+		$("#alertDiscountTeamId").val(value);
+		askDiscountList();
+		$("#selectDiscountModal").modal("show");
+	}
+
+	//选择优惠券查询函数
+	function searchDiscount() {
+		$('#discountTable').bootstrapTable("selectPage", 1);
+	}
+
+	function askDiscountList() {
+		var all2;
+		$('#discountTable')
+				.bootstrapTable(
+						{
+							method : 'post',
+							contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+							url : "queryGroupList.do",//请求查询组内优惠券s
+							dataType : 'json',
+							striped : true, //是否显示行间隔色
+							pageNumber : 1, //初始化加载第一页，默认第一页
+							pageSize : 10,//单页记录数
+							pageList : [ 10, 20, 30 ],//分页步进值
+							pagination : true,//是否分页
+							queryParamsType : 'limit',//查询参数组织方式
+							sidePagination : 'server',//指定服务器端分页
+							queryParams : function(p) {
+								return paramsForAlertDiscountTable(p);
+							},
+							clickToSelect : true,//是否启用点击选中行
+							toolbarAlign : 'right',//工具栏对齐方式
+							buttonsAlign : 'right',//按钮对齐方式
+							toolbar : '#toolbar',//指定工作栏
+							columns : [
+									{
+										title : "操作",
+										field : "discountId",
+										formatter : function(value, row, index) {
+											return "<a href='#' onclick=doDeleteDiscount('"
+													+ value + "')>移除</a>";
+										}
+									},
+									{
+										title : '优惠券编号',
+										field : 'discountId'
+									},
+									{
+										title : '优惠券名称',
+										field : 'discountName'
+									},
+									{
+										title : '优惠类型',
+										field : 'discountType',
+										formatter : function(value, row, index) {
+											if (value == "1") {
+												return "满减";
+											}
+											if (value == "2") {
+												return "每满减";
+											}
+											if (value == "3") {
+												return "折扣";
+											}
+										}
+									},
+									{
+										title : '优惠券金额',
+										field : 'amount',
+										formatter : function(value) {
+											return value.amount
+										}
+									},
+									{
+										title : '限制金额',
+										field : 'limitAmount',
+										formatter : function(value) {
+											return value.amount
+										}
+									},
+									{
+										title : '折扣',
+										field : 'discount',
+										formatter : function(value, row, index) {
+											if (row.discountType == 3) {
+												return value
+											} else {
+												return "-"
+											}
+										}
+									},
+									{
+										title : '有效期类型',
+										field : 'timeType',
+										formatter : function(value, row, index) {
+											if (value == 1) {
+												return "时间"
+											} else {
+												return "天数"
+											}
+										}
+									},
+									{
+										title : '使用截止时间',
+										field : 'timeEnd',
+										formatter : function(value, row, index) {
+											if (row.timeType == 1) {
+												return value
+											} else {
+												return value + "天"
+											}
+										}
+									},
+									{
+										title : '领取截止时间',
+										field : 'timeEndReceive',
+										formatter : function(value, row, index) {
+											return format(value)
+										}
+									},
+									{
+										title : '发布状态',
+										field : 'publishFlg',
+										formatter : function(value, row, index) {
+											if (value == '0') {
+												return '未发布';
+											} else if (value == '1') {
+												return '已发布';
+											}
+										}
+									} ],
+							locale : 'zh-CN',//中文支持,
+							responseHandler : function(res) {
+								//在ajax获取到数据，渲染表格之前，修改数据源
+								all2 = res.rows;
+								return res;
+							}
+						})
+	}
+
+	function paramsForAlertDiscountTable(params) {
+		$("#serchDiscount input[type='text']").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		params["alertDiscountTeamId"] = $("#alertDiscountTeamId").val();
+		return params;
+	}
+
+	//从组中移除优惠券
+	function doDeleteDiscount(value) {
+		if (confirm("确认移除？")) {
+			jQuery.ajax({
+				url : "removeDiscountFromTeam.do",
+				type : 'post',
+				data : {
+					"discountId" : value
+				},
+				dataType : 'json',
+				success : function(data) {
+					if (!data.success) {
+						alert(data.message);
+						return false;
+					} else {
+						alert(data.message);
+						$("#discountTable").bootstrapTable('refresh');
+					}
+				},
+				error : function() {
+					alert("异常！");
+				}
+			});
+		}
+	}
+
+	//执行添加之后将数据写入隐藏域中
+	function addDiscountHidden() {
+		//使用getSelections即可获得，row是json格式的数据
+		var row = $('#discountTable').bootstrapTable('getSelections');
+		if (row.length < 1) {
+			alert("请选择用户");
+			return;
+		}
+		//创建一个数组，将选中的数据row中所需要的列放到数组
+		var t = [];
+		for (var i = 0; i < row.length; i++) {
+			t.push(row[i].discountId);
+		}
+		//系列化对象  (把对象的类型转换为字符串类型)
+		var b = JSON.stringify(t);
+		//放入隐藏域中
+		$("#addCanTogeDisid").val(b);
+		$("#editCanTogeDisid").val(b);
+	}
+
+	//清除搜索
+	function cleanDis() {
+		$('#serchDiscount input').val("");
+	}
+
+	//显示放大图片
+	function imgbig(url) {
+		$('#imgbig').modal('show');
+		$("#bigbis").attr('src', url);
+	}
+	//bootstrap时间控件的一些设置
+	$('.datetimepicker').datetimepicker({
+		//minView : "month",//设置只显示到月份
+		format : 'yyyy-mm-dd HH:mm:ss',//文本框显示格式
+		language : 'zh-CN',//汉化
+		minView : 0, //0表示可以选择小时、分钟   1只可以选择小时
+		minuteStep : 1,//分钟间隔1分钟
+		autoclose : true,//选中关闭
+		todayBtn : true
+	//今日按钮
+	})
+
+	//获取搜索的所有值
+	function params(params) {
+		$("#a input[type='text']").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		$("#a select").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		return params;
+	}
+
+	//清空搜索条件
+	function clean() {
+		$("#a input").val("");
+		$("#a select").val("");
+	}
+</script>
+
+<script type="text/javascript">
+	//图片预览
+	function preview(file, type) {
+		var prevDiv
+		if (type == '1') {
+			prevDiv = document.getElementById('previewAdd');
+		}
+		if (type == '2') {
+			prevDiv = document.getElementById('previewAddPcs');
+		}
+		if (type == '3') {
+			prevDiv = document.getElementById('previewEdit');
+		}
+		if (type == '4') {
+			prevDiv = document.getElementById('previewEditPc');
+		}
+		prevDiv.style.display = "block";
+		if (file.files && file.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function(evt) {
+				prevDiv.innerHTML = '<img src="' + evt.target.result + '" />';
+			}
+			reader.readAsDataURL(file.files[0]);
+		} else {
+			prevDiv.innerHTML = '<div class="img" style="filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src=\'' + file.value + '\'"></div>';
+		}
+	}
+</script>
+</html>

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+#parse("content/importBase.vm")
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+#preview>img {
+	width: 100px;
+	height: 100px;
+}
+</style>
+</head>
+<body style="width: 100%; height: 100%;">
+	<div id="page-wrapper">
+		<!--BEGIN TITLE & BREADCRUMB PAGE-->
+		<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+			<div class="page-header pull-left">
+				<div class="page-title">发票管理</div>
+			</div>
+			<ol class="breadcrumb page-breadcrumb pull-right">
+				<li><i class="fa fa-home"></i>&nbsp;<a href="#">系统设置</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="hidden"><a href="#">系统设置</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="active">发票管理</li>
+			</ol>
+
+			<div class="clearfix"></div>
+		</div>
+
+
+		<div style="margin-top: 2%;" id="a">
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">昵称：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="nickName" name="nickName"
+							class="form-control" /> <br />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">手机：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="cell" name="cell" class="form-control" />
+						<br />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">发票单号：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="invoiceid" name="invoiceid"
+							class="form-control" /> <br />
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">订单号：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="orderid" name="orderid"
+							class="form-control" /> <br />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">发票状态 ：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select id="printStatus" class="form-control">
+							<option value="">请选择</option>
+							<option value="0" selected="selected">未出票</option>
+							<option value="1">已出票</option>
+						</select> <br />
+					</div>
+				</div>
+
+			</div>
+
+			<div class="col-sm-4" style="float: right">
+				<div class="control-group">
+					<div>
+						<button onclick="clean()" class="btn btn-danger" name="Name"
+							id="search_tel" value="清空"
+							style="float: right; margin-right: 2%;">清空</button>
+					</div>
+					<div>
+						<button onclick="sorce()" class="btn btn-info" name="Name"
+							id="search_tel" value="查询"
+							style="float: right; margin-right: 2%;">查询</button>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<table id="mytab" class="table table-hover"></table>
+	</div>
+
+	<!--END TITLE & BREADCRUMB PAGE-->
+	<!--BEGIN CONTENT-->
+
+
+	<!--详情-->
+	<div class="modal fade" id="detail" data-backdrop="static"
+		tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">发票详情</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" role="form" name="form" method="post">
+						<input type="hidden" id="id" class="form-control" name="id"
+							readonly />
+						<div class="form-group">
+							<label for="lastname" class="col-sm-4 control-label">用户编号：</label>
+							<div class="col-sm-8">
+								<input type="text" id="duserId" class="form-control"
+									name="duserId" readonly />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-4 control-label">昵称：</label>
+							<div class="col-sm-8">
+								<input type="text" id="dnickName" class="form-control"
+									name="dnickName" readonly />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-4 control-label">手机：</label>
+							<div class="col-sm-8">
+								<input type="text" id="dcell" class="form-control" name="dcell"
+									readonly />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-4 control-label">发票编号：</label>
+							<div class="col-sm-8">
+								<input type="text" id="dinvoiceNo" class="form-control"
+									name="dinvoiceNo" readonly />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-4 control-label">订单编号：</label>
+							<div class="col-sm-8">
+								<input type="text" name="dorderId" id="dorderId"
+									class="form-control" readonly />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-4 control-label">发票抬头：</label>
+							<div class="col-sm-8">
+								<input type="text" name="dinvoiceTitle" id="dinvoiceTitle"
+									class="form-control" readonly />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-4 control-label">税号：</label>
+							<div class="col-sm-8">
+								<input type="text" name="dtaxNumber" id="dtaxNumber"
+									class="form-control" readonly />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-4 control-label">开户行信息：</label>
+							<div class="col-sm-8">
+								<input type="text" name="dComBank" id="dComBank"
+									class="form-control" readonly />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-4 control-label">单位地址：</label>
+							<div class="col-sm-8">
+								<input type="text" name="dComAddress" id="dComAddress"
+									class="form-control" readonly />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-4 control-label">发票类型：</label>
+							<div class="col-sm-8">
+								<select id="dtype" class="form-control" disabled="disabled">
+									<option value="">请选择</option>
+									<option value="1">企业单位</option>
+									<option value="2">个人</option>
+									<option value="3">专用发票</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-4 control-label">发票内容：</label>
+							<div class="col-sm-8">
+								<textarea class="form-control" rows="3" name="dinvoiceContent"
+									id="dinvoiceContent" readonly></textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-4 control-label">发票状态：</label>
+							<div class="col-sm-8">
+								<select id="ePrintStatus" class="form-control"
+									disabled="disabled">
+									<option value="">请选择</option>
+									<option value="0">未出票</option>
+									<option value="1">已出票</option>
+								</select>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary"
+						onclick="editPrintStatus()">确定出票</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+<script type="text/javascript">
+	function submit() {
+		$("form[name='form']").ajaxSubmit(
+				{
+					type : "post",
+					url : $("#id").val() == "0" ? "addspecialty.do"
+							: "updatespecialty.do",
+					dataType : "json",
+					beforeSubmit : function() {
+					},
+					success : function(data) {
+						if (!data.bizSucc) {
+							alert(data.err_msg);
+							return false;
+						} else {
+							alert(data.data);
+
+							window.location.reload(true);
+						}
+
+					},
+					error : function(e) {
+						alert("异常!");
+					}
+
+				});
+	}
+	function clean() {
+		$("#a input").val("");
+		$("#a select").val("");
+	}
+
+	bootsearch()
+	function sorce() {
+		$("#mytab").bootstrapTable('destroy');
+		//生成用户数据
+		bootsearch();
+	}
+
+	var all;
+	function bootsearch() {
+		//生成用户数据
+		$('#mytab').bootstrapTable(
+				{
+					method : 'post',
+					contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+					url : "selectinvoice.do",//要请求数据的文件路径
+					dataType : 'json',
+					striped : true, //是否显示行间隔色
+					pageNumber : 1, //初始化加载第一页，默认第一页
+					pageSize : 10,//单页记录数
+					pageList : [ 5, 10, 20, 30 ],//分页步进值
+					pagination : true,//是否分页
+					queryParamsType : 'limit',//查询参数组织方式
+					sidePagination : 'server',//指定服务器端分页
+					queryParams : function(p) {
+						return params(p);
+					},
+
+					clickToSelect : true,//是否启用点击选中行
+					toolbarAlign : 'right',//工具栏对齐方式
+					buttonsAlign : 'right',//按钮对齐方式
+					toolbar : '#toolbar',//指定工作栏
+					columns : [
+							{
+								title : '操作',
+								field : 'id',
+								formatter : function(value, row, index) {
+
+									return "<a href='#' onclick=showDetail('"
+											+ index + "')>查看详情</a>  ";
+
+								}
+							}, {
+								title : '用户编号',
+								field : 'userId'
+							}, {
+								title : '昵称',
+								field : 'nickName'
+							}, {
+								title : '手机',
+								field : 'cell'
+							}, {
+								title : '订单编号',
+								field : 'orderId'
+							}, {
+								title : '税号',
+								field : 'taxNumber'
+							}, {
+								title : '发票抬头',
+								field : 'invoiceTitle',
+								formatter : function(value, row, index) {
+									if (value != null) {
+										return value.substr(0, 5) + "...";
+									}
+								}
+							}, {
+								title : '发票类型',
+								field : 'type',
+								formatter : function(value, row, index) {
+									if (value == "1") {
+										return "企业单位";
+									} else if (value == "2") {
+										return "个人";
+									} else if (value == "3") {
+										return "专用发票";
+									}
+								}
+							}, {
+								title : '发票状态',
+								field : 'printStatus',
+								formatter : function(value, row, index) {
+									if (value == "0") {
+										return "未出票";
+									} else if (value == "1") {
+										return "已出票";
+									}
+								}
+							}, {
+								title : '创建时间',
+								field : 'gmtCreate',
+								formatter : function(value, row, index) {
+									return format(value);
+								}
+							}, {
+								title : '修改者',
+								field : 'modifier'
+							}, {
+								title : '修改时间',
+								field : 'gmtModified',
+								formatter : function(value, row, index) {
+									return format(value);
+								}
+							} ],
+					locale : 'zh-CN',//中文支持,
+					responseHandler : function(res) {
+						//在ajax获取到数据，渲染表格之前，修改数据源
+						all = res.rows;
+						return res;
+					}
+				})
+	}
+	function showDetail(number) {
+		claenmyModal();
+		$("#id").val(all[number].id);
+		$("#ePrintStatus").val(all[number].printStatus);
+		$("#dtaxNumber").val(all[number].taxNumber);
+		$("#duserId").val(all[number].userId);
+		$("#dinvoiceNo").val(all[number].invoiceNo);
+		$("#dtype").val(all[number].type);
+		$("#dinvoiceTitle").val(all[number].invoiceTitle);
+		$("#dinvoiceContent").val(all[number].invoiceContent);
+		$("#dnickName").val(all[number].nickName);
+		$("#dorderId").val(all[number].orderId);
+		$("#dcell").val(all[number].cell);
+		$("#dComBank").val(all[number].comBank);
+		$("#dComAddress").val(all[number].comAddress);
+		$("#butt").addClass("hidden");
+		$("#detail").modal("show");
+	}
+
+	function claenmyModal() {
+		$("#detail input").val("");
+		$("#detail select").val("");
+		$("#detail textarea").val("");
+	}
+	//显示添加框
+	function showallmodal(id, type) {
+		//添加的时候先清除一下缓存
+		claenmyModal(id)
+		$("#id").val("0");
+		$("#rank").val("0");
+		$("#" + id).modal(type);
+	}
+
+	//显示修改框
+	function updatelabellingshow(number) {
+		for ( var k in all[number]) {
+			$("#" + k).val(all[number][k]);
+		}
+		$("#myModal").modal('show');
+	}
+
+	//删除
+	function editPrintStatus() {
+		var status = $("#ePrintStatus").val();
+		var id = $("#id").val();
+		jQuery.ajax({
+			url : "printInvoice.do",
+			type : 'post',
+			data : {
+				"id" : id,
+				"printStatus" : status
+			},
+			dataType : 'json',
+			success : function(data) {
+				if (!data.success) {
+					alert(data.message);
+					return false;
+				} else {
+					$("#detail").modal('hide');
+					$("#mytab").bootstrapTable('refresh');
+				}
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+	}
+	//获取搜索的所有值
+	function params(params) {
+		$("#a input[type='text']").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		$("#a select").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		return params;
+	}
+</script>
+</html>

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+#parse("content/importBase.vm")
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+#preview>img {
+	width: 100%;
+	height: 170px;
+}
+</style>
+</head>
+<body style="width: 100%; height: 100%;">
+	<div id="page-wrapper">
+		<!--BEGIN TITLE & BREADCRUMB PAGE-->
+		<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+			<div class="page-header pull-left">
+				<div class="page-title">系统设置</div>
+			</div>
+			<ol class="breadcrumb page-breadcrumb pull-right">
+				<li><i class="fa fa-home"></i>&nbsp;<a href="#">系统设置</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="hidden"><a href="#">系统设置</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="active">系统用户管理</li>
+			</ol>
+
+			<div class="clearfix"></div>
+		</div>
+
+
+		<div style="margin-top: 2%;" id="a">
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">用户名：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="name" class="form-control" /> <br />
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-4" style="float: right">
+				<div class="control-group">
+					<div>
+						<button onclick="clean()" class="btn btn-danger" name="Name"
+							id="search_tel" value="清空"
+							style="float: right; margin-right: 2%;">清空</button>
+					</div>
+					<div>
+						<button onclick="sorce()" class="btn btn-info" name="Name"
+							id="search_tel" value="查询"
+							style="float: right; margin-right: 2%;">查询</button>
+					</div>
+					<div>
+						<button onclick="showallmodal('myModal','show')"
+							class="btn btn-warning" name="Name" id="search_tel" value="添加"
+							style="float: right; margin-right: 2%;">添加</button>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<!--END TITLE & BREADCRUMB PAGE-->
+		<!--BEGIN CONTENT-->
+		<table id="mytab" class="table table-hover"></table>
+		<div class="modal fade" id="myModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">用户信息</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" role="form" name="form"
+							method="post">
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label">用户名<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-10">
+									<input type="hidden" id="id" class="form-control" name="id"
+										value="0" /> <input type="text" id="username"
+										class="form-control" name="username" onpaste="return false"
+										 ondragenter="return false"
+										oninput="this.value=this.value.replace(/[^\w\.\/]/ig,'');"
+										placeholder="请勿输入中文" />
+								</div>
+							</div>
+							<div class="form-group" id="pw">
+								<label for="lastname" class="col-sm-2 control-label">密码<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-10">
+									<input type="text" id="password" class="form-control"
+										name="password" onpaste="return false"
+										 ondragenter="return false"
+										oninput="this.value=this.value.replace(/[^\w\.\/]/ig,'');"
+										placeholder="请勿输入中文" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label">真实姓名：</label>
+								<div class="col-sm-10">
+									<input type="hidden" id="id" class="form-control" name="id"
+										value="0" /> <input type="text" id="realName"
+										class="form-control" name="realName" placeholder="请输入真实姓名" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label">角色<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-10">
+									<select name="roleId" id="roleId" class="form-control">
+										<option value="">请选择</option> #foreach($role in $role)
+										<option value="$!role.ROLE_ID">$!role.NAME</option> #end
+									</select>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" onclick="submit()">确定</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+<script type="text/javascript">
+	function submit() {
+		$("form[name='form']").ajaxSubmit(
+				{
+					type : "post",
+					url : $("#id").val() == "0" ? "addsysuser.do"
+							: "updatesysuser.do",
+					dataType : "json",
+					beforeSubmit : function() {
+						if ($("#username").val() == ""
+								|| $("#username").val() == null) {
+							alert("用户名不能为空!");
+							return false;
+						}
+						if ($("#id").val() == "0") {
+							if ($("#password").val() == ""
+									|| $("#password").val() == null) {
+								alert("密码不能为空!");
+								return false;
+							}
+						}
+						if ($("#roleId").val() == ""
+								|| $("#roleId").val() == null) {
+							alert("角色不能为空!");
+							return false;
+						}
+					},
+					success : function(data) {
+						if (!data.success) {
+							alert(data.message);
+							return false;
+						} else {
+							alert(data.message);
+							showallmodal('myModal', 'hide');
+							$("#mytab").bootstrapTable('refresh');
+						}
+
+					},
+					error : function(e) {
+						alert("异常!");
+					}
+
+				});
+	}
+	function clean() {
+		$("#a input").val("");
+		$("#a select").val("");
+	}
+	bootsearch()
+	function sorce() {
+		$("#mytab").bootstrapTable('destroy');
+		//生成用户数据
+		bootsearch();
+	}
+	var all;
+	function bootsearch() {
+		//生成用户数据
+		$('#mytab')
+				.bootstrapTable(
+						{
+							method : 'post',
+							contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+							url : "selectallsysuser.do",//要请求数据的文件路径
+							dataType : 'json',
+							striped : true, //是否显示行间隔色
+							pageNumber : 1, //初始化加载第一页，默认第一页
+							pageSize : 10,//单页记录数
+							pageList : [ 5, 10, 20, 30 ],//分页步进值
+							pagination : true,//是否分页
+							queryParamsType : 'limit',//查询参数组织方式
+							sidePagination : 'server',//指定服务器端分页
+							queryParams : function(p) {
+								return params(p);
+							},
+
+							clickToSelect : true,//是否启用点击选中行
+							toolbarAlign : 'right',//工具栏对齐方式
+							buttonsAlign : 'right',//按钮对齐方式
+							toolbar : '#toolbar',//指定工作栏
+							columns : [
+									{
+										title : '操作',
+										field : 'id',
+										formatter : function(value, row, index) {
+											if (value == "1") {
+												return "内置用户不能进行操作"
+											} else {
+												return "<a href='#' onclick=updatelabellingshow('"
+														+ index
+														+ "')>修改</a> | "
+														+ "<a href='#' onclick=deletelabelling('"
+														+ value + "')>删除</a>"; /* + 
+																																												"<a href='#' onclick=updatepassword('"+row.userId+"')>重置密码</a>"; */
+											}
+										}
+									},
+									{
+										title : '用户名',
+										field : 'username'
+									},
+									{
+										title : '角色',
+										field : 'rolename'
+									},
+									{
+										title : '真实姓名',
+										field : 'realName'
+									},
+									{
+										title : '创建者',
+										field : 'creater'
+									},
+									{
+										title : '创建时间',
+										field : 'gmtCreate',
+										formatter : function(value, row, index) {
+											return format(value);
+										}
+									},
+									{
+										title : '修改者',
+										field : 'modifier'
+									},
+									{
+										title : '修改时间',
+										field : 'gmtModified',
+										formatter : function(value, row, index) {
+											return format(value);
+										}
+									} ],
+							locale : 'zh-CN',//中文支持,
+							responseHandler : function(res) {
+								//在ajax获取到数据，渲染表格之前，修改数据源
+								all = res.rows;
+								return res;
+							}
+						})
+	}
+
+	function updatepassword(userid) {
+		if (confirm("确定重置密码？重置密码后不可恢复")) {
+			jQuery.ajax({
+				url : "updatepassword.do",
+				type : 'post',
+				data : {
+					"password" : "888888",
+					"userId" : userid
+				},
+				dataType : 'json',
+				success : function(data) {
+					if (data.success) {
+						alert(data.message);
+						$("#mytab").bootstrapTable('refresh');
+					} else {
+						alert("失败!");
+					}
+				},
+				error : function() {
+					alert("异常！");
+				}
+			});
+		} else {
+			return;
+		}
+	}
+	//显示添加框
+	function showallmodal(id, type) {
+		$("#username").val("");
+		$("#password").val("");
+		$("#roleId").val("");
+		$("#id").val("0");
+		$("#realName").val("");
+		$("#pw").removeClass("hidden");
+		$("#" + id).modal(type);
+	}
+
+	//显示修改框
+	function updatelabellingshow(number) {
+		for ( var k in all[number]) {
+			$("#" + k).val(all[number][k]);
+		}
+		$("#roleId").val(all[number].roldId);
+		$("#pw").addClass("hidden");
+		$("#myModal").modal("show");
+	}
+
+	//删除
+	function deletelabelling(ID) {
+		if (confirm("确定删除此信息？删除后不可恢复")) {
+			jQuery.ajax({
+				url : "deleteSysUser.do",
+				type : 'post',
+				data : {
+					"id" : ID
+				},
+				dataType : 'json',
+				success : function(data) {
+					if (data.success) {
+						alert(data.message);
+						$("#mytab").bootstrapTable('refresh');
+					} else {
+						alert(data.message);
+					}
+				},
+				error : function() {
+					alert("异常！");
+				}
+			});
+		} else {
+			return;
+		}
+	}
+	//获取搜索的所有值
+	function params(params) {
+		$("#a input[type='text']").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+
+		return params;
+	}
+</script>
+</html>

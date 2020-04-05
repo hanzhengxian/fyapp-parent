@@ -1,0 +1,47 @@
+[
+  {
+    "type": 0,
+    "title": {
+      "订单时间": "gmtModified",
+      "收货人": "reUserName",
+      "收货电话": "cell",
+      "收货地址": "address",
+      "订单状态": "orderState",
+      "取货方式": "transferType",
+      "实付金额": "realOrderPrice",
+      "实付积分": "realPointPrice",
+      "商品名称": "productName",
+      "商品属性": "valuees",
+      "购买数量": "orderCount",
+      "运费": "luggage",
+      "erp编号": "erpNo",
+      "父订单编号": "orderId",
+      "子订单编号": "childOrderId",
+      "用户编号": "userId",
+      "商品编号": "productId",
+      "物流公司（编号）": "expressNo",
+      "物流单号": "kuaidiNo"
+    },
+    "data": {
+      "gmtModified":"",
+      "reUserName": "",
+      "cell":"",
+      "address": "",
+      "orderState":"",
+      "transferType": "",
+      "realOrderPrice": "",
+      "realPointPrice": "",
+      "productName": "",
+      "valuees": "",
+      "orderCount": "",
+      "luggage": "",
+      "erpNo":"",
+      "orderId": "",
+      "childOrderId": "",
+      "userId": "",
+      "productId": "",
+      "expressNo": "",
+      "kuaidiNo": ""
+    }
+  }
+]

@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+#parse("content/importBase.vm")
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link type="text/css" rel="stylesheet" href="css/wuliu.css">
+<style type="text/css">
+#preview>img {
+	width: 80%;
+	height: auto;
+}
+</style>
+</head>
+<body style="width: 100%; height: 100%;">
+	<div id="page-wrapper">
+		<!--BEGIN TITLE & BREADCRUMB PAGE-->
+		<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+			<div class="page-header pull-left">
+				<div class="page-title">客服管理</div>
+			</div>
+			<ol class="breadcrumb page-breadcrumb pull-right">
+				<li><i class="fa fa-home"></i>&nbsp;<a href="#">客服管理</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="hidden"><a href="#">客服管理</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+			</ol>
+			<div class="clearfix"></div>
+		</div>
+
+
+		<div style="margin-top: 2%;" id="a">
+			<div class="row">
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">用户手机号：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="userCell" name="userCell"
+							class="form-control" />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">用户昵称：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="userName" name="userName"
+							class="form-control" />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">真实姓名：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="realName" name="realName"
+							class="form-control" />
+					</div>
+				</div>
+			</div>
+			<br />
+
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">是否自动刷新：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="checkbox" id="isAutoRefresh" name="isAutoRefresh"
+							class="form-control" /> <br />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">刷新时间间隔（秒）：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="autoRefreshTime" name="autoRefreshTime"
+							class="form-control" /> <br />
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-4" style="float: right">
+				<div class="control-group">
+					<div>
+						<button onclick="clean()" class="btn btn-danger" name="Name"
+							id="search_tel" value="清空"
+							style="float: right; margin-right: 2%;">清空</button>
+					</div>
+					<div>
+						<button onclick="sorce()" class="btn btn-info" name="Name"
+							id="search_tel" value="查询"
+							style="float: right; margin-right: 2%;">查询</button>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<table id="mytab" class="table table-hover"></table>
+
+	</div>
+
+	<div class="modal fade" id="chatRecordModal" data-backdrop="static"
+		tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true" style="overflow-y: auto;">
+		<div class="modal-dialog" style="width: 50%">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">聊天记录</h4>
+				</div>
+
+				<div class="modal-body">
+					<form class="form-horizontal" role="form" name="repeatChatForm"
+						id="repeatChatForm" enctype="multipart/form-data">
+
+						<input type="hidden" id="rechatId" name="rechatId"
+							class="form-control" />
+
+						<div class="form-group">
+							<label class="col-sm-2 control-label">文字内容</label>
+							<div class="col-sm-10">
+								<input type="text" id="repeatComment" name="repeatComment"
+									class="form-control" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="lastname" class="col-sm-2 control-label">图片内容：</label>
+							<div class="col-sm-10">
+								<input type="file" id="repeatImg" name="repeatImg"
+									onchange="preview(this)" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="lastname" class="col-sm-2 control-label"></label>
+							<div class="col-sm-10">
+								<div id="preview" style="display: none" class=""></div>
+							</div>
+						</div>
+					</form>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal"
+						onclick="closeChatRecordModal()">关闭</button>
+					<button type="button" class="btn btn-primary"
+						onclick="submitRepeat()">回复</button>
+				</div>
+
+				<div class="modal-body">
+					<table id="chatRecordTab" class="table table-hover"></table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="imgbig" data-backdrop="static"
+		tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true" onclick="closeImg()">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">查看图片</h4>
+				</div>
+				<div class="modal-body">
+					<img alt="" src="" id="bigbis" style="width: 100%; height: 100%;" />
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+<script src="js/emoji.js"></script>
+
+<script type="text/javascript">
+	var t = 3000;
+	var set1 = setInterval(fn, t);
+	function fn() {
+		if ($("#isAutoRefresh").is(":checked")) {
+			$('#mytab').bootstrapTable('refresh');
+			if (!isNaN($("#autoRefreshTime").val())
+					&& $("#autoRefreshTime").val() != '') {
+				t = parseFloat($("#autoRefreshTime").val()) * 1000;
+			} else {
+				t = 3000;
+			}
+		}
+		clearInterval(set1);
+		if (t > 0) {
+			set1 = setInterval(fn, t);
+		}
+	}
+</script>
+
+<script type="text/javascript">
+	function claenmyModal() {
+		$("#myModal input").val("");
+	}
+
+	function clean() {
+		$("#a input").val("");
+		$("#a select").val("");
+	}
+
+	bootsearch()
+	function sorce() {
+		$("#mytab").bootstrapTable('destroy');
+		//生成用户数据
+		bootsearch();
+	}
+
+	var all;
+	function bootsearch() {
+		//生成用户数据
+		$('#mytab')
+				.bootstrapTable(
+						{
+							method : 'post',
+							contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+							url : "chatList.do",//要请求数据的文件路径
+							dataType : 'json',
+							striped : true, //是否显示行间隔色
+							pageNumber : 1, //初始化加载第一页，默认第一页
+							pageSize : 10,//单页记录数
+							pageList : [ 5, 10, 20, 30 ],//分页步进值
+							pagination : true,//是否分页
+							queryParamsType : 'limit',//查询参数组织方式
+							sidePagination : 'server',//指定服务器端分页
+							queryParams : function(p) {
+								return params(p);
+							},
+							clickToSelect : true,//是否启用点击选中行
+							toolbarAlign : 'right',//工具栏对齐方式
+							buttonsAlign : 'right',//按钮对齐方式
+							toolbar : '#toolbar',//指定工作栏
+							columns : [
+									{
+										title : '操&nbsp&nbsp&nbsp&nbsp作',
+										field : 'id',
+										formatter : function(value, row, index) {
+											var url = "<a href='#' onclick=showRecordTab('"
+													+ index + "')>聊天记录</a>";
+											return url;
+										}
+									},
+									{
+										title : '用户手机号',
+										field : 'userCell'
+									},
+									{
+										title : '用户昵称',
+										field : 'userName'
+									},
+									{
+										title : '真实姓名',
+										field : 'realName'
+									},
+									{
+										title : '未读消息条数',
+										field : 'noreadnum'
+									},
+									{
+										title : '最后发送人',
+										field : 'lastSendUser'
+									},
+									{
+										title : '最后发送内容',
+										field : 'lastChatComment',
+										formatter : function(value, row, index) {
+											if (row.lastChatType == '1') {
+												return value.substr(0, 20)
+														+ "...";
+												//return emojiDecode(value)
+											}
+
+											if (row.lastChatType == '2')
+												return '<img src="'+value+'" data-imgurl="'+value+'" width="100px" height="60px"/>';
+										}
+									}, {
+										title : '最后发送时间',
+										field : 'lastChatDate'
+									} ],
+							locale : 'zh-CN',//中文支持,
+							onLoadSuccess : function() { //加载成功时执行
+								$("img").load(
+										function() {
+											var viewer = new Viewer(document
+													.getElementById('mytab'), {
+												navbar : false,
+												toolbar : {
+													zoomIn : true,
+													zoomOut : true,
+													play : true,
+													rotateLeft : true,
+													rotateRight : true
+
+												},
+												show : function() {
+													viewer.update();
+												}
+											});
+										})
+							},
+							responseHandler : function(res) {
+								//在ajax获取到数据，渲染表格之前，修改数据源
+								all = res.rows;
+								return res;
+							}
+						})
+	}
+
+	var allChatRecord;
+	$('#chatRecordTab')
+			.bootstrapTable(
+					{
+						method : 'post',
+						contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+						url : "chatRecordList.do",//要请求数据的文件路径
+						dataType : 'json',
+						striped : true, //是否显示行间隔色
+						pageNumber : 1, //初始化加载第一页，默认第一页
+						pageSize : 10,//单页记录数
+						pageList : [ 5, 10, 20, 30 ],//分页步进值
+						pagination : true,//是否分页
+						queryParamsType : 'limit',//查询参数组织方式
+						sidePagination : 'server',//指定服务器端分页
+						queryParams : function(p) {
+							p["chatId"] = $("#rechatId").val();
+							return p;
+						},
+						clickToSelect : true,//是否启用点击选中行
+						toolbarAlign : 'right',//工具栏对齐方式
+						buttonsAlign : 'right',//按钮对齐方式
+						toolbar : '#toolbar',//指定工作栏
+						columns : [
+								{
+									title : '聊天内容',
+									field : 'CHAT_COMMNET',
+									formatter : function(value, row, index) {
+										if (row.CHAT_TYPE == '1')
+											return '<span id="DYNAMIC_WORD_SHOW" >'
+													+ value + '</span>';
+
+										if (row.CHAT_TYPE == '2')
+											return '<img src="'+value+'" data-imgurl="'+value+'" width="100px" height="60px"/>';
+									}
+								}, {
+									title : '发送人',
+									field : 'CHAT_OBJ',
+									formatter : function(value, row, index) {
+										if (value == "1") {
+											return row.NICK_NAME;
+										} else if (value == "2") {
+											return "客服";
+										}
+									}
+								}, {
+									title : '发送时间',
+									field : 'CHAT_TIME',
+									formatter : function(value, row, index) {
+										return format(value);
+									}
+								} ],
+						locale : 'zh-CN',//中文支持,
+						onLoadSuccess : function() { //加载成功时执行
+							$("img")
+									.load(
+											function() {
+												var viewer = new Viewer(
+														document
+																.getElementById('chatRecordTab'),
+														{
+															navbar : false,
+															toolbar : {
+																zoomIn : true,
+																zoomOut : true,
+																play : true,
+																rotateLeft : true,
+																rotateRight : true
+
+															},
+															show : function() {
+																viewer.update();
+															}
+														});
+											})
+						},
+						responseHandler : function(res) {
+							//在ajax获取到数据，渲染表格之前，修改数据源
+							allChatRecord = res.rows;
+							return res;
+						}
+					})
+
+	//显示模态框
+	function showRecordTab(index) {
+		$("#rechatId").val(all[index].chatId);
+
+		$("#repeatComment").val("");
+		$("#repeatImg").val("");
+		$("#preview").empty();
+
+		$('#chatRecordTab').bootstrapTable("selectPage", 1);
+		$('#chatRecordModal').modal('show');
+
+		$('#DYNAMIC_WORD_SHOW').emoji();
+	}
+
+	function closeChatRecordModal() {
+		$('#chatRecordModal').modal('hide');
+		$("#mytab").bootstrapTable('refresh');
+	}
+
+	function showReplyModal(index) {
+		$("#replyModal input").val("");
+		$("#replyModal select").val("");
+		$('#commentInput').hide();
+		$('#commentFile').hide();
+		$('#preview').html("");
+
+		$("#replyChatId").val(allChatRecord[index].chatId);
+		$("#replyChatObj").val(allChatRecord[index].chatObj);
+		var chatType = allChatRecord[index].chatType;
+		if (chatType == "1") {
+			var innerHtml = '<div class="col-sm-8"><textarea rows="10" class="form-control" readonly="readonly">'
+					+ allChatRecord[index].chatCommnet + '</textarea></div>';
+			$('#comment').html(innerHtml);
+		} else if (chatType == "2") {
+			var innerHtml = '<img style="width:40%; height:auto;margin-top: 10px;margin-left: 15px;" src='
+					+ allChatRecord[index].chatCommnet + ' />';
+			$('#comment').html(innerHtml);
+		}
+		$('#replyModal').modal('show');
+
+	}
+
+	function reply() {
+		var formData = new FormData();
+		formData.append("chatId", $("#replyChatId").val());
+		formData.append("chatType", $("#replyChatType").val());
+		formData.append("chatCommnet", $("#commentInput").val());
+		formData.append("img", $("#commentFile")[0].files[0]);
+		jQuery.ajax({
+			url : "reply.do",
+			type : 'post',
+			data : formData,
+			dataType : 'json',
+			cache : false,
+			processData : false,
+			contentType : false,
+			success : function(data) {
+				if (data.success) {
+					$('#replyModal').modal('hide');
+					$("#chatRecordTab").bootstrapTable('refresh');
+				} else {
+					alert(data.message);
+				}
+			},
+			error : function() {
+				alert("操作失败！");
+			}
+		});
+	}
+
+	$(document).ready(function() {
+
+		// 注册change事件       
+		jQuery('#replyChatType').change(function() {
+			var type = $(this).children('option:selected').val();
+			if (type == "1") {
+				$('#commentFile').val("");
+				$('#preview').html("");
+				$('#commentInput').show();
+				$('#commentFile').hide();
+			} else if (type == "2") {
+				$('#commentInput').val("");
+				$('#commentInput').hide();
+				$('#commentFile').show();
+			} else {
+				$('#commentInput').val("");
+				$('#commentInput').hide();
+				$('#commentFile').hide();
+				$('#preview').html("");
+				$('#commentFile').val("");
+				alert("请选择有效值");
+				return;
+			}
+		})
+	})
+
+	//图片预览
+	function preview(file) {
+		var prevDiv = document.getElementById('preview');
+		prevDiv.style.display = "block";
+		if (file.files && file.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function(evt) {
+				prevDiv.innerHTML = '<img src="' + evt.target.result
+						+ '" style="width:50%" />';
+			}
+			reader.readAsDataURL(file.files[0]);
+		} else {
+			prevDiv.innerHTML = '<div class="img" style="filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src=\'' + file.value + '\'"></div>';
+		}
+	}
+
+	//显示放大图片
+	function imgbig(url) {
+		$('#imgbig').modal('show');
+		$("#bigbis").attr('src', url);
+	}
+
+	//展示回复框
+	function showRepeat() {
+		$('#repeatModel').modal('show');
+	}
+
+	function closeRepeatModel() {
+		//repeatComment repeatImg
+		$("#repeatComment").val("");
+		$("#repeatImg").val("");
+		$("#preview").empty();
+		$('#repeatModel').modal('hide');
+	}
+	//获取搜索的所有值
+	function params(params) {
+		$("#a input[type='text']").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		$("#a select").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		return params;
+	}
+
+	function closeImg() {
+		$('#imgbig').modal('hide');
+	}
+</script>
+
+<script>
+	function submitRepeat() {
+		if ($("#repeatComment").val() == "" && $("#repeatImg").val() == "") {
+			alert("请输入回复内容");
+			return;
+		}
+
+		$("form[id='repeatChatForm']").ajaxSubmit({
+			type : "post",
+			url : "repeatChat.do",
+			dataType : "json",
+			beforeSubmit : function() {
+			},
+			success : function(data) {
+				if (data.success) {
+					closeRepeatModel();
+					$('#chatRecordTab').bootstrapTable("selectPage", 1);
+				} else {
+					alert("操作失败");
+				}
+			},
+			error : function() {
+				alert("操作失败！");
+			}
+		});
+	}
+</script>
+</html>

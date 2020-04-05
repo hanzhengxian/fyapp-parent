@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+#parse("content/importBase.vm")
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+#preview>img {
+	width: 100px;
+	height: 100px;
+}
+</style>
+</head>
+<body style="width: 100%; height: 100%;">
+	<div id="page-wrapper">
+		<!--BEGIN TITLE & BREADCRUMB PAGE-->
+		<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+			<div class="page-header pull-left">
+				<div class="page-title">系统设置</div>
+			</div>
+			<ol class="breadcrumb page-breadcrumb pull-right">
+				<li><i class="fa fa-home"></i>&nbsp;<a href="#">系统设置</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="hidden"><a href="#">系统设置</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="active">系统城市设置</li>
+			</ol>
+
+			<div class="clearfix"></div>
+		</div>
+
+		<div style="margin-top: 2%;" id="a">
+			<div class="row">
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">城市名称：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="cityName" class="form-control" />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">状态：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select class="form-control" id="isUse" name="isUse">
+							<option selected="selected" value="">请选择</option>
+							<option value="1">启用</option>
+							<option value="0">禁用</option>
+						</select>
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">级别：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select class="form-control" id="depth" name="depth">
+							<option selected="selected" value="">请选择</option>
+							<option value="1">省级</option>
+							<option value="2">市级</option>
+						</select>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="col-sm-4" style="float: right">
+				<div class="control-group">
+					<div>
+						<button onclick="clean()" class="btn btn-danger" name="Name"
+							id="search_tel" value="清空"
+							style="float: right; margin-right: 2%;">清空</button>
+					</div>
+					<div>
+						<button onclick="sorce()" class="btn btn-info" name="Name"
+							id="search_tel" value="查询"
+							style="float: right; margin-right: 2%;">查询</button>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<!--END TITLE & 1BREADCRUMB PAGE-->
+		<!--BEGIN CONTENT-->
+		<table id="mytab" class="table table-hover"></table>
+
+		<div class="modal fade" id="myModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">修改邮费</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" role="form" name="form"
+							enctype="multipart/form-data" method="post">
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label">城市名称：</label>
+								<div class="col-sm-10">
+									<input type="hidden" id="id" class="form-control" name="id"
+										value="0" /> <input type="text" id="cName"
+										class="form-control" name="cityName" readonly="readonly" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label">运费：</label>
+								<div class="col-sm-10">
+									<input type="text" id="postage" class="form-control"
+										name="postage" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label">免邮金额：</label>
+								<div class="col-sm-10">
+									<input type="text" id="freePostage" class="form-control"
+										name="freePostage" />
+								</div>
+							</div>
+
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" onclick="submit()">确定</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+</body>
+
+<script type="text/javascript">
+	function submit() {
+		$("form[name='form']").ajaxSubmit({
+			type : "post",
+			url : "updatePostage.do",
+			dataType : "json",
+			beforeSubmit : function() {
+			},
+			success : function(data) {
+				if (!data.success) {
+					alert("操作失败");
+					return false;
+				} else {
+					alert("操作成功");
+					showallmodal('myModal', 'hide');
+					$("#mytab").bootstrapTable('refresh');
+				}
+
+			},
+			error : function(e) {
+				alert("异常!");
+			}
+
+		});
+	}
+	function clean() {
+		$("#a input").val("");
+		$("#a select").val("");
+	}
+
+	bootsearch()
+	function sorce() {
+		$("#mytab").bootstrapTable('destroy');
+		//生成用户数据
+		bootsearch();
+	}
+
+	var all;
+	function bootsearch() {
+		//生成用户数据
+		$('#mytab')
+				.bootstrapTable(
+						{
+							method : 'post',
+							contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+							url : "selectAllPro.do",//要请求数据的文件路径
+							dataType : 'json',
+							striped : true, //是否显示行间隔色
+							pageNumber : 1, //初始化加载第一页，默认第一页
+							pageSize : 10,//单页记录数
+							pageList : [ 5, 10, 20, 30 ],//分页步进值
+							pagination : true,//是否分页
+							queryParamsType : 'limit',//查询参数组织方式
+							sidePagination : 'server',//指定服务器端分页
+							queryParams : function(p) {
+								return params(p);
+							},
+
+							clickToSelect : true,//是否启用点击选中行
+							toolbarAlign : 'right',//工具栏对齐方式
+							buttonsAlign : 'right',//按钮对齐方式
+							toolbar : '#toolbar',//指定工作栏
+							columns : [
+									{
+										title : '操作',
+										field : 'id',
+										formatter : function(value, row, index) {
+
+											return "<a href='#' onclick=updatelabellingshow('"
+													+ index + "')>修改邮费</a> ";
+										}
+									},
+									{
+										title : '状态',
+										field : 'isUse',
+										width : 8,
+										formatter : function(value, row, index) {
+											if (value == '1') {
+												return "<a href='#' onclick=updateCanUse('"
+														+ index
+														+ "','0')>禁用</a> ";
+											}
+											if (value == '0') {
+												return "<a href='#' onclick=updateCanUse('"
+														+ index
+														+ "','1')>启用</a> ";
+											}
+										}
+									},
+									{
+										title : '城市名称',
+										field : 'cityName'
+									},
+									{
+										title : '全称',
+										field : 'mergerName'
+									},
+									{
+										title : '邮费',
+										field : 'postage',
+										formatter : function(value, row, index) {
+											return value.amount;
+										}
+									},
+									{
+										title : '免邮金额',
+										field : 'freePostage',
+										formatter : function(value, row, index) {
+											return value.amount;
+										}
+									} ],
+							locale : 'zh-CN',//中文支持,
+							responseHandler : function(res) {
+								//在ajax获取到数据，渲染表格之前，修改数据源
+								all = res.rows;
+								return res;
+							}
+						})
+	}
+
+	//显示添加框
+	function showallmodal(id, type) {
+		//添加的时候先清除一下缓存
+		claenmyModal(id)
+		$("#id").val("0");
+		$("#" + id).modal(type);
+	}
+
+	//显示修改框
+	function updatelabellingshow(number) {
+
+		$("#id").val(all[number].id);
+		$("#cName").val(all[number].cityName);
+		$("#postage").val(all[number].postage.amount);
+		$("#freePostage").val(all[number].freePostage.amount);
+
+		$("#myModal").modal('show');
+	}
+
+	//删除
+	function updateCanUse(number, type) {
+		var id = all[number].id;
+		jQuery.ajax({
+			url : "updateCanUse.do",
+			type : 'post',
+			data : {
+				"id" : id,
+				"type" : type
+			},
+			dataType : 'json',
+			success : function(json) {
+				if (!json.success) {
+					alert("操作失败");
+					return false;
+				} else {
+					alert("操作成功");
+					$("#mytab").bootstrapTable('refresh');
+				}
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+	}
+	//获取搜索的所有值
+	function params(params) {
+		$("#a input[type='text']").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		$("#a select").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		return params;
+	}
+</script>
+</html>

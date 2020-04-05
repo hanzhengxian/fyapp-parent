@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="GB2312"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans default-autowire="byName">
+    <!-- ======================================================================== -->
+    <!--  DAO定义。                                                               -->
+    <!-- ======================================================================== -->
+    <bean id="SProvinceDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisSProvinceDAO" parent="sqlMapClientDAO"/>
+    <bean id="accountDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisAccountDAO" parent="sqlMapClientDAO"/>
+    <bean id="accountLogDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisAccountLogDAO" parent="sqlMapClientDAO"/>
+    <bean id="activityDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisActivityDAO" parent="sqlMapClientDAO"/>
+    <bean id="addressDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisAddressDAO" parent="sqlMapClientDAO"/>
+    <bean id="bannerDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisBannerDAO" parent="sqlMapClientDAO"/>
+    <bean id="categoryDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisCategoryDAO" parent="sqlMapClientDAO"/>
+    <bean id="chatListDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisChatListDAO" parent="sqlMapClientDAO"/>
+    <bean id="chatRecordDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisChatRecordDAO" parent="sqlMapClientDAO"/>
+    <bean id="discountDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisDiscountDAO" parent="sqlMapClientDAO"/>
+    <bean id="discountTeamDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisDiscountTeamDAO" parent="sqlMapClientDAO"/>
+    <bean id="discountUserDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisDiscountUserDAO" parent="sqlMapClientDAO"/>
+    <bean id="evaluateDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisEvaluateDAO" parent="sqlMapClientDAO"/>
+    <bean id="goodsAttrDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisGoodsAttrDAO" parent="sqlMapClientDAO"/>
+    <bean id="goodsAttrValueDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisGoodsAttrValueDAO" parent="sqlMapClientDAO"/>
+    <bean id="imgDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisImgDAO" parent="sqlMapClientDAO"/>
+    <bean id="invoiceDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisInvoiceDAO" parent="sqlMapClientDAO"/>
+    <bean id="knowledgeDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisKnowledgeDAO" parent="sqlMapClientDAO"/>
+    <bean id="msgDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisMsgDAO" parent="sqlMapClientDAO"/>
+    <bean id="optionDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisOptionDAO" parent="sqlMapClientDAO"/>
+    <bean id="orderDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisOrderDAO" parent="sqlMapClientDAO"/>
+    <bean id="orderCheckRecordDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisOrderCheckRecordDAO" parent="sqlMapClientDAO"/>
+    <bean id="orderOweDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisOrderOweDAO" parent="sqlMapClientDAO"/>
+    <bean id="orderPickDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisOrderPickDAO" parent="sqlMapClientDAO"/>
+    <bean id="orderRebateDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisOrderRebateDAO" parent="sqlMapClientDAO"/>
+    <bean id="orderRefundLogDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisOrderRefundLogDAO" parent="sqlMapClientDAO"/>
+    <bean id="orderReturnDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisOrderReturnDAO" parent="sqlMapClientDAO"/>
+    <bean id="orderVoucherDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisOrderVoucherDAO" parent="sqlMapClientDAO"/>
+    <bean id="planBirthDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisPlanBirthDAO" parent="sqlMapClientDAO"/>
+    <bean id="planReturnDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisPlanReturnDAO" parent="sqlMapClientDAO"/>
+    <bean id="productDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisProductDAO" parent="sqlMapClientDAO"/>
+    <bean id="productCategoryDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisProductCategoryDAO" parent="sqlMapClientDAO"/>
+    <bean id="productTeamDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisProductTeamDAO" parent="sqlMapClientDAO"/>
+    <bean id="productTypeDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisProductTypeDAO" parent="sqlMapClientDAO"/>
+    <bean id="sequenceDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisSequenceDAO" parent="sqlMapClientDAO"/>
+    <bean id="smDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisSmDAO" parent="sqlMapClientDAO"/>
+    <bean id="stockPriceDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisStockPriceDAO" parent="sqlMapClientDAO"/>
+    <bean id="stockPriceTeamDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisStockPriceTeamDAO" parent="sqlMapClientDAO"/>
+    <bean id="stockPriceTeamMiddleDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisStockPriceTeamMiddleDAO" parent="sqlMapClientDAO"/>
+    <bean id="sysConfigDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisSysConfigDAO" parent="sqlMapClientDAO"/>
+    <bean id="sysExpressDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisSysExpressDAO" parent="sqlMapClientDAO"/>
+    <bean id="sysLevelDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisSysLevelDAO" parent="sqlMapClientDAO"/>
+    <bean id="sysMenuDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisSysMenuDAO" parent="sqlMapClientDAO"/>
+    <bean id="sysReturnReasonDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisSysReturnReasonDAO" parent="sqlMapClientDAO"/>
+    <bean id="sysRoleDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisSysRoleDAO" parent="sqlMapClientDAO"/>
+    <bean id="sysRoleUserDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisSysRoleUserDAO" parent="sqlMapClientDAO"/>
+    <bean id="sysSearchDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisSysSearchDAO" parent="sqlMapClientDAO"/>
+    <bean id="sysZjmDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisSysZjmDAO" parent="sqlMapClientDAO"/>
+    <bean id="teamDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisTeamDAO" parent="sqlMapClientDAO"/>
+    <bean id="teamCheckDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisTeamCheckDAO" parent="sqlMapClientDAO"/>
+    <bean id="teamUserDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisTeamUserDAO" parent="sqlMapClientDAO"/>
+    <bean id="userDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisUserDAO" parent="sqlMapClientDAO"/>
+    <bean id="userAliDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisUserAliDAO" parent="sqlMapClientDAO"/>
+    <bean id="voucherDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisVoucherDAO" parent="sqlMapClientDAO"/>
+    <bean id="voucherRecordDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisVoucherRecordDAO" parent="sqlMapClientDAO"/>
+    <bean id="withdrawDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisWithdrawDAO" parent="sqlMapClientDAO"/>
+    <bean id="wordDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisWordDAO" parent="sqlMapClientDAO"/>
+    <bean id="workCheckDAO" class="com.onway.fyapp.common.dal.ibatis.IbatisWorkCheckDAO" parent="sqlMapClientDAO"/>
+
+	<!--
+   <bean id="extraDAO" class="com.yylc.settlecore.common.dal.ibatis.IbatisExtraDAO" parent="sqlMapClientDAO"/>
+   -->
+</beans>

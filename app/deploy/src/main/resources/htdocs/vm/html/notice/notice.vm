@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+#parse("content/importBase.vm")
+<meta name="referrer" content="no-referrer" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+#preview>img {
+	width: 60%;
+}
+</style>
+</head>
+<body style="width: 100%; height: 100%;">
+	<div id="page-wrapper">
+		<!--BEGIN TITLE & BREADCRUMB PAGE-->
+		<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+			<div class="page-header pull-left">
+				<div class="page-title">养生知识管理</div>
+			</div>
+			<ol class="breadcrumb page-breadcrumb pull-right">
+				<li><i class="fa fa-home"></i>&nbsp;<a href="#">养生知识管理</a></li>
+			</ol>
+
+			<div class="clearfix"></div>
+		</div>
+
+		<div style="margin-top: 2%;" id="a">
+
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">类型：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select class="form-control" id="selectType">
+							<option selected="selected" value="">请选择</option>
+							<option value="1">新闻公告</option>
+							<option value="2">养生知识</option>
+						</select> <br />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">标题：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="selectTitle" class="form-control" /> <br />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">状态：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select class="form-control" id="delFlg">
+							<option selected="selected" value="">请选择</option>
+							<option value="0">已发布</option>
+							<option value="1">未发布</option>
+						</select> <br />
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-4" style="float: right">
+				<div class="control-group">
+					<div>
+						<button onclick="clean()" class="btn btn-danger" name="Name"
+							id="search_tel" value="清空"
+							style="float: right; margin-right: 2%;">清空</button>
+					</div>
+					<div>
+						<button onclick="sorce()" class="btn btn-info" name="Name"
+							id="search_tel" value="查询"
+							style="float: right; margin-right: 2%;">查询</button>
+					</div>
+					<div>
+						<button onclick="showallmodal('myModal','show')"
+							class="btn btn-warning" name="Name" id="search_tel" value="添加"
+							style="float: right; margin-right: 2%;">添加</button>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<!--END TITLE & BREADCRUMB PAGE-->
+		<!--BEGIN CONTENT-->
+		<table id="mytab" class="table table-hover"></table>
+
+		<!-- 详情 -->
+		<div class="modal fade" id="myAllModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" style="width: 50%;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">查看详情</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" role="form" name="inoticeform"
+							method="post" id="INFO_FORM">
+							<input type="hidden" id="INFO_KNOW_ID" name="knowId"
+								class="form-control" />
+							<div class="row">
+								<div class="form-group col-md-6">
+									<label for="lastname" class="col-sm-4 control-label">类型：</label>
+									<div class="col-sm-8">
+										<select id="INFO_TYPE" name="type" disabled="disabled">
+											<option value="1">新闻公告</option>
+											<option value="2">养生知识</option>
+										</select>
+									</div>
+								</div>
+
+								<div class="form-group col-md-6">
+									<label for="lastname" class="col-sm-4 control-label">标题：</label>
+									<div class="col-sm-8">
+										<input type="text" id="INFO_TITLE" name="title"
+											class="form-control" readonly="readonly" />
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="form-group col-md-6">
+									<label for="lastname" class="col-sm-4 control-label">内容：</label>
+									<div class="col-sm-8">
+										<input type="text" id="INFO_CONTENT" name="content"
+											class="form-control" readonly="readonly" />
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="form-group col-md-6">
+									<label for="lastname" class="col-sm-4 control-label">点赞统计：</label>
+									<div class="col-sm-8">
+										<input type="text" id="INFO_PRAISE_COUNT" name="praiseCount"
+											class="form-control" readonly="readonly" />
+									</div>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="lastname" class="col-sm-4 control-label">评论统计：</label>
+									<div class="col-sm-8">
+										<input type="text" id="INFO_COMMENT_COUNT" name="commentCount"
+											class="form-control" readonly="readonly" />
+									</div>
+								</div>
+							</div>
+
+						</form>
+					</div>
+					<div class="modal-footer">
+						<!-- <button type="button" onclick="changeUserInfo()">修改信息</button> -->
+						<button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 查看图片模块 -->
+		<div class="modal fade" id="imgbig" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">查看图片</h4>
+					</div>
+					<div class="modal-body">
+						<img alt="" src="" id="bigbis" style="width: 100%; height: 100%;" />
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="allImg" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">查看图片</h4>
+					</div>
+					<div class="modal-body" id="imgArr"></div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 添加模块开始 -->
+		<div class="modal fade" id="myModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" style="width: 40%">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">编辑养生知识</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" role="form" name="noticeform"
+							method="post" enctype="multipart/form-data">
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label">类型<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-10">
+									<input type="hidden" id="eknowId" value="0" name="eknowId" />
+									<select class="form-control" id="atype" name="atype">
+										<option value="">请选择</option>
+										<option value="1">新闻公告</option>
+										<option value="2">养生知识</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label">标题<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-10">
+									<input type="text" id="atitle" name="atitle"
+										class="form-control" />
+								</div>
+							</div>
+							<div class="form-group">
+								<input type="hidden" name="oldImg" id="oldImg"> <label
+									for="lastname" class="col-sm-2 control-label">缩略图<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-10">
+									<input type="file" id="aheadImg" name="aheadImg"
+										class="form-control" multiple="multiple"
+										onchange="preview(this)" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label"></label>
+								<div class="col-sm-10">
+									<div id="preview" style="display: none" class=""></div>
+								</div>
+							</div>
+							<div class="form-group">
+								<input type="hidden" name="acontent" id="acontent"> <label
+									for="lastname" class="col-sm-2 control-label">新闻内容<span
+									style="color: red;">*</span>
+								</label> <label for="lastname" class="col-sm-2 control-label"><span
+									style="color: red;">视频内容请参考https://www.kancloud.cn/wangfupeng/wangeditor2/134973</span>
+								</label><br>
+								<div id="edit" class="col-sm-10"></div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="submitAdd" class="btn btn-primary"
+							onclick="submitnotice(this)">确定</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--评论  -->
+		<div class="modal fade" id="pl" data-backdrop="static" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog" style="width: 50%;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myel">评论详情</h4>
+
+						<div class="row">
+							<label class="col-sm-2 control-label"
+								style="text-align: right; margin-top: 5px">开始时间：</label>
+							<div class="col-sm-3">
+								<div class="control-group">
+									<input type="hidden" id="linkid" name="linkid"
+										readonly="readonly" /> <input type="text" id="startDate"
+										name="startDate" class="form-control datetimepicker"
+										readonly="readonly" /> <br />
+								</div>
+							</div>
+
+							<label class="col-sm-2 control-label"
+								style="text-align: right; margin-top: 5px">结束时间：</label>
+							<div class="col-sm-3">
+								<div class="control-group">
+									<input type="text" id="endDate" name="endDate"
+										class="form-control datetimepicker" readonly="readonly" /> <br />
+								</div>
+							</div>
+							<button onclick="clean()" class="btn btn-danger" name="Name"
+								id="search_tel" value="清空"
+								style="float: right; margin-right: 2%;">清空</button>
+							<button onclick="comment2()" class="btn btn-info" name="Name"
+								id="search_tel" value="查询"
+								style="float: right; margin-right: 2%;">查询</button>
+						</div>
+					</div>
+					<div class="modal-body">
+						<table id="pltab" class="table table-hover"></table>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 注意， 只需要引用 JS，无需引用任何 CSS！！！-->
+		<script type="text/javascript" src="js/wangEditor/wangEditor.js"></script>
+		<script type="text/javascript">
+			var E = window.wangEditor
+			var editor = new E('#edit')
+			// 或者 var editor = new E( document.getElementById('editor') )
+			// 隐藏“网络图片”tab
+			editor.customConfig.showLinkImg = false
+			// 关闭粘贴样式的过滤
+			editor.customConfig.pasteFilterStyle = false
+			//editor.customConfig.debug = location.href.indexOf('wangeditor_debug_mode=1') > 0
+			// 下面两个配置，使用其中一个即可显示“上传图片”的tab。但是两者不要同时使用！！！
+			// editor.customConfig.uploadImgShowBase64 = true   // 使用 base64 保存图片
+			// 上传图片（举例）
+			editor.customConfig.uploadImgServer = 'fileUploadForEditor.do';
+			//限制上传图片数 
+			editor.customConfig.uploadImgMaxLength = 1;
+
+			editor.customConfig.uploadImgParams = {
+				token : 'abcdef12345' // 属性值会自动进行 encode ，此处无需 encode
+			}
+			//图片上传时的属性名 
+			editor.customConfig.uploadFileName = 'photo'
+
+			editor.customConfig.uploadImgHeaders = {
+				'Accept' : 'text/x-json'
+			}
+
+			editor.customConfig.uploadImgHooks = {
+				before : function(xhr, editor, files) {
+					// 图片上传之前触发
+					// xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，files 是选择的图片文件
+
+					// 如果返回的结果是 {prevent: true, msg: 'xxxx'} 则表示用户放弃上传
+					// return {
+					//     prevent: true,
+					//     msg: '放弃上传'
+					// }
+				},
+				success : function(xhr, editor, result) {
+					// 图片上传并返回结果，图片插入成功之后触发
+					// xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，result 是服务器端返回的结果
+					//alert(result.data);
+
+				},
+				fail : function(xhr, editor, result) {
+					// 图片上传并返回结果，但图片插入错误时触发
+					// xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，result 是服务器端返回的结果
+					//alert(result);
+				},
+				error : function(xhr, editor) {
+					// 图片上传出错时触发
+					// xhr 是 XMLHttpRequst 对象，editor 是编辑器对象
+				},
+				timeout : function(xhr, editor) {
+					// 图片上传超时时触发
+					// xhr 是 XMLHttpRequst 对象，editor 是编辑器对象
+				},
+
+				// 如果服务器端返回的不是 {errno:0, data: [...]} 这种格式，可使用该配置
+				// （但是，服务器端返回的必须是一个 JSON 格式字符串！！！否则会报错）
+				customInsert : function(insertImg, result, editor) {
+					// 图片上传并返回结果，自定义插入图片的事件（而不是编辑器自动插入图片！！！）
+					// insertImg 是插入图片的函数，editor 是编辑器对象，result 是服务器端返回的结果
+
+					// 举例：假如上传图片成功后，服务器端返回的是 {url:'....'} 这种格式，即可这样插入图片：
+					var url = result.data
+					/* var htmlStr = '<p style="margin:0;padding: 0;border:0;"><img src="'+url+'" style="max-width:100%;"><br></p>'; */
+					/* editor.txt.html(htmlStr); */
+					insertImg(url)
+
+					// result 必须是一个 JSON 格式字符串！！！否则报错
+				}
+			}
+			editor.create();
+			$('#editor').attr('style', 'height:auto;');
+		</script>
+	</div>
+</body>
+<script type="text/javascript">
+	//添加
+	function submitnotice(ele) {
+		var url = "";
+		var id = $("#eknowId").val();
+		if (id > "0") {
+			url = "updatenotice.do";
+		} else {
+			url = "addnotice.do";
+		}
+		$("#acontent").val(editor.txt.html());
+
+		$("form[name='noticeform']").ajaxSubmit({
+			type : "post",
+			url : url,
+			dataType : "json",
+			beforeSubmit : function() {
+				if ($("#atype").val() == null || $("#atype").val() == "") {
+					alert("类型不能为空");
+					return false;
+				}
+				if ($("#atitle").val() == null || $("#atitle").val() == "") {
+					alert("标题不能为空");
+					return false;
+				}
+				/* if($("#asubTitle").val()==null || $("#asubTitle").val()==""){
+					alert("副标题不能为空");
+					return false;
+				} */
+				$(ele).attr("disabled", true);
+			},
+			success : function(data) {
+				$(ele).attr("disabled", false);
+				if (data.success) {
+					alert("操作成功");
+					$("#myModal").modal("hide");
+					$("#mytab").bootstrapTable('refresh');
+					claenmyModal();
+				} else {
+					alert("操作失败,但系统无异常");
+				}
+			},
+			error : function() {
+				alert("操作失败！");
+				$(ele).attr("disabled", false);
+			}
+		});
+	}
+
+	//显示修改框
+	function updateNotice(index) {
+		editor.txt.html(all[index].content);//富文本回显
+		$("#eknowId").val(all[index].knowId);
+		$("#atype").val(all[index].type);
+		$("#atitle").val(all[index].title);
+		$("#asubTitle").val(all[index].subTitle);
+		$("#oldImg").val(all[index].headImgUrl);
+		var innerHtml = "";
+		if (all[index].headImgUrl) {
+			for (var i = 0; i < all[index].headImgUrl.length; i++) {
+				innerHtml += "<img src="+all[index].headImgUrl[i]+" />"
+			}
+		}
+		$("#preview").html(innerHtml);
+		$("#preview").css("display", "block");
+
+		$("#myModal").modal('show');
+	}
+
+	function claenmyModal() {
+		$("#myModal input").val("");
+		$("#myModal select").val("");
+		$("#myModal textarea").val("");
+		$("#id").val("0");
+		editor.txt.html("");
+	}
+	function claenmyEditModal() {
+		$("#myEditModal input").val("");
+		$("#myEditModal select").val("");
+		$("#myEditModal textarea").val("");
+		$("#id").val("0");
+	}
+
+	function clean() {
+		$("#a input").val("");
+		$("#a select").val("");
+	}
+
+	bootsearch()
+	function sorce() {
+		$("#mytab").bootstrapTable('destroy');
+		//生成用户数据
+		bootsearch();
+	}
+
+	var all;
+	function bootsearch() {
+		//生成用户数据
+		$('#mytab')
+				.bootstrapTable(
+						{
+							method : 'post',
+							contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+							url : "selectnotice.do",//要请求数据的文件路径
+							dataType : 'json',
+							striped : true, //是否显示行间隔色
+							pageNumber : 1, //初始化加载第一页，默认第一页
+							pageSize : 10,//单页记录数
+							pageList : [ 5, 10, 20, 30 ],//分页步进值
+							pagination : true,//是否分页
+							queryParamsType : 'limit',//查询参数组织方式
+							sidePagination : 'server',//指定服务器端分页
+							queryParams : function(p) {
+								return params(p);
+							},
+
+							clickToSelect : true,//是否启用点击选中行
+							toolbarAlign : 'right',//工具栏对齐方式
+							buttonsAlign : 'right',//按钮对齐方式
+							toolbar : '#toolbar',//指定工作栏
+							columns : [
+									{
+										title : '操作',
+										field : 'ID',
+										formatter : function(value, row, index) {
+											var html = "<a href='#' onclick=updateNotice('"
+													+ index
+													+ "')>详情</a> | <a href='#' onclick=showimg('"
+													+ index
+													+ "')>图片</a>| <a href='#' onclick=comment('"
+													+ index + "')>查看评论</a>";
+											if (row.delFlg == '1') {
+												html += "| <a href='#' onclick=deleteNotice('"
+														+ index + "',0)>发布</a>"
+											}
+											if (row.delFlg == '0') {
+												html += "| <a href='#' onclick=deleteNotice('"
+														+ index
+														+ "',1)>取消发布</a>"
+											}
+											return html;
+										}
+									},
+									{
+										title : '类型',
+										field : 'type',
+										formatter : function(value, row, index) {
+											if (value == 1)
+												return "新闻公告";
+
+											if (value == 2)
+												return "养生知识";
+										}
+
+									},
+									{
+										title : '标题',
+										field : 'title',
+									},
+									{
+										title : '主图',
+										field : 'headImgUrl',
+										formatter : function(value, row, index) {
+											return '<img src="'+value+'" data-imgurl="'+value+'" width="100px" height="60px"/>';
+										}
+									},
+									{
+										title : '创建者',
+										field : 'creater'
+									},
+									{
+										title : '创建时间',
+										field : 'gmtCreate',
+										formatter : function(value, row, index) {
+											return format(value);
+										}
+									},
+									{
+										title : '修改者',
+										field : 'modifier'
+									},
+									{
+										title : '修改时间',
+										field : 'gmtModified',
+										formatter : function(value, row, index) {
+											return format(value);
+										}
+									} ],
+							locale : 'zh-CN',//中文支持,
+							onLoadSuccess : function() { //加载成功时执行
+								$("img").load(
+										function() {
+											var viewer = new Viewer(document
+													.getElementById('mytab'), {
+												navbar : false,
+												toolbar : {
+													zoomIn : true,
+													zoomOut : true,
+													play : true,
+													rotateLeft : true,
+													rotateRight : true
+
+												},
+												show : function() {
+													viewer.update();
+												}
+											});
+										})
+							},
+							responseHandler : function(res) {
+								//在ajax获取到数据，渲染表格之前，修改数据源
+								all = res.rows;
+								return res;
+							}
+						})
+	}
+
+	//删除
+	function deleteNotice(index, delFlg) {
+		var knowId = all[index].knowId;
+		if (confirm("确定当前操作？操作后不可恢复")) {
+			jQuery.ajax({
+				url : 'deletenotice.do',
+				type : 'post',
+				dataType : 'json',
+				data : {
+					"knowId" : knowId,
+					"delFlg" : delFlg
+				},
+				success : function(result) {
+					if (result.success) {
+						alert(result.message);
+						$("#mytab").bootstrapTable('refresh');
+					} else {
+						alert(result.message);
+						$("#mytab").bootstrapTable('refresh');
+					}
+				},
+				error : function(result) {
+					alert("操作失败！");
+				}
+			})
+		} else {
+			return;
+		}
+	}
+
+	//显示添加框
+	function showallmodal(id, type) {
+		claenmyModal();
+		$("#preview").html("");
+		//$("#eknowId").val("0");
+		$("#" + id).modal(type);
+	}
+	//显示放大图片
+	function imgbig(url) {
+		$('#imgbig').modal('show');
+		$("#bigbis").attr('src', url);
+	}
+
+	//获取搜索的所有值
+	function params(params) {
+		$("#a input[type='text']").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		$("#a select").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		return params;
+	}
+	function params2(params) {
+		params["linkid"] = $("#linkid").val();
+		params["startDate"] = $("#startDate").val();
+		params["endDate"] = $("#endDate").val();
+		return params;
+	}
+
+	//显示详情框
+	function showmodal(id, type) {
+		$("#" + id).modal(type);
+	}
+
+	//显示详情框
+	function showaccount(index) {
+		$("#INFO_KNOW_ID").val(all[index].knowId);
+		$("#INFO_TYPE").val(all[index].type);
+		$("#INFO_TITLE").val(all[index].title);
+		$("#INFO_SUB_TITLE").val(all[index].subTitle);
+		$("#INFO_CONTENT").val(all[index].content);
+		$("#INFO_PRAISE_COUNT").val(all[index].praiseCount);
+		$("#INFO_COMMENT_COUNT").val(all[index].commentCount);
+		showmodal('myAllModal', 'show');
+	}
+
+	//显示所有图片
+	function showimg(index) {
+		var imgs = all[index].headImgUrl;
+		//遍历出所有图片的url并加到imgArr元素下 
+		var trs = "";
+		jQuery.each(imgs, function(i, value) {
+			trs += "<img alt='' src='" + value + "' id='bigbis" + i
+					+ "' style='width: 100%; height: 100%;' />";
+		});
+		$("#imgArr").html(trs);
+		$("#allImg").modal('show');
+	}
+	function comment(index) {
+		$("#pltab").bootstrapTable('destroy');
+		$("#startDate").val("");
+		$("#endDate").val("");
+		var data = all[index];
+		var u = data.knowId;
+		$('#linkid').val(u);
+		showcomment();
+		$("#pl").modal("show");
+	}
+	function comment2() {
+		$("#pltab").bootstrapTable('destroy');
+		//alert("comment2");
+		showcomment();
+	}
+	var all2;
+	function showcomment() {
+		$('#pltab')
+				.bootstrapTable(
+						{
+							method : 'post',
+							contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+							url : "selectek.do",//要请求数据的文件路径
+							dataType : 'json',
+							striped : true, //是否显示行间隔色
+							pageNumber : 1, //初始化加载第一页，默认第一页
+							pageSize : 10,//单页记录数
+							pageList : [ 5, 10, 20, 30 ],//分页步进值
+							pagination : true,//是否分页
+							queryParamsType : 'limit',//查询参数组织方式
+							sidePagination : 'server',//指定服务器端分页
+							queryParams : function(p) {
+								return params2(p);
+							},
+
+							clickToSelect : true,//是否启用点击选中行
+							toolbarAlign : 'right',//工具栏对齐方式
+							buttonsAlign : 'right',//按钮对齐方式
+							toolbar : '#toolbar',//指定工作栏
+							columns : [
+									{
+										title : '操作',
+										field : 'id',
+										formatter : function(value, row, index) {
+											var html = " <a href='#' onclick=deletepl('"
+													+ index + "')>删除</a>";
+											if (row.isBest == '0') {
+												html += "| <a href='#' onclick=upodatepl('"
+														+ index
+														+ "',1)>设为最优</a>";
+											} else {
+												html += "| <a href='#' onclick=upodatepl('"
+														+ index
+														+ "',0)>取消最优</a>";
+											}
+											return html;
+										}
+									},
+									{
+										title : '评价内容',
+										field : 'evaluateContent'
+									},
+
+									{
+										title : '创建时间',
+										field : 'gmtCreate',
+										formatter : function(value, row, index) {
+											return format(value);
+										}
+									},
+									{
+										title : '修改时间',
+										field : 'gmtModified',
+										formatter : function(value, row, index) {
+											return format(value);
+										}
+									} ],
+							locale : 'zh-CN',//中文支持,
+							responseHandler : function(res) {
+								//在ajax获取到数据，渲染表格之前，修改数据源
+								all2 = res.rows;
+								return res;
+							}
+						})
+	}
+	$('.datetimepicker').datetimepicker({
+		minView : "month",//设置只显示到月份
+		format : 'yyyy-mm-dd',
+		language : 'zh-CN',
+		autoclose : true,//选中关闭
+		todayBtn : true
+	//今日按钮
+	})
+	function deletepl(index) {
+		var id = all2[index].id;
+		if (confirm("确定删除此信息？删除后不可恢复")) {
+			jQuery.ajax({
+				url : "deletepl.do",
+				type : 'post',
+				data : {
+					"id" : id
+				},
+				dataType : 'json',
+				success : function(json) {
+					if (json) {
+						alert("删除成功");
+						$("#pltab").bootstrapTable('refresh');
+					} else {
+						alert("删除失败");
+					}
+				},
+				error : function() {
+					alert("异常！");
+				}
+			});
+		} else {
+			return;
+		}
+	}
+
+	function upodatepl(index, isBest) {
+		var id = all2[index].id;
+		jQuery.ajax({
+			url : "upodatepl.do",
+			type : 'post',
+			data : {
+				"id" : id,
+				"isBest" : isBest
+			},
+			dataType : 'json',
+			success : function(json) {
+				if (json) {
+					alert(json.message);
+					$("#pltab").bootstrapTable('refresh');
+				} else {
+					alert(json.message);
+				}
+			},
+			error : function() {
+				alert("异常！");
+			}
+		});
+	}
+
+	//图片预览
+	function preview(target) {
+		$("#preview").html("");
+		var length = 0;
+		var imgContent = document.getElementById('preview');
+		imgContent.style.display = "block";
+		//imgContent为图片展示的区域
+		var reader = new FileReader();
+		reader.readAsDataURL(target.files[length]);
+		//异步读取图片，读取完会触onload
+		reader.onload = function() {
+			imgContent.innerHTML += "<img src='"+this.result+"'/>";
+			length++;
+			if (length < target.files.length) {
+				reader.readAsDataURL(target.files[length]);
+			}
+		}
+	}
+</script>
+</html>

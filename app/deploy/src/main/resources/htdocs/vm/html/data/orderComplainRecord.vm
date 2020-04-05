@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+#parse("content/importBase.vm")
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+#preview>img {
+	width: 100%;
+	height: 170px;
+}
+</style>
+</head>
+<body style="width: 100%; height: 100%;">
+	<div id="page-wrapper">
+		<!--BEGIN TITLE & BREADCRUMB PAGE-->
+		<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+			<div class="page-header pull-left">
+				<div class="page-title">顾客投诉记录</div>
+			</div>
+			<ol class="breadcrumb page-breadcrumb pull-right">
+				<li><i class="fa fa-home"></i>&nbsp;<a href="#">顾客投诉记录表</a></li>
+			</ol>
+			<div class="clearfix"></div>
+		</div>
+
+
+		<div style="margin-top: 2%;" id="a">
+
+			<div class="row">
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">门店：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select id="teamIds" name="teamIds"
+							class="selectpicker show-tick form-control" multiple title="请选择"
+							data-live-search="true" data-size="5" data-actions-box="true">
+						</select>
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">营业员信息：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="operMsg" name="operMsg"
+							class="form-control" placeholder="编号、手机、姓名" /> <br />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">会员信息：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="userMsg" name="userMsg"
+							class="form-control" placeholder="编号、手机、姓名" /> <br />
+					</div>
+				</div>
+
+			</div>
+
+			<div class="row">
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">商品信息：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="proMsg" name="proMsg" class="form-control"
+							placeholder="ERP编号、商品编号、名称" />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">投诉状态：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select name="conStatus" id="conStatus" class="form-control">
+							<option value="">请选择</option>
+							<option value="ING" selected="selected">处理中</option>
+							<option value="END">已结束</option>
+						</select> <br />
+					</div>
+				</div>
+
+			</div>
+
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">创建时间（开始）：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="startDate"
+							class="form-control datetimepicker" readonly /> <br />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">创建时间（结束）：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="endDate"
+							class="form-control datetimepicker" readonly /> <br />
+					</div>
+				</div>
+
+			</div>
+			<br />
+
+			<div class="row">
+				<div class="col-sm-4" style="float: right">
+					<div class="control-group">
+						<div>
+							<button id="btnTransfer" type="button" class="btn btn-danger"
+								style="float: right; margin-right: 2%; margin-bottom: 10px;"
+								onclick="clean()">清空</button>
+						</div>
+						<div>
+							<button onclick="sorce()" class="btn btn-info" name="Name"
+								id="search_tel" value="查询"
+								style="float: right; margin-right: 2%;">查询</button>
+						</div>
+						<div>
+							<button id="search_btn" type="button" class="btn btn-success"
+								style="float: right; margin-right: 2%;"
+								onclick="exportAllPage()">导出全部</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<table id="mytab" class="table table-hover"></table>
+
+	</div>
+
+</body>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('.selectpicker').selectpicker({
+			'noneSelectedText' : '请选择',
+			'deselectAllText' : '全不选',
+			'selectAllText' : '全选',
+		})
+		getAllTeamMsg();
+	})
+</script>
+
+<script type="text/javascript">
+	$('.datetimepicker').datetimepicker({
+		minView : "month",//设置只显示到月份
+		format : 'yyyy-mm-dd',
+		language : 'zh-CN',
+		autoclose : true,//选中关闭
+		todayBtn : true
+	//今日按钮
+	})
+	function clean() {
+		$("#a input").val("");
+		$("#a select").val("");
+		$('.selectpicker').selectpicker('refresh');
+	}
+
+	bootsearch(null);
+
+	var all;
+	function sorce() {
+		$("#mytab").bootstrapTable('destroy');
+		//生成用户数据
+		bootsearch("queryAllDiscountUseList.do");
+	}
+
+	function bootsearch(url) {
+		//生成用户数据
+		$('#mytab')
+				.bootstrapTable(
+						{
+							method : 'post',
+							contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+							url : "complain/orderComplainRecord.do",//要请求数据的文件路径
+							dataType : 'json',
+							striped : true, //是否显示行间隔色
+							pageNumber : 1, //初始化加载第一页，默认第一页
+							pageSize : 10,//单页记录数
+							pageList : [ 5, 10, 20, 30 ],//分页步进值
+							pagination : true,//是否分页
+							queryParamsType : 'limit',//查询参数组织方式
+							sidePagination : 'server',//指定服务器端分页
+							queryParams : function(p) {
+								return params(p);
+							},
+							clickToSelect : true,//是否启用点击选中行
+							toolbarAlign : 'right',//工具栏对齐方式
+							buttonsAlign : 'right',//按钮对齐方式
+							toolbar : '#toolbar',//指定工作栏
+							showFooter : false,//开启列计算
+							columns : [
+									{
+										title : '状态',
+										field : 'statusStr'
+									},
+									{
+										title : '退货原因',
+										field : 'reason'
+									},
+									{
+										title : '门店',
+										field : 'teamId',
+										formatter : function(value, row, index) {
+											return checkEmpty(row.teamId)
+													+ "</br>"
+													+ checkEmpty(row.teamName)
+													+ "</br>"
+													+ checkEmpty(row.teamErpNo);
+										}
+									},
+									{
+										title : '商品信息',
+										field : 'productId',
+										formatter : function(value, row, index) {
+											return checkEmpty(row.productId)
+													+ "</br>"
+													+ checkEmpty(row.productName)
+													+ "</br>"
+													+ checkEmpty(row.productErpNo)
+													+ "</br>"
+													+ checkEmpty(row.specification)
+													+ "</br>"
+													+ checkEmpty(row.unit);
+										}
+									},
+									{
+										title : '订单数量',
+										field : 'orderCount'
+									},
+									{
+										title : '退货数量',
+										field : 'returnCount'
+									},
+									{
+										title : '顾客',
+										field : 'cln_user_name',
+										formatter : function(value, row, index) {
+											return checkEmpty(row.cln_user_name)
+													+ "</br>"
+													+ checkEmpty(row.cln_user_cell);
+										}
+									},
+									{
+										title : '投诉时间',
+										field : 'cln_time'
+									},
+									{
+										title : '投诉联系人信息',
+										field : 'linkUser',
+										formatter : function(value, row, index) {
+											return checkEmpty(row.linkUser)
+													+ "</br>"
+													+ checkEmpty(row.linkCell);
+										}
+									},
+									{
+										title : '顾客备注',
+										field : 'reasonOther'
+									},
+									{
+										title : '顾客描述图片',
+										field : 'returnImgs',
+										formatter : function(value, row, index) {
+											var thisHtml = '';
+											for (var a = 0; a < value.length; a++) {
+												thisHtml += '<img src="'+value[a]+'" data-imgurl="'+value[a]+'" width="100px" height="60px"/>';
+											}
+											return thisHtml
+										}
+									},
+									{
+										title : '营业员信息',
+										field : 'assUserName',
+										formatter : function(value, row, index) {
+											return checkEmpty(row.assUserName)
+													+ "</br>"
+													+ checkEmpty(row.assUserCell);
+										}
+									},
+									{
+										title : '营业员审核备注',
+										field : 'failReason'
+									},
+									{
+										title : '营业员质量问题描述',
+										field : 'quartyDesc'
+									},
+									{
+										title : '营业员描述图片',
+										field : 'quartuImgs',
+										formatter : function(value, row, index) {
+											var thisHtml = '';
+											for (var c = 0; c < value.length; c++) {
+												thisHtml += '<img src="'+value[c]+'" data-imgurl="'+value[c]+'" width="100px" height="60px"/>';
+											}
+											return thisHtml
+										}
+									},
+									{
+										title : '质管信息',
+										field : 'acc_user_name',
+										formatter : function(value, row, index) {
+											return checkEmpty(row.acc_user_name)
+													+ "</br>"
+													+ checkEmpty(row.acc_user_cell);
+										}
+									},
+									{
+										title : '质管处理方式',
+										field : 'dealWay'
+									},
+									{
+										title : '质管审核备注',
+										field : 'acc_user_check_memo'
+									},
+									{
+										title : '营业员退款凭证',
+										field : 'returnVoucherMemo'
+									},
+									{
+										title : '营业员退款凭证图片',
+										field : 'returnVoucherImgs',
+										formatter : function(value, row, index) {
+											var thisHtml = '';
+											for (var b = 0; b < value.length; b++) {
+												thisHtml += '<img src="'+value[b]+'" data-imgurl="'+value[b]+'" width="100px" height="60px"/>';
+											}
+											return thisHtml
+										}
+									},
+									{
+										title : '财务内勤信息',
+										field : 'cwnq_user_name',
+										formatter : function(value, row, index) {
+											return checkEmpty(row.cwnq_user_name)
+													+ "</br>"
+													+ checkEmpty(row.cwnq_user_cell);
+										}
+									}, {
+										title : '财务内勤审核理由',
+										field : 'cwnq_user_check_memo'
+									}, {
+										title : '订单号',
+										field : 'orderNo'
+									}, {
+										title : '子订单号',
+										field : 'orderId'
+									} ],
+							locale : 'zh-CN',//中文支持,
+							onLoadSuccess : function() { //加载成功时执行
+								$("img").load(
+										function() {
+											var viewer = new Viewer(document
+													.getElementById('mytab'), {
+												navbar : false,
+												toolbar : {
+													zoomIn : true,
+													zoomOut : true,
+													play : true,
+													rotateLeft : true,
+													rotateRight : true
+
+												},
+												show : function() {
+													viewer.update();
+												}
+											});
+										})
+							},
+							responseHandler : function(res) {
+								//在ajax获取到数据，渲染表格之前，修改数据源
+								all = res.rows;
+								return res;
+							}
+						})
+	}
+
+	//获取搜索的所有值
+	function params(params) {
+
+		params['teamIds'] = $('#teamIds').val();
+		params['operMsg'] = $('#operMsg').val();
+		params['userMsg'] = $('#userMsg').val();
+
+		params['proMsg'] = $('#proMsg').val();
+		params['conStatus'] = $('#conStatus').val();
+
+		params['startDate'] = $('#startDate').val();
+		params['endDate'] = $('#endDate').val();
+
+		return params;
+	}
+</script>
+
+<script type="text/javascript">
+	function exportAllPage() {
+		var teamIds = $("#teamIds").val();
+		var operMsg = $("#operMsg").val();
+		var userMsg = $("#userMsg").val();
+
+		var proMsg = $("#proMsg").val();
+		var conStatus = $("#conStatus").val();
+
+		var startDate = $("#startDate").val();
+		var endDate = $("#endDate").val();
+
+		var action = "complain/exportOrderComplainRecord.do";
+		var form = $("<form></form>");
+		form.attr('action', action);
+		form.attr('method', 'post');
+		input2 = $("<input type='text' name='teamIds' value='"+teamIds+"' />");
+		form.append(input2);
+		input3 = $("<input type='text' name='startDate' value='"+startDate+"' />");
+		form.append(input3);
+		input4 = $("<input type='text' name='endDate' value='"+endDate+"' />");
+		form.append(input4);
+		input5 = $("<input type='text' name='operMsg' value='"+operMsg+"' />");
+		form.append(input5);
+		input6 = $("<input type='text' name='userMsg' value='"+userMsg+"' />");
+		form.append(input6);
+		input7 = $("<input type='text' name='proMsg' value='"+proMsg+"' />");
+		form.append(input7);
+		input8 = $("<input type='text' name='conStatus' value='"+conStatus+"' />");
+		form.append(input8);
+
+		form.appendTo("body");
+		form.css('display', 'none');
+		form.submit();
+	}
+</script>
+</html>

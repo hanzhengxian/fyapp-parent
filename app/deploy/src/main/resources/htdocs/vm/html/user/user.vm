@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+#parse("content/importBase.vm")
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+#preview>img {
+	width: 100%;
+	height: 170px;
+}
+
+.fixed-table-container thead th:nth-child(1) .th-inner {
+	width: 200px
+}
+</style>
+</head>
+<body style="width: 100%; height: 100%;">
+	<div id="page-wrapper">
+		<!--BEGIN TITLE & BREADCRUMB Page-->
+		<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+			<div class="page-header pull-left">
+				<div class="page-title">用户管理</div>
+			</div>
+			<ol class="breadcrumb page-breadcrumb pull-right">
+				<li><i class="fa fa-home"></i>&nbsp;<a href="#">用户管理</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="hidden"><a href="#">用户信息管理</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="active">用户信息管理</li>
+			</ol>
+
+			<div class="clearfix"></div>
+		</div>
+
+
+		<div style="margin-top: 2%;" id="a">
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">用户编号：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="userId" class="form-control" /> <br />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">用户昵称：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="nickName" class="form-control" /> <br />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">真实姓名：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="realName" class="form-control" /> <br />
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">推荐人编号：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="recommendUserId" class="form-control" /> <br />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">推荐人昵称：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="recommendNickName" class="form-control" />
+						<br />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">推荐人真实姓名：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="recommendRealName" class="form-control" />
+						<br />
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">用户手机号码：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="selectcell" class="form-control" /> <br />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">推荐人手机号：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="recommendUserCell" class="form-control" />
+						<br />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">用户ERP编号：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="erpNo" class="form-control" /> <br />
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">用户性别：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select name="selectsex" id="selectsex" class="form-control">
+							<option value="">请选择</option>
+							<option value="1">男</option>
+							<option value="2">女</option>
+							<option value="0">保密</option>
+						</select> <br />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">用户等级：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select name="userLevel" id="userLevel" class="form-control">
+							<option value="">请选择</option>
+							<option value="1">V1</option>
+							<option value="2">V2</option>
+							<option value="3">V3</option>
+							<option value="4">V4</option>
+							<option value="5">V5</option>
+						</select> <br />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">用户账号状态：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select name="delFlg" id="delFlg" class="form-control">
+							<option value="">请选择</option>
+							<option value="1">黑名单</option>
+							<option value="0">正常</option>
+						</select> <br />
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">注册开始时间：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="startDate" name="startDate"
+							class="form-control datetimepicker" readonly="readonly" /> <br />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">注册结束时间：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="endDate" name="endDate"
+							class="form-control datetimepicker" readonly="readonly" /> <br />
+					</div>
+				</div>
+
+			</div>
+
+			<div class="col-sm-4" style="float: right">
+				<div class="control-group">
+					<div>
+						<button id="search_btn" type="button" class="btn btn-success"
+							style="float: right; margin-right: 2%; margin-bottom: 10px;"
+							onclick="exportAllPage('all')">导出全部</button>
+					</div>
+					<div>
+						<button id="btnTransfer" type="button" class="btn btn-success"
+							style="float: right; margin-right: 2%; margin-bottom: 10px;"
+							onclick="exportAllPage('thisPage')">导出当页</button>
+					</div>
+					<div>
+						<button onclick="clean()" class="btn btn-danger" name="Name"
+							id="search_tel" value="清空"
+							style="float: right; margin-right: 2%;">清空</button>
+					</div>
+					<div>
+						<button onclick="sorce()" class="btn btn-info" name="Name"
+							id="search_tel" value="查询"
+							style="float: right; margin-right: 2%;">查询</button>
+					</div>
+
+
+				</div>
+			</div>
+
+		</div>
+
+		<input type="hidden" id="offset" readonly="readonly" /> <input
+			type="hidden" id="limit" readonly="readonly" />
+
+		<!--END TITLE & BREADCRUMB P-->
+		<!--BEGIN CONTENT-->
+		<table id="mytab" class="table table-hover"></table>
+		<div class="modal fade" id="myModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" style="width: 50%;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">查看详情</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" role="form" name="noticeform"
+							method="post" id="INFO_FORM">
+							<input type="hidden" id="INFO_USER_ID" name="userId"
+								class="form-control" />
+							<div class="row">
+								<div class="form-group col-md-6">
+									<label for="lastname" class="col-sm-4 control-label">用户昵称：</label>
+									<div class="col-sm-8">
+										<input type="text" id="INFO_NICK_NAME" name="nickName"
+											class="form-control" />
+									</div>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="lastname" class="col-sm-4 control-label">真实姓名：</label>
+									<div class="col-sm-8">
+										<input type="text" id="INFO_REAL_NAME" name="realName"
+											class="form-control" />
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="form-group col-md-6">
+									<label for="lastname" class="col-sm-4 control-label">手机号码：</label>
+									<div class="col-sm-8">
+										<input type="text" id="INFO_CELL" name="cell"
+											class="form-control" />
+									</div>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="lastname" class="col-sm-4 control-label">性别：</label>
+									<div class="col-sm-8">
+										<select name="sex" id="INFO_SEX" class="form-control">
+											<option value="">请选择</option>
+											<option value="1">男</option>
+											<option value="2">女</option>
+										</select>
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="form-group col-md-6">
+									<label for="lastname" class="col-sm-4 control-label">身份证号：</label>
+									<div class="col-sm-8">
+										<!-- <input type="text" id="INFO_CERT_NO" name="INFO_CERT_NO"
+											class="form-control" readonly /> -->
+										<input type="text" id="INFO_CERT_NO" class="form-control"
+											name="certNo" />
+									</div>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="lastname" class="col-sm-4 control-label">等级：</label>
+									<div class="col-sm-8">
+										<select name="userLevel" id="INFO_USER_LEVEL"
+											class="form-control">
+											<option value="">请选择</option>
+											<option value="1">V1</option>
+											<option value="2">V2</option>
+											<option value="3">V3</option>
+											<option value="4">V4</option>
+											<option value="5">V5</option>
+										</select>
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="form-group col-md-6">
+									<label for="lastname" class="col-sm-4 control-label">生日：</label>
+									<div class="col-sm-8">
+										<input type="text" id="INFO_BIRTHDAY" class="form-control"
+											name="certNo" />
+									</div>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="lastname" class="col-sm-4 control-label">年龄段：</label>
+									<div class="col-sm-8">
+										<input type="text" id="INFO_AGEGROUP" class="form-control"
+											name="certNo" />
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="form-group col-md-6">
+									<label for="lastname" class="col-sm-4 control-label">年龄：</label>
+									<div class="col-sm-8">
+										<input type="text" id="INFO_AGE" name="age"
+											class="form-control" />
+									</div>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="lastname" class="col-sm-4 control-label">公司名称：</label>
+									<div class="col-sm-8">
+										<input type="text" id="INFO_COM_NAME" name="comName"
+											class="form-control" />
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="form-group col-md-6">
+									<label for="lastname" class="col-sm-4 control-label">公司地址：</label>
+									<div class="col-sm-8">
+										<input type="text" id="INFO_COM_ADDRESS" name="comAddress"
+											class="form-control" />
+									</div>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="lastname" class="col-sm-4 control-label">职业：</label>
+									<div class="col-sm-8">
+										<input type="text" id="INFO_PROFESSION" name="profession"
+											class="form-control" />
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="form-group col-md-6">
+									<label for="lastname" class="col-sm-4 control-label">状态：</label>
+									<div class="col-sm-8">
+										<input type="text" id="INFO_DEL_FLG" name="delFlg"
+											class="form-control" />
+									</div>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="lastname" class="col-sm-4 control-label">用户角色：</label>
+									<div class="col-sm-8">
+										<input type="text" id="INFO_ROLE" name="role"
+											class="form-control" />
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="form-group col-md-6">
+									<label for="lastname" class="col-sm-4 control-label">推荐人：</label>
+									<div class="col-sm-8">
+										<input type="text" id="INFO_RECOMMEND_USER_ID"
+											name="recommendUserId" class="form-control" />
+									</div>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="lastname" class="col-sm-4 control-label">账户号：</label>
+									<div class="col-sm-8">
+										<input type="text" id="INFO_ACCOUNT_NO" name="accountNo"
+											class="form-control" />
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="form-group col-md-6">
+									<label for="lastname" class="col-sm-4 control-label">用户ID：</label>
+									<div class="col-sm-8">
+										<input type="text" id="INFO_TEAM_ID" name="teamId"
+											class="form-control" />
+									</div>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="lastname" class="col-sm-4 control-label">健康值：</label>
+									<div class="col-sm-8">
+										<input type="text" id="INFO_DEVOTE_AMOUNT" name="devoteAmount"
+											class="form-control" />
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="form-group col-md-6">
+									<label for="lastname" class="col-sm-4 control-label">胡币：</label>
+									<div class="col-sm-8">
+										<input type="text" id="INFO_HU_BALANCE" name="huBalance"
+											class="form-control" />
+									</div>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="lastname" class="col-sm-4 control-label">积分：</label>
+									<div class="col-sm-8">
+										<input type="text" id="INFO_HU_POINT" name="huPoint"
+											class="form-control" />
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<!-- <button type="button" onclick="changeUserInfo()">修改信息</button> -->
+						<button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="realNameModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" style="width: 50%;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">修改真实姓名</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" role="form" name="noticeform"
+							method="post">
+							<input type="hidden" id="REAL_USER_ID" name="userId"
+								class="form-control" />
+							<div class="row">
+								<div class="form-group col-md-6">
+									<label for="lastname" class="col-sm-4 control-label">真实姓名：</label>
+									<div class="col-sm-8">
+										<input type="text" id="MODIFY_REAL_NAME" name="realName"
+											class="form-control" />
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="form-group col-md-6">
+									<label for="lastname" class="col-sm-4 control-label">ERP编号：</label>
+									<div class="col-sm-8">
+										<input type="text" id="MODIFY_ERP_NO" name="erpNo"
+											class="form-control" />
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-info"
+							onclick="updateUserRealName()">修改信息</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 用户流水信息列表 -->
+		<div class="modal fade" id="accountModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" style="width: 50%;">
+				<div class="modal-content">
+					<input type="hidden" id="accountLog" name="accountLog"
+						readonly="readonly" />
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">流水记录详情</h4>
+						<!-- 查询条件  -->
+						<div class="row">
+							<label class="col-sm-2 control-label"
+								style="text-align: right; margin-top: 5px">流水类型：</label>
+							<div class="col-sm-3">
+								<div class="control-group">
+									<select name="logType" id="logType" class="form-control">
+										<option value="">请选择</option>
+										<option value="1">健康值</option>
+										<option value="6">胡币</option>
+										<option value="3">积分</option>
+										<!-- <option value="4">临时积分</option>
+										<option value="5">临时胡币</option> -->
+									</select>
+								</div>
+							</div>
+							<label class="col-sm-2 control-label"
+								style="text-align: right; margin-top: 5px">流水标识：</label>
+							<div class="col-sm-3">
+								<div class="control-group">
+									<select name="logFlg" id="logFlg" class="form-control">
+										<option value="">请选择</option>
+										<option value="1">支出</option>
+										<option value="1.1">支出退回</option>
+										<option value="2">返利</option>
+										<option value="2.1">返利回退</option>
+										<option value="3">购物</option>
+										<option value="4">收入</option>
+										<option value="5">退货</option>
+										<option value="6">提现</option>
+										<option value="7">提现退回</option>
+										<option value="8">兑换</option>
+										<option value="9">领取</option>
+										<option value="10">积分过期</option>
+										<option value="11">邀请好友</option>
+										<option value="12">失效贡献值</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<br>
+						<div class="row">
+							<label class="col-sm-2 control-label"
+								style="text-align: right; margin-top: 5px">开始时间：</label>
+							<div class="col-sm-3">
+								<div class="control-group">
+									<input type="text" id="startDateS" name="startDate"
+										class="form-control datetimepicker" readonly="readonly" /> <br />
+								</div>
+							</div>
+							<label class="col-sm-2 control-label"
+								style="text-align: right; margin-top: 5px">结束时间：</label>
+							<div class="col-sm-3">
+								<div class="control-group">
+									<input type="text" id="endDateS" name="endDate"
+										class="form-control datetimepicker" readonly="readonly" /> <br />
+								</div>
+							</div>
+							<button onclick="cleanFrame()" class="btn btn-danger" name="Name"
+								id="search_tel" value="清空"
+								style="float: right; margin-right: 2%;">清空</button>
+							<button onclick="showaccountlogTab()" class="btn btn-info"
+								name="Name" id="search_tel" value="查询"
+								style="float: right; margin-right: 2%;">查询</button>
+						</div>
+					</div>
+					<div class="modal-body">
+						<table id="stockPriceTab" class="table table-hover"></table>
+					</div>
+					<div class="modal-footer">
+						<!-- <button type="button" class="btn btn-danger" onclick="showStockPrioceModal()">新增库存属性</button> -->
+						<button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 收货地址 -->
+		<div class="modal fade" id="addressModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" style="width: 50%;">
+				<div class="modal-content">
+					<input type="hidden" id="addressUserId" name="addressUserId"
+						readonly="readonly" />
+					<div class="modal-body">
+						<table id="addressTab" class="table table-hover"></table>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="imgbig" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">查看图片</h4>
+					</div>
+					<div class="modal-body">
+						<img alt="" src="" id="bigbis" style="width: 100%; height: 100%;" />
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</body>
+
+<script type="text/javascript">
+	$('.datetimepicker').datetimepicker({
+		minView : "month",//设置只显示到月份
+		format : 'yyyy-mm-dd',
+		language : 'zh-CN',
+		autoclose : true,//选中关闭
+		todayBtn : true
+	//今日按钮
+	})
+	function clean() {
+		$("#a input").val("");
+		$("#a select").val("");
+	}
+	function cleanFrame() {
+		$("#logType").val("");
+		$("#logFlg").val("");
+		$("#startDate").val("");
+		$("#endDate").val("");
+	}
+
+	bootsearch(null);
+
+	var all;
+	function sorce() {
+		$("#mytab").bootstrapTable('destroy');
+		//生成用户数据
+		bootsearch("selectuser.do");
+	}
+
+	function bootsearch(url) {
+		$('#mytab')
+				.bootstrapTable(
+						{
+							method : 'post',
+							contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+							url : url,//要请求数据的文件路径
+							dataType : 'json',
+							striped : true, //是否显示行间隔色
+							pageNumber : 1, //初始化加载第一页，默认第一页
+							pageSize : 10,//单页记录数
+							pageList : [ 5, 10, 20, 30 ],//分页步进值
+							pagination : true,//是否分页
+							queryParamsType : 'limit',//查询参数组织方式
+							sidePagination : 'server',//指定服务器端分页
+							queryParams : function(p) {
+								return params(p);
+							},
+							clickToSelect : true,//是否启用点击选中行
+							toolbarAlign : 'right',//工具栏对齐方式
+							buttonsAlign : 'right',//按钮对齐方式
+							toolbar : '#toolbar',//指定工作栏
+							columns : [
+									{
+										title : '操作',
+										field : 'ID',
+										formatter : function(value, row, index) {
+
+											var menu = "<a href='#' onclick=showaccount('"
+													+ index
+													+ "')>查看详情</a>| "
+													+ "<a href='#' onclick=showaccountlog('"
+													+ index
+													+ "')>流水记录</a>| "
+													+ "<a href='#' onclick=showAddressMsg('"
+													+ index
+													+ "')>收货地址</a>| "
+													+ "<a href='#' onclick=showRealNameModal('"
+													+ index + "')>修改真实姓名</a>";
+
+											if (row.delFlg == '0') {
+												menu += "| <a href='#' onclick=modifyUserStatus('"
+														+ index
+														+ "',1)>加入黑名单</a>";
+											}
+
+											if (row.delFlg == '1') {
+												menu += "| <a href='#' onclick=modifyUserStatus('"
+														+ index
+														+ "',0)>移除黑名单</a>";
+											}
+
+											return menu;
+										}
+									},
+									{
+										title : '用户头像',
+										field : 'headUrl',
+										formatter : function(value, row, index) {
+											return '<img src="'+value+'" data-imgurl="'+value+'" width="100px" height="60px"/>';
+										}
+									},
+									{
+										title : '手机号码',
+										field : 'cell'
+									},
+									{
+										title : '用户昵称',
+										field : 'nickName'
+									},
+									{
+										title : 'ERP编号',
+										field : 'erpNo'
+									},
+									{
+										title : '真实姓名',
+										field : 'realName'
+									},
+									{
+										title : '性别',
+										field : 'sex',
+										formatter : function(value, row, index) {
+											if (value == "1")
+												return "男";
+											if (value == "2")
+												return "女";
+											else
+												return "保密";
+										}
+									},
+									{
+										title : '身份证号',
+										field : 'certNo'
+									},
+									{
+										title : '生日',
+										field : 'birthday'
+									},
+									{
+										title : '年龄段',
+										field : 'ageGroup'
+									},
+									{
+										title : '职业',
+										field : 'profession'
+									},
+									{
+										title : '公司名称',
+										field : 'comName'
+									},
+									{
+										title : '公司地址',
+										field : 'comAddress'
+									},
+									{
+										title : '账户状态',
+										field : 'delFlg',
+										formatter : function(value, row, index) {
+											if (value == "0")
+												return "正常";
+											if (value == "1")
+												return "黑名单";
+										}
+
+									},
+									{
+										title : '等级',
+										field : 'userLevel_Str'
+									},
+									{
+										title : '推荐人昵称',
+										field : 'recommendNickName'
+									},
+									{
+										title : '推荐人手机号',
+										field : 'recommendUserCell'
+									},
+									{
+										title : '推荐人姓名',
+										field : 'recommendRealName'
+									},
+									{
+										title : '创建时间',
+										field : 'gmtCreate',
+										formatter : function(value, row, index) {
+											return format(value);
+										}
+									}, {
+										title : '用户编号',
+										field : 'userId'
+									}, {
+										title : '推荐人编号',
+										field : 'recommendUserId'
+									}, ],
+							locale : 'zh-CN',//中文支持,
+							formatNoMatches : function() {
+								if (isEmpty(url)) {
+									return "单击查询搜索记录"
+								} else {
+									return "没有找到匹配的记录"
+								}
+							},
+							onLoadSuccess : function() { //加载成功时执行
+								$("img").load(
+										function() {
+											var viewer = new Viewer(document
+													.getElementById('mytab'), {
+												navbar : false,
+												toolbar : {
+													zoomIn : true,
+													zoomOut : true,
+													play : true,
+													rotateLeft : true,
+													rotateRight : true
+
+												},
+												show : function() {
+													viewer.update();
+												}
+											});
+										})
+							},
+							responseHandler : function(res) {
+								//在ajax获取到数据，渲染表格之前，修改数据源
+								all = res.rows;
+								return res;
+							}
+						})
+
+	}
+
+	//显示添加框
+	function showallmodal(id, type) {
+		$("#" + id).modal(type);
+	}
+
+	//显示详情框
+	function showaccount(number) {
+		$("#INFO_USER_ID").val(all[number].userId);
+		$("#INFO_NICK_NAME").val(all[number].nickName);
+		$("#INFO_CELL").val(all[number].cell);
+		$("#INFO_SEX").val(all[number].sex);
+		$("#INFO_CERT_NO").val(all[number].certNo);
+		$("#INFO_USER_LEVEL").val(all[number].userLevel);
+		$("#INFO_AGE").val(all[number].age);
+		$("#INFO_COM_NAME").val(all[number].comName);
+		if (all[number].delFlg == "0")
+			$("#INFO_DEL_FLG").val("正常");
+		if (all[number].delFlg == "1")
+			$("#INFO_DEL_FLG").val("黑名单");
+		$("#INFO_ROLE").val(all[number].role);
+		$("#INFO_RECOMMEND_USER_ID").val(all[number].recommendUserId);
+		$("#INFO_ACCOUNT_NO").val(all[number].accountNo);
+		$("#INFO_TEAM_ID").val(all[number].teamId);
+		$("#INFO_DEVOTE_AMOUNT").val(all[number].devoteAmount / 100);
+		//$("#INFO_HU_BALANCE").val(all[number].huBalance / 100);
+		$("#INFO_HU_POINT").val(all[number].huPoint / 100);
+		$("#INFO_HU_BALANCE").val(all[number].rePoint / 100);
+		$("#INFO_REAL_NAME").val(all[number].realName);
+		$("#INFO_COM_ADDRESS").val(all[number].comAddress);
+		$("#INFO_PROFESSION").val(all[number].profession);
+		$("#INFO_BIRTHDAY").val(all[number].birthday);
+		$("#INFO_AGEGROUP").val(all[number].ageGroup);
+		showallmodal('myModal', 'show');
+	}
+
+	//获取搜索的所有值
+	function params(params) {
+		$("#a input[type='text']").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		$("#a select").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+
+		$("#offset").val(params.offset);
+		$("#limit").val(params.limit);
+
+		return params;
+	}
+
+	//显示放大图片
+	function imgbig(url) {
+		$('#imgbig').modal('show');
+		$("#bigbis").attr('src', url);
+	}
+
+	//展示流水信息列表
+	function showaccountlog(index) {
+		var data = all[index];
+		var userId = data.userId;
+		$('#accountLog').val(userId);
+		showaccountlogTab();
+		$('#accountModal').modal('show');
+	}
+
+	var frame;
+	function showaccountlogTab() {
+		$("#stockPriceTab").bootstrapTable('destroy');
+		//生成用户数据
+		$('#stockPriceTab').bootstrapTable({
+			method : 'post',
+			contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+			url : "selectAccountLog.do",//要请求数据的文件路径
+			dataType : 'json',
+			/*   toolbar: '#toolbar',//指定工具栏 */
+			striped : true, //是否显示行间隔色
+			//dataField: "res",//bootstrap table 可以前端分页也可以后端分页，这里
+			//我们使用的是后端分页，后端分页时需返回含有total：总记录数,这个键值好像是固定的  
+			//rows： 记录集合 键值可以修改  dataField 自己定义成自己想要的就好
+			pageNumber : 1, //初始化加载第一页，默认第一页
+			pagination : true,//是否分页
+			queryParams : function(p) {
+				return params2(p);
+			},
+			undefinedText : "",
+			queryParamsType : 'limit',//查询参数组织方式
+			sidePagination : 'server',//指定服务器端分页
+			pageSize : 10,//单页记录数
+			pageList : [ 5, 10, 20, 30 ],//分页步进值
+			/* showRefresh:true,//刷新按钮
+			showColumns:true, */
+			clickToSelect : false,//是否启用点击选中行
+			toolbarAlign : '',//工具栏对齐方式
+			buttonsAlign : '',//按钮对齐方式
+			toolbar : '#toolbar',//指定工作
+			columns : [ {
+				title : '会员昵称',
+				field : 'NICK_NAME'
+			}, {
+				title : '账户号',
+				field : 'ACCOUNT_NO'
+			}, {
+				title : '流水类型',
+				field : 'TYPE_SHOW'
+			}, {
+				title : '流水标识',
+				field : 'FLG_SHOW'
+			}, {
+				title : '操作金额',
+				field : 'AMOUNT'
+			}, {
+				title : '操作前金额',
+				field : 'BEFORE_BALANCE'
+			}, {
+				title : '操作后金额',
+				field : 'AFTER_BALANCE'
+			}, {
+				title : '创建时间',
+				field : 'GMT_CREATE',
+				formatter : function(value, row, index) {
+					return format(value);
+				}
+			} ],
+			locale : 'zh-CN',//中文支持,
+			responseHandler : function(res) {
+				frame = res;
+				return res;
+			}
+		})
+	}
+	//获取流水弹框搜索的所有值
+	function params2(params) {
+		params['userId'] = $('#accountLog').val();
+		params['logType'] = $('#logType').val();
+		params['logFlg'] = $('#logFlg').val();
+		params['startDate'] = $('#startDateS').val();
+		params['endDate'] = $('#endDateS').val();
+		return params;
+	}
+</script>
+
+<script type="text/javascript">
+	function showAddressMsg(index) {
+		var data = all[index];
+		var userId = data.userId;
+		$('#addressUserId').val(userId);
+		showAddressMsgTab();
+		$('#addressModal').modal('show');
+	}
+
+	var addressIndex;
+	function showAddressMsgTab() {
+		$("#addressTab").bootstrapTable('destroy');
+		//生成用户数据
+		$('#addressTab').bootstrapTable({
+			method : 'post',
+			contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+			url : "selectUserAddress.do",//要请求数据的文件路径
+			dataType : 'json',
+			/*   toolbar: '#toolbar',//指定工具栏 */
+			striped : true, //是否显示行间隔色
+			//dataField: "res",//bootstrap table 可以前端分页也可以后端分页，这里
+			//我们使用的是后端分页，后端分页时需返回含有total：总记录数,这个键值好像是固定的  
+			//rows： 记录集合 键值可以修改  dataField 自己定义成自己想要的就好
+			pageNumber : 1, //初始化加载第一页，默认第一页
+			pagination : true,//是否分页
+			queryParams : function(p) {
+				return params3(p);
+			},
+			undefinedText : "",
+			queryParamsType : 'limit',//查询参数组织方式
+			sidePagination : 'server',//指定服务器端分页
+			pageSize : 10,//单页记录数
+			pageList : [ 5, 10, 20, 30 ],//分页步进值
+			/* showRefresh:true,//刷新按钮
+			showColumns:true, */
+			clickToSelect : false,//是否启用点击选中行
+			toolbarAlign : '',//工具栏对齐方式
+			buttonsAlign : '',//按钮对齐方式
+			toolbar : '#toolbar',//指定工作
+			columns : [ {
+				title : '是否默认',
+				field : 'isDefalt',
+				formatter : function(value, row, index) {
+					if (value == "0")
+						return "否";
+					if (value == "1")
+						return "是";
+				}
+			}, {
+				title : '姓名',
+				field : 'reUserName'
+			}, {
+				title : '手机号',
+				field : 'cell'
+			}, {
+				title : '省',
+				field : 'province'
+			}, {
+				title : '市',
+				field : 'city'
+			}, {
+				title : '区',
+				field : 'area'
+			}, {
+				title : '收货地址',
+				field : 'reAddr'
+			}, {
+				title : '创建时间',
+				field : 'gmtCreate',
+				formatter : function(value, row, index) {
+					return format(value);
+				}
+			}, {
+				title : '修改时间',
+				field : 'gmtModified',
+				formatter : function(value, row, index) {
+					return format(value);
+				}
+			} ],
+			locale : 'zh-CN',//中文支持,
+			responseHandler : function(res) {
+				addressIndex = res;
+				return res;
+			}
+		})
+	}
+
+	function params3(params) {
+		params['userId'] = $('#addressUserId').val();
+		return params;
+	}
+
+	//
+	function modifyUserStatus(index, delflg) {
+		var userId = all[index].userId;
+
+		if (confirm("确认该操作？")) {
+			jQuery.ajax({
+				url : "modifyUserStatus.do",
+				type : 'post',
+				data : {
+					"userId" : userId,
+					"delFlg" : delflg
+				},
+				dataType : 'json',
+				success : function(data) {
+					if (data.success) {
+						$("#mytab").bootstrapTable('refresh');
+					} else {
+						alert("修改失败");
+					}
+				},
+				error : function() {
+					alert("异常！");
+				}
+			});
+		} else {
+			return;
+		}
+	}
+
+	function showRealNameModal(index) {
+		var realName = all[index].realName;
+		var userId = all[index].userId;
+		var erpNo = all[index].erpNo;
+
+		$("#REAL_USER_ID").val(userId);
+		$("#MODIFY_REAL_NAME").val(realName);
+		$("#MODIFY_ERP_NO").val(erpNo);
+
+		$("#realNameModal").modal('show');
+	}
+
+	function updateUserRealName() {
+		var userId = $("#REAL_USER_ID").val();
+		var realName = $("#MODIFY_REAL_NAME").val();
+		var erpNo = $("#MODIFY_ERP_NO").val();
+
+		if (confirm("确认该操作？")) {
+			jQuery.ajax({
+				url : "updateUserRealName.do",
+				type : 'post',
+				data : {
+					"userId" : userId,
+					"realName" : realName,
+					"erpNo" : erpNo
+				},
+				dataType : 'json',
+				success : function(data) {
+					if (data.success) {
+						$("#realNameModal").modal('hide');
+						$("#mytab").bootstrapTable('refresh');
+					} else {
+						alert("修改失败");
+					}
+				},
+				error : function() {
+					alert("异常！");
+				}
+			});
+		} else {
+			return;
+		}
+	}
+</script>
+
+<script>
+	//按条件导出全部数据 
+	function exportAllPage(type) {
+
+		var userId = $("#userId").val();
+		var nickName = $("#nickName").val();
+		var realName = $("#realName").val();
+		var selectcell = $("#selectcell").val();
+		var selectsex = $("#selectsex").val();
+
+		var userLevel = $("#userLevel").val();
+		var delFlg = $("#delFlg").val();
+		var startDate = $("#startDate").val();
+		var endDate = $("#endDate").val();
+		var recommendUserCell = $("#recommendUserCell").val();
+		var recommendUserId = $("#recommendUserId").val();
+		var recommendNickName = $("#recommendNickName").val();
+		var recommendRealName = $("#recommendRealName").val();
+		var erpNo = $("#erpNo").val();
+
+		var offset = $("#offset").val();
+		var limit = $("#limit").val();
+
+		var action = "exportAllPageForUser.do";
+		var form = $("<form></form>");
+		form.attr('action', action);
+		form.attr('method', 'post');
+		input2 = $("<input type='text' name='userId' value='"+userId+"' />");
+		form.append(input2);
+		input3 = $("<input type='text' name='nickName' value='"+nickName+"' />");
+		form.append(input3);
+		input4 = $("<input type='text' name='realName' value='"+realName+"' />");
+		form.append(input4);
+		input5 = $("<input type='text' name='selectcell' value='"+selectcell+"' />")
+		form.append(input5);
+		input6 = $("<input type='text' name='selectsex' value='"+selectsex+"' />");
+		form.append(input6);
+		input7 = $("<input type='text' name='userLevel' value='"+userLevel+"' />");
+		form.append(input7);
+		input8 = $("<input type='text' name='delFlg' value='"+delFlg+"' />");
+		form.append(input8);
+		input9 = $("<input type='text' name='startDate' value='"+startDate+"' />");
+		form.append(input9);
+		input10 = $("<input type='text' name='endDate' value='"+endDate+"' />");
+		form.append(input10);
+		input11 = $("<input type='text' name='recommendUserCell' value='"+recommendUserCell+"' />");
+		form.append(input11);
+		input12 = $("<input type='text' name='recommendUserId' value='"+recommendUserId+"' />");
+		form.append(input12);
+		input13 = $("<input type='text' name='recommendNickName' value='"+recommendNickName+"' />");
+		form.append(input13);
+		input14 = $("<input type='text' name='recommendRealName' value='"+recommendRealName+"' />");
+		form.append(input14);
+		input15 = $("<input type='text' name='offset' value='"+offset+"' />");
+		form.append(input15);
+		input16 = $("<input type='text' name='limit' value='"+limit+"' />");
+		form.append(input16);
+		input17 = $("<input type='text' name='type' value='"+type+"' />");
+		form.append(input17);
+		input18 = $("<input type='text' name='erpNo' value='"+erpNo+"' />");
+		form.append(input18);
+
+		form.appendTo("body");
+		form.css('display', 'none');
+		form.submit();
+	}
+</script>
+
+</html>

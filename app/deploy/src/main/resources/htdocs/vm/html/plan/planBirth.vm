@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+#parse("content/importBase.vm")
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+#preview>img {
+	width: 100px;
+	height: 100px;
+}
+</style>
+</head>
+<body style="width: 100%; height: 100%;">
+	<div id="page-wrapper">
+		<!--BEGIN TITLE & BREADCRUMB PAGE-->
+		<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+			<div class="page-header pull-left">
+				<div class="page-title">注册/生日方案管理</div>
+			</div>
+			<ol class="breadcrumb page-breadcrumb pull-right">
+				<li><i class="fa fa-home"></i>&nbsp;<a href="#">方案管理</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="hidden"><a href="#">注册/生日方案信息</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="active">注册/生日方案列表</li>
+			</ol>
+			<div class="clearfix"></div>
+		</div>
+
+		<table id="mytab" class="table table-hover"></table>
+
+		<!-- 修改模态框  -->
+		<div class="modal fade" id="editModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title">修改方案</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" role="form" name="editForm"
+							enctype="multipart/form-data" method="post">
+
+							<input type="hidden" name="birthId" id="birthId">
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">优惠类型<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<select class="form-control" id="planType" name="planType"
+										onchange="doSwitchPlanType(this.value)">
+										<option value="">请选择</option>
+										<option value="1">按倍率返</option>
+										<option value="2">按金额返</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">优惠对象<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<select class="form-control" id="amountType" name="amountType"
+										onchange="doSwitchAmountType(this.value)">
+										<option value="">请选择</option>
+										<!-- <option value="1">胡币</option>
+										<option value="2">临时胡币</option> -->
+										<option value="3">积分</option>
+										<!-- <option value="4">临时积分</option> -->
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group" id="amountDiv">
+								<label for="lastname" class="col-sm-3 control-label">金额<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<input type="text" id="amount" name="amount"
+										class="form-control" min="0"
+										onkeyup="this.value=this.value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')"
+										placeholder="请填写金额">
+								</div>
+							</div>
+
+							<div class="form-group" id="rateDiv">
+								<label for="lastname" class="col-sm-3 control-label">倍率<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<input type="text" id="rate" name="rate"
+										class="form-control priceInput" min="0"
+										onkeyup="this.value=this.value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')">
+								</div>
+							</div>
+
+							<div class="form-group" id="dateDiv">
+								<label class="col-sm-3 control-label"
+									style="text-align: right; margin-top: 5px">有效期<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<div class="control-group">
+										<input type="text" id="endDate" name="endDate"
+											class="form-control datetimepicker" readonly="readonly" /> <br />
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-3 control-label">状态<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-9">
+									<select class="form-control" id="status" name="status">
+										<option value="1">启用</option>
+										<option value="0">关闭</option>
+									</select>
+								</div>
+							</div>
+
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary"
+							onclick="submitEdit()">确定</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+<script type="text/javascript">
+	//显示修改框           
+	function showUpdateModal(index) {
+		$("#birthId").val(all[index].birthId);
+		$("#planType").val(all[index].planType);
+		$("#amountType").val(all[index].amountType);
+		$("#amount").val(all[index].amount.amount);
+		$('#rate').val(all[index].rate);
+		$('#endDate').val(all[index].endDate);
+		$('#status').val(all[index].status);
+		$("#editModal").modal('show');
+		//控制部分元素的显示或隐藏
+		doSwitchPlanType(all[index].planType);
+		doSwitchAmountType(all[index].amountType);
+	}
+
+	//提交修改表单
+	function submitEdit() {
+		$("form[name='editForm']").ajaxSubmit(
+				{
+					type : "post",
+					url : "updatePlanBirth.do",
+					dataType : "json",
+					beforeSubmit : function() {
+						//表单数据校验
+						if ($("#planType").val() == null
+								|| $("#planType").val() == "") {
+							alert("方案类型不能为空");
+							return false;
+						}
+						if ($("#amountType").val() == null
+								|| $("#amountType").val() == "") {
+							alert("金额类型不能为空");
+							return false;
+						}
+						if ($("#planType").val() == 2) {
+							if ($("#amount").val() == null
+									|| $("#amount").val() == "") {
+								alert("金额不能为空");
+								return false;
+							}
+						} else if ($("#planType").val() == 1) {
+							if ($("#rate").val() == null
+									|| $("#rate").val() == "") {
+								alert("倍率不能为空");
+								return false;
+							}
+						}
+						if ($("#amountType").val() == 2
+								|| $("#amountType").val() == 4) {
+							if ($("#endDate").val() == null
+									|| $("#endDate").val() == "") {
+								alert("有效期不能为空");
+								return false;
+							}
+						}
+					},
+					success : function(data) {
+						if (!data.success) {
+							alert(data.message);
+							return false;
+						} else {
+							alert(data.message);
+							showOrHiddenModal('editModal', 'hide');
+							$("#mytab").bootstrapTable('refresh');
+						}
+
+					},
+					error : function(e) {
+						alert("异常!");
+					}
+
+				});
+	}
+
+	bootsearch();
+
+	function bootsearch() {
+		//生成列表数据
+		$('#mytab')
+				.bootstrapTable(
+						{
+							method : 'post',
+							contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+							url : "selectPlanBirth.do",//要请求数据的文件路径
+							dataType : 'json',
+							striped : true, //是否显示行间隔色
+							pageNumber : 1, //初始化加载第一页，默认第一页
+							pageSize : 10,//单页记录数
+							pageList : [ 5, 10, 20, 30 ],//分页步进值
+							pagination : false,//是否分页
+							queryParamsType : 'limit',//查询参数组织方式
+							sidePagination : 'server',//指定服务器端分页
+							clickToSelect : true,//是否启用点击选中行
+							toolbarAlign : 'right',//工具栏对齐方式
+							buttonsAlign : 'right',//按钮对齐方式
+							toolbar : '#toolbar',//指定工作栏
+							columns : [
+									{
+										title : '操作',
+										field : 'birthId',//删除操作时使用
+										formatter : function(value, row, index) {
+											return "<a href='#' onclick=showUpdateModal('"
+													+ index + "')>修改</a>";
+										}
+									},
+									{
+										title : '编号',
+										field : 'birthId'
+									},
+									{
+										title : '适用场景',
+										field : 'type',
+										formatter : function(value, row, index) {
+											if (value == "register") {
+												return "注册有礼";
+											}
+											if (value == "birth") {
+												return "生日当月促销";
+											}
+										}
+									},
+									{
+										title : '方案类型',
+										field : 'planType',
+										formatter : function(value, row, index) {
+											if (value == "1") {
+												return "按倍率";
+											}
+											if (value == "2") {
+												return "按金额";
+											}
+										}
+									},
+									{
+										title : '金额对象',
+										field : 'amountType',
+										formatter : function(value, row, index) {
+											if (value == "1") {
+												return "胡币";
+											} else if (value == "2") {
+												return "临时胡币";
+											} else if (value == "3") {
+												return "积分";
+											} else if (value == "4") {
+												return "临时积分";
+											} else {
+												return "-";
+											}
+										}
+									},
+									{
+										title : '金额',
+										field : 'amount',
+										formatter : function(value) {
+											if (value.amount == "0"
+													|| value.amount == null
+													|| value.amount == "") {
+												return "-"
+											} else {
+												return value.amount
+											}
+										}
+									},
+									{
+										title : '倍率',
+										field : 'rate',
+										formatter : function(value) {
+											if (value == "0" || value == null
+													|| value == "") {
+												return "-"
+											} else {
+												return value
+											}
+										}
+									},
+									{
+										title : '临时货币有效期',
+										field : 'endDate',
+										formatter : function(value, row, index) {
+											if (value == "" || value == null
+													|| value == undefined) {
+												return "非临时货币"
+											} else {
+												return format(value)
+											}
+										}
+									},
+									{
+										title : '状态',
+										field : 'status',
+										formatter : function(value, row, index) {
+											if (value == "1") {
+												return "已启用"
+											} else {
+												return "未启用"
+											}
+										}
+									},
+									{
+										title : '创建者',
+										field : 'creater'
+									},
+									{
+										title : '创建时间',
+										field : 'gmtCreate',
+										formatter : function(value, row, index) {
+											return format(value)
+										}
+									},
+									{
+										title : '修改者',
+										field : 'modifier'
+									},
+									{
+										title : '修改时间',
+										field : 'gmtModified',
+										formatter : function(value, row, index) {
+											return format(value)
+										}
+									} ],
+							locale : 'zh-CN',//中文支持,
+							responseHandler : function(res) {
+								//在ajax获取到数据，渲染表格之前，修改数据源
+								all = res.rows;
+								return res;
+							}
+						})
+	}
+
+	//bootstrap时间控件的一些设置
+	$('.datetimepicker').datetimepicker({
+		//minView : "month",//设置只显示到月份
+		format : 'yyyy-mm-dd HH:mm:ss',//文本框显示格式
+		language : 'zh-CN',//汉化
+		autoclose : true,//选中关闭
+		todayBtn : true
+	//今日按钮
+	})
+
+	//根据兑换领取去动态显示input
+	function doSwitchPlanType(value) {
+		if (value == 1) {
+			$('#amount').val("");
+			$('#endDate').val("");
+			$('#rateDiv').css("display", "block");
+			$('#amountDiv').css("display", "none");
+			$('#dateDiv').css("display", "none");
+		} else if (value == 2) {
+			$('#rate').val("");
+			$('#rateDiv').css("display", "none");
+			$('#amountDiv').css("display", "block");
+			$('#dateDiv').css("display", "block");
+		}
+	}
+
+	//根据货币类型决定时间框的显示隐藏
+	function doSwitchAmountType(value) {
+		if (value == 2 || value == 4) {
+			$('#dateDiv').css("display", "block");
+		} else if (value == 1 || value == 3) {
+			$('.datetimepicker').val("");
+			$('#dateDiv').css("display", "none");
+		}
+	}
+
+	//控制模态框显隐
+	function showOrHiddenModal(id, type) {
+		//添加的时候先清除一下缓存
+		claenmyModal(id);
+		$("#" + id).modal(type);
+	}
+</script>
+</html>

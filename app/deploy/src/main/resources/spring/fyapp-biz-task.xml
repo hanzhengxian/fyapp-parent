@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+           http://www.springframework.org/schema/task   
+		   http://www.springframework.org/schema/task/spring-task-3.0.xsd"
+	default-autowire="byName">
+	<task:annotation-driven />
+		<!-- 名字必须是applicationEventMulticaster和messageSource是一样的，默认找这个名字的对象 -->
+	<!-- 名字必须是applicationEventMulticaster，因为AbstractApplicationContext默认找个 -->
+	<!-- 如果找不到就new一个，但不是异步调用而是同步调用 -->
+	<bean id="applicationEventMulticaster"
+		class="org.springframework.context.event.SimpleApplicationEventMulticaster">
+		<!-- <property name="taskExecutor" ref="taskExecutor" /> -->
+		<!-- 注入任务执行器 这样就实现了异步调用（缺点是全局的，要么全部异步，要么全部同步（删除这个属性即是同步）） -->
+	</bean>
+	<!-- 线程执行器 -->
+	<bean id="threadExecutor"
+		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="25" />
+		<property name="maxPoolSize" value="150" />
+		<property name="queueCapacity" value="1000" />
+	</bean>
+	
+	<!-- 每月一号 定时重置所有商品月销量 -->
+	<bean id="cleanProMounthSellTask" class="com.onway.task.CleanProMounthSellTask" />
+	<!-- 每个小时清理一次到期的临时账户 -->
+	<bean id="cleanTempAmountTask" class="com.onway.task.CleanTempAmountTask" />
+	
+	<!-- 每天1点自动确认收货 -->
+	<bean id="autoReceiveOrderTask" class="com.onway.task.AutoReceiveOrderTask" />
+	
+	<!-- 每月一号 零点触发    更新用户等级  -->
+	<bean id="updateUserDevoteTask" class="com.onway.task.UpdateUserDevoteTask" />
+	
+	<!-- 每月一号 2点触发    更新团队等级  -->
+	<bean id="updateTeamDevoteTask" class="com.onway.task.UpdateTeamDevoteTask" />
+	
+	<!-- 每年6月30号24点触发    积分清零  -->
+	<bean id="cleanUserPointTask" class="com.onway.task.CleanUserPointTask" />
+	
+	<!-- 每年5月一号下午一点触发    积分清零通知  -->
+	<bean id="cleanUserPointSendMsgTask" class="com.onway.task.CleanUserPointSendMsgTask" />
+	
+	<!-- 每天0点同步库存 -->
+	<bean id="teamStockTask" class="com.onway.task.TeamStockTask" />
+	
+	<bean id="autoDiscountOutTimeTask" class="com.onway.task.AutoDiscountOutTimeTask" />
+	
+	<!-- <task:scheduled-tasks>
+		<task:scheduled ref="cleanProMounthSellTask" method="execute" cron="0 0 1 1 * ?" />
+		<task:scheduled ref="cleanTempAmountTask" method="execute" cron="0 0 0/1 * * ?" />
+		<task:scheduled ref="autoReceiveOrderTask" method="execute" cron="0 0 1 * * ?" />
+		<task:scheduled ref="updateUserDevoteTask" method="execute" cron="0 0 0 1 * ?" />
+		<task:scheduled ref="updateTeamDevoteTask" method="execute" cron="0 0 2 1 * ?" />
+		<task:scheduled ref="cleanUserPointTask" method="execute" cron="0 0 0 1 7 ?" />
+		<task:scheduled ref="cleanUserPointTask" method="execute" cron="0 0 13 1 5 ?" />
+		<task:scheduled ref="teamStockTask" method="execute" cron="0 0 0 * * ?" />
+		<task:scheduled ref="autoDiscountOutTimeTask" method="execute" cron="0 1 0 * * ?" />
+	</task:scheduled-tasks> -->
+	
+	<!-- 测试 -->
+	<!-- <task:scheduled-tasks>
+		<task:scheduled ref="autoDiscountOutTimeTask" method="execute" cron="0 25 10 * * ?" />
+	</task:scheduled-tasks> -->
+
+	<context:component-scan base-package="com.onway.task" /> 
+</beans>
+
+
+	

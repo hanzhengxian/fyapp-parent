@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+#parse("content/importBase.vm")
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+#preview>img {
+	width: 100%;
+	height: 170px;
+}
+</style>
+</head>
+<body style="width: 100%; height: 100%;">
+	<div id="page-wrapper">
+		<!--BEGIN TITLE & BREADCRUMB PAGE-->
+		<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+			<div class="page-header pull-left">
+				<div class="page-title">商品销售分析</div>
+			</div>
+			<ol class="breadcrumb page-breadcrumb pull-right">
+				<li><i class="fa fa-home"></i>&nbsp;<a href="#">商品销售分析</a></li>
+			</ol>
+			<div class="clearfix"></div>
+		</div>
+
+
+		<div style="margin-top: 2%;" id="a">
+
+			<div class="row">
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">系统省：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select id="linkProvince" name="linkProvince"
+							class="selectpicker show-tick form-control" title="请选择"
+							data-live-search="true" data-size="5"
+							onchange="getAllCityComplex(this)">
+						</select><br />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">系统市：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select id="linkCity" name="linkCity"
+							class="selectpicker show-tick form-control" title="请选择"
+							data-live-search="true" data-size="5" data-actions-box="true">
+						</select><br />
+					</div>
+				</div>
+
+			</div>
+			<br />
+
+			<div class="row">
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">门店：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select id="teamIds" name="teamIds"
+							class="selectpicker show-tick form-control" multiple title="请选择"
+							data-live-search="true" data-size="5" data-actions-box="true">
+						</select>
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">门店等级：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select id="teamLevels" name="teamLevels"
+							class="selectpicker show-tick form-control" multiple title="请选择"
+							data-live-search="true" data-size="5" data-actions-box="true">
+							<option value="1">V1</option>
+							<option value="2">V2</option>
+							<option value="3">V3</option>
+							<option value="4">V4</option>
+							<option value="5">V5</option>
+						</select>
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">商品信息：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="proMsg" name="proMsg" class="form-control"
+							placeholder="ERP编号、商品编号、标题行" />
+					</div>
+				</div>
+
+			</div>
+			<br />
+
+			<div class="row">
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">一级分类：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select id="fatherCategory" name="fatherCategory"
+							class="selectpicker show-tick form-control" multiple title="请选择"
+							data-live-search="true" data-size="5" data-actions-box="true"
+							onchange="getChildCategory(1)">
+						</select>
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">二级分类：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select id="childCategory" name="childCategory"
+							class="selectpicker show-tick form-control" multiple title="请选择"
+							data-live-search="true" data-size="5" data-actions-box="true"
+							onchange="getChildCategory(2)">
+						</select>
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">三级分类：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select id="childCategorys" name="childCategorys"
+							class="selectpicker show-tick form-control" multiple title="请选择"
+							data-live-search="true" data-size="5" data-actions-box="true">
+						</select>
+					</div>
+				</div>
+
+			</div>
+			<br />
+
+			<div class="row">
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">类型<span
+					style="color: red;">*</span></label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select class="form-control" id="calType" name="calType">
+							<option value="HB" selected="selected">环比</option>
+							<option value="TB">同比</option>
+						</select>
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">时段类型<span
+					style="color: red;">*</span></label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select name="timeType" id="timeType" class="form-control"
+							onchange="timeTypeChange(this)">
+							<option value="">请选择</option>
+							<option value="YEAR">年</option>
+							<option value="YEAR_HALF">半年</option>
+							<option value="MOUNTH">月</option>
+							<option value="DAYS">日</option>
+							<option value="HOURS">时</option>
+						</select> <br />
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">开始时间<span
+					style="color: red;">*</span></label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="startDate"
+							class="form-control datetimepicker" readonly /> <br />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">结束时间<span
+					style="color: red;">*</span></label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="endDate"
+							class="form-control datetimepicker" readonly /> <br />
+					</div>
+				</div>
+
+			</div>
+
+			<div class="row">
+				<div class="col-sm-4" style="float: right">
+					<div class="control-group">
+						<div>
+							<button id="btnTransfer" type="button" class="btn btn-danger"
+								style="float: right; margin-right: 2%; margin-bottom: 10px;"
+								onclick="clean()">清空</button>
+						</div>
+						<div>
+							<button onclick="sorce()" class="btn btn-info" name="Name"
+								id="search_tel" value="查询"
+								style="float: right; margin-right: 2%;">查询</button>
+						</div>
+						<div>
+							<button id="search_btn" type="button" class="btn btn-success"
+								style="float: right; margin-right: 2%;"
+								onclick="exportAllPage()">导出全部</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<table id="mytab" class="table table-hover"></table>
+
+
+		<div id="main" style="width: 800px; height: 600px; margin: 0 auto;"></div>
+
+	</div>
+
+</body>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('.selectpicker').selectpicker({
+			'noneSelectedText' : '请选择',
+			'deselectAllText' : '全不选',
+			'selectAllText' : '全选',
+		})
+		getAllProvinceComplex();
+		getAllTeamMsg();
+		getFatherCategory(0);
+		//getChildCategory(0);
+
+	})
+</script>
+
+<script type="text/javascript">
+	function clean() {
+		$("#a input").val("");
+		$("#a select").val("");
+		$('.selectpicker').selectpicker('refresh');
+	}
+
+	bootsearch(null);
+
+	var all;
+	function sorce() {
+		$("#mytab").bootstrapTable('destroy');
+		//生成用户数据
+		bootsearch("data/calculateCategorySalesMoney.do");
+	}
+
+	function bootsearch(url) {
+		//生成用户数据
+		$('#mytab').bootstrapTable({
+			method : 'post',
+			contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+			url : url,//要请求数据的文件路径
+			dataType : 'json',
+			striped : true, //是否显示行间隔色
+			pageNumber : 1, //初始化加载第一页，默认第一页
+			pageSize : 10,//单页记录数
+			pageList : [ 5, 10, 20, 30 ],//分页步进值
+			pagination : false,//是否分页
+			queryParamsType : 'limit',//查询参数组织方式
+			sidePagination : 'server',//指定服务器端分页
+			queryParams : function(p) {
+				return params(p);
+			},
+			clickToSelect : true,//是否启用点击选中行
+			toolbarAlign : 'right',//工具栏对齐方式
+			buttonsAlign : 'right',//按钮对齐方式
+			toolbar : '#toolbar',//指定工作栏
+			showFooter : true,//开启列计算
+			columns : [ {
+				title : '当前日期',
+				field : 'dateA'
+			}, {
+				title : '当前日期销售额',
+				field : 'priceA',
+				footerFormatter : function(value) {
+					var count = 0;
+					for ( var i in value) {
+						count += parseFloat(value[i].priceA)
+					}
+					return count.toFixed(2);
+				}
+			}, {
+				title : '当前日期销量',
+				field : 'numA',
+				footerFormatter : function(value) {
+					var count = 0;
+					for ( var i in value) {
+						count += parseFloat(value[i].numA)
+					}
+					return count.toFixed(2);
+				}
+			}, {
+				title : '对比日期',
+				field : 'dateB'
+			}, {
+				title : '对比日期销售额',
+				field : 'priceB',
+				footerFormatter : function(value) {
+					var count = 0;
+					for ( var i in value) {
+						count += parseFloat(value[i].priceB)
+					}
+					return count.toFixed(2);
+				}
+			}, {
+				title : '对比日期销量',
+				field : 'numB',
+				footerFormatter : function(value) {
+					var count = 0;
+					for ( var i in value) {
+						count += parseFloat(value[i].numB)
+					}
+					return count.toFixed(2);
+				}
+			}, {
+				title : '（销售额）环比/同比率（%）',
+				field : 'link_ratio_money',
+				formatter : function(value, row, index) {
+					var a = "";
+					if (value < 0) {
+						var a = '<p class="text-danger">' + value + '</p>';
+					} else if (value > 0) {
+						var a = '<p class="text-success">' + value + '</p>';
+					} else {
+						var a = '<p class="text-dark">' + value + '</p>';
+					}
+					return a;
+				},
+			}, {
+				title : '（销量）环比/同比率（%）',
+				field : 'link_ratio_num',
+				formatter : function(value, row, index) {
+					var a = "";
+					if (value < 0) {
+						var a = '<p class="text-danger">' + value + '</p>';
+					} else if (value > 0) {
+						var a = '<p class="text-success">' + value + '</p>';
+					} else {
+						var a = '<p class="text-dark">' + value + '</p>';
+					}
+					return a;
+				},
+			} ],
+			locale : 'zh-CN',//中文支持,
+			formatNoMatches : function() {
+				if (isEmpty(url)) {
+					return "单击查询搜索记录"
+				} else {
+					return "没有找到匹配的记录"
+				}
+			},
+			onLoadSuccess : function() { //加载成功时执行
+				calculateCategorySalesMoneyCharts();
+				$(".fixed-table-body").on("scroll", function() {
+					var sl = this.scrollLeft;
+					$(this).next()[0].scrollLeft = sl;
+				})
+			},
+			responseHandler : function(res) {
+				//在ajax获取到数据，渲染表格之前，修改数据源
+				all = res.rows;
+				return res;
+			}
+		})
+
+	}
+
+	//获取搜索的所有值
+	function params(params) {
+		params['linkProvince'] = $("#linkProvince").val();
+		params['linkCity'] = $("#linkCity").val();
+
+		params['teamIds'] = $('#teamIds').val();
+		params['teamLevels'] = $('#teamLevels').val();
+		params['proMsg'] = $("#proMsg").val();
+
+		params['fatherCategory'] = $('#fatherCategory').val();
+		params['childCategory'] = $('#childCategory').val();
+		params['childCategorys'] = $('#childCategorys').val();
+
+		params['calType'] = $('#calType').val();
+		params['timeType'] = $('#timeType').val();
+
+		params['startDate'] = $('#startDate').val();
+		params['endDate'] = $('#endDate').val();
+
+		return params;
+	}
+
+	function calculateCategorySalesMoneyCharts() {
+		var linkProvince = $('#linkProvince').val();
+		var linkCity = $('#linkCity').val();
+
+		var teamIds = $('#teamIds').val();
+		var teamLevels = $('#teamLevels').val();
+		var proMsg = $('#proMsg').val();
+
+		var fatherCategory = $('#fatherCategory').val();
+		var childCategory = $('#childCategory').val();
+		var childCategorys = $('#childCategorys').val();
+
+		var calType = $('#calType').val();
+		var timeType = $('#timeType').val();
+
+		var startDate = $('#startDate').val();
+		var endDate = $('#endDate').val();
+
+		jQuery.ajax({
+			url : 'data/calculateCategorySalesMoneyCharts.do',
+			type : 'post',
+			data : {
+				"linkProvince" : linkProvince,
+				"linkCity" : linkCity,
+				"teamIds" : teamIds,
+				"teamLevels" : teamLevels,
+				"proMsg" : proMsg,
+				"fatherCategory" : fatherCategory,
+				"childCategory" : childCategory,
+				"childCategorys" : childCategorys,
+				"calType" : calType,
+				"timeType" : timeType,
+				"startDate" : startDate,
+				"endDate" : endDate
+			},
+			dataType : 'json',
+			success : function(data) {
+				var myChart = echarts.init(document.getElementById('main'));
+				var option;
+				var xAxisData = data.xAxisData;
+				var seriesPriceA = data.seriesPriceA;
+				var seriesPriceB = data.seriesPriceB;
+				var seriesNumA = data.seriesNumA;
+				var seriesNumB = data.seriesNumB;
+				option = {
+					tooltip : {
+						trigger : 'axis',
+						axisPointer : {
+							type : 'cross',
+							crossStyle : {
+								color : '#999'
+							}
+						}
+					},
+					toolbox : {
+						feature : {
+							dataView : {
+								show : true,
+								readOnly : false
+							},
+							magicType : {
+								show : true,
+								type : [ 'line', 'bar' ]
+							},
+							restore : {
+								show : true
+							},
+							saveAsImage : {
+								show : true
+							}
+						}
+					},
+					legend : {
+						data : [ '当期销售额', '对比期销售额', '当期销量', '对比期销量' ]
+					},
+					xAxis : [ {
+						type : 'category',
+						data : xAxisData,
+						axisPointer : {
+							type : 'shadow'
+						}
+					} ],
+					yAxis : [ {
+						type : 'value',
+						name : '销售额',
+						axisLabel : {
+							formatter : '{value} 元'
+						}
+					}, {
+						type : 'value',
+						name : '销量',
+						axisLabel : {
+							formatter : '{value} 件'
+						}
+					} ],
+					series : [ {
+						name : '当期销售额',
+						type : 'bar',
+						data : seriesPriceA
+					}, {
+						name : '当期销量',
+						type : 'line',
+						yAxisIndex : 1,
+						data : seriesNumA
+					}, {
+						name : '对比期销售额',
+						type : 'bar',
+						data : seriesPriceB
+					}, {
+						name : '对比期销量',
+						type : 'line',
+						yAxisIndex : 1,
+						data : seriesNumB
+					} ]
+				};
+				myChart.clear();
+				myChart.setOption(option);
+			},
+			error : function() {
+
+			}
+		});
+	}
+</script>
+
+<script type="text/javascript">
+	function exportAllPage() {
+		var linkProvince = $('#linkProvince').val();
+		var linkCity = $('#linkCity').val();
+
+		var teamIds = $('#teamIds').val();
+		var teamLevels = $('#teamLevels').val();
+		var proMsg = $('#proMsg').val();
+
+		var fatherCategory = $('#fatherCategory').val();
+		var childCategory = $('#childCategory').val();
+		var childCategorys = $('#childCategorys').val();
+
+		var calType = $('#calType').val();
+		var timeType = $('#timeType').val();
+
+		var startDate = $('#startDate').val();
+		var endDate = $('#endDate').val();
+
+		if (isEmpty(timeType) || isEmpty(startDate) || isEmpty(endDate)) {
+			alert("请选择有效时间数据");
+			return;
+		}
+
+		var action = "data/exportCalculateCategorySalesMoney.do";
+		var form = $("<form></form>");
+		form.attr('action', action);
+		form.attr('method', 'post');
+		input2 = $("<input type='text' name='linkProvince' value='"+linkProvince+"' />");
+		form.append(input2);
+		input3 = $("<input type='text' name='linkCity' value='"+linkCity+"' />");
+		form.append(input3);
+		input4 = $("<input type='text' name='teamIds' value='"+teamIds+"' />");
+		form.append(input4);
+		input5 = $("<input type='text' name='teamLevels' value='"+teamLevels+"' />")
+		form.append(input5);
+		input6 = $("<input type='text' name='proMsg' value='"+proMsg+"' />");
+		form.append(input6);
+		input7 = $("<input type='text' name='fatherCategory' value='"+fatherCategory+"' />");
+		form.append(input7);
+		input8 = $("<input type='text' name='childCategory' value='"+childCategory+"' />");
+		form.append(input8);
+		input9 = $("<input type='text' name='childCategorys' value='"+childCategorys+"' />");
+		form.append(input9);
+		input10 = $("<input type='text' name='calType' value='"+calType+"' />");
+		form.append(input10);
+		input11 = $("<input type='text' name='timeType' value='"+timeType+"' />");
+		form.append(input11);
+		input12 = $("<input type='text' name='startDate' value='"+startDate+"' />");
+		form.append(input12);
+		input13 = $("<input type='text' name='endDate' value='"+endDate+"' />");
+		form.append(input13);
+
+		form.appendTo("body");
+		form.css('display', 'none');
+		form.submit();
+	}
+</script>
+
+</html>

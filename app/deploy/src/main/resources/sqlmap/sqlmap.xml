@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="GB2312"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN" "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+    <settings cacheModelsEnabled="true" enhancementEnabled="false" lazyLoadingEnabled="false" maxRequests="3000" maxSessions="3000" maxTransactions="3000" useStatementNamespaces="false"/>
+    
+    <sqlMap resource="sqlmap/common-sqlmap-mapping.xml"/>
+	<!-- 增加了一个公共方法-->
+	<!-- <sqlMap resource="sqlmap/Updatealltable-sqlmap-mapping.xml"/> -->
+    <!-- 
+    <sqlMap resource="sqlmap/Extra-sqlmap-mapping.xml"/>
+    -->
+    <sqlMap resource="sqlmap/CacheManager-sqlmap-mapping.xml"/>
+	    
+		    <sqlMap resource="sqlmap/SProvince-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/Account-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/AccountLog-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/Activity-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/Address-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/Banner-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/Category-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/ChatList-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/ChatRecord-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/Discount-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/DiscountTeam-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/DiscountUser-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/Evaluate-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/GoodsAttr-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/GoodsAttrValue-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/Img-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/Invoice-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/Knowledge-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/Msg-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/Option-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/Order-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/OrderCheckRecord-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/OrderOwe-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/OrderPick-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/OrderRebate-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/OrderRefundLog-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/OrderReturn-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/OrderVoucher-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/PlanBirth-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/PlanReturn-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/Product-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/ProductCategory-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/ProductTeam-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/ProductType-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/Sequence-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/Sm-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/StockPrice-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/StockPriceTeam-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/StockPriceTeamMiddle-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/SysConfig-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/SysExpress-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/SysLevel-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/SysMenu-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/SysReturnReason-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/SysRole-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/SysRoleUser-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/SysSearch-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/SysZjm-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/Team-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/TeamCheck-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/TeamUser-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/User-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/UserAli-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/Voucher-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/VoucherRecord-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/Withdraw-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/Word-sqlmap-mapping.xml"/>
+		    <sqlMap resource="sqlmap/WorkCheck-sqlmap-mapping.xml"/>
+		
+</sqlMapConfig>

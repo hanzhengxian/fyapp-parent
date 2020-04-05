@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+#parse("content/importBase.vm")
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+#preview>img {
+	width: 30%;
+	height: 170px;
+}
+</style>
+</head>
+<body style="width: 100%; height: 100%;">
+	<div id="page-wrapper">
+		<!--BEGIN TITLE & BREADCRUMB PAGE-->
+		<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+			<div class="page-header pull-left">
+				<div class="page-title">意见反馈管理</div>
+			</div>
+			<ol class="breadcrumb page-breadcrumb pull-right">
+				<li><i class="fa fa-home"></i>&nbsp;<a href="#">意见反馈管理</a></li>
+			</ol>
+
+			<div class="clearfix"></div>
+		</div>
+
+
+		<div style="margin-top: 2%;" id="a">
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">反馈用户昵称：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="nickname" class="form-control" /> <br />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">反馈用户帐号：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="selectcell" class="form-control" /> <br />
+					</div>
+				</div>
+				<!-- <label class="col-sm-1 control-label"
+    					style="text-align: right; margin-top: 5px">反馈标题：</label>
+    				<div class="col-sm-2">
+    					<div class="control-group">
+    						<input type="text" id="title" class="form-control"/>
+    						<br />
+    					</div>
+    				</div> -->
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px"></label>
+				<div class="col-sm-4" style="float: right">
+					<div>
+						<button onclick="clean()" class="btn btn-danger" name="Name"
+							id="search_tel" value="清空"
+							style="float: right; margin-right: 2%;">清空</button>
+					</div>
+					<div>
+						<button onclick="sorce()" class="btn btn-info" name="Name"
+							id="search_tel" value="查询"
+							style="float: right; margin-right: 2%;">查询</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--END TITLE & BREADCRUMB PAGE-->
+		<!--BEGIN CONTENT-->
+		<table id="mytab" class="table table-hover"></table>
+		#parse("content/bigimg.vm")
+		<div class="modal fade" id="myModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">回复</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" role="form" name="noticeform"
+							method="post">
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label">反馈用户昵称：</label>
+								<div class="col-sm-10">
+									<input type="hidden" id="ID" class="form-control" readonly />
+									<input type="hidden" id="USER_ID" class="form-control" readonly />
+									<input type="text" id="NICK_NAME" class="form-control" readonly />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label">反馈用户帐号：</label>
+								<div class="col-sm-10">
+									<input type="text" id="CELL" class="form-control" readonly />
+								</div>
+							</div>
+							<!-- <div class="form-group">
+        							<label for="lastname" class="col-sm-2 control-label">反馈标题：</label>
+            						<div class="col-sm-10">
+										<input type="text" id="TITLE" class="form-control" readonly />
+        							</div>
+								</div> -->
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label">反馈内容：</label>
+								<div class="col-sm-10">
+									<textarea class="form-control" id="MESSAGE"
+										name="noticeContent" readonly>
+                                        </textarea>
+
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label">反馈图片：</label>
+								<div class="col-sm-10">
+									<div id="preview"></div>
+
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label">回复人：</label>
+								<div class="col-sm-10">
+									<input type="text" id="REPLY_NAME" class="form-control"
+										readonly />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label">回复内容：</label>
+								<div class="col-sm-10">
+									<textarea class="form-control" id="REPLY_CONTENT">
+                                        </textarea>
+								</div>
+							</div>
+
+						</form>
+					</div>
+					<div class="modal-footer" id="showbutton">
+						<button type="button" class="btn btn-primary" onclick="submit()">确定</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</body>
+
+<script type="text/javascript">
+	function clean() {
+		$("#a input").val("");
+		$("#a select").val("");
+	}
+	function sorce() {
+		$('#mytab').bootstrapTable("selectPage", 1);
+	}
+	var all;
+	//生成用户数据
+	$('#mytab')
+			.bootstrapTable(
+					{
+						method : 'post',
+						contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+						url : "selectallfeedback.do",//要请求数据的文件路径
+						dataType : 'json',
+						striped : true, //是否显示行间隔色
+						pageNumber : 1, //初始化加载第一页，默认第一页
+						pageSize : 5,//单页记录数
+						pageList : [ 5, 10, 20, 30 ],//分页步进值
+						pagination : true,//是否分页
+						queryParamsType : 'limit',//查询参数组织方式
+						sidePagination : 'server',//指定服务器端分页
+						queryParams : function(p) {
+							return params(p);
+						},
+
+						clickToSelect : true,//是否启用点击选中行
+						toolbarAlign : 'right',//工具栏对齐方式
+						buttonsAlign : 'right',//按钮对齐方式
+						toolbar : '#toolbar',//指定工作栏
+						columns : [
+								{
+									title : '反馈用户昵称',
+									field : 'NICK_NAME'
+								},
+
+								{
+									title : '反馈用户帐号',
+									field : 'CELL',
+								},
+								/* {
+								    title:'反馈标题',
+								    field:'TITLE'
+								}, */
+								{
+									title : '反馈时间',
+									field : 'GMT_CREATE',
+									formatter : function(value, row, index) {
+										return format(value);
+									}
+								},
+								{
+									title : '反馈内容',
+									field : 'MESSAGE',
+									formatter : function(value, row, index) {
+										if (value != null) {
+											return value.substr(0, 5) + "...";
+										}
+									}
+								},
+								{
+									title : '反馈图片',
+									field : 'IMG',
+									formatter : function(value, row, index) {
+										var result = "";
+										if (value != "" && value != null) {
+											var str = new Array();
+											str = value.split(",");
+											for (var i = 0; i < str.length; i++) {
+												result = result
+														+ "&nbsp;&nbsp;<img src='"
+														+ str[i]
+														+ "' width='60px' height='60px' onclick=imgbig('"
+														+ str[i] + "') />";
+											}
+										} else {
+											result = "无图片";
+										}
+										return result;
+									}
+								},
+								{
+									title : '回复人',
+									field : 'REPLY_NAME'
+								},
+								{
+									title : '回复内容',
+									field : 'REPLY_CONTENT',
+									formatter : function(value, row, index) {
+										if (value != null) {
+											return value.substr(0, 5) + "...";
+										}
+									}
+								},
+								{
+									title : '操作',
+									field : 'ID',
+									formatter : function(value, row, index) {
+										if (row.REPLY_CONTENT != null
+												&& row.REPLY_CONTENT != "") {
+											return "<a href='#' onclick=showfeedback('"
+													+ index + "','1')>查看详情</a>";
+										} else {
+											return "<a href='#' onclick=showfeedback('"
+													+ index + "','0')>回复</a>";
+
+										}
+
+									}
+								} ],
+						locale : 'zh-CN',//中文支持,
+						responseHandler : function(res) {
+							//在ajax获取到数据，渲染表格之前，修改数据源
+							all = res.rows;
+							return res;
+						}
+					})
+	//回复
+	function submit() {
+		jQuery.ajax({
+			url : "updatefeedback.do",
+			type : 'post',
+			data : {
+				"id" : $("#ID").val(),
+				"message" : $("#REPLY_CONTENT").val(),
+				"userid" : $("#USER_ID").val(),
+				"title" : $("#TITLE").val()
+			},
+			dataType : 'json',
+			success : function(json) {
+				if (!json.bizSucc) {
+					alert(json.err_msg);
+					return false;
+				} else {
+					alert("回复成功！");
+					window.location.reload(true);
+				}
+			},
+			error : function() {
+				alert("异常！");
+			}
+		})
+	}
+	//显示修改框
+	function showfeedback(number, type) {
+		for ( var k in all[number]) {
+			$("#" + k).val(all[number][k]);
+		}
+		$("#preview").html("");
+		if (all[number].IMG != "" && all[number].IMG != null) {
+			var str = new Array();
+			str = all[number].IMG.split(",");
+			for (var i = 0; i < str.length; i++) {
+				$("#preview").append("&nbsp;&nbsp;<img src='"+str[i]+"' />");
+			}
+		} else {
+			$("#preview").html("无图片");
+		}
+		if (type == "1") {
+			$("#showbutton").addClass("hidden");
+		} else {
+			$("#showbutton").removeClass("hidden");
+		}
+		$("#myModal").modal('show');
+	}
+	//获取搜索的所有值
+	function params(params) {
+		$("#a input[type='text']").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		return params;
+	}
+</script>
+</html>

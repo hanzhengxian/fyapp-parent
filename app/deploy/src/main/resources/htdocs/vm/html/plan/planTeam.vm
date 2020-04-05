@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+#parse("content/importBase.vm")
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+#preview>img {
+	width: 100%;
+	height: 170px;
+}
+</style>
+</head>
+<!-- 张月 -->
+<body style="width: 100%; height: 100%;">
+	<div id="page-wrapper">
+		<!--BEGIN TITLE & BREADCRUMB PAGE-->
+		<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+			<div class="page-header pull-left">
+				<div class="page-title">方案组列表</div>
+			</div>
+
+			<ol class="breadcrumb page-breadcrumb pull-right">
+				<li><i class="fa fa-home"></i>&nbsp;<a href="#">方案组管理</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="hidden"><a href="#">方案组管理</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="active">方案组列表</li>
+			</ol>
+			<div class="clearfix"></div>
+		</div>
+
+		<div style="margin-top: 2%;" id="a">
+
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">方案名称：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="planTeamName" name="planTeamName"
+							class="form-control" /> <br />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">方案ID：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="planTeamId" name="planTeamId"
+							class="form-control" /> <br />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">方案类型：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select class="form-control" id="type" name="type">
+							<option selected="selected" value="">请选择</option>
+							<option value="0">平台产品方案</option>
+							<option value="1">商品方案</option>
+							<option value="2">团队方案</option>
+						</select> <br />
+					</div>
+				</div>
+
+			</div>
+
+			<div class="col-sm-4" style="float: right">
+				<div class="control-group">
+					<div>
+						<button onclick="clean()" class="btn btn-danger" name="Name"
+							id="search_tel" value="清空"
+							style="float: right; margin-right: 2%;">清空</button>
+					</div>
+					<div>
+						<button onclick="sorce()" class="btn btn-info" name="Name"
+							id="search_tel" value="查询"
+							style="float: right; margin-right: 2%;">查询</button>
+					</div>
+					<div>
+						<button onclick="addModel()" class="btn btn-warning" name="Name"
+							id="search_tel" value="添加"
+							style="float: right; margin-right: 2%;">添加</button>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<!--BEGIN CONTENT-->
+		<table id="mytab" class="table table-hover"></table>
+		<!-- 添加方案组 -->
+		<div class="modal fade" id="addPlan" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">新增方案组</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" role="form" id="addpt"
+							enctype="multipart/form-data">
+
+							<div class="form-group">
+
+								<label class="col-sm-2 control-label">方案组名称<span
+									style="color: red;">*</span></label>
+								<div class="col-sm-4">
+									<input type="text" id="addPlanTeamName" name="addPlanTeamName"
+										class="form-control" />
+								</div>
+
+								<label class="col-sm-2 control-label">方案类型<span
+									style="color: red;">*</span></label>
+								<div class="col-sm-4">
+									<select class="form-control" id="addType" name="addType">
+										<option value="">请选择</option>
+										<option value="0">平台产品方案</option>
+										<option value="1">商品方案</option>
+										<option value="2">团队方案</option>
+									</select>
+								</div>
+
+							</div>
+
+							<div class="form-group">
+
+								<div id="glbh" style="display: none">
+									<label class="col-sm-2 control-label">关联编号<span
+										style="color: red;">*</span></label>
+									<div class="col-sm-4">
+										<input type="text" id="addLinkId" name="addLinkId"
+											class="form-control" />
+
+									</div>
+								</div>
+
+								<div id="gl" style="display: none">
+									<label class="col-sm-2 control-label">团队编号<span
+										style="color: red;">*</span></label>
+									<div class="col-sm-4">
+										<input type="text" id="addLinkteamId" name="addLinkteamId"
+											class="form-control" />
+									</div>
+								</div>
+
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" onclick="AddPlant()" class="btn btn-primary">添加</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- 修改方案组 -->
+		<div class="modal fade" id="editpt" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">修改方案组</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" role="form" id="ept"
+							enctype="multipart/form-data">
+
+							<div class="form-group">
+
+								<label class="col-sm-2 control-label">方案组名称<span
+									style="color: red;">*</span></label>
+								<div class="col-sm-4">
+									<input type="hidden" id="eid" name="eid" class="form-control" />
+									<input type="text" id="ePlanTeamName" name="ePlanTeamName"
+										class="form-control" />
+								</div>
+
+								<label class="col-sm-2 control-label">方案类型<span
+									style="color: red;">*</span></label>
+								<div class="col-sm-4">
+									<select class="form-control" id="eType" name="eType">
+										<option value="">请选择</option>
+										<option value="0">平台产品方案</option>
+										<option value="1">商品方案</option>
+										<option value="2">团队方案</option>
+									</select>
+								</div>
+
+							</div>
+
+							<div class="form-group">
+
+								<div id="eglbh" style="display: none">
+									<label class="col-sm-2 control-label">关联编号<span
+										style="color: red;">*</span></label>
+									<div class="col-sm-4">
+										<input type="text" id="eLinkId" name="eLinkId"
+											class="form-control" />
+
+									</div>
+								</div>
+								<div id="egl" style="display: none">
+									<label class="col-sm-2 control-label">团队编号<span
+										style="color: red;">*</span></label>
+									<div class="col-sm-4">
+										<input type="text" id="eLinkteamId" name="eLinkteamId"
+											class="form-control" />
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" onclick="ePlant()" class="btn btn-primary">修改</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--查询方案-->
+
+		<div class="modal fade" id="plist" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" style="width: 1200px;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">查看方案组相关方案列表</h4>
+					</div>
+					<div style="margin-top: 2%;" id="a">
+
+
+						<table id="planlist" class="table table-hover"></table>
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--方案列表-->
+
+		<div class="modal fade" id="plans" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" style="width: 1000px;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">添加方案</h4>
+					</div>
+					<div style="margin-top: 2%;" id="b">
+						<div class="row">
+							<label class="col-sm-2 control-label"
+								style="text-align: right; margin-top: 5px">方案名称：</label>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<input type="text" id="planName" name="planName"
+										class="form-control" />
+
+								</div>
+							</div>
+							<label class="col-sm-2 control-label"
+								style="text-align: right; margin-top: 5px">方案主类型：</label>
+							<div class="col-sm-2">
+								<div class="control-group">
+									<select class="form-control" id="mainType" name="mainType">
+										<option selected="selected" value="">请选择</option>
+
+										<option value="1">优惠方案</option>
+										<option value="2">返利方案</option>
+									</select>
+								</div>
+							</div>
+							<div class="control-group">
+								<div>
+									<button onclick="cleant()" class="btn btn-danger" name="Name"
+										id="search_tel" value="清空"
+										style="float: right; margin-right: 2%;">清空</button>
+								</div>
+								<div>
+									<button onclick="sorcet()" class="btn btn-info" name="Name"
+										id="search_tel" value="查询"
+										style="float: right; margin-right: 2%;">查询</button>
+								</div>
+								<div>
+									<button onclick="addps()" class="btn btn-success"
+										style="float: right; margin-right: 2%;">添加</button>
+								</div>
+
+
+							</div>
+						</div>
+
+						<table id="ps" class="table table-hover"></table>
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<input type="hidden" id="pId" name="pId" />
+
+	</div>
+</body>
+
+
+<script type="text/javascript">
+	$('.form_date').datetimepicker({
+		language : 'zh-CN',
+		weekStart : 1,
+		todayBtn : 1,
+		autoclose : 1,
+		todayHighlight : 1,
+		startView : 2,
+		minView : 2,
+		forceParse : 0
+	});
+
+	$('.datetimepicker').datetimepicker({
+		minView : "month",//设置只显示到月份
+		format : 'yyyy-mm-dd',
+		language : 'zh-CN',
+		autoclose : true,//选中关闭
+		todayBtn : true
+	//今日按钮
+	})
+
+	function cleant() {
+		$("#b input").val("");
+		$("#b select").val("");
+	}
+	function sorcet() {
+		$('#ps').bootstrapTable("selectPage", 1);
+	}
+	function clean() {
+		$("#a input").val("");
+		$("#a select").val("");
+
+	}
+	//清空添加框
+	function clean2() {
+		$("#addLinkId").val("");
+		$("#addLinkType").val("");
+		$("#addLinkteamId").val("");
+		$("#addType").val("");
+		$('#addPlanTeamName').val("");
+	}
+
+	//根据窗口调整表格高度
+	$(window).resize(function() {
+		$('#mytab').bootstrapTable('resetView', {
+			height : tableHeight()
+		})
+	})
+
+	function tableHeight() {
+		//可以根据自己页面情况进行调整
+		return $(window).height() - 280;
+	}
+
+	bootsearch()
+	function sorce() {
+		$("#mytab").bootstrapTable('destroy');
+		//生成用户数据
+		bootsearch();
+	}
+
+	var all;
+	function bootsearch() {
+		//生成表格数据
+		$('#mytab').bootstrapTable(
+				{
+					method : 'post',
+					contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+					url : "planTeamList.do",//要请求数据的文件路径
+					dataType : 'json',
+					striped : true, //是否显示行间隔色
+					pageNumber : 1, //初始化加载第一页，默认第一页
+					pagination : true,//是否分页
+					//获取参数的函数
+					queryParams : function(p) {
+						return params(p);
+					},
+					queryParamsType : 'limit',//查询参数组织方式
+					dataType : 'json',
+					sidePagination : 'server',//指定服务器端分页
+					pageSize : 10,//单页记录数
+					pageList : [ 5, 10, 20, 30 ],//分页步进值
+					clickToSelect : true,//是否启用点击选中行
+					toolbarAlign : 'right',//工具栏对齐方式
+					buttonsAlign : 'right',//按钮对齐方式
+					toolbar : '#toolbar',//指定工作栏
+					columns : [
+							{
+								title : '操作',
+								field : 'id',
+								formatter : function(value, row, index) {
+									var url = "";
+									url = url + "<a href=javascript:addplans('"
+											+ index + "')>添加方案| </a>";
+									url = url
+											+ "<a href=javascript:showDetail('"
+											+ index + "')>方案列表 | </a>";
+									url = url + "<a href=javascript:update('"
+											+ index + "')>修改| </a>";
+									url = url + "<a href=javascript:deletept('"
+											+ index + "')>删除| </a>";
+									return url;
+								}
+							}, {
+								title : '方案组名称',
+								field : 'planTeamName'
+							}, {
+								title : '方案组ID',
+								field : 'planTeamId'
+							}, {
+								title : '方案类型',
+								field : 'type',
+								formatter : function(value, row, index) {
+									if (value == "0") {
+										return "平台产品方案";
+									} else if (value == "1") {
+										return "商品方案"
+									} else if (value == "2") {
+										return "团队方案"
+									}
+								}
+							}, {
+								title : '关联类型',
+								field : 'linkType',
+								formatter : function(value, row, index) {
+									if (value == "1") {
+										return "商品";
+									} else if (value == "2") {
+										return "团队"
+									}
+								}
+							}, {
+								title : '关联编号',
+								field : 'linkId'
+							}, {
+								title : '创建时间',
+								field : 'gmtCreate',
+								formatter : function(value, row, index) {
+									return format(value)
+								}
+							},
+
+					],
+					locale : 'zh-CN',//中文支持,
+					responseHandler : function(res) {
+						all = res;
+						//在ajax获取到数据，渲染表格之前，修改数据源
+						return res;
+					}
+				})
+	}
+
+	//显示添加方案弹框
+	function addModel() {
+		clean2();
+		$("#gl").attr("style", "display:none;");
+		$("#glbh").attr("style", "display:none;");
+		$('#addPlan').modal('show');
+	}
+
+	$("#addType").change(function() {
+		if ($(this).val() == '0' || $(this).val() == '') {
+			$("#gl").attr("style", "display:none;");
+			$("#glbh").attr("style", "display:none;");
+		}
+
+		if ($(this).val() == '1') {
+			$("#gl").attr("style", "display:block;");
+			$("#glbh").attr("style", "display:block;");
+
+		}
+		if ($(this).val() == '2') {
+			$("#gl").attr("style", "display:none;");
+			$("#glbh").attr("style", "display:block;");
+
+		}
+	});
+	$("#eType").change(function() {
+		if ($(this).val() == '0' || $(this).val() == '') {
+			$("#egl").attr("style", "display:none;");
+			$("#eglbh").attr("style", "display:none;");
+		}
+
+		if ($(this).val() == '1') {
+			$("#egl").attr("style", "display:block;");
+			$("#eglbh").attr("style", "display:block;");
+
+		}
+		if ($(this).val() == '2') {
+			$("#egl").attr("style", "display:none;");
+			$("#eglbh").attr("style", "display:block;");
+
+		}
+	});
+
+	//获取搜索的所有值
+	function params(params) {
+		$("#a input[type='text']").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		$("#a select").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		return params;
+	}
+
+	function AddPlant() {
+		if (confirm("正在添加数据，确认继续！")) {
+
+			$("form[id='addpt']").ajaxSubmit({
+				type : "post",
+				url : "addplanteam.do",
+				dataType : "json",
+				beforeSubmit : function() {
+				},
+				success : function(data) {
+					if (data.success) {
+						alert("添加成功");
+						window.location.reload();
+
+					} else {
+						alert("添加失败,但系统无异常");
+					}
+				},
+				error : function() {
+					alert("添加失败！");
+				}
+
+			});
+		}
+	}
+
+	function update(index) {
+		var data = all.rows;
+		$("#eid").val(data[index].id);
+		$("#eLinkId").val(data[index].linkId);
+		$("#eLinkteamId").val(data[index].linkTeamId);
+		$("#eLinkType").val(data[index].linkType);
+		$("#eType").val(data[index].type);
+		$('#ePlanTeamName').val(data[index].planTeamName);
+
+		if ($("#eType").val() == '0' || $("#eType").val() == '') {
+			$("#egl").attr("style", "display:none;");
+			$("#eglbh").attr("style", "display:none;");
+		}
+
+		if ($("#eType").val() == '1') {
+			$("#egl").attr("style", "display:block;");
+			$("#eglbh").attr("style", "display:block;");
+
+		}
+		if ($("#eType").val() == '2') {
+			$("#egl").attr("style", "display:none;");
+			$("#eglbh").attr("style", "display:block;");
+
+		}
+
+		$("#editpt").modal("show");
+
+	}
+	function ePlant() {
+		if (confirm("正在更新数据，确认继续！")) {
+
+			$("form[id='ept']").ajaxSubmit({
+				type : "post",
+				url : "editplanteam.do",
+				dataType : "json",
+				beforeSubmit : function() {
+				},
+				success : function(data) {
+					if (data.success) {
+						alert("修改成功");
+						window.location.reload();
+
+					} else {
+						alert("修改失败,但系统无异常");
+					}
+				},
+				error : function() {
+					alert("修改失败！");
+				}
+
+			});
+		}
+	}
+	//删除
+	function deletept(index) {
+
+		var id = all.rows[index].id;
+
+		if (confirm("确定删除此信息？删除后不可恢复")) {
+			jQuery.ajax({
+				url : "deleteplanteam.do",
+				type : 'post',
+				data : {
+					"id" : id
+				},
+				dataType : 'json',
+				success : function(json) {
+					if (json) {
+						alert("删除成功");
+						$("#mytab").bootstrapTable('refresh');
+					} else {
+						alert("删除失败");
+					}
+				},
+				error : function() {
+					alert("异常！");
+				}
+			});
+		} else {
+			return;
+		}
+	}
+	//方案列表
+	function showDetail(index) {
+		$("#planlist").bootstrapTable('destroy');
+		var tid = all.rows[index].planTeamId;
+
+		$('#planlist').bootstrapTable({
+			method : 'post',
+			contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+			url : "getPlanList.do?planTeamId=" + tid,//要请求数据的文件路径
+			dataType : 'json',
+			striped : true, //是否显示行间隔色
+			pageNumber : 1, //初始化加载第一页，默认第一页
+			pageSize : 20,//单页记录数
+			pageList : [ 20, 30 ],//分页步进值
+			pagination : true,//是否分页
+			queryParamsType : 'limit',//查询参数组织方式
+			sidePagination : 'server',//指定服务器端分页
+			queryParams : function(p) {
+				return params4(p);
+			},
+
+			clickToSelect : true,//是否启用点击选中行
+			toolbarAlign : 'right',//工具栏对齐方式
+			buttonsAlign : 'right',//按钮对齐方式
+			toolbar : '#toolbar',//指定工作栏
+
+			columns : [ {
+				title : '方案ID',
+				field : 'planId',
+			},
+
+			{
+				title : '方案名称',
+				field : 'planName'
+			}, {
+				title : '方案主类型',
+				field : 'mainType',
+				formatter : function(value, row, index) {
+					if (value == "2") {
+						return "返利方案";
+					} else if (value == "1") {
+						return "优惠方案"
+					}
+				}
+			},
+
+			{
+				title : '操作对象',
+				field : 'operateObj',
+				formatter : function(value, row, index) {
+					if (value == "1") {
+						return "现金";
+					}
+					if (value == "2") {
+						return "积分";
+					}
+
+				}
+
+			},
+
+			{
+				title : '是否应用',
+				field : 'youhuiFlg',
+				formatter : function(value, row, index) {
+					if (value == "1") {
+						return "否";
+					}
+					if (value == "2") {
+						return " 是";
+					}
+
+				}
+			}, {
+				title : '限制件数',
+				field : 'limitCount'
+			}, {
+				title : '有效开始日期',
+				field : 'startDate',
+				formatter : function(value, row, index) {
+					return format(value)
+				}
+			}, {
+				title : '有效结束日期',
+				field : 'endDate',
+				formatter : function(value, row, index) {
+					return format(value)
+				}
+			},
+
+			{
+				title : '创建时间',
+				field : 'gmtCreate',
+				formatter : function(value, row, index) {
+					return format(value)
+				}
+			}, {
+				title : '修改时间',
+				field : 'gmtModified',
+				formatter : function(value, row, index) {
+					return format(value)
+				}
+			}
+
+			],
+			locale : 'zh-CN',//中文支持,
+			responseHandler : function(res) {
+				//在ajax获取到数据，渲染表格之前，修改数据源
+				all4 = res.rows;
+				return res;
+			}
+		})
+		$("#plist").modal("show");
+	}
+	function params4(params) {
+
+		return params;
+	}
+	function create() {
+		var all2;
+		$('#ps').bootstrapTable({
+			method : 'post',
+			contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+			url : "queryNoTeamPlan.do",//要请求数据的文件路径
+			dataType : 'json',
+			striped : true, //是否显示行间隔色
+			pageNumber : 1, //初始化加载第一页，默认第一页
+			pageSize : 20,//单页记录数
+			pageList : [ 20, 30 ],//分页步进值
+			pagination : true,//是否分页
+			queryParamsType : 'limit',//查询参数组织方式
+			sidePagination : 'server',//指定服务器端分页
+			queryParams : function(p) {
+				return params2(p);
+			},
+
+			clickToSelect : true,//是否启用点击选中行
+			toolbarAlign : 'right',//工具栏对齐方式
+			buttonsAlign : 'right',//按钮对齐方式
+			toolbar : '#toolbar',//指定工作栏
+
+			columns : [ {
+				field : "id",
+				checkbox : true,
+				align : 'center',
+			}, {
+				title : '方案名称',
+				field : 'planName'
+			}, {
+				title : '方案主类型',
+				field : 'mainType',
+				formatter : function(value, row, index) {
+					if (value == "2") {
+						return "返利方案";
+					} else if (value == "1") {
+						return "优惠方案"
+					}
+				}
+			}, ],
+			locale : 'zh-CN',//中文支持,
+			responseHandler : function(res) {
+				//在ajax获取到数据，渲染表格之前，修改数据源
+				all2 = res.rows;
+				return res;
+			}
+		})
+	}
+	function params2(params) {
+		params["planName"] = $("#planName").val();
+		params["mainType"] = $("#mainType").val();
+
+		return params;
+	}
+	function addplans(index) {
+
+		$("#planName").val("");
+		$("#mainType").val("");
+		$("#pId").val(all.rows[index].planTeamId);
+		$("#ps").bootstrapTable('destroy');
+		create();
+		$("#plans").modal("show");
+
+	}
+	function addps() {
+		//使用getSelections即可获得，row是json格式的数据
+		var row = $('#ps').bootstrapTable('getSelections');
+		if (row.length < 1) {
+			alert("请选择方案");
+			return;
+		}
+		var t = [];
+		var tid = $("#pId").val();
+		for (var i = 0; i < row.length; i++) {
+			t.push(row[i].planId);
+		}
+		b = JSON.stringify(t);
+		jQuery.ajax({
+			type : 'post',
+			url : 'manyAddTeam.do',
+
+			data : {
+				"b" : b,
+				"tid" : tid
+			},
+			success : function(data) {
+				if (data.success) {
+					alert("添加成功");
+					window.location.reload();
+
+				} else {
+					alert("添加失败");
+				}
+			}
+		});
+
+	}
+</script>
+
+</html>

@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+#parse("content/importBase.vm")
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+#preview>img {
+	width: 100%;
+	height: 170px;
+}
+</style>
+</head>
+<body style="width: 100%; height: 100%;">
+	<div id="page-wrapper">
+		<!--BEGIN TITLE & BREADCRUMB Page-->
+		<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+			<div class="page-header pull-left">
+				<div class="page-title">系统设置</div>
+			</div>
+			<ol class="breadcrumb page-breadcrumb pull-right">
+				<li><i class="fa fa-home"></i>&nbsp;<a href="#">系统设置</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="hidden"><a href="#">系统设置</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="active">商品分类管理</li>
+			</ol>
+			<div class="clearfix"></div>
+		</div>
+
+		<div style="margin-top: 2%;" id="a">
+			<!-- <div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">类名：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="categoryName" name="categoryName" value=""
+							class="form-control" />
+					</div>
+				</div>
+			</div> -->
+
+			<div class="col-sm-4" style="float: right">
+				<div class="control-group">
+					<div>
+						<button onclick="sorce()" class="btn btn-info" name="Name"
+							id="search_tel" value="查询"
+							style="float: right; margin-right: 2%;">查询</button>
+					</div>
+					<div>
+						<button onclick="showAddModal()" class="btn btn-warning"
+							name="Name" id="search_tel" value="添加"
+							style="float: right; margin-right: 2%;">添加</button>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+
+		<!--END TITLE & BREADCRUMB P-->
+		<!--BEGIN CONTENT-->
+		<table id="mytab" class="table table-hover"></table>
+
+		<!-- 子类列表 （二级）-->
+		<div class="modal fade" id="attrValueModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" style="width: 50%;">
+				<div class="modal-content">
+
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">子类名详情</h4>
+					</div>
+					<div class="modal-body">
+						<table id="valuetab" class="table table-hover"></table>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-success"
+							onclick="showAddValuemodalForSecond()">新增子类名</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal"
+							onclick="hideAttr()">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 子类列表 （三级）-->
+		<div class="modal fade" id="attrValueModalThird"
+			data-backdrop="static" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog" style="width: 50%;">
+				<div class="modal-content">
+
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">子类名详情</h4>
+					</div>
+					<div class="modal-body">
+						<table id="valuetabThird" class="table table-hover"></table>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-success"
+							onclick="showAddValuemodalForThird()">新增子类名</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal"
+							onclick="hideAttr()">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<input type="hidden" id="thisBtnType" name="thisBtnType"
+			readonly="readonly" value="0" /> <input type="hidden"
+			id="topIdForSecond" name="topIdForSecond" readonly="readonly" /> <input
+			type="hidden" id="topIdForThird" name="topIdForThird"
+			readonly="readonly" />
+
+		<!-- 新增或修改类名 -->
+		<div class="modal fade" id="modifyModel" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" style="width: 50%;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">修改类名</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" role="form" name="cateModifyform"
+							method="post" id="INFO_FORM">
+
+							<input type="hidden" id="INFO_ID" name="id" class="form-control"
+								value="0" /> <input type="hidden" id="INFO_TOP_ID" name="topId"
+								class="form-control" value="0" />
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label">类名<span
+									style="color: red;">*</span></label>
+								<div class="col-sm-8">
+									<input type="text" id="INFO_CATEGORY_NAME" name="categoryName"
+										class="form-control" maxlength="64" />
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-success"
+							onclick="changeAttr()">提交</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal"
+							onclick="hideAttr()">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+</body>
+
+<script type="text/javascript">
+	function clean() {
+		$("#a input").val("");
+		$("#a select").val("");
+	}
+
+	bootsearch()
+	function sorce() {
+		$("#mytab").bootstrapTable('destroy');
+		//生成用户数据
+		bootsearch();
+	}
+
+	var all;
+	function bootsearch() {
+		//生成数据
+		$('#mytab')
+				.bootstrapTable(
+						{
+							method : 'post',
+							contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+							url : "selectFirstCate.do",//要请求数据的文件路径
+							dataType : 'json',
+							striped : true, //是否显示行间隔色
+							pageNumber : 1, //初始化加载第一页，默认第一页
+							pageSize : 10,//单页记录数
+							pageList : [ 5, 10, 20, 30 ],//分页步进值
+							pagination : true,//是否分页
+							queryParamsType : 'limit',//查询参数组织方式
+							sidePagination : 'server',//指定服务器端分页
+							queryParams : function(p) {
+								return params(p);
+							},
+							clickToSelect : true,//是否启用点击选中行
+							toolbarAlign : 'right',//工具栏对齐方式
+							buttonsAlign : 'right',//按钮对齐方式
+							toolbar : '#toolbar',//指定工作栏
+							columns : [
+									{
+										title : '操作',
+										field : 'ID',
+										formatter : function(value, row, index) {
+											return "<a href='#' onclick=updateAttr('"
+													+ index
+													+ "')>修改 </a> | "
+													+ "<a href='#' onclick=showSecondValue('"
+													+ index
+													+ "')>查看二级类名</a> |"
+													+ "<a href='#' onclick=delAttrValue('"
+													+ value + "')>删除</a> ";
+										}
+									}, {
+										title : '一级类名',
+										field : 'CATEGORY_NAME'
+									} ],
+							locale : 'zh-CN',//中文支持,
+							responseHandler : function(res) {
+								//在ajax获取到数据，渲染表格之前，修改数据源
+								all = res.rows;
+								return res;
+							}
+						});
+	}
+
+	//显示添加框
+	function showAddModal() {
+		$("#thisBtnType").val(0);
+
+		$("#INFO_CATEGORY_NAME").val("");
+		$("#INFO_ID").val("0");
+		$("#INFO_TOP_ID").val("0");
+		$('#modifyModel').modal('show');
+	}
+
+	//显示详情框(一级分类)
+	function updateAttr(number) {
+		$("#thisBtnType").val(0);
+		$("#INFO_CATEGORY_NAME").val(all[number].CATEGORY_NAME);
+		$("#INFO_ID").val(all[number].ID);
+		$("#INFO_TOP_ID").val(all[number].TOP_ID);
+		$('#modifyModel').modal('show');
+	}
+
+	function hideAttr() {
+		$("#INFO_CATEGORY_NAME").val("");
+		$("#INFO_ID").val(0);
+		$("#INFO_TOP_ID").val(0);
+		$('#myModal').modal('hide');
+		$('#addCategoryModel').modal('hide');
+	}
+
+	function hideAttrValue() {
+
+		var thisBtnType = $("#thisBtnType").val();
+		if (thisBtnType == '0') {
+			$("#mytab").bootstrapTable('refresh');
+			$('#modifyModel').modal('hide');
+		}
+		if (thisBtnType == '1') {
+			$("#valuetab").bootstrapTable('refresh');
+			$('#modifyModel').modal('hide');
+		}
+		if (thisBtnType == '2') {
+			$("#valuetabThird").bootstrapTable('refresh');
+			$('#modifyModel').modal('hide');
+		}
+		$("#mytab").bootstrapTable('refresh');
+	}
+
+	//获取搜索的所有值
+	function params(params) {
+		$("#a input[type='text']").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		$("#a select").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		return params;
+	}
+
+	function changeAttr() {
+		if ($("#INFO_CATEGORY_NAME").val() == "") {
+			alert("请填写分类名称 ");
+			return;
+		}
+		$("form[id='INFO_FORM']").ajaxSubmit({
+			type : "post",
+			url : "updateCate.do",
+			dataType : "json",
+			beforeSubmit : function() {
+			},
+			success : function(data) {
+				if (data.success) {
+					alert("操作成功");
+					hideAttrValue();
+				} else {
+					alert(data.message);
+				}
+			},
+			error : function() {
+				alert("操作失败！");
+			}
+		});
+	}
+
+	function delAttrValue(value) {
+
+		if (confirm("删除后不可恢复！确认删除？")) {
+			jQuery.ajax({
+				url : "deleteCate.do",
+				type : 'post',
+				data : {
+					"id" : value
+				},
+				dataType : 'json',
+				success : function(data) {
+					if (data.success) {
+						alert("操作成功");
+						hideAttrValue();
+					} else {
+						alert("操作失败");
+					}
+				},
+				error : function() {
+					alert("异常！");
+				}
+			});
+		}
+	}
+</script>
+
+
+<script type="text/javascript">
+	//展示二级类名列表信息 
+	function showSecondValue(number) {
+		$("#thisBtnType").val(1);
+
+		var topId = all[number].ID;
+
+		$("#topIdForSecond").val(topId);
+
+		$("#valuetab").bootstrapTable("refreshOptions", {
+			pageNumber : 1
+		});
+
+		$('#attrValueModal').modal('show');
+	}
+
+	//二级分类
+	var allValueSecond;
+	//生成数据
+	$('#valuetab')
+			.bootstrapTable(
+					{
+						method : 'post',
+						contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+						url : "queryCateByTopId.do",//要请求数据的文件路径
+						dataType : 'json',
+						striped : true, //是否显示行间隔色
+						pageNumber : 1, //初始化加载第一页，默认第一页
+						pageSize : 10,//单页记录数
+						pageList : [ 5, 10, 20, 30 ],//分页步进值
+						pagination : true,//是否分页
+						queryParamsType : 'limit',//查询参数组织方式
+						sidePagination : 'server',//指定服务器端分页
+						queryParams : function(p) {
+							return paramsValues(p);
+						},
+						clickToSelect : true,//是否启用点击选中行
+						toolbarAlign : 'right',//工具栏对齐方式
+						buttonsAlign : 'right',//按钮对齐方式
+						toolbar : '#toolbar',//指定工作栏
+						columns : [
+								{
+									title : '操作',
+									field : 'ID',
+									formatter : function(value, row, index) {
+										return "<a href='#' onclick=updateAttrValue('"
+												+ index
+												+ "')>修改类名 </a> | "
+												+ "<a href='#' onclick=showThirdValue('"
+												+ index
+												+ "')>查看三级类名</a> |"
+												+ "<a href='#' onclick=delAttrValue('"
+												+ value + "')>删除</a> ";
+									}
+								}, {
+									title : '类名',
+									field : 'CATEGORY_NAME'
+								}, {
+									title : '上级类名',
+									field : 'TOP_NAME'
+								} ],
+						locale : 'zh-CN',//中文支持,
+						responseHandler : function(res) {
+							//在ajax获取到数据，渲染表格之前，修改数据源
+							allValueSecond = res.rows;
+							return res;
+						}
+					});
+
+	function paramsValues(params) {
+		params['topId'] = $('#topIdForSecond').val();
+		return params;
+	}
+
+	//修改框（二级分类）
+	function updateAttrValue(number) {
+		$("#thisBtnType").val(1);
+		$("#INFO_CATEGORY_NAME").val(allValueSecond[number].CATEGORY_NAME);
+		$("#INFO_ID").val(allValueSecond[number].ID);
+		$("#INFO_TOP_ID").val(allValueSecond[number].TOP_ID);
+		$('#modifyModel').modal('show');
+	}
+
+	//显示添加框(二级分类)
+	function showAddValuemodalForSecond() {
+		$("#thisBtnType").val(1);
+		$("#INFO_CATEGORY_NAME").val('');
+		$("#INFO_TOP_ID").val($('#topIdForSecond').val());
+		$("#INFO_ID").val(0);
+		$('#modifyModel').modal('show');
+	}
+</script>
+
+<script type="text/javascript">
+	//展示三级类名列表信息 
+	function showThirdValue(number) {
+		$("#thisBtnType").val(2);
+
+		var topId = allValueSecond[number].ID;
+
+		$("#topIdForThird").val(topId);
+
+		$("#valuetabThird").bootstrapTable("refreshOptions", {
+			pageNumber : 1
+		});
+
+		$('#attrValueModalThird').modal('show');
+	}
+
+	//三级分类
+	var allValueThird;
+	//生成数据
+	$('#valuetabThird')
+			.bootstrapTable(
+					{
+						method : 'post',
+						contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+						url : "queryCateByTopId.do",//要请求数据的文件路径
+						dataType : 'json',
+						striped : true, //是否显示行间隔色
+						pageNumber : 1, //初始化加载第一页，默认第一页
+						pageSize : 10,//单页记录数
+						pageList : [ 5, 10, 20, 30 ],//分页步进值
+						pagination : true,//是否分页
+						queryParamsType : 'limit',//查询参数组织方式
+						sidePagination : 'server',//指定服务器端分页
+						queryParams : function(p) {
+							return paramsValuesthird(p);
+						},
+						clickToSelect : true,//是否启用点击选中行
+						toolbarAlign : 'right',//工具栏对齐方式
+						buttonsAlign : 'right',//按钮对齐方式
+						toolbar : '#toolbar',//指定工作栏
+						columns : [
+								{
+									title : '操作',
+									field : 'ID',
+									formatter : function(value, row, index) {
+										return "<a href='#' onclick=updateAttrValueThird('"
+												+ index
+												+ "')>修改类名 </a> | "
+												+ "<a href='#' onclick=delAttrValue('"
+												+ value + "')>删除</a> ";
+									}
+								}, {
+									title : '类名',
+									field : 'CATEGORY_NAME'
+								}, {
+									title : '上级类名',
+									field : 'TOP_NAME'
+								} ],
+						locale : 'zh-CN',//中文支持,
+						responseHandler : function(res) {
+							//在ajax获取到数据，渲染表格之前，修改数据源
+							allValueThird = res.rows;
+							return res;
+						}
+					});
+
+	function paramsValuesthird(params) {
+		params['topId'] = $('#topIdForThird').val();
+		return params;
+	}
+
+	//修改框（三级分类）
+	function updateAttrValueThird(number) {
+		$("#thisBtnType").val(2);
+		$("#INFO_CATEGORY_NAME").val(allValueThird[number].CATEGORY_NAME);
+		$("#INFO_ID").val(allValueThird[number].ID);
+		$("#INFO_TOP_ID").val(allValueThird[number].TOP_ID);
+		$('#modifyModel').modal('show');
+	}
+
+	//显示添加框(三级分类)
+	function showAddValuemodalForThird() {
+		$("#thisBtnType").val(2);
+		$("#INFO_CATEGORY_NAME").val('');
+		$("#INFO_TOP_ID").val($('#topIdForThird').val());
+		$("#INFO_ID").val(0);
+		$('#modifyModel').modal('show');
+	}
+</script>
+</html>

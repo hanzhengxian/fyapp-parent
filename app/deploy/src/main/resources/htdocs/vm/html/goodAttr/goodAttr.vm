@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+#parse("content/importBase.vm")
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+#preview>img {
+	width: 100%;
+	height: 170px;
+}
+</style>
+</head>
+<body style="width: 100%; height: 100%;">
+	<div id="page-wrapper">
+		<!--BEGIN TITLE & BREADCRUMB Page-->
+		<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+			<div class="page-header pull-left">
+				<div class="page-title">商品属性管理</div>
+			</div>
+			<ol class="breadcrumb page-breadcrumb pull-right">
+				<li><i class="fa fa-home"></i>&nbsp;<a href="#">商品属性管理</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="hidden"><a href="#">商品属性管理</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="active">商品属性管理</li>
+			</ol>
+			<div class="clearfix"></div>
+		</div>
+
+
+		<div style="margin-top: 2%;" id="a">
+
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">属性名称：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="attrName" name="attrName"
+							class="form-control" />
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+
+				<div class="col-sm-4" style="float: right">
+					<div class="control-group">
+						<div>
+							<button onclick="clean()" class="btn btn-danger" name="Name"
+								id="search_tel" value="清空"
+								style="float: right; margin-right: 2%;">清空</button>
+						</div>
+
+						<div>
+							<button onclick="sorce()" class="btn btn-info" name="Name"
+								id="search_tel" value="查询"
+								style="float: right; margin-right: 2%;">查询</button>
+						</div>
+
+						<div>
+							<button onclick="showAddmodal()" class="btn btn-warning"
+								name="Name" id="search_tel" value="新增"
+								style="float: right; margin-right: 2%;">新增</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--END TITLE & BREADCRUMB P-->
+		<!--BEGIN CONTENT-->
+		<table id="mytab" class="table table-hover"></table>
+
+		<div class="modal fade" id="myModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" style="width: 50%;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">属性详情</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" role="form" name="infoModifyform"
+							method="post" id="INFO_FORM">
+
+							<input type="hidden" id="INFO_ATTR_ID" name="id"
+								class="form-control" value="0" />
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label">属性名<span
+									style="color: red;">*</span>：
+								</label>
+								<div class="col-sm-8">
+									<input type="text" id="INFO_ATTR_NAME" name="attrName"
+										class="form-control" maxlength="64" />
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-success"
+							onclick="changeAttr()">提交</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal"
+							onclick="hideAttr()">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="attrValueModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" style="width: 50%;">
+				<div class="modal-content">
+					<input type="hidden" id="attrId" name="attrId" readonly="readonly" />
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">属性值详情</h4>
+					</div>
+					<div class="modal-body">
+						<table id="valuetab" class="table table-hover"></table>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-success"
+							onclick="showAddValuemodal()">新增属性值名</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal"
+							onclick="hideAttr()">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="modal fade" id="valueModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" style="width: 50%;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">属性值</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" role="form" name="valueInfoform"
+							method="post" id="VALUES_FORM">
+
+							<input type="hidden" id="INFO_ATTR_VALUES_ID" name="id"
+								class="form-control" value="0" /> <input type="hidden"
+								id="INFO_ATTR_ID_VALUE" name="attrId" class="form-control"
+								value="0" />
+
+							<div class="row">
+								<div class="form-group col-md-6">
+									<label for="lastname" class="col-sm-4 control-label">属性值名<span
+										style="color: red;">*</span>：
+									</label>
+									<div class="col-sm-8">
+										<input type="text" id="INFO_ATTR_VALUES_NAME" name="value"
+											class="form-control" maxlength="64" />
+									</div>
+								</div>
+							</div>
+
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-success" data-dismiss="modal"
+							onclick="changeAttrValue()">修改信息</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal"
+							onclick="hideAttr()">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+<script type="text/javascript">
+	function clean() {
+		$("#a input").val("");
+		$("#a select").val("");
+	}
+
+	bootsearch();
+
+	var all;
+	function sorce() {
+		$("#mytab").bootstrapTable('destroy');
+		//生成用户数据
+		bootsearch();
+	}
+
+	function bootsearch() {
+		//生成数据
+		$('#mytab')
+				.bootstrapTable(
+						{
+							method : 'post',
+							contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+							url : "selectAllAttr.do",//要请求数据的文件路径
+							dataType : 'json',
+							striped : true, //是否显示行间隔色
+							pageNumber : 1, //初始化加载第一页，默认第一页
+							pageSize : 10,//单页记录数
+							pageList : [ 5, 10, 20, 30 ],//分页步进值
+							pagination : true,//是否分页
+							queryParamsType : 'limit',//查询参数组织方式
+							sidePagination : 'server',//指定服务器端分页
+							queryParams : function(p) {
+								return params(p);
+							},
+							clickToSelect : true,//是否启用点击选中行
+							toolbarAlign : 'right',//工具栏对齐方式
+							buttonsAlign : 'right',//按钮对齐方式
+							toolbar : '#toolbar',//指定工作栏
+							columns : [
+									{
+										title : '操作',
+										field : 'ID',
+										formatter : function(value, row, index) {
+											return "<a href='#' onclick=updateAttr('"
+													+ index
+													+ "')>修改 </a> | "
+													+ "<a href='#' onclick=showAttrValue('"
+													+ index + "')>查看属性值</a> ";
+										}
+									},
+									{
+										title : '属性名',
+										field : 'ATTR_NAME'
+									},
+									{
+										title : '状态',
+										field : 'STATUS',
+										formatter : function(value, row, index) {
+											if (value == "ENABLED") {
+												return "正常";
+											} else if (value == "UNABLED") {
+												return "失效";
+											}
+										}
+									},
+									{
+										title : '创建者',
+										field : 'createrUser'
+									},
+									{
+										title : '创建时间',
+										field : 'GMT_CREATE',
+										formatter : function(value, row, index) {
+											return format(value);
+										}
+									},
+									{
+										title : '修改者',
+										field : 'modifierUser'
+									},
+									{
+										title : '修改时间',
+										field : 'GMT_MODIFIED',
+										formatter : function(value, row, index) {
+											return format(value);
+										}
+									} ],
+							locale : 'zh-CN',//中文支持,
+							responseHandler : function(res) {
+								//在ajax获取到数据，渲染表格之前，修改数据源
+								all = res.rows;
+								return res;
+							}
+						})
+
+	}
+
+	var allValue;
+	//生成数据
+	$('#valuetab').bootstrapTable(
+			{
+				method : 'post',
+				contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+				url : "selectAllAttrValue.do",//要请求数据的文件路径
+				dataType : 'json',
+				striped : true, //是否显示行间隔色
+				pageNumber : 1, //初始化加载第一页，默认第一页
+				pageSize : 10,//单页记录数
+				pageList : [ 5, 10, 20, 30 ],//分页步进值
+				pagination : true,//是否分页
+				queryParamsType : 'limit',//查询参数组织方式
+				sidePagination : 'server',//指定服务器端分页
+				queryParams : function(p) {
+					return paramsValues(p);
+				},
+				clickToSelect : true,//是否启用点击选中行
+				toolbarAlign : 'right',//工具栏对齐方式
+				buttonsAlign : 'right',//按钮对齐方式
+				toolbar : '#toolbar',//指定工作栏
+				columns : [
+						{
+							title : '操作',
+							field : 'ID',
+							formatter : function(value, row, index) {
+								return "<a href='#' onclick=updateAttrValue('"
+										+ index + "')>修改属性值 </a> | "
+										+ "<a href='#' onclick=delAttrValue('"
+										+ value + "')>删除</a> ";
+							}
+						}, {
+							title : '属性值名',
+							field : 'VALUE'
+						}, {
+							title : '状态',
+							field : 'STATUS'
+						}, {
+							title : '创建者',
+							field : 'createrUser'
+						}, {
+							title : '创建时间',
+							field : 'GMT_CREATE',
+							formatter : function(value, row, index) {
+								return format(value);
+							}
+						}, {
+							title : '修改者',
+							field : 'modifierUser'
+						}, {
+							title : '修改时间',
+							field : 'GMT_MODIFIED',
+							formatter : function(value, row, index) {
+								return format(value);
+							}
+						} ],
+				locale : 'zh-CN',//中文支持,
+				responseHandler : function(res) {
+					//在ajax获取到数据，渲染表格之前，修改数据源
+					allValue = res.rows;
+					return res;
+				}
+			})
+
+	//显示添加框
+	function showAddmodal() {
+		$("#INFO_ATTR_ID_VALUE").val("");
+		$('#myModal').modal('show');
+	}
+
+	//显示详情框
+	function updateAttr(number) {
+
+		$("#INFO_ATTR_NAME").val(all[number].ATTR_NAME);
+		//	if(all[number].NORMAL){
+		//		$("#normal").val("true");
+		//	}else if(!all[number].NORMAL){
+		//		$("#normal").val("false");
+		//	}else{
+		//		$("#normal").val(all[number].NORMAL);
+		//	}
+
+		//	$("#status").val(all[number].STATUS);
+		$("#INFO_ATTR_NAME").val(all[number].ATTR_NAME);
+		$("#INFO_ATTR_ID").val(all[number].ID);
+		$('#myModal').modal('show');
+	}
+
+	function showAddValuemodal() {
+
+		$('#valueModal').modal('show');
+	}
+
+	function updateAttrValue(number) {
+
+		$("#INFO_ATTR_VALUES_NAME").val(allValue[number].VALUE);
+		$("#INFO_ATTR_VALUES_ID").val(allValue[number].ID);
+
+		/* $('#attrValueModal').modal('hide'); */
+		$('#valueModal').modal('show');
+	}
+
+	//展示属性值信息 
+	function showAttrValue(number) {
+
+		var attrId = all[number].ID;
+
+		$("#attrId").val(attrId);
+		$("#INFO_ATTR_ID_VALUE").val(attrId);
+
+		$('#valuetab').bootstrapTable("selectPage", 1);
+
+		$('#attrValueModal').modal('show');
+	}
+
+	function hideAttr() {
+		$("#INFO_ATTR_NAME").val("");
+		$("#INFO_ATTR_ID").val(0);
+		$('#myModal').modal('hide');
+	}
+
+	function hideAttrValue() {
+		$("#INFO_ATTR_VALUES_NAME").val("");
+		$("#INFO_ATTR_VALUES_ID").val(0);
+		$('#valueModal').modal('hide');
+	}
+
+	function paramsValues(params) {
+		params['attrId'] = $('#attrId').val();
+		return params;
+	}
+
+	//获取搜索的所有值
+	function params(params) {
+		$("#a input[type='text']").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		$("#a select").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		return params;
+	}
+
+	function changeAttr() {
+		if ($("#INFO_ATTR_NAME").val() == "") {
+			alert("请填写属性名称 ");
+			return;
+		}
+		$("form[id='INFO_FORM']").ajaxSubmit({
+			type : "post",
+			url : "updateGoodsAttr.do",
+			dataType : "json",
+			beforeSubmit : function() {
+			},
+			success : function(data) {
+				if (data.success) {
+					alert("操作成功");
+					hideAttr();
+					$("#mytab").bootstrapTable('refresh');
+				} else {
+					alert("操作失败");
+				}
+			},
+			error : function() {
+				alert("操作失败！");
+			}
+		});
+	}
+
+	function changeAttrValue() {
+		if ($("#INFO_ATTR_VALUES_NAME").val() == "") {
+			alert("请填写属性值名称 ");
+			return;
+		}
+		$("form[id='VALUES_FORM']").ajaxSubmit({
+			type : "post",
+			url : "updateGoodsAttrValue.do",
+			dataType : "json",
+			beforeSubmit : function() {
+			},
+			success : function(data) {
+				if (data.success) {
+					alert("操作成功");
+					hideAttrValue();
+					$("#valuetab").bootstrapTable('refresh');
+				} else {
+					alert("操作失败");
+				}
+			},
+			error : function() {
+				alert("操作失败！");
+			}
+		});
+	}
+
+	function delAttrValue(value) {
+
+		if (confirm("删除后不可恢复！确认删除？")) {
+			jQuery.ajax({
+				url : "deleteGoodsAttrValue.do",
+				type : 'post',
+				data : {
+					"attrId" : value
+				},
+				dataType : 'json',
+				success : function(data) {
+					if (data.success) {
+						alert("操作成功");
+						$("#valuetab").bootstrapTable('refresh');
+					} else {
+						alert("操作失败");
+					}
+				},
+				error : function() {
+					alert("异常！");
+				}
+			});
+		}
+	}
+</script>
+</html>

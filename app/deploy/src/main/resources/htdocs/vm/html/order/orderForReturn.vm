@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+#parse("content/importBase.vm")
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link type="text/css" rel="stylesheet" href="css/wuliu.css">
+
+<style type="text/css">
+</style>
+
+</head>
+<body style="width: 100%; height: 100%;">
+	<div id="page-wrapper">
+		<!--BEGIN TITLE & BREADCRUMB PAGE-->
+		<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+			<div class="page-header pull-left">
+				<div class="page-title">退款异常订单管理</div>
+			</div>
+			<ol class="breadcrumb page-breadcrumb pull-right">
+				<li><i class="fa fa-home"></i>&nbsp;<a href="#">退款异常订单管理</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="hidden"><a href="#">退款异常订单管理</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+			</ol>
+			<div class="clearfix"></div>
+		</div>
+
+
+		<div style="margin-top: 2%;" id="a">
+
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">子订单编号：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="childOrderId" name="childOrderId"
+							class="form-control" /> <br />
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-4" style="float: right">
+				<div class="control-group">
+					<div>
+						<button onclick="clean()" class="btn btn-danger" name="Name"
+							id="search_tel" value="清空"
+							style="float: right; margin-right: 2%;">清空</button>
+					</div>
+					<div>
+						<button onclick="sorce()" class="btn btn-info" name="Name"
+							id="search_tel" value="查询"
+							style="float: right; margin-right: 2%;">查询</button>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<table id="mytab" class="table table-hover"
+			style="word-break: break-all; word-wrap: break-all;"></table>
+
+		<!-- 查看图片模块 -->
+		<div class="modal fade" id="imgbig" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">查看图片</h4>
+					</div>
+					<div class="modal-body">
+						<img alt="" src="" id="bigbis" style="width: 100%; height: 100%;" />
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<input type="hidden" id="offset" readonly="readonly" />
+	<input type="hidden" id="limit" readonly="readonly" />
+</body>
+
+
+<script type="text/javascript">
+	bootsearch()
+
+	function sorce() {
+		$("#mytab").bootstrapTable('destroy');
+		//生成用户数据
+		bootsearch();
+	}
+
+	var all;
+	function bootsearch() {
+		//生成用户数据
+		$('#mytab').bootstrapTable(
+				{
+					method : 'post',
+					contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+					url : "queryForOrderReturnNotSucc.do",//要请求数据的文件路径
+					dataType : 'json',
+					striped : true, //是否显示行间隔色
+					pageNumber : 1, //初始化加载第一页，默认第一页
+					pageSize : 10,//单页记录数
+					pageList : [ 5, 10, 20, 30 ],//分页步进值
+					pagination : true,//是否分页
+					queryParamsType : 'limit',//查询参数组织方式
+					sidePagination : 'server',//指定服务器端分页
+					queryParams : function(p) {
+						return params(p);
+					},
+					showRefresh : false,
+					//是否显示内容列下拉框。
+					showColumns : false,
+					//显示导出插件
+					showExport : false,
+					exportDataType : "basic",
+					clickToSelect : true,//是否启用点击选中行
+					toolbarAlign : 'right',//工具栏对齐方式
+					buttonsAlign : 'right',//按钮对齐方式
+					toolbar : '#toolbar',//指定工作栏
+					columns : [
+							{
+								title : '操&nbsp&nbsp&nbsp&nbsp作',
+								field : 'id',
+								align : 'center',
+								formatter : function(value, row, index) {
+									var url = '';
+									url += "<a href='#' onclick=huikuan('"
+											+ index + "')>确认回款</a>";
+									return url;
+								}
+							},
+							{
+								title : '订单状态',
+								field : 'orderStateStr'
+							},
+							{
+								title : '退款状态',
+								field : 'subOrderStatusStr',
+							},
+							{
+								title : '退款（金额）状态',
+								field : 'moneyStatusStr',
+							},
+							{
+								title : '退款（金额）说明',
+								field : 'moneyMemo',
+							},
+							{
+								title : '支付状态',
+								field : 'payState',
+								formatter : function(value, row, index) {
+									if (value == "1") {
+										return "未支付";
+									} else if (value == "2") {
+										return "已支付";
+									} else if (value == "3") {
+										return "取消";
+									} else if (value == "4") {
+										return "其他";
+									}
+								}
+							},
+							{
+								title : '支付方式',
+								field : 'payWay',
+								formatter : function(value, row, index) {
+									if (value == "1") {
+										return "微信";
+									} else if (value == "2") {
+										return "支付宝";
+									} else if (value == "3") {
+										return "线下支付";
+									} else {
+										return "其他";
+									}
+								}
+							},
+							{
+								title : '创建日期',
+								field : 'gmtCreate',
+								formatter : function(value, row, index) {
+									return format(value);
+								}
+							},
+							{
+								title : '取货方式',
+								field : 'transferType',
+								formatter : function(value, row, index) {
+									if (value == "0") {
+										return "物流配送";
+									} else if (value == "1") {
+										return "到店自取";
+									}
+								}
+							},
+							{
+								title : '实付金额',
+								field : 'realOrderPrice.amount'
+							},
+							{
+								title : '实付积分',
+								field : 'realPointPrice.amount'
+							},
+							{
+								title : '收货地址',
+								field : 'id',
+								formatter : function(value, row, index) {
+									if (row.transferType == "0") {
+										return row.province + row.city
+												+ row.area + row.reAddr;
+									}
+								}
+							}, {
+								title : '收货人',
+								field : 'reUserName'
+							}, {
+								title : '联系电话',
+								field : 'cell'
+							}, {
+								title : '子订单编号',
+								field : 'childOrderId',
+								cellStyle : {
+									css : {
+										'mso-number-format' : '\@'
+									}
+								}
+							}, {
+								title : '用户编号',
+								field : 'userId',
+								cellStyle : {
+									css : {
+										'mso-number-format' : '\@'
+									}
+								}
+							} ],
+					locale : 'zh-CN',//中文支持,
+					responseHandler : function(res) {
+						//在ajax获取到数据，渲染表格之前，修改数据源
+						all = res.rows;
+						return res;
+					}
+
+				})
+	}
+
+	function claenmyModal() {
+		$("#myModal input").val("");
+	}
+
+	function clean() {
+		$("#a input").val("");
+		$("#a select").val("");
+	}
+
+	//显示放大图片
+	function imgbig(url) {
+		$('#imgbig').modal('show');
+		$("#bigbis").attr('src', url);
+	}
+
+	//获取搜索的所有值
+	function params(params) {
+		$("#a input[type='text']").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		$("#a select").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		params['rankType'] = "0";
+
+		$("#offset").val(params.offset);
+		$("#limit").val(params.limit);
+		return params;
+	}
+
+	$('.datetimepicker').datetimepicker({
+		minView : "month",//设置只显示到月份
+		language : 'zh-CN',//汉化
+		format : 'yyyy-mm-dd',
+		language : 'zh-CN',
+		autoclose : true,//选中关闭
+		todayBtn : true
+	//今日按钮
+	})
+</script>
+
+</html>

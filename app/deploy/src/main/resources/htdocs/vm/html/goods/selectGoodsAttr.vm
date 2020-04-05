@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+#parse("content/importBase.vm")
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+#preview>img {
+	width: 100%;
+	height: 170px;
+}
+</style>
+<base target="mainFrame" />
+</head>
+<body style="width: 100%; height: 100%;">
+	<div id="page-wrapper">
+		<!--BEGIN TITLE & BREADCRUMB PAGE-->
+		<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+			<div class="page-header pull-left">
+				<div class="page-title">规格列表</div>
+			</div>
+
+			<ol class="breadcrumb page-breadcrumb pull-right">
+				<li><i class="fa fa-home"></i>&nbsp;<a href="#">商品管理</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="hidden"><a href="#">商品管理</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="active">商品列表</li>
+			</ol>
+			<div class="clearfix"></div>
+		</div>
+
+		<table id="mytab" class="table table-hover"></table>
+
+		<!-- 展示商品详情 -->
+		<div class="modal fade" id="showDetailModel" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">规格详情</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" role="form" id="showDetailForm">
+							<!-- #if(attrFlag == '1') -->
+							#foreach($per in $attrList)
+							<div class="form-group">
+								<label class="col-sm-2 control-label">商品属性名</label>
+								<div class="col-sm-4">
+									<input type="text" value="$per.attrNames" name="showAttrNames"
+										class="form-control" id="showAttrNames" readonly="readonly" />
+								</div>
+								<label class="col-sm-2 control-label">商品属性值</label>
+								<div class="col-sm-4">
+									<input type="text" value="$per.valuees" name="showValuees"
+										class="form-control" id="showValuees" readonly="readonly" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">商品原价</label>
+								<div class="col-sm-4">
+									<input type="text" value="$per.price" name="showPrice"
+										class="form-control" id="showPrice" readonly="readonly" />
+								</div>
+								<label class="col-sm-2 control-label">商品现价</label>
+								<div class="col-sm-4">
+									<input type="text" value="$per.goodAmount"
+										name="showGoodAmount" class="form-control" id="showGoodAmount"
+										readonly="readonly" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">商品积分</label>
+								<div class="col-sm-4">
+									<input type="text" value="$per.point" name="showPoint"
+										class="form-control" id="showPoint" readonly="readonly" />
+								</div>
+								<label class="col-sm-2 control-label">商品库存</label>
+								<div class="col-sm-4">
+									<input type="text" value="$per.stock" name="showStock"
+										class="form-control" id="showStock" readonly="readonly" />
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">商品图片</label>
+								<div class="col-sm-4">
+									<img src="$per.imgSrc" width='65px;' height='50px;' />
+								</div>
+								<label class="col-sm-2 control-label">商品销量</label>
+								<div class="col-sm-4">
+									<input type="text" value="$per.sellNum" name="showSellNum"
+										class="form-control" id="showSellNum" readonly="readonly" />
+								</div>
+							</div>
+							#end
+						</form>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

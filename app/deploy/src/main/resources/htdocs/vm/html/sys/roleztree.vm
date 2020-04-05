@@ -1,0 +1,187 @@
+<link rel="stylesheet" href="css/ztree/zTreeStyle/metroStyle.css" type="text/css">
+<script type="text/javascript" src="js/ztree/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="js/ztree/jquery.ztree.excheck.js"></script>
+<script type="text/javascript" src="js/ztree/jquery.ztree.exedit.js"></script>
+<SCRIPT type="text/javascript" >
+
+	var zTree;
+	var demoIframe;
+
+	var setting = { 
+		check: {
+				enable: true,
+				chkDisabledInherit: true
+			},
+		view: {
+			dblClickExpand: false,
+			showLine: true,
+			selectedMulti: false
+		},
+		data: {
+			simpleData: {
+				enable:true,
+				idKey: "id",
+				pIdKey: "pId",
+				rootPId: ""
+			}
+		},
+		callback: {
+			beforeClick: function(treeId, treeNode) {
+				
+			}
+		}
+	};
+	var zNodes ;
+	
+	
+	function toshowztree(roldid){
+		$("#roldid").val(roldid);
+		jQuery.ajax({
+    		 url : "selectjutisdiction.do",
+    		 type : 'post',
+    		 data:{"roldid":roldid},
+    		 dataType : 'json',
+			 async : false,
+    		 success : function(data) {
+    		 	zNodes = data.menu;
+				var t = $("#tree");
+				t = jQuery.fn.zTree.init(t, setting, zNodes);
+				demoIframe = $("#testIframe");
+        		demoIframe.bind("load", loadReady);
+        		zTree = jQuery.fn.zTree.getZTreeObj("tree");
+        		var nodes = zTree.getNodes();
+        		for (var i = 0; i < nodes.length; i++) { //设置节点展开
+                   zTree.expandNode(nodes[i], true, false, true);
+                }
+				if(data.role!=null){
+    				//在这里默认选择节点的时候因插件原因id不能为1  否则会选中全部
+    				for(var i=0;i<data.role.length;i++){
+    					var chilfern = data.role[i].childern;
+    					if(chilfern != null){
+    						for(var j=0; j < chilfern.length;j++){
+    							node =   zTree.getNodeByParam("id", chilfern[j].id, null);
+        						zTree.checkNode(node, true, true);
+    						}
+    					}else{
+    						node =   zTree.getNodeByParam("id", data.role[i].id, null);
+        					zTree.checkNode(node, true, true);
+    					}
+						/*  */
+    				}
+				}
+				
+    		 },
+    		 error : function() {  
+    		            alert("异常！");  
+    		     }  
+		});
+		$("#showztree").modal('show');
+	}
+	function loadReady() {
+		var bodyH = demoIframe.contents().find("body").get(0).scrollHeight,
+		htmlH = demoIframe.contents().find("html").get(0).scrollHeight,
+		maxH = Math.max(bodyH, htmlH), minH = Math.min(bodyH, htmlH),
+		h = demoIframe.height() >= maxH ? minH:maxH ;
+		if (h < 530) h = 530;
+		demoIframe.height(h);
+	}
+		function hideRMenu() {
+			if (rMenu) rMenu.css({"display": "none"});
+			$("body").unbind("mousedown", onBodyMouseDown);
+		}
+		function onBodyMouseDown(event){
+			if (!(event.target.id == "rMenu" || $(event.target).parents("#rMenu").length>0)) {
+				rMenu.css({"display" : "none"});
+			}
+		}
+	
+		function checkTreeNode(checked) {
+			var nodes = zTree.getSelectedNodes();
+			if (nodes && nodes.length>0) {
+				zTree.checkNode(nodes[0], checked, true);
+			}
+			hideRMenu();
+		}
+		function resetTree() {
+			hideRMenu();
+			jQuery.fn.zTree.init($("#tree"), setting, zNodes);
+		}
+		function sumbitztree(){
+			var treeObj = jQuery.fn.zTree.getZTreeObj("tree");
+			var nodes = treeObj.getCheckedNodes(true);
+			var r="[";
+			for(var i=1;i<nodes.length;i++){
+				if(nodes[i].isParent==true){
+					r = r+'{"name":"'+nodes[i].name+'","id":"'+nodes[i].id+'","pId":"'+nodes[i].pId+
+					'","isParent":"true","childern":[';
+					for(var z = 0 ;z<nodes[i].children.length;z++){
+						if(nodes[i].children[z].checked==true){
+							if(z!=0){
+								r= r+',';
+							}
+							r = r+'{"name":"'+nodes[i].children[z].name+'","id":"'+nodes[i].children[z].id
+							+'","pId":"'+nodes[i].children[z].pId+'","url":"'+nodes[i].children[z].file+
+							'","isParent":"false"}';
+						}
+					}
+					r = r+"]}";
+				}else{ 
+					if(nodes[i].level==1){
+    					r = r+'{"id":"'+nodes[i].id+'","name":"'+nodes[i].name+'","pId":"'+nodes[i].pId+'","url":"'+
+    					nodes[i].file+'","isParent":"false"}';
+					}
+				}
+				if(i==nodes.length-1){
+				}else if(nodes[i].level!=1){
+				}else{
+					r = r+",";
+				}
+			}
+		
+			//经测试发现偶尔会出现多一个，的情况，在这判断并删除  
+			if(r.substr(r.length-1,1)==","){
+				r = r.substring(0, r.lastIndexOf(','));  
+				
+			};
+			r = r+"]";
+			
+			jQuery.ajax({
+    		 url : "updatejurisidiction.do",
+    		 type : 'post',
+    		 data:{"id":$("#roldid").val(),"value":r},
+    		 dataType : 'json',
+    		 success : function(data) {
+    		 	 if(!data.success){
+	                alert(data.message);
+	                return false;
+	            }else{
+					alert(data.message);
+					$("#mytab").bootstrapTable('refresh');
+	            }
+    		 },
+    		 error : function() {  
+    		            alert("异常！");  
+    		     }  
+		});
+		}
+
+  </SCRIPT>
+<div class="modal fade" id="showztree" data-backdrop="static"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    		<div class="modal-dialog">
+        		<div class="modal-content">
+            		<div class="modal-header">
+                		<button type="button" class="close" data-dismiss="modal"  aria-hidden="true">&times;</button>
+                		<h4 class="modal-title"  id="myModalLabel">编辑权限</h4>
+            		</div>
+            		<div class="modal-body">
+						<input  type="hidden" id="roldid" name="roldid"/>
+                        <span id="tree" class="ztree" style="width:100%; overflow:auto;"></span>
+            		</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" onclick="sumbitztree()">确定</button>
+                		<button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+            		</div>
+        		</div>
+				
+    		</div>
+</div>

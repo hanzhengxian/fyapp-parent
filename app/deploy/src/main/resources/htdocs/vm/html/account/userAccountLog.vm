@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+#parse("content/importBase.vm")
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+#preview>img {
+	width: 100%;
+	height: 170px;
+}
+</style>
+</head>
+<body style="width: 100%; height: 100%;">
+	<div id="page-wrapper">
+		<!--BEGIN TITLE & BREADCRUMB PAGE-->
+		<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+			<div class="page-header pull-left">
+				<div class="page-title">流水记录</div>
+			</div>
+			<ol class="breadcrumb page-breadcrumb pull-right">
+				<li><i class="fa fa-home"></i>&nbsp;<a href="#">用户流水记录</a></li>
+			</ol>
+
+			<div class="clearfix"></div>
+		</div>
+
+
+		<div style="margin-top: 2%;" id="a">
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">会员编号：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="userId" class="form-control" /> <br />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">会员昵称：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="nickName" class="form-control" /> <br />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">会员手机号：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="cell" class="form-control" /> <br />
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">账户号：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="accountNo" class="form-control"
+							name="accountNo" /> <br />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">流水类型：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select name="logType" id="logType" class="form-control">
+							<option value="">请选择</option>
+						</select> <br />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">流水标识：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select name="logFlg" id="logFlg" class="form-control">
+							<option value="">请选择</option>
+						</select> <br />
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">开始时间：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="startDate"
+							class="form-control datetimepicker" readonly="readonly" /> <br />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">结束时间：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="endDate"
+							class="form-control datetimepicker" readonly="readonly" /> <br />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px"></label>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-4" style="float: right">
+					<div class="control-group">
+						<div>
+							<button id="btnTransfer" type="button" class="btn btn-success"
+								style="float: right; margin-right: 2%; margin-bottom: 10px;"
+								onclick="exportAllPage('thisPage')">导出当页</button>
+						</div>
+						<div>
+							<button id="search_btn" type="button" class="btn btn-success"
+								style="float: right; margin-right: 2%; margin-bottom: 10px;"
+								onclick="exportAllPage('all')">导出全部</button>
+						</div>
+						<div>
+							<button onclick="clean()" class="btn btn-danger" name="Name"
+								id="search_tel" value="清空"
+								style="float: right; margin-right: 2%;">清空</button>
+						</div>
+						<div>
+							<button onclick="sorce()" class="btn btn-info" name="Name"
+								id="search_tel" value="查询"
+								style="float: right; margin-right: 2%;">查询</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+
+		<!--BEGIN CONTENT-->
+		<table id="mytab" class="table table-hover"></table>
+	</div>
+
+	<input type="hidden" id="offset" readonly="readonly" />
+	<input type="hidden" id="limit" readonly="readonly" />
+
+</body>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		accountTypeLogEnums();
+		accountFlgLogEnums();
+	});
+
+	function accountTypeLogEnums() {
+		jQuery.ajax({
+			url : "accountLogType.do",
+			type : 'post',
+			dataType : 'json',
+			success : function(result) {
+				if (result.success) {
+					var rows = result.obj;
+					var bodyHtml = "";
+					bodyHtml = bodyHtml + '<option value="">请选择</option>';
+					for (var i = 0; i < rows.length; i++) {
+						var row = rows[i];
+						bodyHtml = bodyHtml
+								+ '<option value="' + row.code + '">'
+								+ row.message + '</option>';
+					}
+					$('#logType').html(bodyHtml);
+				}
+			},
+			error : function() {
+				alert("操作失败！");
+			}
+		});
+	}
+
+	function accountFlgLogEnums() {
+		jQuery.ajax({
+			url : "accountLogFlg.do",
+			type : 'post',
+			dataType : 'json',
+			success : function(result) {
+				if (result.success) {
+					var rows = result.obj;
+					var bodyHtml = "";
+					bodyHtml = bodyHtml + '<option value="">请选择</option>';
+					for (var i = 0; i < rows.length; i++) {
+						var row = rows[i];
+						bodyHtml = bodyHtml
+								+ '<option value="' + row.code + '">'
+								+ row.message + '</option>';
+					}
+					$('#logFlg').html(bodyHtml);
+				}
+			},
+			error : function() {
+				alert("操作失败！");
+			}
+		});
+	}
+</script>
+
+<script type="text/javascript">
+	$('.datetimepicker').datetimepicker({
+		minView : "month",//设置只显示到月份
+		format : 'yyyy-mm-dd',
+		language : 'zh-CN',
+		autoclose : true,//选中关闭
+		todayBtn : true
+	//今日按钮
+	})
+
+	function clean() {
+		$("#a input").val("");
+		$("#a select").val("");
+	}
+
+	bootsearch(null);
+
+	var all;
+	function sorce() {
+		$("#mytab").bootstrapTable('destroy');
+		//生成用户数据
+		bootsearch("selectUserAccountList.do");
+	}
+
+	function bootsearch(url) {
+		$('#mytab').bootstrapTable({
+			method : 'post',
+			contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+			url : url,//要请求数据的文件路径
+			dataType : 'json',
+			striped : true, //是否显示行间隔色
+			pageNumber : 1, //初始化加载第一页，默认第一页
+			pageSize : 10,//单页记录数
+			pageList : [ 5, 10, 20, 30 ],//分页步进值
+			pagination : true,//是否分页
+			queryParamsType : 'limit',//查询参数组织方式
+			sidePagination : 'server',//指定服务器端分页
+			queryParams : function(p) {
+				return params(p);
+			},
+			clickToSelect : true,//是否启用点击选中行
+			toolbarAlign : 'right',//工具栏对齐方式
+			buttonsAlign : 'right',//按钮对齐方式
+			toolbar : '#toolbar',//指定工作栏
+			columns : [ {
+				title : '会员手机号',
+				field : 'CELL'
+			}, {
+				title : '会员昵称',
+				field : 'NICK_NAME'
+			}, {
+				title : '真实姓名',
+				field : 'REAL_NAME'
+			}, {
+				title : '会员等级',
+				field : 'USER_LEVEL'
+			}, {
+				title : '健康值',
+				field : 'DEVOTE_AMOUNT'
+			}, {
+				title : '积分',
+				field : 'POINT'
+			}, {
+				title : '胡币',
+				field : 'RE_POINT'
+			}, {
+				title : '流水类型',
+				field : 'TYPE_SHOW'
+			}, {
+				title : '流水标识',
+				field : 'FLG_SHOW'
+			}, {
+				title : '操作金额',
+				field : 'AMOUNT'
+			}, {
+				title : '操作前金额',
+				field : 'BEFORE_BALANCE'
+			}, {
+				title : '操作后金额',
+				field : 'AFTER_BALANCE'
+			}, {
+				title : '账户号',
+				field : 'ACCOUNT_NO'
+			}, {
+				title : '会员编号',
+				field : 'USER_ID'
+			}, {
+				title : '创建时间',
+				field : 'GMT_CREATE',
+				formatter : function(value, row, index) {
+					return format(value);
+				}
+			} ],
+			locale : 'zh-CN',//中文支持,
+			formatNoMatches : function() {
+				if (isEmpty(url)) {
+					return "单击查询搜索记录"
+				} else {
+					return "没有找到匹配的记录"
+				}
+			},
+			responseHandler : function(res) {
+				//在ajax获取到数据，渲染表格之前，修改数据源
+				all = res.rows;
+				return res;
+			}
+		})
+	}
+
+	//获取搜索的所有值
+	function params(params) {
+		$("#a input[type='text']").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		params["logType"] = $("#logType").val();
+		params["logFlg"] = $("#logFlg").val();
+
+		$("#offset").val(params.offset);
+		$("#limit").val(params.limit);
+
+		return params;
+	}
+	//导出
+	function exportaccount() {
+		var url = "exportaccount.do?selectusername="
+				+ $("#selectusername").val() + "&selectcell="
+				+ $("#selectcell").val() + "&ACCOUNT_NO="
+				+ $("#ACCOUNT_NO").val() + "&selecttype="
+				+ $("#selecttype").val() + "&starpdate="
+				+ $("#starpdate").val() + "&enddate=" + $("#enddate").val()
+				+ "&selectuserId=" + $("#selectuserId").val();
+		url = encodeURI(url);
+		url = encodeURI(url);
+		window.location.href = url;
+	}
+</script>
+
+<script>
+	//按条件导出全部数据 
+	function exportAllPage(type) {
+
+		var nickName = $("#nickName").val();
+		var cell = $("#cell").val();
+		var userId = $("#userId").val();
+		var logType = $("#logType").val();
+		var logFlg = $("#logFlg").val();
+
+		var accountNo = $("#accountNo").val();
+		var startDate = $("#startDate").val();
+		var endDate = $("#endDate").val();
+
+		var offset = $("#offset").val();
+		var limit = $("#limit").val();
+
+		if (type == 'thisPage') {
+			if (isEmpty(offset) || isEmpty(limit)) {
+				alert("没有查询数据");
+				return;
+			}
+		}
+
+		var action = "exportAllPageForUserAccountLog.do";
+		var form = $("<form></form>");
+		form.attr('action', action);
+		form.attr('method', 'post');
+		input2 = $("<input type='text' name='nickName' value='"+nickName+"' />");
+		form.append(input2);
+		input3 = $("<input type='text' name='cell' value='"+cell+"' />");
+		form.append(input3);
+		input4 = $("<input type='text' name='userId' value='"+userId+"' />");
+		form.append(input4);
+		input5 = $("<input type='text' name='logType' value='"+logType+"' />")
+		form.append(input5);
+		input6 = $("<input type='text' name='logFlg' value='"+logFlg+"' />");
+		form.append(input6);
+		input7 = $("<input type='text' name='accountNo' value='"+accountNo+"' />");
+		form.append(input7);
+		input8 = $("<input type='text' name='startDate' value='"+startDate+"' />");
+		form.append(input8);
+		input9 = $("<input type='text' name='endDate' value='"+endDate+"' />");
+		form.append(input9);
+		input10 = $("<input type='text' name='offset' value='"+offset+"' />");
+		form.append(input10);
+		input11 = $("<input type='text' name='limit' value='"+limit+"' />");
+		form.append(input11);
+		input12 = $("<input type='text' name='type' value='"+type+"' />");
+		form.append(input12);
+
+		form.appendTo("body");
+		form.css('display', 'none');
+		form.submit();
+	}
+</script>
+
+</html>

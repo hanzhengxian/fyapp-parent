@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+#parse("content/importBase.vm")
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+#preview>img {
+	width: 100%;
+	height: 170px;
+}
+
+.fixed-table-container thead th:nth-child(1) .th-inner {
+	width: 100px
+}
+
+.fixed-table-container thead th:nth-child(9) .th-inner {
+	width: 100px
+}
+
+.fixed-table-container thead th:nth-child(10) .th-inner {
+	width: 100px
+}
+
+.fixed-table-container thead th:nth-child(12) .th-inner {
+	width: 100px
+}
+</style>
+</head>
+<body style="width: 100%; height: 100%;">
+	<div id="page-wrapper">
+		<!--BEGIN TITLE & BREADCRUMB PAGE-->
+		<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+			<div class="page-header pull-left">
+				<div class="page-title">会员分析</div>
+			</div>
+			<ol class="breadcrumb page-breadcrumb pull-right">
+				<li><i class="fa fa-home"></i>&nbsp;<a href="#">会员分析</a></li>
+			</ol>
+			<div class="clearfix"></div>
+		</div>
+
+
+		<div style="margin-top: 2%;" id="a">
+
+			<div class="row">
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">会员信息：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="buyMsg" name="buyMsg" class="form-control"
+							placeholder="编号、手机、姓名" />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">年龄段：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select class="form-control" id="ageGroup" name="ageGroup">
+							<option value="">请选择</option>
+						</select>
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">商品信息：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="proMsg" name="proMsg" class="form-control"
+							placeholder="ERP编码、助记码、中文、条码、序号" />
+					</div>
+				</div>
+
+			</div>
+			<br />
+
+			<div class="row">
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">系统省：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select id="linkProvince" name="linkProvince"
+							class="selectpicker show-tick form-control" title="请选择"
+							data-live-search="true" data-size="5"
+							onchange="getAllCityComplex(this)">
+						</select>
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">系统市：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select id="linkCity" name="linkCity"
+							class="selectpicker show-tick form-control" title="请选择"
+							data-live-search="true" data-size="5" data-actions-box="true">
+						</select>
+					</div>
+				</div>
+
+			</div>
+			<br />
+
+			<div class="row">
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">一级分类：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select id="fatherCategory" name="fatherCategory"
+							class="selectpicker show-tick form-control" multiple title="请选择"
+							data-live-search="true" data-size="5" data-actions-box="true"
+							onchange="getChildCategory(1)">
+						</select>
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">二级分类：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select id="childCategory" name="childCategory"
+							class="selectpicker show-tick form-control" multiple title="请选择"
+							data-live-search="true" data-size="5" data-actions-box="true"
+							onchange="getChildCategory(2)">
+						</select>
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">三级分类：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select id="childCategorys" name="childCategorys"
+							class="selectpicker show-tick form-control" multiple title="请选择"
+							data-live-search="true" data-size="5" data-actions-box="true">
+						</select>
+					</div>
+				</div>
+
+			</div>
+			<br />
+
+			<div class="row">
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">创建开始时间：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="startDate" name="startDate"
+							class="form-control datetimepicker" readonly="readonly" /> <br />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">创建结束时间：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="endDate" name="endDate"
+							class="form-control datetimepicker" readonly="readonly" /> <br />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">是否非会员：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select name="specialyFlg" id="specialyFlg" class="form-control">
+							<option value="">请选择</option>
+							<option value="true">是</option>
+							<option value="false">否</option>
+						</select>
+					</div>
+				</div>
+
+			</div>
+			<br />
+
+			<div class="row">
+				<div class="col-sm-4" style="float: right">
+					<div class="control-group">
+						<div>
+							<button id="btnTransfer" type="button" class="btn btn-danger"
+								style="float: right; margin-right: 2%; margin-bottom: 10px;"
+								onclick="clean()">清空</button>
+						</div>
+						<div>
+							<button onclick="sorce()" class="btn btn-info" name="Name"
+								id="search_tel" value="查询"
+								style="float: right; margin-right: 2%;">查询</button>
+						</div>
+						<div>
+							<button id="search_btn" type="button" class="btn btn-success"
+								style="float: right; margin-right: 2%;"
+								onclick="exportAllPage()">导出全部</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<table id="mytab" class="table table-hover"></table>
+
+
+		<div id="main" style="width: 800px; height: 600px; margin: 0 auto;"></div>
+
+	</div>
+
+</body>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('.selectpicker').selectpicker({
+			'noneSelectedText' : '请选择',
+			'deselectAllText' : '全不选',
+			'selectAllText' : '全选',
+		})
+		getAllProvinceComplex();
+		getFatherCategory(0);
+		ageGroupEnum();
+	})
+</script>
+
+<script type="text/javascript">
+	$('.datetimepicker').datetimepicker({
+		minView : "month",//设置只显示到月份
+		format : 'yyyy-mm-dd',
+		language : 'zh-CN',
+		autoclose : true,//选中关闭
+		todayBtn : true
+	//今日按钮
+	})
+	function clean() {
+		$("#a input").val("");
+		$("#a select").val("");
+		$('.selectpicker').selectpicker('refresh');
+	}
+
+	bootsearch(null);
+
+	var all;
+	function sorce() {
+		$("#mytab").bootstrapTable('destroy');
+		//生成用户数据
+		bootsearch("data/calculateSalesCategoryForUserMsg.do");
+	}
+	function bootsearch(url) {
+		//生成用户数据
+		$('#mytab')
+				.bootstrapTable(
+						{
+							method : 'post',
+							contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+							url : url,//要请求数据的文件路径
+							dataType : 'json',
+							striped : true, //是否显示行间隔色
+							pageNumber : 1, //初始化加载第一页，默认第一页
+							pageSize : 10,//单页记录数
+							pageList : [ 5, 10, 20, 30 ],//分页步进值
+							pagination : true,//是否分页
+							queryParamsType : 'limit',//查询参数组织方式
+							sidePagination : 'server',//指定服务器端分页
+							queryParams : function(p) {
+								return params(p);
+							},
+							clickToSelect : true,//是否启用点击选中行
+							toolbarAlign : 'right',//工具栏对齐方式
+							buttonsAlign : 'right',//按钮对齐方式
+							toolbar : '#toolbar',//指定工作栏
+							showFooter : true,//开启列计算
+							columns : [
+									{
+										title : '序号',
+										align : 'center',
+										formatter : function(value, row, index) {
+											var pageSize = $('#mytab')
+													.bootstrapTable(
+															'getOptions').pageSize; //通过table的#id 得到每页多少条
+											var pageNumber = $('#mytab')
+													.bootstrapTable(
+															'getOptions').pageNumber; //通过table的#id 得到当前第几页
+											return pageSize * (pageNumber - 1)
+													+ index + 1; // 返回每条的序号： 每页条数 *（当前页 - 1 ）+ 序号
+										},
+										footerFormatter : function(value) {
+											return "当前页小计" + "</br>" + "合计";
+										}
+									},
+									{
+										title : '会员编号',
+										field : 'userId'
+									},
+									{
+										title : '会员手机号',
+										field : 'cell'
+									},
+									{
+										title : '会员昵称',
+										field : 'nickName'
+									},
+									{
+										title : '会员等级',
+										field : 'userLevel'
+									},
+									{
+										title : '真实姓名',
+										field : 'realName'
+									},
+									{
+										title : '性别',
+										field : 'sex'
+									},
+									{
+										title : '收货地址',
+										field : 'province',
+										formatter : function(value, row, index) {
+											return checkEmpty(row.province)
+													+ "</br>"
+													+ checkEmpty(row.city)
+													+ "</br>"
+													+ checkEmpty(row.area)
+													+ "</br>"
+													+ checkEmpty(row.reAddr);
+										}
+									},
+									{
+										title : '年龄段',
+										field : 'ageGroup'
+									},
+									{
+										title : '消费金额',
+										field : 'realPayPrice'
+									},
+									{
+										title : '下单次数',
+										field : 'orderCount'
+									},
+									{
+										title : '庆余卡机构',
+										field : 'teamName_v'
+									},
+									{
+										title : '庆余卡余额',
+										field : 'voucherSumAmount'
+									},
+									{
+										title : '注册时间',
+										field : 'registerTime',
+										formatter : function(value, row, index) {
+											return format(value);
+										}
+									}, {
+										title : '推荐人编号',
+										field : 're_userId'
+									}, {
+										title : '推荐人手机号码',
+										field : 're_cell'
+									}, {
+										title : '推荐人真实姓名',
+										field : 're_name'
+									}, {
+										title : '推荐人等级',
+										field : 're_userLevel'
+									} ],
+							locale : 'zh-CN',//中文支持,
+							formatNoMatches : function() {
+								if (isEmpty(url)) {
+									return "单击查询搜索记录"
+								} else {
+									return "没有找到匹配的记录"
+								}
+							},
+							onLoadSuccess : function(res) { //加载成功时执行
+								$(".fixed-table-footer")
+										.find(".th-inner")
+										.each(
+												function(index, item) {
+													if (index == 9) {
+														$(this)
+																.html(
+																		res.realPayPrice_page
+																				+ '</br>'
+																				+ res.realPayPrice_sum);
+													}
+													if (index == 10) {
+														$(this)
+																.html(
+																		res.orderCount_page
+																				+ '</br>'
+																				+ res.orderCount_sum);
+													}
+													if (index == 12) {
+														$(this)
+																.html(
+																		res.voucherSumAmount_page
+																				+ '</br>'
+																				+ res.voucherSumAmount_sum);
+													}
+												});
+
+								$(".fixed-table-body").on("scroll", function() {
+									var sl = this.scrollLeft;
+									$(this).next()[0].scrollLeft = sl;
+								})
+							},
+							responseHandler : function(res) {
+								//在ajax获取到数据，渲染表格之前，修改数据源
+								all = res.rows;
+								return res;
+							}
+						})
+	}
+
+	//获取搜索的所有值
+	function params(params) {
+
+		$("#a input[type='text']").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		$("#a input[type='number']").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		$("#a select").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+
+		return params;
+	}
+</script>
+
+<script type="text/javascript">
+	function exportAllPage() {
+		var buyMsg = $("#buyMsg").val();
+		var ageGroup = $("#ageGroup").val();
+		var proMsg = $("#proMsg").val();
+
+		var linkProvince = $("#linkProvince").val();
+		var linkCity = $("#linkCity").val();
+
+		var fatherCategory = $("#fatherCategory").val();
+		var childCategory = $("#childCategory").val();
+		var childCategorys = $("#childCategorys").val();
+
+		var startDate = $("#startDate").val();
+		var endDate = $("#endDate").val();
+		var specialyFlg = $("#specialyFlg").val();
+
+		var action = "data/exportCalculateSalesCategoryForUserMsg.do";
+		var form = $("<form></form>");
+		form.attr('action', action);
+		form.attr('method', 'post');
+		input2 = $("<input type='text' name='buyMsg' value='"+buyMsg+"' />");
+		form.append(input2);
+		input3 = $("<input type='text' name='ageGroup' value='"+ageGroup+"' />");
+		form.append(input3);
+		input4 = $("<input type='text' name='proMsg' value='"+proMsg+"' />");
+		form.append(input4);
+		input5 = $("<input type='text' name='fatherCategory' value='"+fatherCategory+"' />")
+		form.append(input5);
+		input6 = $("<input type='text' name='childCategory' value='"+childCategory+"' />");
+		form.append(input6);
+		input7 = $("<input type='text' name='childCategorys' value='"+childCategorys+"' />");
+		form.append(input7);
+		input8 = $("<input type='text' name='linkProvince' value='"+linkProvince+"' />");
+		form.append(input8);
+		input9 = $("<input type='text' name='linkCity' value='"+linkCity+"' />");
+		form.append(input9);
+		input10 = $("<input type='text' name='startDate' value='"+startDate+"' />");
+		form.append(input10);
+		input11 = $("<input type='text' name='endDate' value='"+endDate+"' />");
+		form.append(input11);
+		input12 = $("<input type='text' name='specialyFlg' value='"+specialyFlg+"' />");
+		form.append(input12);
+
+		form.appendTo("body");
+		form.css('display', 'none');
+		form.submit();
+	}
+</script>
+
+
+</html>

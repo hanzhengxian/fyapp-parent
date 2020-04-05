@@ -1,0 +1,3702 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+#parse("content/importBase.vm")
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link type="text/css" rel="stylesheet" href="css/wuliu.css">
+<style type="text/css">
+#preview>img {
+	width: 100%;
+	height: 170px;
+}
+
+.fixed-table-container thead th:nth-child(2) .th-inner {
+	width: 200px
+}
+
+.fixed-table-container thead th:nth-child(9) .th-inner {
+	width: 170px
+}
+
+.fixed-table-container thead th:nth-child(10) .th-inner {
+	width: 170px
+}
+
+.fixed-table-container thead th:nth-child(12) .th-inner {
+	width: 170px
+}
+
+.fixed-table-container thead th:nth-child(21) .th-inner {
+	width: 170px
+}
+
+.fixed-table-container thead th:nth-child(26) .th-inner {
+	width: 170px
+}
+
+.fixed-table-container thead th:nth-child(28) .th-inner {
+	width: 170px
+}
+
+.fixed-table-container thead th:nth-child(31) .th-inner {
+	width: 170px
+}
+
+.fixed-table-container thead th:nth-child(32) .th-inner {
+	width: 170px
+}
+
+.fixed-table-container thead th:nth-child(34) .th-inner {
+	width: 170px
+}
+
+.fixed-table-container thead th:nth-child(35) .th-inner {
+	width: 170px
+}
+
+.scr_b {
+	padding: 0 20px;
+	background: #F1F1F1;
+	position: fixed;
+	bottom: 0;
+}
+
+.scr_b:after {
+	content: '';
+	width: 0;
+	height: 0;
+	border-width: 4px 0 4px 4px;
+	border-style: solid;
+	border-color: transparent transparent transparent #505050;
+	/*透明 透明 透明 灰*/
+	position: absolute;
+	right: 8px;
+	top: 8px;
+}
+
+.scr_b:before {
+	content: '';
+	width: 0;
+	height: 0;
+	border-width: 4px 4px 4px 0;
+	border-style: solid;
+	border-color: transparent #505050 transparent transparent;
+	/*透明 灰 透明 透明 */
+	position: absolute;
+	left: 8px;
+	top: 8px;
+}
+
+#scro {
+	width: 100%;
+	height: 20px;
+	padding-top: 2px;
+	position: relative;
+	/*bottom: 0;left:0; */
+}
+
+#scro .scro_mouse {
+	width: 20%;
+	height: 14px;
+	background: #C1C1C1;
+	cursor: pointer;
+	position: absolute;
+	left: 0;
+	top: 5px;
+	z-index: 1;
+}
+</style>
+
+</head>
+<body style="width: 100%; height: 100%;">
+	<div id="page-wrapper">
+		<!--BEGIN TITLE & BREADCRUMB PAGE-->
+		<div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
+			<div class="page-header pull-left">
+				<div class="page-title">订单管理</div>
+			</div>
+			<ol class="breadcrumb page-breadcrumb pull-right">
+				<li><i class="fa fa-home"></i>&nbsp;<a href="#">订单管理</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+				<li class="hidden"><a href="#">订单管理</a>&nbsp;&nbsp;<i
+					class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
+			</ol>
+			<div class="clearfix"></div>
+		</div>
+
+
+		<div style="margin-top: 2%;" id="a">
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">用户编号：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="userId" name="userId" class="form-control" />
+						<br />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">订单编号（父）：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="orderId" name="orderId"
+							class="form-control" /> <br />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">订单编号（子）：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="childOrderId" name="childOrderId"
+							class="form-control" /> <br />
+					</div>
+				</div>
+
+
+			</div>
+
+			<div class="row">
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">商品编号：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="productId" name="productId"
+							class="form-control" /> <br />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">商品名称：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="productName" name="productName"
+							class="form-control" /> <br />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">商品ERP编号：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="productErpNo" name="productErpNo"
+							class="form-control" /> <br />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">商品条形码：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="barCode" name="barCode"
+							class="form-control" /> <br />
+					</div>
+				</div>
+
+			</div>
+
+			<div class="row">
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">门店编号：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="teamId" name="teamId" class="form-control" />
+						<br />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">门店名称：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="teamName" name="teamName"
+							class="form-control" /> <br />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">门店ERP编号：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="teamErpNo" name="teamErpNo"
+							class="form-control" /> <br />
+					</div>
+				</div>
+
+			</div>
+
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">用户手机号：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="userCell" name="userCell"
+							class="form-control" /> <br />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">订单手机号：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="orderCell" name="orderCell"
+							class="form-control" /> <br />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">支付方式：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select class="form-control" id="payWay" name="payWay">
+							<option value="">全部</option>
+							<option value="1">微信支付</option>
+							<option value="2">支付宝支付</option>
+							<option value="3">线下支付</option>
+						</select>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">订单状态：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select class="form-control" id="orderState" name="orderState">
+							<option value="0">全部</option>
+							<option value="1">待付款(含待审核)</option>
+							<option value="2" selected="selected">待发货(含待接单)</option>
+							<option value="3">待收货</option>
+							<option value="4">订单完成(含未评价)</option>
+							<option value="5">订单失败(含审核不通过)</option>
+							<option value="6">退款完成</option>
+							<option value="7">退款失败(含审核不通过)</option>
+							<option value="8">退款中(流程中)</option>
+						</select>
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">创建开始时间：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="startDate" name="startDate"
+							class="form-control datetimepicker" readonly="readonly" /> <br />
+					</div>
+				</div>
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">创建结束时间：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="endDate" name="endDate"
+							class="form-control datetimepicker" readonly="readonly" /> <br />
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">审核状态：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select class="form-control" id="subOrderStatus"
+							name="subOrderStatus">
+							<option value="0">全部</option>
+							<option value="1">待付款(待审核)</option>
+							<option value="2">待发货(待接单)</option>
+							<option value="3">订单完成(未评价)</option>
+							<option value="4">订单失败(审核不通过)</option>
+							<option value="5">退款完成(仅退款)</option>
+							<option value="6">退款完成(退款退货)</option>
+							<option value="7">退款失败(审核不通过)</option>
+							<option value="8">退款中(用户待发货)</option>
+							<option value="9">退款中(门店待收货)</option>
+							<!-- <option value="10">收银审核通过</option>
+							<option value="11">收银审核拒绝</option> -->
+						</select><br />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">异常订单：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select class="form-control" id="errFlg" name="errFlg">
+							<option value="">全部</option>
+							<option value="1">是</option>
+							<option value="0">否</option>
+						</select><br />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">取货方式：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select class="form-control" id="transferType" name="transferType">
+							<option value="">全部</option>
+							<option value="0" selected="selected">物流配送</option>
+							<option value="1">到店自取</option>
+						</select><br />
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">是否营业员折扣：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<select class="form-control" id="isCashier" name="isCashier">
+							<option value="">全部</option>
+							<option value="1">是</option>
+							<option value="0">否</option>
+						</select><br />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">收银操作员：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="cashierUser" name="cashierUser"
+							class="form-control" /> <br />
+					</div>
+				</div>
+
+				<label class="col-sm-1 control-label"
+					style="text-align: right; margin-top: 5px">商超凭证号：</label>
+				<div class="col-sm-2">
+					<div class="control-group">
+						<input type="text" id="voucher" name="voucher"
+							class="form-control" /> <br />
+					</div>
+				</div>
+
+			</div>
+
+			<div class="row">
+				<div class="col-sm-4" style="float: right">
+					<div class="control-group">
+						<div>
+							<button id="btnTransfer" type="button" class="btn btn-success"
+								style="float: left; margin-right: 2%; margin-bottom: 10px;"
+								onclick="exportAllPage('thisPage')">导出当页</button>
+						</div>
+						<div>
+							<button id="search_btn" type="button" class="btn btn-success"
+								style="float: left; margin-right: 2%; margin-bottom: 10px;"
+								onclick="exportAllPage('all')">导出全部</button>
+						</div>
+						<div>
+							<button id="btnTransfer" type="button" class="btn btn-danger"
+								style="float: left; margin-right: 2%; margin-bottom: 10px;"
+								onclick="clean()">清空</button>
+						</div>
+						<div>
+							<button id="btnTransfer" type="button" class="btn btn-info"
+								style="float: left; margin-right: 2%; margin-bottom: 10px;"
+								onclick="sorce()">查询</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-4" style="float: right">
+					<div class="control-group">
+						<div>
+							<button id="btnTransfer" type="button" class="btn btn-primary"
+								style="float: left; margin-right: 2%; margin-bottom: 10px;"
+								onclick="showPrintOrderModal()">打印快递单（图片）</button>
+						</div>
+						<div>
+							<button id="btnTransfer" type="button" class="btn btn-primary"
+								style="float: left; margin-right: 2%; margin-bottom: 10px;"
+								onclick="showManyfhtabModal()">批量发货</button>
+						</div>
+						<div>
+							<button id="btnTransfer" type="button" class="btn btn-primary"
+								style="float: left; margin-right: 2%; margin-bottom: 10px;"
+								onclick="importOrderSendModel()">导入发货订单</button>
+						</div>
+						<div>
+							<button id="btnTransfer" type="button" class="btn btn-primary"
+								style="float: left; margin-right: 2%; margin-bottom: 10px;"
+								onclick="importOrderSendSFModel()">速发导入</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+
+
+		<div id="toolbar"></div>
+		<table id="mytab" class="table table-hover"
+			style="word-break: break-all; word-wrap: break-all;"></table>
+		<div class="scr_b" data-id="1">
+			<div id='scro'>
+				<div class="scro_mouse"></div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="addWuliuModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">发货(查看物流信息)</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" role="form" method="post">
+							<input type="hidden" id="awlChildOrderId" name="awlChildOrderId" />
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label">商品名称：</label>
+								<div class="col-sm-8">
+									<input type="text" id="awlProductName" name="awlProductName"
+										class="form-control" readonly="readonly" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label">商品属性：</label>
+								<div class="col-sm-8">
+									<input type="text" id="awlProdValues" name="awlProdValues"
+										class="form-control" readonly="readonly" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label">收货地址：</label>
+								<div class="col-sm-8">
+									<input type="text" id="awlAddress" name="awlAddress"
+										class="form-control" readonly="readonly" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label">物流公司：</label>
+								<div class="col-sm-8">
+									<select class="form-control" id="awlComp" name="awlComp">
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label">快递单号：</label>
+								<div class="col-sm-8">
+									<input type="text" id="awlKuaiDiNo" name="awlKuaiDiNo"
+										class="form-control" />
+								</div>
+							</div>
+
+							<div class="form-group" id="wuliuInfo" style="display: none">
+								<div style="zoom: 1;">
+									<ul class="op_express_delivery_timeline_box" id="wuliuInfoUl">
+									</ul>
+								</div>
+							</div>
+
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="submitReply" class="btn btn-primary"
+							onclick="addWuliu()">确定</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--批量发货商品列表 -->
+		<div class="modal fade" id="manyfhtabModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true" style="overflow-y: auto;">
+			<div class="modal-dialog" style="width: 70%;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">待发货商品列表</h4>
+					</div>
+					<div class="modal-body">
+
+						<table id="waitfhTab" class="table table-hover"></table>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="addstockpbtn" class="btn btn-success"
+							onclick="exportSfExcel(this)">速发 标准模板 订单导出</button>
+						<button type="button" class="btn btn-success"
+							onclick="sfGetMainoAndPrint(this)">打印快递单号</button>
+						<!-- <button type="button" class="btn btn-success"
+							onclick="sfGetMaino()">请求快递单号</button>-->
+						<button id="search_btn" type="button" class="btn btn-info"
+							onclick="goDownExpress()">物流公司（编号）下载</button>
+						<button type="button" class="btn btn-info"
+							onclick="exportAllWaitPage()">导出待发货订单列表excle</button>
+						<button type="button" id="addstockpbtn" class="btn btn-danger"
+							onclick="showManyfhModal()">填写物流</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--已经有订单号的订单  已发货的 -->
+		<div class="modal fade" id="printOrderModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true" style="overflow-y: auto;">
+			<div class="modal-dialog" style="width: 70%;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">已发货商品列表</h4>
+					</div>
+					<div class="modal-body">
+						<table id="printOrderTab" class="table table-hover"></table>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="addstockpbtn" class="btn btn-success"
+							onclick="sfPrint(this)">运单打印</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--批量发货弹框 -->
+		<div class="modal fade" id="manyfhModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" style="width: 50%;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">批量发货</h4>
+					</div>
+					<div class="modal-body">
+						<table id="waitfhpdTab" class="table table-bordered">
+							<caption>发货清单</caption>
+							<thead>
+								<tr>
+									<th>名称</th>
+									<th>属性</th>
+									<th>数量</th>
+								</tr>
+							</thead>
+							<tbody id="waitfhpdTabbody">
+
+							</tbody>
+
+						</table>
+						<form class="form-horizontal" role="form" method="post"
+							style="margin-top: 60px">
+							<input type="hidden" id="childOrderIdArr" name="childOrderIdArr" />
+							<div class="form-group">
+								<label for="lastname" class="control-label"
+									style="float: left; margin-left: 18px;">物流公司：</label>
+								<div class="col-sm-8">
+									<select class="form-control" id="manyfhComp" name="manyfhComp">
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="lastname" class="control-label"
+									style="float: left; margin-left: 18px;">快递单号：</label>
+								<div class="col-sm-8">
+									<input type="text" id="manyfhKuaiDiNo" name="manyfhKuaiDiNo"
+										class="form-control" />
+								</div>
+							</div>
+
+							<div class="form-group" id="wuliuInfo" style="display: none">
+								<div style="zoom: 1;">
+									<ul class="op_express_delivery_timeline_box" id="wuliuInfoUl">
+									</ul>
+								</div>
+							</div>
+
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="addstockpbtn" class="btn btn-danger"
+							onclick="manyAddwuliu()">确定</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--导出依法获得订单列表 -->
+		<div class="modal fade" id="excleSuccessOrder" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true" style="overflow-y: auto;">
+			<div class="modal-dialog" style="width: 70%;">
+				<div class="modal-content">
+					<input type="hidden" id="successChildExcel">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">已发货商品列表</h4>
+					</div>
+					<div class="modal-body">
+						<table id="waitExcelTab" class="table table-hover"></table>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-info"
+							onclick="exportWaitExcel()">导出当前订单列表excle</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="savePathModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">填写运单图片本地保存路径（以\结尾，需已存在文件夹）</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" role="form" method="post">
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label">本地保存路径：</label>
+								<div class="col-sm-8">
+									<input type="text" id="savePath" name="savePath"
+										class="form-control" />
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="submitReply" class="btn btn-primary"
+							onclick="sfGetMaino(this)">确定</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="tuihuoModal" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">退货（售后）申请</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" role="form" name="noticeform"
+							method="post">
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label">订单编号：</label>
+								<div class="col-sm-8">
+									<input type="text" id="thChildOrderId" name="thChildOrderId"
+										class="form-control" readonly="readonly" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label">商品名称：</label>
+								<div class="col-sm-8">
+									<input type="text" id="thProductName" name="thProductName"
+										class="form-control" readonly="readonly" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label">商品属性：</label>
+								<div class="col-sm-8">
+									<input type="text" id="thProdValues" name="thProdValues"
+										class="form-control" readonly="readonly" />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label">退货原因：</label>
+								<div class="col-sm-8">
+									<input type="text" id="thReason" name="thReason"
+										class="form-control" readonly />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label">附述：</label>
+								<div class="col-sm-8">
+									<textarea id="thReasonOther" name="thReasonOther"
+										class="form-control" readonly></textarea>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label">物流公司：</label>
+								<div class="col-sm-8">
+									<input type="text" id="thComp" name="thComp"
+										class="form-control" readonly />
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label">快递单号：</label>
+								<div class="col-sm-8">
+									<input type="text" id="thKuaiDiNo" name="thKuaiDiNo"
+										class="form-control" readonly />
+								</div>
+							</div>
+
+							<div class="form-group" id="thwuliuInfo" style="display: none">
+								<div style="zoom: 1;">
+									<ul class="op_express_delivery_timeline_box" id="thwuliuInfoUl">
+									</ul>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="lastname" class="col-sm-2 control-label">审核结果：</label>
+								<div class="col-sm-10">
+									<input type="hidden" id="id" value="0" name="id" /> <select
+										class="form-control" id="auditState" name="auditState">
+										<option value="">请选择</option>
+										<option value="yes">同意退货</option>
+										<option value="no">驳回申请</option>
+									</select>
+								</div>
+							</div>
+
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="submitReply" class="btn btn-primary"
+							onclick="editTHorSH()">确定</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 导入发货订单详细 -->
+		<div class="modal fade" id="showImportOrderSend"
+			data-backdrop="static" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog" style="width: 1000px;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">导入信息查看</h4>
+					</div>
+					<div style="margin-top: 2%;" id="searchShop">
+						<div style="padding: 0 15px">
+							<div class="input-group" style="width: 250px;"
+								onclick="$('#FileInput')[0].click()">
+								<span class="input-group-btn">
+									<button class="btn btn-info" type="button">
+										<i class="glyphicon glyphicon-folder-open"></i>选择文件
+									</button>
+								</span> <input type="text" class="form-control" placeholder="请选择文件"
+									readonly="readonly" id="excelfile">
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="control-group">
+								<div>
+									<button onclick="importExcelForOrderSend()"
+										class="btn btn-danger" name="Name" id="excelOrderSend"
+										value="确认上传" style="float: right; margin-right: 2%;">确认上传</button>
+								</div>
+							</div>
+						</div>
+
+						<table id="importSendOrderTable" class="table table-hover"></table>
+
+						<input type="file" id="FileInput" hidden="hidden"
+							style="display: none;" onchange="importfile(this)" />
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="showImportOrderSendSF"
+			data-backdrop="static" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog" style="width: 1000px;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">速发导入 发货</h4>
+					</div>
+					<div style="margin-top: 2%;">
+						<div style="padding: 0 15px">
+							<div class="input-group" style="width: 250px;"
+								onclick="$('#FileInputSF')[0].click()">
+								<span class="input-group-btn">
+									<button class="btn btn-info" type="button">
+										<i class="glyphicon glyphicon-folder-open"></i>选择文件
+									</button>
+								</span> <input type="text" class="form-control" placeholder="请选择文件"
+									readonly="readonly" id="excelfileSF">
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="control-group">
+								<div>
+									<button onclick="importExcelForOrderSendSF()"
+										class="btn btn-danger" name="Name" id="excelOrderSend"
+										value="确认上传" style="float: right; margin-right: 2%;">确认上传</button>
+								</div>
+							</div>
+						</div>
+
+						<!-- <table id="importSendOrderSFTable" class="table table-hover"></table> -->
+
+						<input type="file" id="FileInputSF" hidden="hidden"
+							style="display: none;" onchange="importfileSF(this)" />
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="modal fade" id="queryOrderCheckRecordModal"
+			data-backdrop="static" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog" style="width: 1000px;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">审核记录</h4>
+					</div>
+					<div style="margin-top: 2%;" id="">
+						<div class="row">
+							<div class="col-sm-2">
+								<div class="control-group">
+									<button id="search_btn" type="button" class="btn btn-info"
+										onclick="refreshqueryOrderCheckRecord()">刷新</button>
+								</div>
+							</div>
+						</div>
+						<table id="queryOrderCheckRecordTable" class="table table-hover"></table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="queryOrderOweRecordModal"
+			data-backdrop="static" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog" style="width: 1000px;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">借条信息</h4>
+					</div>
+					<div style="margin-top: 2%;" id="">
+						<div class="row">
+							<div class="col-sm-2">
+								<div class="control-group">
+									<button id="search_btn" type="button" class="btn btn-info"
+										onclick="refreshqueryOrderOweRecord()">刷新</button>
+								</div>
+							</div>
+						</div>
+						<table id="queryOrderOweRecordTable" class="table table-hover"></table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="queryOrderRebateRecordModal"
+			data-backdrop="static" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog" style="width: 1000px;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">返利记录</h4>
+					</div>
+					<div style="margin-top: 2%;" id="">
+						<div class="row">
+							<div class="col-sm-2">
+								<div class="control-group">
+									<button id="search_btn" type="button" class="btn btn-info"
+										onclick="refreshqueryOrderRebateRecord()">刷新</button>
+								</div>
+							</div>
+						</div>
+						<table id="queryOrderRebateTable" class="table table-hover"></table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="queryOrderReturnRecordModal"
+			data-backdrop="static" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog" style="width: 1000px;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">退货退款记录</h4>
+					</div>
+					<div style="margin-top: 2%;" id="">
+						<div class="row">
+							<div class="col-sm-2">
+								<div class="control-group">
+									<button id="search_btn" type="button" class="btn btn-info"
+										onclick="refreshqueryOrderReturnRecord()">刷新</button>
+								</div>
+							</div>
+						</div>
+						<table id="queryOrderReturnTable" class="table table-hover"></table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="modal fade" id="queryOrderVoucherRecordModal"
+			data-backdrop="static" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog" style="width: 1000px;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">商超凭证记录</h4>
+					</div>
+					<div style="margin-top: 2%;" id="">
+						<div class="row">
+							<div class="col-sm-2">
+								<div class="control-group">
+									<button id="search_btn" type="button" class="btn btn-info"
+										onclick="refreshqueryOrderVoucherRecord()">刷新</button>
+								</div>
+							</div>
+						</div>
+						<table id="queryOrderVoucherTable" class="table table-hover"></table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 查看图片模块 -->
+		<div class="modal fade" id="imgbig" data-backdrop="static"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">查看图片</h4>
+					</div>
+					<div class="modal-body">
+						<img alt="" src="" id="bigbis" style="width: 100%; height: 100%;" />
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+	<input type="hidden" id="offset" readonly="readonly" />
+	<input type="hidden" id="limit" readonly="readonly" />
+	<input type="hidden" id="thisChildrenOrderId" readonly="readonly" />
+	<input type="hidden" id="thisOrderId" readonly="readonly" />
+</body>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		sorce();
+	})
+
+	function clean() {
+		$("#a input").val("");
+		$("#a select").val("");
+	}
+	
+	bootsearch();
+
+	var all;
+	function sorce() {
+		$("#mytab").bootstrapTable('destroy');
+		//生成用户数据
+		bootsearch();
+	}
+	
+	function bootsearch() {
+		//生成用户数据
+		$('#mytab')
+				.bootstrapTable(
+						{
+							method : 'post',
+							contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+							url : "selectAllOrder.do",//要请求数据的文件路径
+							dataType : 'json',
+							striped : true, //是否显示行间隔色
+							pageNumber : 1, //初始化加载第一页，默认第一页
+							pageSize : 10,//单页记录数
+							pageList : [ 5, 10, 20, 30 ],//分页步进值
+							pagination : true,//是否分页
+							queryParamsType : 'limit',//查询参数组织方式
+							sidePagination : 'server',//指定服务器端分页
+							queryParams : function(p) {
+								return params(p);
+							},
+							showRefresh : true,
+							//是否显示内容列下拉框。
+							showColumns : true,
+							//显示导出插件
+							showExport : true,
+							exportDataType : "basic",
+							clickToSelect : true,//是否启用点击选中行
+							toolbarAlign : 'right',//工具栏对齐方式
+							buttonsAlign : 'right',//按钮对齐方式
+							toolbar : '#toolbar',//指定工作栏
+							height : 1200,
+							columns : [
+									{
+										title : '操&nbsp&nbsp&nbsp&nbsp作',
+										field : 'id',
+										align : 'center',
+										formatter : function(value, row, index) {
+											var url = '';
+											if (row.payWay == "3") {
+												url = '<button type="button" onclick="vou('
+														+ index
+														+ ')"class="RoleOfEdit btn btn-default  btn-sm" style="margin-right:15px;">商超凭证号</button>';
+											} else {
+												if (row.transferType == "0"
+														&& row.orderState > "1"
+														&& row.orderState != "11") {
+													url = "<a href='#' onclick=showWuliuInfo('"
+															+ index
+															+ "')>查看物流  </a>";
+												}
+												if ((row.orderState == "1" || row.orderState == "1.1")
+														&& row.transferType == "0") {
+													url = "<a href='#' onclick=showAddWuliuModal('"
+															+ index + "')>发货  </a>";
+												} else if (row.orderState == "2"
+														&& row.transferType == "0") {
+													url += "<a href='#' onclick=showAddWuliuModal('"
+															+ index
+															+ "')>修改物流  </a>";
+												} else if (row.orderState == "4") {
+													/* url += "<a href='#' onclick=showTuiHuoModal('"
+															+ index
+															+ "')>退货审核  </a>"; */
+												} else if (row.orderState == "7") {
+													/* url += "<a href='#' onclick=editTHorSH('"
+															+ index
+															+ "',"
+															+ "'"
+															+ "GTH"
+															+ "')>已收到货  </a>"; */
+												} else if (row.orderState == "5") {
+													/* url += "<a href='#' onclick=tuihuan('"
+															+ index + "')>退款  </a>"; */
+												}
+											}
+											
+											if(row.canDelaty){
+												url+= "|<a href='#' onclick=modifyDelayFlg('"+ row.childOrderId +"')>延长该订单</a>";
+											}
+											
+											return url;
+										}
+									}, {
+										title : '记录查看',
+										field : 'id',
+										align : 'center',
+										formatter : function(value, row, index) {
+											var url = '';
+											url+= "<a href='#' onclick=queryOrderCheckRecord('"+ row.childOrderId +"')>审核记录</a>";
+											url+= "|<a href='#' onclick=queryOrderOweRecord('"+ row.orderId +"')>借条信息</a>";
+											url+= "|<a href='#' onclick=queryOrderRebateRecord('"+ row.childOrderId +"')>返利记录</a>";
+											url+= "|<a href='#' onclick=queryOrderReturnRecord('"+ row.childOrderId +"')>退货记录</a>";
+											url+= "|<a href='#' onclick=queryOrderVoucherRecord('"+ row.childOrderId +"')>商超凭证记录</a>";
+											return url;
+										}
+									},{
+										title : '订单状态',
+										field : 'orderStateStr'
+									}, {
+										title : '是否异常订单',
+										field : 'errFlg',
+										formatter : function(value, row, index) {
+											if (value == "0") {
+												return "否";
+											} else if (value == "1") {
+												return "是";
+											}
+										}
+									},{
+										title : '审核/退款状态',
+										field : 'subOrderStatusStr'
+									},{
+										title : '支付状态',
+										field : 'payState',
+										formatter : function(value, row, index) {
+											if (value == "1") {
+												return "未支付";
+											} else if (value == "2") {
+												return "已支付";
+											} else if (value == "3") {
+												return "取消";
+											} else if (value == "4") {
+												return "其他";
+											}
+										}
+									}, {
+										title : '支付方式',
+										field : 'payWay',
+										formatter : function(value, row, index) {
+											if (value == "1") {
+												return "微信";
+											} else if (value == "2") {
+												return "支付宝";
+											} else if (value == "3") {
+												return "线下支付";
+											} else {
+												return "其他";
+											}
+										}
+									}, {
+										title : '商超凭证图',
+										field : 'voucherImg',
+										formatter : function(value, row, index) {
+											if(value == null || value.length <=0){
+												return null;
+											}
+											var html = "";
+											for(var i=0;i<value.length;i++){
+												html+='<img src="'+value[i]+'" data-imgurl="'+value[i]+'" width="100px" height="60px"/>';	
+											}
+											return  html;	
+										}
+									}, {
+								        title:'创建日期',
+								        field:'gmtCreate',
+								        formatter : function(value, row, index) {
+											return format(value);
+										}
+								    },{
+										title : '订单编号',
+										field : 'orderId',
+										cellStyle : {
+											css : {
+												'mso-number-format' : '\@'
+											}
+										}
+									},{
+										title : '取货方式',
+										field : 'transferType',
+										formatter : function(value, row, index) {
+											if (value == "0") {
+												return "物流配送";
+											} else if (value == "1") {
+												return "到店自取";
+											}
+										}
+									},{
+										title : '商品名称',
+										field : 'productName'
+									}, {
+										title : '商品属性',
+										field : 'valuees'
+									}, {
+										title : '购买数量',
+										field : 'orderCount'
+									}, {
+										title : '自提时间',
+										field : 'pickMsg'
+									}, {
+										title : '已核销数',
+										field : 'hasConfirmNum',
+									}, {
+										title : '未核销数',
+										field : 'notConfirmNum'
+									}, {
+										title : '订单原价',
+										field : 'oldAllAmount.amount'
+									}, {
+										title : '运费',
+										field : 'luggage.amount'
+									}, {
+										title : '已优惠金额',
+										field : 'reduceAmount.amount'
+									}, {
+										title : '订单金额',
+										field : 'childOrderPrice.amount'
+									}, {
+										title : '优惠券',
+										field : 'reduceAmountDiscount.amount'
+									}, {
+										title : '折扣金额',
+										field : 'discountMoney.amount'
+									}, {
+										title : '积分抵扣现金',
+										field : 'reducePoint',
+										formatter : function(value, row, index) {
+											return row.reducePoint.amount+'积分抵扣'+row.reducePointMoney.amount+'元现金';
+										}
+									}, {
+										title : '支付金额',
+										field : 'amountAndVoucher.amount'
+									}, {
+										title : '庆余卡',
+										field : 'reduceAmountVoucher.amount'
+									}, {
+										title : '现金',
+										field : 'realOrderPrice.amount'
+									}, {
+										title : '支付积分',
+										field : 'realPointPrice.amount'
+									}, {
+										title : '收货地址',
+										field : 'id',
+										formatter : function(value, row, index) {
+											if (row.transferType == "0") {
+												return row.province+row.city+row.area+row.reAddr;
+											} 
+										}
+									}, {
+										title : '收货人',
+										field : 'reUserName'
+									}, {
+										title : '联系电话',
+										field : 'cell'
+									}, {
+										title : '商品类型',
+										field : 'productType',
+										formatter : function(value, row, index) {
+											if (value == "1") {
+												return "购买商品";
+											} else if (value == "2") {
+												return "购买服务";
+											} else if (value == "3") {
+												return "购买积分";
+											} else if (value == "4") {
+												return "其他";
+											}
+										}
+									}, {
+								        title:'修改者',
+								        field:'modifier'
+								    },{
+								        title:'修改时间',
+								        field:'gmtModified',
+								        formatter : function(value, row, index) {
+											return format(value);
+										}
+								    },{
+										title : '团队名称',
+										field : 'teamName'
+									},  {
+										title : '商超凭证号',
+										field : 'voucher'
+									}, {
+										title : '子订单编号',
+										field : 'childOrderId',
+										cellStyle : {
+											css : {
+												'mso-number-format' : '\@'
+											}
+										}
+									}, {
+										title : '用户编号',
+										field : 'userId',
+										cellStyle : {
+											css : {
+												'mso-number-format' : '\@'
+											}
+										}
+									}],
+							locale : 'zh-CN',//中文支持,
+							onLoadSuccess: function () {  //加载成功时执行
+				                getTdValue();
+				                 
+				                 $(".fixed-table-header").css({'position':'relative','top':'0'})
+				                 $(".fixed-table-header").attr('data-po','relative')
+				                 $(".fixed-table-body").css('width', $("#page-wrapper").width())
+				                 scrollAll()
+				                 scrollTab()
+				                 
+				                 $("#mytab").load(function(){
+							        
+							    })
+				                 
+				                 $("img").load(function(){
+				               	  var viewer = new Viewer(document.getElementById('mytab'), {
+				               	      navbar: false,
+				               	      toolbar: {
+				               	        zoomIn: true,
+				               	        zoomOut: true,
+				               	        play: true,
+				               	        rotateLeft: true,
+				               	        rotateRight: true
+				               	       
+				               	      },
+				               	      show: function (){
+				               	        viewer.update();
+				               	      }  
+				               	  });
+				               	})
+				            },
+							responseHandler : function(res) {
+								//在ajax获取到数据，渲染表格之前，修改数据源
+								all = res.rows;
+								return res;
+							}
+						})
+	}
+	
+					
+	//将已批准的数据改变背景颜色
+    function getTdValue(){
+		var tableId = document.getElementById("mytab");
+		var thisOrderId = '';
+		tableId.rows[0].setAttribute("style","background: #A9A9A9");
+		var colorArray = new Array();
+		colorArray[0]="background: #FFFFCC;";
+		colorArray[1]="background: #FFFF99;";
+		colorArray[2]="background: #FFFF66;";
+		var j = 0;
+		for(var i=0;i<all.length;i++){
+			var orderId = all[i].orderId;
+			if(thisOrderId.indexOf(orderId) != -1 ){
+                tableId.rows[i+1].setAttribute("style",colorArray[j]);
+                for(var m=i;m>=0;m--){
+                	if(thisOrderId.indexOf(all[m].orderId) != -1){
+                    	tableId.rows[m+1].setAttribute("style",colorArray[j]);
+                    }
+                }
+                j++;
+                if(j > 2){
+                	j=0;
+                }
+            }
+			thisOrderId = orderId;
+		}
+    }
+	
+	function wScroll() {
+	    var box = window.parent.document
+	    $(box).scroll(function() {
+	       var Height = $(box).scrollTop();
+	       if(Height>500){
+	    	   $(".fixed-table-header").css({'position':'fixed','top':'0'})
+	    	   $(".fixed-table-body").scroll(function(){var aa=$(".fixed-table-body").scrollLeft();$(".fixed-table-header").css("left",0)})
+
+	       }
+	    })
+	  }
+
+	function claenmyModal() {
+		$("#myModal input").val("");
+	}
+
+	//按条件导出全部数据 
+	function exportAllPage(type) {
+		var userId = $("#userId").val();
+		var orderId = $("#orderId").val();
+		var childOrderId = $("#childOrderId").val();
+		
+		var productId = $("#productId").val();
+		var productName = $("#productName").val();
+		var orderState = $("#orderState").val();
+		if(isEmpty(orderState)){
+			orderState = '0'
+		}
+		var transferType = $("#transferType").val();
+		
+		var teamId = $("#teamId").val();
+		var teamName = $("#teamName").val();
+		var teamErpNo = $("#teamErpNo").val();
+		var userCell = $("#userCell").val();
+		var orderCell = $("#orderCell").val();
+		var payWay = $("#payWay").val();
+		var startDate = $("#startDate").val();
+		var endDate = $("#endDate").val();
+			
+		var offset = $("#offset").val();
+		var limit = $("#limit").val();
+		
+		var errFlg = $("#errFlg").val();
+		var subOrderStatus = $("#subOrderStatus").val();
+		if(isEmpty(subOrderStatus)){
+			subOrderStatus = '0'
+		}
+		var isCashier = $("#isCashier").val();
+		var cashierUser = $("#cashierUser").val();
+		
+		var productErpNo = $("#productErpNo").val();
+		var voucher = $("#voucher").val();
+		var barCode = $("#barCode").val();
+		
+		var action = "exportAllPage.do";
+		var form = $("<form></form>");
+		form.attr('action', action);
+		form.attr('method', 'post');
+		input2 = $("<input type='text' name='userId' value='"+userId+"' />");
+		form.append(input2);
+		input3 = $("<input type='text' name='orderId' value='"+orderId+"' />");
+		form.append(input3);
+		input4 = $("<input type='text' name='childOrderId' value='"+childOrderId+"' />");
+		form.append(input4);
+		input5 = $("<input type='text' name='productId' value='"+productId+"' />")
+		form.append(input5);
+		input6 = $("<input type='text' name='productName' value='"+productName+"' />");
+		form.append(input6);
+		input7 = $("<input type='text' name='orderState' value='"+orderState+"' />");
+		form.append(input7);
+		input8 = $("<input type='text' name='transferType' value='"+transferType+"' />");
+		form.append(input8);
+		input9 = $("<input type='text' name='teamId' value='"+teamId+"' />");
+		form.append(input9);
+		input10 = $("<input type='text' name='teamName' value='"+teamName+"' />");
+		form.append(input10);
+		input11 = $("<input type='text' name='teamErpNo' value='"+teamErpNo+"' />");
+		form.append(input11);
+		input12 = $("<input type='text' name='userCell' value='"+userCell+"' />");
+		form.append(input12);
+		input13 = $("<input type='text' name='orderCell' value='"+orderCell+"' />");
+		form.append(input13);
+		input14 = $("<input type='text' name='payWay' value='"+payWay+"' />");
+		form.append(input14);
+		input15 = $("<input type='text' name='startDate' value='"+startDate+"' />");
+		form.append(input15);
+		input16 = $("<input type='text' name='endDate' value='"+endDate+"' />");
+		form.append(input16);
+		input17 = $("<input type='text' name='offset' value='"+offset+"' />");
+		form.append(input17);
+		input18 = $("<input type='text' name='limit' value='"+limit+"' />");
+		form.append(input18);
+		input19 = $("<input type='text' name='type' value='"+type+"' />");
+		form.append(input19);
+		input20 = $("<input type='text' name='errFlg' value='"+errFlg+"' />");
+		form.append(input20);
+		input21 = $("<input type='text' name='subOrderStatus' value='"+subOrderStatus+"' />");
+		form.append(input21);
+		input22 = $("<input type='text' name='isCashier' value='"+isCashier+"' />");
+		form.append(input22);
+		input23 = $("<input type='text' name='cashierUser' value='"+cashierUser+"' />");
+		form.append(input23);
+		input24 = $("<input type='text' name='productErpNo' value='"+productErpNo+"' />");
+		form.append(input24);
+		input25 = $("<input type='text' name='voucher' value='"+voucher+"' />");
+		form.append(input25);
+		input26 = $("<input type='text' name='barCode' value='"+barCode+"' />");
+		form.append(input26);
+		
+		form.appendTo("body");
+		form.css('display', 'none');
+		form.submit();
+	}
+	
+	//导出待支付订单
+	function exportAllWaitPage() {
+		var userId = $("#userId").val();
+		var orderId = $("#orderId").val();
+		var productId = $("#productId").val();
+		
+		var orderState = '1';
+		var transferType = '0';
+		
+		var teamId = $("#teamId").val();
+		var teamName = $("#teamName").val();
+		var teamErpNo = $("#teamErpNo").val();
+		var userCell = $("#userCell").val();
+		var orderCell = $("#orderCell").val();
+		var payWay = $("#payWay").val();
+		var startDate = $("#startDate").val();
+		var endDate = $("#endDate").val();
+		
+		var productErpNo = $("#productErpNo").val();
+		var voucher = $("#voucher").val();
+		var barCode = $("#barCode").val();
+		
+		var action = "exportAllWaitPage.do";
+		var form = $("<form></form>");
+		form.attr('action', action);
+		form.attr('method', 'post');
+		input2 = $("<input type='text' name='userId' value='"+userId+"' />");
+		form.append(input2);
+		input3 = $("<input type='text' name='orderId' value='"+orderId+"' />");
+		form.append(input3);
+		input4 = $("<input type='text' name='productId' value='"+productId+"' />");
+		form.append(input4);
+		input5 = $("<input type='text' name='orderState' value='"+orderState+"' />")
+		form.append(input5);
+		input6 = $("<input type='text' name='transferType' value='"+transferType+"' />");
+		form.append(input6);
+		input7 = $("<input type='text' name='teamId' value='"+teamId+"' />");
+		form.append(input7);
+		input8 = $("<input type='text' name='teamName' value='"+teamName+"' />");
+		form.append(input8);
+		input9 = $("<input type='text' name='teamErpNo' value='"+teamErpNo+"' />");
+		form.append(input9);
+		input10 = $("<input type='text' name='userCell' value='"+userCell+"' />");
+		form.append(input10);
+		input11 = $("<input type='text' name='orderCell' value='"+orderCell+"' />");
+		form.append(input11);
+		input12 = $("<input type='text' name='payWay' value='"+payWay+"' />");
+		form.append(input12);
+		input13 = $("<input type='text' name='startDate' value='"+startDate+"' />");
+		form.append(input13);
+		input14 = $("<input type='text' name='endDate' value='"+endDate+"' />");
+		form.append(input14);
+		input15 = $("<input type='text' name='chooseChildrenIdS' value='"+chooseWaitOrder+"' />");
+		form.append(input15);
+		input16 = $("<input type='text' name='productErpNo' value='"+productErpNo+"' />");
+		form.append(input16);
+		input17 = $("<input type='text' name='voucher' value='"+voucher+"' />");
+		form.append(input17);
+		input18 = $("<input type='text' name='barCode' value='"+barCode+"' />");
+		form.append(input18);
+		
+		form.appendTo("body");
+		form.css('display', 'none');
+		form.submit();
+	}
+
+	
+	function vou(index) {
+		alert("商超凭证号：" + all[index].voucher);
+	}
+	//显示添加物流模态框
+	function showAddWuliuModal(index) {
+		$("#addWuliuModal input").val("");
+		$("#addWuliuModal select").val("");
+		$("#addWuliuModal textarea").val("");
+
+		var orderstate = all[index].orderState;
+		jQuery("#awlComp").children('option').remove();
+		$('#wuliuInfoUl').html("");
+		$("#awlProductName").val(all[index].productName);
+		$("#awlProdValues").val(all[index].valuees);
+		$("#awlChildOrderId").val(all[index].childOrderId);
+		$("#awlAddress").val(
+				all[index].province + all[index].city + all[index].area
+						+ all[index].reAddr);
+		$("#submitReply").show();
+		jQuery.ajax({
+			url : "queryKuaidiComs.do",
+			type : 'post',
+			async : false,
+			data : "",
+			dataType : 'json',
+			success : function(data) {
+				if (data.success) {
+					var awlCompSelect = jQuery("#awlComp");
+					jQuery("<option value=''>请选择</option>").appendTo(
+							awlCompSelect);
+					jQuery.each(data.obj, function(name, value) {
+						jQuery(
+								"<option value='"+this.expressNo+"'>"
+										+ this.expressName + "</option>")
+								.appendTo(awlCompSelect);
+					});
+					if (orderstate == "2") {
+						$("#awlComp").val(all[index].carriCom);
+						$("#awlKuaiDiNo").val(all[index].carriNo);
+					}
+				} else {
+					alert(data.message);
+				}
+			},
+			error : function() {
+				alert("操作失败！");
+			}
+		});
+
+		$('#addWuliuModal').modal('show');
+	}
+
+	//添加物流信息
+	function addWuliu() {
+
+		var formData = new FormData();
+		formData.append("childOrderId", $("#awlChildOrderId").val());
+		formData.append("companyNo", $("#awlComp").val());
+		formData.append("kuaidiNo", $("#awlKuaiDiNo").val());
+
+		jQuery.ajax({
+			url : "addWuliuInfo.do",
+			type : 'post',
+			data : formData,
+			dataType : 'json',
+			cache : false,
+			processData : false,
+			contentType : false,
+			success : function(data) {
+				if (data.success) {
+					alert(data.message);
+					$("#addWuliuModal").modal("hide");
+					$("#mytab").bootstrapTable('refresh');
+				} else {
+					alert(data.message);
+				}
+			},
+			error : function() {
+				alert("操作失败！");
+			}
+		});
+
+	}
+
+	//查看物流信息
+	function showWuliuInfo(index) {
+		if (!all[index].carriNo) {
+			alert("没有发货信息");
+			return;
+		}
+		showAddWuliuModal(index);
+		$("#awlComp").val(all[index].carriCom);
+		$("#awlKuaiDiNo").val(all[index].carriNo);
+		var formData = new FormData();
+		formData.append("companyNo", all[index].carriCom);
+		formData.append("kuaidiNo", all[index].carriNo);
+		$("#submitReply").hide();
+		jQuery
+				.ajax({
+					url : "showWuliuInfo.do",
+					type : 'post',
+					data : formData,
+					dataType : 'json',
+					cache : false,
+					processData : false,
+					contentType : false,
+					success : function(data) {
+						if (data.success) {
+							if (data.obj) {
+								if (data.obj.data) {
+									var datalist = data.obj.data;
+									var innerHtml = "";
+									for (var i = 0; i < datalist.length; i++) {
+										if (i == 0) {
+											innerHtml = '<li class="op_express_delivery_timeline_new c-clearfix"><div class="op_express_delivery_timeline_title"><div class="op_express_delivery_timeline_circle op_express_delivery_timeline_circle"><i class="c-icon op_express_delivery_timeline_circle_red"></i><i class="c-text c-text-danger c-text-mult c-gap-left-small" style="padding:2px 5px">最新</i></div><div class="op_express_delivery_timeline_info">'
+													+ datalist[i].time
+													+ '<br>'
+													+ datalist[i].context
+													+ '</div></div></li>';
+										} else {
+											innerHtml += '<li class="op_express_delivery_timeline_label c-clearfix"><div class="op_express_delivery_timeline_title"><div class="op_express_delivery_timeline_circle"><i class="c-icon op_express_delivery_timeline_circle_blue"></i></div><div class="op_express_delivery_timeline_info">'
+													+ datalist[i].time
+													+ '<br>'
+													+ datalist[i].context
+													+ '</div></div></li>';
+										}
+									}
+									$('#wuliuInfoUl').html(innerHtml);
+									$('#wuliuInfo').show();
+								}
+							}
+						} else {
+							alert(data.message);
+						}
+					},
+					error : function() {
+						alert("操作失败！");
+					}
+				});
+
+	}
+
+	function showTuiHuoModal(index) {
+		$('#thwuliuInfoUl').html("");
+		$("#tuihuoModal input").val("");
+		$("#tuihuoModal select").val("");
+		$("#tuihuoModal textarea").val("");
+
+		$("#thChildOrderId").val(all[index].childOrderId);
+		$("#thProductName").val(all[index].productName);
+		$("#thProdValues").val(all[index].valuees);
+		var formData = new FormData();
+		formData.append("childOrderId", all[index].childOrderId);
+		jQuery
+				.ajax({
+					url : "queryReturnInfo.do",
+					type : 'post',
+					data : formData,
+					dataType : 'json',
+					cache : false,
+					processData : false,
+					contentType : false,
+					success : function(data) {
+						if (data.success) {
+							if (data.obj) {
+								$("#thReason").val(data.obj.returnInfo.reason);
+								$("#thReasonOther").val(
+										data.obj.returnInfo.reasonOther);
+								$("#thKuaiDiNo").val(
+										data.obj.returnInfo.carriNo);
+								if (data.obj.wuliuInfo) {
+									$("#thComp").val(
+											data.obj.wuliuInfo.companyName);
+									datalist = data.obj.wuliuInfo.data;
+									var innerHtml = "";
+									for (var i = 0; i < datalist.length; i++) {
+										if (i == 0) {
+											innerHtml = '<li class="op_express_delivery_timeline_new c-clearfix"><div class="op_express_delivery_timeline_title"><div class="op_express_delivery_timeline_circle op_express_delivery_timeline_circle"><i class="c-icon op_express_delivery_timeline_circle_red"></i><i class="c-text c-text-danger c-text-mult c-gap-left-small" style="padding:2px 5px">最新</i></div><div class="op_express_delivery_timeline_info">'
+													+ datalist[i].time
+													+ '<br>'
+													+ datalist[i].context
+													+ '</div></div></li>';
+										} else {
+											innerHtml += '<li class="op_express_delivery_timeline_label c-clearfix"><div class="op_express_delivery_timeline_title"><div class="op_express_delivery_timeline_circle"><i class="c-icon op_express_delivery_timeline_circle_blue"></i></div><div class="op_express_delivery_timeline_info">'
+													+ datalist[i].time
+													+ '<br>'
+													+ datalist[i].context
+													+ '</div></div></li>';
+										}
+									}
+									$('#thwuliuInfoUl').html(innerHtml);
+									$('#thwuliuInfo').show();
+								}
+
+							}
+						} else {
+							alert(data.message);
+						}
+					},
+					error : function() {
+						alert("操作失败！");
+					}
+				});
+		$("#tuihuoModal").modal("show");
+
+	}
+
+	function editTHorSH(index, type) {
+		var formData = new FormData();
+		if (type && index) {
+			formData.append("childOrderId", all[index].childOrderId);
+			formData.append("type", type);
+		} else {
+			var auditresult = $("#auditState").val();
+			if (!auditresult) {
+				alert("请选择有效的审核结果");
+				return;
+			}
+			if (auditresult == "yes") {
+				type = "ATH";
+			} else if (auditresult == "no") {
+				type = "DTH";
+			}
+			formData.append("childOrderId", $("#thChildOrderId").val());
+			formData.append("type", type);
+		}
+
+		jQuery.ajax({
+			url : "editOrderSta.do",
+			type : 'post',
+			data : formData,
+			dataType : 'json',
+			cache : false,
+			processData : false,
+			contentType : false,
+			success : function(data) {
+				if (data.success) {
+					$("#tuihuoModal").modal("hide");
+					$("#mytab").bootstrapTable('refresh');
+				} else {
+					alert(data.message);
+				}
+			},
+			error : function() {
+				alert("操作失败！");
+			}
+		});
+	}
+
+	function tuihuan(index) {
+		var childOrderId = all[index].childOrderId;
+		jQuery.ajax({
+			url : "tuikuan.do",
+			type : 'post',
+			data : {
+				childOrderId : childOrderId
+			},
+			dataType : 'json',
+			success : function(data) {
+				if (data.success) {
+					$("#mytab").bootstrapTable('refresh');
+					alert(data.message);
+				} else {
+					alert(data.message);
+				}
+			},
+			error : function() {
+				alert("操作失败！");
+			}
+		});
+	}
+
+	var fhData;
+	function showManyfhTab() {
+		//先销毁表单 
+		$("#waitfhTab").bootstrapTable('destroy');
+		//生成用户数据
+		$('#waitfhTab').bootstrapTable({
+			method : 'post',
+			contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+			url : "selectAllOrder.do",//要请求数据的文件路径
+			dataType : 'json',
+			/*   toolbar: '#toolbar',//指定工具栏 */
+			striped : true, //是否显示行间隔色
+			//   dataField: "res",//bootstrap table 可以前端分页也可以后端分页，这里
+			//我们使用的是后端分页，后端分页时需返回含有total：总记录数,这个键值好像是固定的  
+			//rows： 记录集合 键值可以修改  dataField 自己定义成自己想要的就好
+			pageNumber : 1, //初始化加载第一页，默认第一页
+			pagination : true,//是否分页
+			queryParams : function(p) {
+				return params2(p);
+			},
+			undefinedText : "",
+			queryParamsType : 'limit',//查询参数组织方式
+			sidePagination : 'server',//指定服务器端分页
+			pageSize : 5,//单页记录数
+			pageList : [ 5, 10, 20, 30 ],//分页步进值
+			/* showRefresh:true,//刷新按钮
+			showColumns:true, */
+			clickToSelect : true,//是否启用点击选中行
+			toolbarAlign : '',//工具栏对齐方式
+			buttonsAlign : '',//按钮对齐方式
+			toolbar : '#toolbar',//指定工作
+			//点击每一个单选框时触发的操作         
+			onCheck:function(row){ 
+				setChooseOrder(row);
+	        },
+	      	//取消每一个单选框时对应的操作；        
+			onUncheck:function(row){ 
+				unsetChooseOrder(row);
+	        },
+	      	//点击全选框时触发的操作        
+			onCheckAll:function(rows){ 
+	          	setAllChooseOrder(rows);
+	        },
+	        onUncheckAll:function(rows){ 
+	          	unsetAllChooseOrder(rows);
+	        },
+			columns : [ {
+				field : "id",
+				checkbox : true,
+				align : 'center',
+				formatter : waitSendOrderFormatter
+			},{
+				title : '订单时间',
+				field : 'gmtModified',
+				formatter : function(value, row, index) {
+						return format(value);
+				}
+			},{
+				title : '收货人',
+				field : 'reUserName'
+			},{
+				title : '收货电话',
+				field : 'cell'
+			},{
+				title : '收货地址',
+				field : 'id',
+				formatter : function(value, row, index) {
+					if (row.transferType == "0") {
+						return row.province+row.city+row.area+row.reAddr;
+					} 
+				}
+			},{
+				title : '订单状态',
+				field : 'orderStateStr',
+			},{
+				title : '取货方式',
+				field : 'transferType',
+				formatter : function(value, row, index) {
+					if (value == "0") {
+						return "物流配送";
+					} else if (value == "1") {
+						return "到店自取";
+					}
+				}
+			},{
+				title : '实付金额',
+				field : 'realOrderPrice.amount'
+			},{
+				title : '实付积分',
+				field : 'realPointPrice.amount'
+			},{
+				title : '商品名称',
+				field : 'productName',
+				formatter : function(value, row, index) {
+					return value.substr(0, 20) + "...";
+				}
+			},{
+				title : '商品属性',
+				field : 'valuees'
+			},{
+				title : '购买数量',
+				field : 'orderCount'
+			},{
+				title : '运费',
+				field : 'luggage.amount'
+			},{
+				title : 'erp编号',
+				field : 'erpNo'
+			},{
+				title : '父订单编号',
+				field : 'orderId'
+			},{
+				title : '子订单编号',
+				field : 'childOrderId'
+			},{
+				title : '用户编号',
+				field : 'userId'
+			},{
+				title : '商品编号',
+				field : 'productId'
+			}],
+			locale : 'zh-CN',//中文支持,
+			responseHandler : function(res) {
+				fhData = res.rows;
+				return res;
+			}
+		});
+	}
+
+	var chooseWaitOrder = new Array();
+	//显示待发货列表
+	function showManyfhtabModal() {
+		$("#fhuserId").val("");
+		$("#fhorderId").val("");
+		chooseWaitOrder = new Array();
+		showManyfhTab();
+		$("#manyfhtabModal").modal("show");
+	}
+
+	function showManyfhModal() {
+		$("#waitfhpdTabbody").html("");
+		$("#manyfhComp").val("");
+		$("#manyfhKuaiDiNo").val("");
+		var row = $('#waitfhTab').bootstrapTable('getSelections');
+		if (row.length < 1) {
+			alert("请至少选择一个订单");
+			return;
+		}
+		var body = jQuery("#waitfhpdTabbody");
+		var childOderArr = [];
+		jQuery.each(row, function(name, value) {
+			childOderArr.push(this.childOrderId);
+			if (!this.valuees) {
+				this.valuees = "无";
+			}
+			jQuery(
+					'<tr><td>' + this.productName + '</td><td>' + this.valuees
+							+ '</td><td>' + this.orderCount + '</td></tr><tr>')
+					.appendTo(body);
+		});
+		if (childOderArr.length < 1) {
+			alert("请至少选择一个订单");
+			return;
+		}
+		$("#childOrderIdArr").val(JSON.stringify(childOderArr));
+		jQuery("#awlComp").children('option').remove();
+		jQuery.ajax({
+			url : "queryKuaidiComs.do",
+			type : 'post',
+			async : false,
+			data : "",
+			dataType : 'json',
+			success : function(data) {
+				if (data.success) {
+					var manyfhCompSelect = jQuery("#manyfhComp");
+					jQuery("<option value=''>请选择</option>").appendTo(
+							manyfhCompSelect);
+					jQuery.each(data.obj, function(name, value) {
+						jQuery(
+								"<option value='"+this.expressNo+"'>"
+										+ this.expressName + "</option>")
+								.appendTo(manyfhCompSelect);
+					});
+				} else {
+					alert(data.message);
+				}
+			},
+			error : function() {
+				alert("操作失败！");
+			}
+		});
+
+		$("#manyfhModal").modal("show");
+	}
+
+	function manyAddwuliu() {
+		var formData = new FormData();
+		formData.append("childOrderIdArr", $("#childOrderIdArr").val());
+		formData.append("companyNo", $("#manyfhComp").val());
+		formData.append("kuaidiNo", $("#manyfhKuaiDiNo").val());
+
+		jQuery.ajax({
+			url : "manyAddWuliu.do",
+			type : 'post',
+			data : formData,
+			dataType : 'json',
+			cache : false,
+			processData : false,
+			contentType : false,
+			success : function(data) {
+				if (data.success) {
+					alert("操作成功");
+					$("#manyfhModal").modal("hide");
+					//$("#manyfhtabModal").modal("hide");
+					$("#waitfhTab").bootstrapTable('refresh');
+				} else {
+					alert(data.message);
+				}
+			},
+			error : function() {
+				alert("操作失败！");
+			}
+		});
+	}
+
+	//待发货列表查询
+	function queryfhtab() {
+		$('#waitfhTab').bootstrapTable("selectPage", 1);
+	}
+
+	//显示添加框
+	function showallmodal(id, type) {
+		$("#" + id).modal(type);
+	}
+
+	//显示放大图片
+	function imgbig(url) {
+		$('#imgbig').modal('show');
+		$("#bigbis").attr('src', url);
+	}
+
+	//获取搜索的所有值
+	function params(params) {
+		$("#a input[type='text']").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		$("#a select").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		params['rankType'] = "0";
+		
+		$("#offset").val(params.offset);
+		$("#limit").val(params.limit);
+		return params;
+	}
+
+	//获取搜索的所有值
+	function params2(params) {
+		$("#a input[type='text']").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		$("#a select").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		params['orderState'] = "2";
+		params['transferType'] = "0";
+		params['rankType'] = "1";
+		return params;
+	}
+	
+	$('.datetimepicker').datetimepicker({
+		minView : "month",//设置只显示到月份
+		language : 'zh-CN',//汉化
+		format : 'yyyy-mm-dd',
+		language : 'zh-CN',
+		autoclose : true,//选中关闭
+		todayBtn : true //今日按钮
+	})
+	
+	//顺风下单
+	function sfGetMaino(ele) {
+		$(ele).attr("disabled", true);
+		if(confirm("确认该操作（顺风下单）？")){
+			var formData = new FormData();
+			
+			for(var i = 0;i<chooseWaitOrder.length;i++){
+				formData.append("chooseChildrenIdS",chooseWaitOrder[i]);
+			}
+			
+			jQuery.ajax({
+				url : "sfGetMaino.do",
+				type : 'post',
+				data : formData,
+				dataType : 'json',
+				cache : false,
+				processData : false,
+				contentType : false,
+				success : function(data) {
+					if (data.success) {
+						sfPrint(ele);
+					} else {
+						alert(data.message);
+						$(ele).attr("disabled", false);
+					}
+				},
+				error : function() {
+					alert("操作失败！");
+					$(ele).attr("disabled", false);
+				}
+			});
+		}
+	}
+	
+	var successChildArray = new Array();
+	function sfGetMainoAndPrint(ele) {
+		$(ele).attr("disabled", true);
+		if(confirm("确认打印？")){
+			var formData = new FormData();
+			
+			for(var i = 0;i<chooseWaitOrder.length;i++){
+				formData.append("chooseChildrenIdS",chooseWaitOrder[i]);
+			}
+			
+			jQuery.ajax({
+				url : "sfGetMainoAndPrint.do",
+				type : 'post',
+				data : formData,
+				dataType : 'json',
+				cache : false,
+				processData : false,
+				contentType : false,
+				success : function(data) {
+					if (data.success) {
+						$("#waitfhTab").bootstrapTable('refresh');
+						$(ele).attr("disabled", false);
+						
+						var successChildOrderId = data.obj;
+						
+						var successChildExcel = [];
+						for(var i = 0;i<=successChildOrderId.length;i++){
+							successChildExcel.push(successChildOrderId[i]);
+							successChildArray.push(successChildOrderId[i]);
+						}
+						$("#successChildExcel").val(JSON.stringify(successChildExcel));
+						
+						$("#excleSuccessOrder").modal("show");
+						showWaitExcelTab();
+					} else {
+						alert(data.message);
+						$(ele).attr("disabled", false);
+					}
+				},
+				error : function() {
+					alert("操作失败！");
+					$(ele).attr("disabled", false);
+				}
+			});
+		}else{
+			$(ele).attr("disabled", false);
+		}
+	}
+	
+	function paramsForWaitExcelTab(params) {
+		params['chooseChildrenIdS'] = $("#successChildExcel").val();
+		return params;
+	}
+	
+	var excelData;
+	function showWaitExcelTab() {
+		//先销毁表单 
+		$("#waitExcelTab").bootstrapTable('destroy');
+		//生成用户数据
+		$('#waitExcelTab').bootstrapTable({
+			method : 'post',
+			contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+			url : "selectAllOrder.do",//要请求数据的文件路径
+			dataType : 'json',
+			/*   toolbar: '#toolbar',//指定工具栏 */
+			striped : true, //是否显示行间隔色
+			//   dataField: "res",//bootstrap table 可以前端分页也可以后端分页，这里
+			//我们使用的是后端分页，后端分页时需返回含有total：总记录数,这个键值好像是固定的  
+			//rows： 记录集合 键值可以修改  dataField 自己定义成自己想要的就好
+			pageNumber : 1, //初始化加载第一页，默认第一页
+			pagination : true,//是否分页
+			queryParams : function(p) {
+				return paramsForWaitExcelTab(p);
+			},
+			undefinedText : "",
+			queryParamsType : 'limit',//查询参数组织方式
+			sidePagination : 'server',//指定服务器端分页
+			pageSize : 5,//单页记录数
+			pageList : [ 5, 10, 20, 30 ],//分页步进值
+			/* showRefresh:true,//刷新按钮
+			showColumns:true, */
+			clickToSelect : false,//是否启用点击选中行
+			toolbarAlign : '',//工具栏对齐方式
+			buttonsAlign : '',//按钮对齐方式
+			toolbar : '#toolbar',//指定工作
+			columns : [ {
+				title : '运单号',
+				field : 'carriNo'
+			}, {
+				title : '订单时间',
+				field : 'gmtModified',
+				formatter : function(value, row, index) {
+						return format(value);
+				}
+			},{
+				title : '收货人',
+				field : 'reUserName'
+			},{
+				title : '收货电话',
+				field : 'cell'
+			},{
+				title : '收货地址',
+				field : 'id',
+				formatter : function(value, row, index) {
+					if (row.transferType == "0") {
+						return row.province+row.city+row.area+row.reAddr;
+					} 
+				}
+			},{
+				title : '订单状态',
+				field : 'orderStateStr',
+			},{
+				title : '取货方式',
+				field : 'transferType',
+				formatter : function(value, row, index) {
+					if (value == "0") {
+						return "物流配送";
+					} else if (value == "1") {
+						return "到店自取";
+					}
+				}
+			},{
+				title : '实付金额',
+				field : 'realOrderPrice.amount'
+			},{
+				title : '实付积分',
+				field : 'realPointPrice.amount'
+			},{
+				title : '商品名称',
+				field : 'productName',
+				formatter : function(value, row, index) {
+					return value.substr(0, 20) + "...";
+				}
+			},{
+				title : '商品属性',
+				field : 'valuees'
+			},{
+				title : '购买数量',
+				field : 'orderCount'
+			},{
+				title : '运费',
+				field : 'luggage.amount'
+			},{
+				title : 'erp编号',
+				field : 'erpNo'
+			},{
+				title : '父订单编号',
+				field : 'orderId'
+			},{
+				title : '子订单编号',
+				field : 'childOrderId'
+			},{
+				title : '用户编号',
+				field : 'userId'
+			},{
+				title : '商品编号',
+				field : 'productId'
+			}],
+			locale : 'zh-CN',//中文支持,
+			responseHandler : function(res) {
+				excelData = res.rows;
+				return res;
+			}
+		});
+	}
+	
+	//导出运单订单
+	function exportWaitExcel() {
+		
+		var action = "exportWaitExcel.do";
+		var form = $("<form></form>");
+		form.attr('action', action);
+		form.attr('method', 'post');
+		input2 = $("<input type='text' name='chooseChildrenIdS' value='"+successChildArray+"' />");
+		form.append(input2);
+		
+		form.appendTo("body");
+		form.css('display', 'none');
+		form.submit();
+	}
+	
+</script>
+
+<!-- 导出excel文件 -->
+<script type="text/javascript">
+	var idTmr;
+	function getExplorer() {
+		var explorer = window.navigator.userAgent;
+		//ie  
+		if (explorer.indexOf("MSIE") >= 0) {
+			return 'ie';
+		}
+		//firefox  
+		else if (explorer.indexOf("Firefox") >= 0) {
+			return 'Firefox';
+		}
+		//Chrome  
+		else if (explorer.indexOf("Chrome") >= 0) {
+			return 'Chrome';
+		}
+		//Opera  
+		else if (explorer.indexOf("Opera") >= 0) {
+			return 'Opera';
+		}
+		//Safari  
+		else if (explorer.indexOf("Safari") >= 0) {
+			return 'Safari';
+		}
+	}
+	function method5(tableid) {
+
+		if (getExplorer() == 'ie') {
+			var curTbl = document.getElementById(tableid);
+			var oXL = new ActiveXObject("Excel.Application");
+			var oWB = oXL.Workbooks.Add();
+			var xlsheet = oWB.Worksheets(1);
+			var sel = document.body.createTextRange();
+			sel.moveToElementText(curTbl);
+			sel.select();
+			sel.execCommand("Copy");
+			xlsheet.Paste();
+			oXL.Visible = true;
+
+			try {
+				var fname = oXL.Application.GetSaveAsFilename("Excel.xls",
+						"Excel Spreadsheets (*.xls), *.xls");
+			} catch (e) {
+				print("Nested catch caught " + e);
+			} finally {
+				oWB.SaveAs(fname);
+				oWB.Close(savechanges = false);
+				oXL.Quit();
+				oXL = null;
+				idTmr = window.setInterval("Cleanup();", 1);
+			}
+		} else {
+			tableToExcel(tableid);
+		}
+	}
+	function Cleanup() {
+		window.clearInterval(idTmr);
+		CollectGarbage();
+	}
+	var tableToExcel = (function() {
+		var uri = 'data:application/vnd.ms-excel;base64,', template = '<html><head><meta charset="UTF-8"></head><body><table>{table}</table></body></html>', base64 = function(
+				s) {
+			return window.btoa(unescape(encodeURIComponent(s)))
+		}, format = function(s, c) {
+			return s.replace(/{(\w+)}/g, function(m, p) {
+				return c[p];
+			})
+		}
+		return function(table, name) {
+			if (!table.nodeType)
+				table = document.getElementById(table)
+			var ctx = {
+				worksheet : name || 'Worksheet',
+				table : table.innerHTML
+			}
+			window.location.href = uri + base64(format(template, ctx))
+		}
+	})()
+</script>
+
+<script type="text/javascript">
+
+	//erxcel导入订单发货
+	function importExcelForOrderSend(){
+		
+		if($("#FileInput").val() == ''){
+			alert("请选择文件");
+		}
+		
+		$("#excelOrderSend").attr("disabled",true);
+		$("#excelOrderSend").html("数据处理中...");
+		
+		var formData = new FormData();
+		formData.append("file", $("#FileInput")[0].files[0]);
+		
+		jQuery.ajax({
+			url : 'importExcelForOrderSend.do',
+			type : 'post',
+			data : formData,
+			dataType : 'json',
+			cache : false,
+			processData : false,
+			contentType : false,
+			success : function(data) {
+				if (data.success) {
+					alert(data.message);
+					$("#showImportOrderSend").modal("hide");
+				} else {
+					alert(data.message);
+				}
+				$("#excelOrderSend").attr("disabled",false);
+				$("#excelOrderSend").html("确认上传");
+			},
+			error : function() {
+				alert("操作失败！");
+			}
+		});
+	}
+	
+	function goDownExpress(){
+		window.location.href="https://admin.hqyt.cc/demo/express.xls";
+	}
+	
+	function importExcelForOrderSendSF(){
+		
+		if($("#FileInputSF").val() == ''){
+			alert("请选择文件");
+		}
+		
+		$("#excelOrderSendSF").attr("disabled",true);
+		$("#excelOrderSendSF").html("数据处理中...");
+		
+		var formData = new FormData();
+		formData.append("file", $("#FileInputSF")[0].files[0]);
+		
+		jQuery.ajax({
+			url : 'importExcelForOrderSendSF.do',
+			type : 'post',
+			data : formData,
+			dataType : 'json',
+			cache : false,
+			processData : false,
+			contentType : false,
+			success : function(data) {
+				if (data.success) {
+					alert(data.message);
+					$("#showImportOrderSend").modal("hide");
+				} else {
+					alert(data.message);
+				}
+				$("#excelOrderSend").attr("disabled",false);
+				$("#excelOrderSend").html("确认上传");
+			},
+			error : function() {
+				alert("操作失败！");
+			}
+		});
+	}
+</script>
+
+<script type="text/javascript">
+	//importSendOrderTable
+	function importOrderSendModel(){
+		$("#excelfile").val('');
+		$("#FileInput").val('');
+		$("#importSendOrderTable").bootstrapTable('destroy');
+		configjson = getjson('config/data.json');
+        globaltitle = configjson[0].title;
+        initTable();
+		$("#showImportOrderSend").modal("show");
+		//initChooseExcelModel();
+	}
+</script>
+
+<script type="text/javascript">
+	//importSendOrderTable
+	function importOrderSendSFModel(){
+		$("#excelfileSF").val('');
+		$("#FileInputSF").val('');
+		/* $("#importSendOrderSFTable").bootstrapTable('destroy');
+		configjson = getjson('config/dataSf.json');
+        globaltitle = configjson[0].title;
+        initTable(); */
+		$("#showImportOrderSendSF").modal("show");
+	}
+</script>
+
+<script>
+	//var $importTable =  $('#importSendOrderTable');
+    var globaltitle = {};
+    var emptydata = {};
+    var configjson ;
+
+    function inittitle(gtitle) {
+        var firstcolumns = [{
+              	field: "id", 
+              	title: "ID", 
+              	align: "center", 
+              	edit: false, 
+              	formatter: function (value, row, index) {
+                	return index;
+            	}
+        }]
+        
+        for (var a in gtitle) {
+            var obj = {
+                editable: {
+                    type: 'text',
+                    mode: "popup",//popup
+                    title: '',
+                    disabled: true,
+                    emptytext: '无',
+                }
+            }
+            obj.field = gtitle[a];
+            obj.title = a;
+            obj.editable.title = a;
+            firstcolumns.push(obj);
+        }
+        
+        firstcolumns.push()
+        return firstcolumns;
+
+    }
+
+
+    var TableInit = function (data,columns) {
+        var oTableInit = new Object();
+        //初始化Table
+        oTableInit.Init = function () {
+        	$('#importSendOrderTable').bootstrapTable({
+        		url: '',         //请求后台的URL（*）
+                data:data,
+                method: 'get',                      //请求方式（*）
+                toolbar: '#toolbar',                //工具按钮用哪个容器
+                striped: true,                      //是否显示行间隔色
+                cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                pagination: true,                   //是否显示分页（*）
+                sortable: false,                     //是否启用排序
+                sortOrder: "asc",                   //排序方式
+                queryParams: '',//传递参数（*）
+                sidePagination: "client",           //分页方式：client客户端分页，server服务端分页（*）
+                pageNumber:1,                       //初始化加载第一页，默认第一页
+                pageSize: 10,                       //每页的记录行数（*）
+                pageList: [10,50, 100,300,500],        //可供选择的每页的行数（*）
+//                search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+                strictSearch: true,
+                showColumns: true,                  //是否显示所有的列
+                showRefresh: false,                  //是否显示刷新按钮
+                minimumCountColumns: 2,             //最少允许的列数
+                clickToSelect: true,                //是否启用点击选中行
+//                height: 500,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+                uniqueId: "ID",                     //每一行的唯一标识，一般为主键列
+//                showToggle:true,                    //是否显示详细视图和列表视图的切换按钮
+                cardView: false,                    //是否显示详细视图
+                detailView: false,                   //是否显示父子表
+                columns:columns,
+                onClickRow: function (row) {
+                	
+                },
+            });
+        };
+        return oTableInit;
+    };
+
+    function importfile(file) {//导入
+        var f = file.files[0];
+        $("#excelfile").val(f.name);
+        var wb;//读取完成的数据
+        var rABS = false; //是否将文件读取为二进制字符串
+        var ie = IEVersion();
+        if(ie != -1 && ie != 'edge'){
+            if(ie<10){
+                return;
+            }else{
+                rABS = true;
+            }
+        }
+
+        if(checkfilename(file)){
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var data = e.target.result;
+                if(rABS) {
+                    wb = XLSX.read(btoa(fixdata(data)), {//手动转化
+                        type: 'base64'
+                    });
+                } else {
+                    wb = XLSX.read(data, {
+                        type: 'binary'
+                    });
+                }
+                var result = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+
+                resoveresult(globaltitle,result);
+            };
+
+            if(rABS) {
+                reader.readAsArrayBuffer(f);
+            } else {
+                reader.readAsBinaryString(f);
+            }
+        }
+    }
+    
+    function importfileSF(file) {//导入
+        var f = file.files[0];
+        $("#excelfileSF").val(f.name);
+        var wb;//读取完成的数据
+        var rABS = false; //是否将文件读取为二进制字符串
+        var ie = IEVersion();
+        if(ie != -1 && ie != 'edge'){
+            if(ie<10){
+                return;
+            }else{
+                rABS = true;
+            }
+        }
+
+        if(checkfilename(file)){
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var data = e.target.result;
+                if(rABS) {
+                    wb = XLSX.read(btoa(fixdata(data)), {//手动转化
+                        type: 'base64'
+                    });
+                } else {
+                    wb = XLSX.read(data, {
+                        type: 'binary'
+                    });
+                }
+                var result = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+
+                resoveresult(globaltitle,result);
+            };
+
+            if(rABS) {
+                reader.readAsArrayBuffer(f);
+            } else {
+                reader.readAsBinaryString(f);
+            }
+        }
+    }
+
+    function resoveresult(config,list) {
+    	$('#importSendOrderTable').bootstrapTable('showLoading');
+        var rs= [];
+        if(list.length>0){
+            for(var one in list){
+                var obj = {};
+                for(var index in config){
+
+                    var key = list[one][index];
+                    if(!key){
+                        obj[config[index]]="";
+                    }else {
+                        obj[config[index]] = key;
+                    }
+
+                }
+                obj.id = Number(one);
+                rs.push(obj);
+            }
+            $('#importSendOrderTable').bootstrapTable('load',rs );
+        }
+        $('#importSendOrderTable').bootstrapTable('hideLoading');
+    }
+
+    function getjson(url) {
+    	jQuery.ajaxSetup({async:false});
+        var rs;
+        jQuery.getJSON(url, function(json){
+            rs = json;
+        });
+        return rs;
+    }
+    
+    function initTable() {
+        var columns = inittitle(globaltitle);
+        //1.初始化Table
+        var oTable = new TableInit([],columns);
+        oTable.Init();
+    }
+    
+    $(function () {
+        configjson = getjson('config/data.json');
+        globaltitle = configjson[0].title;
+        initTable();
+    });
+</script>
+
+<script type="text/javascript">
+
+	function setChooseOrder(row){
+		var chooseChildOrderId = row.childOrderId;
+		
+		if(!array_contain(chooseWaitOrder,chooseChildOrderId)){
+			chooseWaitOrder.push(chooseChildOrderId);
+		}
+	}
+	
+	function unsetChooseOrder(row){
+		var chooseChildOrderId = row.childOrderId;
+		if(array_contain(chooseWaitOrder,chooseChildOrderId)){
+			var index = chooseWaitOrder.indexOf(chooseChildOrderId);
+			if (index > -1) {
+				chooseWaitOrder.splice(index, 1);
+			}
+		}
+	}
+	
+	function setAllChooseOrder(rows){
+		var arrayObj = new Array();
+		for(var i = 0;i<rows.length;i++){
+			if(!array_contain(chooseWaitOrder,rows[i].childOrderId)){
+				chooseWaitOrder.push(rows[i].childOrderId);
+			}
+		}
+	}
+	
+	function unsetAllChooseOrder(rows){
+		var arrayObj = new Array();
+		for(var i = 0;i<rows.length;i++){
+			if(array_contain(chooseWaitOrder,rows[i].childOrderId)){
+				var index = chooseWaitOrder.indexOf(rows[i].childOrderId);
+				if (index > -1) {
+					chooseWaitOrder.splice(index, 1);
+				}
+			}
+		}
+	}
+	
+	function array_contain(array, obj){
+	    for (var i = 0; i < array.length; i++){
+	        if (array[i] == obj)//如果要求数据类型也一致，这里可使用恒等号===
+	            return true;
+	    }
+	    return false;
+	}
+	
+	function waitSendOrderFormatter(value, row, index) {
+		if (array_contain(chooseWaitOrder,row.childOrderId)){
+			return {
+				disabled : false,//设置是否可用 
+				checked : true //设置选中 
+			};
+		}else{
+			return {
+				disabled : false,//设置是否可用 
+				checked : false //设置不选中 
+			};
+		}
+	}
+
+</script>
+
+<script type="text/javascript">
+    function queryOrderCheckRecord(childrenOrderId){
+    	$("#thisChildrenOrderId").val(childrenOrderId);
+		$("#queryOrderCheckRecordTable").bootstrapTable('destroy');
+		askQueryOrderCheckRecord();
+		$("#queryOrderCheckRecordModal").modal("show");
+    }
+    
+    function refreshqueryOrderCheckRecord() {
+		$('#queryOrderCheckRecordTable').bootstrapTable("selectPage", 1);
+	}
+    
+    function askQueryOrderCheckRecord() {
+    	var allRecordOrderCheck;
+		$('#queryOrderCheckRecordTable').bootstrapTable({
+			method : 'post',
+			contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+			url : "queryOrderCheckList.do?",//请求查询所有可同时使用的优惠券
+			dataType : 'json',
+			striped : true, //是否显示行间隔色
+			pageNumber : 1, //初始化加载第一页，默认第一页
+			pageSize : 10,//单页记录数
+			pageList : [ 5, 10, 20, 30 ],//分页步进值
+			pagination : true,//是否分页
+			queryParamsType : 'limit',//查询参数组织方式
+			sidePagination : 'server',//指定服务器端分页
+			queryParams : function(p) {
+				return paramsForQueryOrderCheckRecord(p);
+			},
+			clickToSelect : false,//是否启用点击选中行
+			toolbarAlign : 'right',//工具栏对齐方式
+			buttonsAlign : 'right',//按钮对齐方式
+			toolbar : '#toolbar',//指定工作栏
+			columns : [{
+				title : '审核类型',
+				field : 'CHECK_TYPE_STR'
+			}, {
+				title : '审核用户',
+				field : 'NICK_NAME'
+			}, {
+				title : '真实姓名',
+				field : 'REAL_NAME'
+			},{
+				title : '电话',
+				field : 'CELL'
+			},{
+				title : '角色',
+				field : 'CHECK_ROLE_STR'
+			},{
+				title : '审核状态',
+				field : 'CHECK_STATUS_STR'
+			},{
+				title : '创建时间',
+				field : 'GMT_CREATE',
+				formatter : function(value, row, index) {
+					return format(value)
+				}
+			} ],
+			locale : 'zh-CN',//中文支持,
+			responseHandler : function(res) {
+				//在ajax获取到数据，渲染表格之前，修改数据源
+				allRecordOrderCheck = res.rows;
+				return res;
+			}
+		})
+	}
+    
+    function paramsForQueryOrderCheckRecord(params) {
+		params['childOrderId'] = $("#thisChildrenOrderId").val();
+		return params;
+	}
+
+</script>
+
+<script type="text/javascript">
+
+function scrollTab(){
+    var boxw = parseInt($(".fixed-table-container").width());
+    var conw = parseInt($(".fixed-table-body").find('#mytab').width());
+    $(".scr_b").width(boxw-40)
+    $("#scro").width(boxw-40)
+    var scro = parseInt($("#scro").width());
+    var set = parseInt(boxw/conw*scro)
+    var mscro = $(".scro_mouse").width(set)
+    var scro_zoom = parseInt($(".scro_mouse").width() / 2);
+    var zoompos = { x: 0, y: 0 };
+    var flag = false;
+    var scropos;
+    $(".scro_mouse").bind("mousedown", function(e) {
+        flag = true;
+        return false;
+    }).mousemove(function(e) {
+        if (flag) {
+            $zoompos(e.pageX, e.pageY);
+            $(this).css("left", zoompos.x);
+            $(".fixed-table-body").scrollLeft(scropos);
+        }
+    }).mouseup(function(e) {
+        flag = false;
+        $(this).css("background", "#ccc");
+    })
+    $(document).mouseup(function(e) {
+        flag = false;
+        $(".scro_mouse").css("background", "#ccc");
+    })
+
+    function $zoompos(x, y) {
+        zoompos.x = x - $("#scro").offset().left - scro_zoom; //得到left值;
+        zoompos.y = y - $("#scro").offset().top - 5; //得到top值;
+        scropos = parseInt((conw - scro) / (scro - set) * zoompos.x);
+        if (zoompos.x <= 0) {
+            zoompos.x = 0;
+        }
+        if (zoompos.x + set >= scro) {
+            zoompos.x = scro - set;
+        }
+        if (scropos < 0) {
+            scropos = 0;
+        }
+        if (scropos >= conw - scro) {
+            scropos = conw - scro;
+        }
+    }
+
+    
+}
+
+function scrollAll(){
+   $(window).scroll(function() {
+	   
+	   $(".fixed-table-body").scroll(function(){
+	          var az=$(".fixed-table-body").scrollLeft();
+	          var po = $(".fixed-table-header").attr('data-po')
+	          if(po=='relative'){
+	            $(".fixed-table-header").css("left",-az)
+	          }else{
+	             $(".fixed-table-header").css("left",250-az)
+	          }  
+	    })
+	   
+       var Height = $(window).scrollTop();
+       var scrollHeight = $(document).height();
+    　 var windowHeight = $(this).height();
+    　　if(Height + windowHeight == scrollHeight){
+    　　    $(".scr_b").css('display','none');
+            $(".scr_b").attr('data-id','2');
+    　　}else{
+            $(".scr_b").css('display','block');
+            var id=$(".scr_b").attr('data-id');
+            if(id==2){
+            	var sc = parseInt($(".fixed-table-body").scrollLeft())/parseInt($(".fixed-table-body").find('#mytab').width())*(parseInt($(".fixed-table-container").width())-40)
+                $(".scro_mouse").css("left", sc);
+            }
+        }
+        if(Height>($("#a").height()+50)){
+            var aa=$(".fixed-table-body").scrollLeft();
+           $(".fixed-table-header").css({'position':'fixed','top':'0',"left":250-aa})
+           $(".fixed-table-header").attr('data-po','fixed')
+        }else{
+            $(".fixed-table-header").css({'position':'relative','top':'0'})
+            $(".fixed-table-header").attr('data-po','relative')
+            var as=$(".fixed-table-body").scrollLeft();
+            var widths = $(".fixed-table-header").find('.table').width();
+            $(".fixed-table-header").css({left: -as,width: widths})
+        }
+        
+        
+    })
+}
+</script>
+
+<script type="text/javascript">
+	
+function modifyDelayFlg(childOrderId){
+	if(confirm("确认延长该订单退款退货时间？")){
+		jQuery.ajax({
+			url : 'modifyDelayFlg.do',
+			type : 'post',
+			data : {
+				childOrderId:childOrderId
+			},
+			dataType : 'json',
+			success : function(data) {
+				if (data.success) {
+					$("#mytab").bootstrapTable('refresh');
+				} else {
+					alert(data.message);
+				}
+			},
+			error : function() {
+				alert("操作失败！");
+			}
+		});
+	}
+}
+</script>
+
+<script type="text/javascript">
+    function queryOrderOweRecord(orderId){
+    	$("#thisOrderId").val(orderId);
+		$("#queryOrderOweRecordTable").bootstrapTable('destroy');
+		askQueryOrderOweRecord();
+		$("#queryOrderOweRecordModal").modal("show");
+    }
+    
+    function refreshqueryOrderOweRecord() {
+		$('#queryOrderOweRecordTable').bootstrapTable("selectPage", 1);
+	}
+    
+    function askQueryOrderOweRecord() {
+    	var allRecordOrderOwe;
+		$('#queryOrderOweRecordTable').bootstrapTable({
+			method : 'post',
+			contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+			url : "getOrderOweRecord.do?",//请求查询所有可同时使用的优惠券
+			dataType : 'json',
+			striped : true, //是否显示行间隔色
+			pageNumber : 1, //初始化加载第一页，默认第一页
+			pageSize : 10,//单页记录数
+			pageList : [ 5, 10, 20, 30 ],//分页步进值
+			pagination : true,//是否分页
+			queryParamsType : 'limit',//查询参数组织方式
+			sidePagination : 'server',//指定服务器端分页
+			queryParams : function(p) {
+				return paramsForQueryOrderOweRecord(p);
+			},
+			clickToSelect : false,//是否启用点击选中行
+			toolbarAlign : 'right',//工具栏对齐方式
+			buttonsAlign : 'right',//按钮对齐方式
+			toolbar : '#toolbar',//指定工作栏
+			columns : [{
+				title : '状态',
+				field : 'statusStr'
+			}, {
+				title : '图片',
+				field : 'oweImg',
+				formatter : function(value, row, index) {
+					return  '<img src="'+value+'" data-imgurl="'+value+'" width="100px" height="60px"/>';
+				}
+			}, {
+				title : '创建时间',
+				field : 'gmtCreate'
+			},{
+				title : '修改时间',
+				field : 'gmtModified'
+			},{
+				title : '营业员',
+				field : 'assUserName'
+			},{
+				title : '营业员电话',
+				field : 'assUserCell'
+			},{
+				title : '驳回操作人',
+				field : 'failUserName'
+			},{
+				title : '驳回操作人电话',
+				field : 'failUserCell'
+			},{
+				title : '驳回理由',
+				field : 'fialReason'
+			},{
+				title : '驳回操作时间',
+				field : 'failTime'
+			},],
+			onLoadSuccess: function () {  //加载成功时执行
+                 $("img").load(function(){
+               	  var viewer = new Viewer(document.getElementById('queryOrderOweRecordTable'), {
+               	      navbar: false,
+               	      toolbar: {
+               	        zoomIn: true,
+               	        zoomOut: true,
+               	        play: true,
+               	        rotateLeft: true,
+               	        rotateRight: true
+               	       
+               	      },
+               	      show: function (){
+               	        viewer.update();
+               	      }  
+               	  });
+               	})
+            },
+			locale : 'zh-CN',//中文支持,
+			responseHandler : function(res) {
+				//在ajax获取到数据，渲染表格之前，修改数据源
+				allRecordOrderOwe = res.rows;
+				return res;
+			}
+		})
+	}
+    
+    function paramsForQueryOrderOweRecord(params) {
+		params['orderId'] = $("#thisOrderId").val();
+		return params;
+	}
+</script>
+
+<script type="text/javascript">
+    function queryOrderRebateRecord(childOrderId){
+    	$("#thisChildrenOrderId").val(childOrderId);
+		$("#queryOrderRebateTable").bootstrapTable('destroy');
+		askQueryOrderRebateRecord();
+		$("#queryOrderRebateRecordModal").modal("show");
+    }
+    
+    function refreshqueryOrderRebateRecord() {
+		$('#queryOrderRebateTable').bootstrapTable("selectPage", 1);
+	}
+    
+    function askQueryOrderRebateRecord() {
+    	var allRecordOrderRebate;
+		$('#queryOrderRebateTable').bootstrapTable({
+			method : 'post',
+			contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+			url : "getOrderRebateRecord.do?",//请求查询所有可同时使用的优惠券
+			dataType : 'json',
+			striped : true, //是否显示行间隔色
+			pageNumber : 1, //初始化加载第一页，默认第一页
+			pageSize : 10,//单页记录数
+			pageList : [ 5, 10, 20, 30 ],//分页步进值
+			pagination : true,//是否分页
+			queryParamsType : 'limit',//查询参数组织方式
+			sidePagination : 'server',//指定服务器端分页
+			queryParams : function(p) {
+				return paramsForQueryOrderRebateRecord(p);
+			},
+			clickToSelect : false,//是否启用点击选中行
+			toolbarAlign : 'right',//工具栏对齐方式
+			buttonsAlign : 'right',//按钮对齐方式
+			toolbar : '#toolbar',//指定工作栏
+			columns : [{
+				title : '类型',
+				field : 'rebateType',
+				formatter : function(value, row, index) {
+					if(value == '1'){
+						return '自己';
+					}
+					if(value == '2'){
+						return '推荐人';
+					}
+				}
+			}, {
+				title : '积分值',
+				field : 'pointAmount.amount'
+			}, {
+				title : '创建时间',
+				field : 'gmtCreate',
+				formatter : function(value, row, index) {
+					return format(value);
+				}
+			},{
+				title : '修改时间',
+				field : 'gmtModified',
+				formatter : function(value, row, index) {
+					return format(value);
+				}
+			}],
+			locale : 'zh-CN',//中文支持,
+			responseHandler : function(res) {
+				//在ajax获取到数据，渲染表格之前，修改数据源
+				allRecordOrderRebate = res.rows;
+				return res;
+			}
+		})
+	}
+    
+    function paramsForQueryOrderRebateRecord(params) {
+		params['childOrderId'] = $("#thisChildrenOrderId").val();
+		return params;
+	}
+</script>
+
+<script type="text/javascript">
+    function queryOrderReturnRecord(childOrderId){
+    	$("#thisChildrenOrderId").val(childOrderId);
+		$("#queryOrderReturnTable").bootstrapTable('destroy');
+		askQueryOrderReturnRecord();
+		$("#queryOrderReturnRecordModal").modal("show");
+    }
+    
+    function refreshqueryOrderReturnRecord() {
+		$('#queryOrderReturnTable').bootstrapTable("selectPage", 1);
+	}
+    
+    function askQueryOrderReturnRecord() {
+    	var allRecordOrderReturn;
+		$('#queryOrderReturnTable').bootstrapTable({
+			method : 'post',
+			contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+			url : "getOrderReturnRecord.do?",//请求查询所有可同时使用的优惠券
+			dataType : 'json',
+			striped : true, //是否显示行间隔色
+			pageNumber : 1, //初始化加载第一页，默认第一页
+			pageSize : 10,//单页记录数
+			pageList : [ 5, 10, 20, 30 ],//分页步进值
+			pagination : true,//是否分页
+			queryParamsType : 'limit',//查询参数组织方式
+			sidePagination : 'server',//指定服务器端分页
+			queryParams : function(p) {
+				return paramsForQueryOrderReturnRecord(p);
+			},
+			clickToSelect : false,//是否启用点击选中行
+			toolbarAlign : 'right',//工具栏对齐方式
+			buttonsAlign : 'right',//按钮对齐方式
+			toolbar : '#toolbar',//指定工作栏
+			columns : [{
+				title : '状态',
+				field : 'statusStr'
+			},{
+				title : '退货原因',
+				field : 'reason'
+			},{
+				title : '用户备注',
+				field : 'reasonOther'
+			},{
+				title : '用户描述图片',
+				field : 'returnImgs',
+				formatter : function(value, row, index) {
+					var thisHtml = '';
+					for(var a=0;a<value.length;a++){
+						thisHtml+='<img src="'+value[a]+'" data-imgurl="'+value[a]+'" width="100px" height="60px"/>';
+					}
+					return  thisHtml
+				}
+			},{
+				title : '联系人姓名',
+				field : 'linkUser'
+			},{
+				title : '联系人电话',
+				field : 'linkCell'
+			},{
+				title : '营业员',
+				field : 'assUserName'
+			},{
+				title : '营业电话',
+				field : 'assUserCell'
+			},{
+				title : '营业员审核备注',
+				field : 'failReason'
+			},{
+				title : '营业员质量问题描述',
+				field : 'quartyDesc'
+			},{
+				title : '营业员描述图片',
+				field : 'quartuImgs',
+				formatter : function(value, row, index) {
+					var thisHtml = '';
+					for(var c=0;c<value.length;c++){
+						thisHtml+='<img src="'+value[c]+'" data-imgurl="'+value[c]+'" width="100px" height="60px"/>';
+					}
+					return  thisHtml
+				}
+			},{
+				title : '质管',
+				field : 'quarUserName'
+			},{
+				title : '质管电话',
+				field : 'quarUserCell'
+			},{
+				title : '质管处理方式',
+				field : 'dealWay'
+			},{
+				title : '质管审核备注',
+				field : 'succReason'
+			},{
+				title : '营业员退款凭证',
+				field : 'returnVoucherMemo'
+			},{
+				title : '营业员退款凭证图片',
+				field : 'returnVoucherImgs',
+				formatter : function(value, row, index) {
+					var thisHtml = '';
+					for(var b=0;b<value.length;b++){
+						thisHtml+='<img src="'+value[b]+'" data-imgurl="'+value[b]+'" width="100px" height="60px"/>';
+					}
+					return  thisHtml
+				}
+			},{
+				title : '财务内勤',
+				field : 'cwnqUserName'
+			},{
+				title : '财务内勤电话',
+				field : 'cwnqUserCell'
+			},{
+				title : '财务内勤审核理由',
+				field : 'succCwnq'
+			},{
+				title : '数量',
+				field : 'chooseNum'
+			},{
+				title : '成功回款金额',
+				field : 'shouldReturnMoney.amount'
+			},{
+				title : '成功回款积分',
+				field : 'shouldReturnPoint.amount'
+			},{
+				title : '成功回款庆余卡',
+				field : 'shouldReturnVoucher.amount'
+			},{
+				title : '成功回退健康值',
+				field : 'shouldReturnDevote.amount'
+			},{
+				title : '【用户】回退返利积分',
+				field : 'shouldReturnRebateUser.amount'
+			},{
+				title : '【团队】回退返利胡币',
+				field : 'shouldReturnRebateReco.amount'
+			},{
+				title : '【推荐人】回退返利胡币',
+				field : 'shouldReturnRebateRecoUser.amount'
+			},{
+				title : '创建时间',
+				field : 'gmtCreate'
+			},{
+				title : '修改时间',
+				field : 'gmtModified'
+			},],
+			locale : 'zh-CN',//中文支持,
+			onLoadSuccess: function () {  //加载成功时执行
+                $("img").load(function(){
+              	  var viewer = new Viewer(document.getElementById('queryOrderReturnTable'), {
+              	      navbar: false,
+              	      toolbar: {
+              	        zoomIn: true,
+              	        zoomOut: true,
+              	        play: true,
+              	        rotateLeft: true,
+              	        rotateRight: true
+              	       
+              	      },
+              	      show: function (){
+              	        viewer.update();
+              	      }  
+              	  });
+              	})
+           },
+			responseHandler : function(res) {
+				//在ajax获取到数据，渲染表格之前，修改数据源
+				allRecordOrderReturn = res.rows;
+				return res;
+			}
+		})
+	}
+    
+    function paramsForQueryOrderReturnRecord(params) {
+		params['childOrderId'] = $("#thisChildrenOrderId").val();
+		return params;
+	}
+</script>
+
+<script type="text/javascript">
+    function queryOrderVoucherRecord(childOrderId){
+    	$("#thisChildrenOrderId").val(childOrderId);
+		$("#queryOrderVoucherTable").bootstrapTable('destroy');
+		askQueryOrderVoucherRecord();
+		$("#queryOrderVoucherRecordModal").modal("show");
+    }
+    
+    function refreshqueryOrderVoucherRecord() {
+		$('#queryOrderVoucherTable').bootstrapTable("refresh");
+	}
+    
+    function askQueryOrderVoucherRecord() {
+    	var allRecordOrderVoucher;
+		$('#queryOrderVoucherTable').bootstrapTable({
+			method : 'post',
+			contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+			url : "getOrderVoucherRecord.do?",//请求查询所有可同时使用的优惠券
+			dataType : 'json',
+			striped : true, //是否显示行间隔色
+			pageNumber : 1, //初始化加载第一页，默认第一页
+			pageSize : 10,//单页记录数
+			pageList : [ 5, 10, 20, 30 ],//分页步进值
+			pagination : true,//是否分页
+			queryParamsType : 'limit',//查询参数组织方式
+			sidePagination : 'server',//指定服务器端分页
+			queryParams : function(p) {
+				return paramsForQueryOrderVoucherRecord(p);
+			},
+			clickToSelect : false,//是否启用点击选中行
+			toolbarAlign : 'right',//工具栏对齐方式
+			buttonsAlign : 'right',//按钮对齐方式
+			toolbar : '#toolbar',//指定工作栏
+			columns : [{
+				title : '凭证号',
+				field : 'voucher'
+			}, {
+				title : '凭证图片',
+				field : 'voucherImg',
+				formatter : function(value, row, index) {
+					if(value == null || value.length <=0){
+						return null;
+					}
+					var html = "";
+					for(var i=0;i<value.length;i++){
+						html+='<img src="'+value[i]+'" data-imgurl="'+value[i]+'" width="100px" height="60px"/>';	
+					}
+					return  html;	
+				}
+			}, {
+				title : '创建时间',
+				field : 'gmtCreate',
+				formatter : function(value, row, index) {
+					return format(value);
+				}
+			}],
+			locale : 'zh-CN',//中文支持,
+			onLoadSuccess: function () {  //加载成功时执行
+                 $("img").load(function(){
+               	  var viewer = new Viewer(document.getElementById('queryOrderVoucherTable'), {
+               	      navbar: false,
+               	      toolbar: {
+               	        zoomIn: true,
+               	        zoomOut: true,
+               	        play: true,
+               	        rotateLeft: true,
+               	        rotateRight: true
+               	       
+               	      },
+               	      show: function (){
+               	        viewer.update();
+               	      }  
+               	  });
+               	})
+            },
+			responseHandler : function(res) {
+				//在ajax获取到数据，渲染表格之前，修改数据源
+				allRecordOrderVoucher = res.rows;
+				return res;
+			}
+		})
+	}
+    
+    function paramsForQueryOrderVoucherRecord(params) {
+		params['childOrderId'] = $("#thisChildrenOrderId").val();
+		return params;
+	}
+</script>
+
+<script type="text/javascript">
+	var chooseSendOrder = new Array();
+	//已发货快递单    
+	function showPrintOrderModal() {
+		chooseSendOrder = new Array();
+		showPrintOrderTab();
+		$("#printOrderModal").modal("show");
+	}
+	
+	var sendData;
+	function showPrintOrderTab() {
+		//先销毁表单 
+		$("#printOrderTab").bootstrapTable('destroy');
+		//生成用户数据
+		$('#printOrderTab').bootstrapTable({
+			method : 'post',
+			contentType : "application/x-www-form-urlencoded",//必须要有！！！！
+			url : "selectAllOrder.do",//要请求数据的文件路径
+			dataType : 'json',
+			/*   toolbar: '#toolbar',//指定工具栏 */
+			striped : true, //是否显示行间隔色
+			//   dataField: "res",//bootstrap table 可以前端分页也可以后端分页，这里
+			//我们使用的是后端分页，后端分页时需返回含有total：总记录数,这个键值好像是固定的  
+			//rows： 记录集合 键值可以修改  dataField 自己定义成自己想要的就好
+			pageNumber : 1, //初始化加载第一页，默认第一页
+			pagination : true,//是否分页
+			queryParams : function(p) {
+				return params3(p);
+			},
+			undefinedText : "",
+			queryParamsType : 'limit',//查询参数组织方式
+			sidePagination : 'server',//指定服务器端分页
+			pageSize : 5,//单页记录数
+			pageList : [ 5, 10, 20, 30 ],//分页步进值
+			/* showRefresh:true,//刷新按钮
+			showColumns:true, */
+			clickToSelect : true,//是否启用点击选中行
+			toolbarAlign : '',//工具栏对齐方式
+			buttonsAlign : '',//按钮对齐方式
+			toolbar : '#toolbar',//指定工作
+			//点击每一个单选框时触发的操作         
+			onCheck:function(row){ 
+				setChooseOrderSend(row);
+	        },
+	      	//取消每一个单选框时对应的操作；        
+			onUncheck:function(row){ 
+				unsetChooseOrderSend(row);
+	        },
+	      	//点击全选框时触发的操作        
+			onCheckAll:function(rows){ 
+	          	setAllChooseOrderSend(rows);
+	        },
+	        onUncheckAll:function(rows){ 
+	          	unsetAllChooseOrderSend(rows);
+	        },
+			columns : [ {
+				field : "id",
+				checkbox : true,
+				align : 'center'
+			},{
+				title : '运单号',
+				field : 'carriNo'
+			},{
+				title : '订单时间',
+				field : 'gmtModified',
+				formatter : function(value, row, index) {
+						return format(value);
+				}
+			},{
+				title : '收货人',
+				field : 'reUserName'
+			},{
+				title : '收货电话',
+				field : 'cell'
+			},{
+				title : '收货地址',
+				field : 'id',
+				formatter : function(value, row, index) {
+					if (row.transferType == "0") {
+						return row.province+row.city+row.area+row.reAddr;
+					} 
+				}
+			},{
+				title : '订单状态',
+				field : 'orderStateStr',
+			},{
+				title : '取货方式',
+				field : 'transferType',
+				formatter : function(value, row, index) {
+					if (value == "0") {
+						return "物流配送";
+					} else if (value == "1") {
+						return "到店自取";
+					}
+				}
+			},{
+				title : '实付金额',
+				field : 'realOrderPrice.amount'
+			},{
+				title : '实付积分',
+				field : 'realPointPrice.amount'
+			},{
+				title : '商品名称',
+				field : 'productName',
+				formatter : function(value, row, index) {
+					return value.substr(0, 20) + "...";
+				}
+			},{
+				title : '商品属性',
+				field : 'valuees'
+			},{
+				title : '购买数量',
+				field : 'orderCount'
+			},{
+				title : '运费',
+				field : 'luggage.amount'
+			},{
+				title : 'erp编号',
+				field : 'erpNo'
+			},{
+				title : '父订单编号',
+				field : 'orderId'
+			},{
+				title : '子订单编号',
+				field : 'childOrderId'
+			},{
+				title : '用户编号',
+				field : 'userId'
+			},{
+				title : '商品编号',
+				field : 'productId'
+			}],
+			locale : 'zh-CN',//中文支持,
+			responseHandler : function(res) {
+				sendData = res.rows;
+				return res;
+			}
+		});
+	}
+
+	//获取搜索的所有值
+	function params3(params) {
+		$("#a input[type='text']").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		$("#a select").each(function() {
+			params[$(this).attr("id")] = $(this).val();
+		});
+		params['orderState'] = "3";
+		params['transferType'] = "0";
+		params['rankType'] = "0";
+		return params;
+	}
+	
+	function setChooseOrderSend(row){
+		var chooseChildOrderId = row.childOrderId;
+		
+		if(!array_contain(chooseSendOrder,chooseChildOrderId)){
+			chooseSendOrder.push(chooseChildOrderId);
+		}
+	}
+	
+	function unsetChooseOrderSend(row){
+		var chooseChildOrderId = row.childOrderId;
+		if(array_contain(chooseSendOrder,chooseChildOrderId)){
+			var index = chooseSendOrder.indexOf(chooseChildOrderId);
+			if (index > -1) {
+				chooseSendOrder.splice(index, 1);
+			}
+		}
+	}
+	
+	function setAllChooseOrderSend(rows){
+		var arrayObj = new Array();
+		for(var i = 0;i<rows.length;i++){
+			if(!array_contain(chooseSendOrder,rows[i].childOrderId)){
+				chooseSendOrder.push(rows[i].childOrderId);
+			}
+		}
+	}
+	
+	function unsetAllChooseOrderSend(rows){
+		var arrayObj = new Array();
+		for(var i = 0;i<rows.length;i++){
+			if(array_contain(chooseSendOrder,rows[i].childOrderId)){
+				var index = chooseSendOrder.indexOf(rows[i].childOrderId);
+				if (index > -1) {
+					chooseSendOrder.splice(index, 1);
+				}
+			}
+		}
+	}
+	
+	function sfPrintModel(){
+		$("#savePathModal").modal("show");
+	}
+
+	//运单图片打印
+	function sfPrint(ele) {
+			var savePath = $("#savePath").val();
+			var formData = new FormData();
+			for(var i = 0;i<chooseSendOrder.length;i++){
+				formData.append("chooseChildrenIdS",chooseSendOrder[i]);
+			}
+			formData.append("savePath", savePath);
+			jQuery.ajax({
+				url : "sfPrint.do",
+				type : 'post',
+				data : formData,
+				dataType : 'json',
+				cache : false,
+				processData : false,
+				contentType : false,
+				success : function(data) {
+					if (data.success) {
+						alert(data.message);
+						$(ele).attr("disabled", false);
+						$("#savePathModal").modal("hide");
+						$("#printOrderTab").bootstrapTable('refresh');
+					} else {
+						alert(data.message);
+						$(ele).attr("disabled", false);
+					}
+				},
+				error : function() {
+					alert("操作失败！");
+					$(ele).attr("disabled", false);
+				}
+			});
+	}
+	
+	function exportSfExcel(ele) {
+		if(chooseWaitOrder.length <= 0){
+			alert("请先选择订单后继续");
+			return;
+		}
+		
+		var action = "exportSfExcel.do";
+		var form = $("<form></form>");
+		form.attr('action', action);
+		form.attr('method', 'post');
+		input2 = $("<input type='text' name='chooseChildrenIdS' value='"+chooseWaitOrder+"' />");
+		form.append(input2);
+		
+		form.appendTo("body");
+		form.css('display', 'none');
+		form.submit();
+}
+</script>
+
+</html>
