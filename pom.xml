@@ -16,7 +16,7 @@
 		<fyapp.version>1.0</fyapp.version>
 		<framework.version>1.0.0</framework.version>
 		<rocketmq.version>3.2.4</rocketmq.version>
-		<mina.version>1.1.5</mina.version>
+		<mina.version>2.0.22</mina.version>
 	</properties>
 	<profiles>
 		<profile>
