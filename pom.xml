@@ -12,7 +12,7 @@
 
 	<!-- 设置 Spring 的版本  -->
 	<properties>
-		<org.springframework.version>3.2.2.RELEASE</org.springframework.version>
+		<org.springframework.version>5.2.21.RELEASE</org.springframework.version>
 		<fyapp.version>1.0</fyapp.version>
 		<framework.version>1.0.0</framework.version>
 		<rocketmq.version>3.2.4</rocketmq.version>
